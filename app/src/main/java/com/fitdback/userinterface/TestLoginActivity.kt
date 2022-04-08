@@ -2,7 +2,6 @@ package com.fitdback.userinterface
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -12,7 +11,6 @@ import com.fitdback.posedetection.R
 
 // Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
 
 
 class TestLoginActivity : AppCompatActivity() {
@@ -25,17 +23,19 @@ class TestLoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_login)
 
-        // 해당 라인 'Firebase.' 뒤의 'auth'가 자동 import 되지 않고 빨간줄로 표시 됨.
-        // 팝업 메시지 : Unresolved reference: auth
+        // 해당 라인 'Firebase.' 뒤의 'auth'가 자동 import 되지 않고 빨간줄로 표시 됨. 팝업 메시지 : Unresolved reference: auth
 //        auth = Firebase.auth
-        firebaseAuth = FirebaseAuth.getInstance()
 
+        firebaseAuth = FirebaseAuth.getInstance() // auth = Firebase.auth 대체
+
+        // 레이아웃
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val btnjoin = findViewById<Button>(R.id.btnJoin)
         val btnAnonymousLogin = findViewById<Button>(R.id.btnAnonymousLogin)
 
-        val toCameraIntent = Intent(this, CameraActivity::class.java)
-
+        // Intent
+        val toCameraAcitivityIntent = Intent(this, CameraActivity::class.java)
+        val toLoginSuccessActivityIntent = Intent(this, LoginSuccessActivity::class.java)
 
         // 로그인 버튼 클릭 시 동작
         btnLogin.setOnClickListener {
@@ -44,7 +44,11 @@ class TestLoginActivity : AppCompatActivity() {
             val email = findViewById<EditText>(R.id.areaID)
             val password = findViewById<EditText>(R.id.areaPassword)
 
-            emailLoginAuth(email.text.toString(), password.text.toString())
+            emailLoginAuth(
+                email.text.toString(),
+                password.text.toString(),
+                toLoginSuccessActivityIntent
+            )
 //            Log.d("TestLogin", email.text.toString())
 
         }
@@ -52,46 +56,52 @@ class TestLoginActivity : AppCompatActivity() {
         // Anonymous 버튼 클릭시 동작
         btnAnonymousLogin.setOnClickListener {
 
-            anonymousAuth()
+            anonymousAuth(toLoginSuccessActivityIntent)
 
         }
 
     } // end of onCreate()
 
-    private fun emailLoginAuth(email: String, password: String) { // 이메일 로그인 인증
+    private fun emailLoginAuth(email: String, password: String, intent: Intent) { // 이메일 로그인 인증
 
 //        Toast.makeText(this, "email: ${email}, pw: ${password}", Toast.LENGTH_LONG).show()
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
-//            .addOnCompleteListener(this) { task ->
-//                if (task.isSuccessful) { // 이메일 로그인 성공
-//                    Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_LONG).show()
-//                } else { // 실패
-//                    Toast.makeText(this, "이메일 로그인 실패", Toast.LENGTH_LONG).show()
-//                }
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) { // 이메일 로그인 성공
+
+                    Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_LONG).show()
+                    startActivity(intent) // LoginSuccessActivity로 이동
+
+                } else { // 실패
+
+                    Toast.makeText(this, "이메일 로그인 실패", Toast.LENGTH_LONG).show()
+
+                }
+            }
+//            .addOnSuccessListener {
+//                Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_LONG).show()
 //            }
-            .addOnSuccessListener {
-                Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_LONG).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(this, firebaseAuth.currentUser?.uid.toString(), Toast.LENGTH_LONG).show()
-                Toast.makeText(this, "이메일 로그인 실패", Toast.LENGTH_LONG).show()
-            }
+//            .addOnFailureListener {
+//                Toast.makeText(this, firebaseAuth.currentUser?.uid.toString(), Toast.LENGTH_LONG).show()
+//                Toast.makeText(this, "이메일 로그인 실패", Toast.LENGTH_LONG).show()
+//            }
 
     }
 
-    private fun anonymousAuth() { // 익명 로그인 인증
+    private fun anonymousAuth(intent: Intent) { // 익명 로그인 인증
 
         firebaseAuth.signInAnonymously()
             .addOnSuccessListener {
                 Toast.makeText(
-                    this, firebaseAuth.currentUser?.uid.toString(),
+                    this, "익명 로그인 성공",
                     Toast.LENGTH_LONG
                 ).show()
+                startActivity(intent)
             }
             .addOnFailureListener {
                 Toast.makeText(
-                    this, "Authentication failed.",
+                    this, "익명 로그인 실패",
                     Toast.LENGTH_LONG
                 ).show()
             }
