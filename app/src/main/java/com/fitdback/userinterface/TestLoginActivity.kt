@@ -36,24 +36,52 @@ class TestLoginActivity : AppCompatActivity() {
 
         val toCameraIntent = Intent(this, CameraActivity::class.java)
 
-        btnAnonymousLogin.setOnClickListener {
-            anonymousAuth()
-        }
-
 
         // 로그인 버튼 클릭 시 동작
         btnLogin.setOnClickListener {
 
+            // 레이아웃의 EditText 에서 email과 password를 읽어들인다.
             val email = findViewById<EditText>(R.id.areaID)
             val password = findViewById<EditText>(R.id.areaPassword)
 
-            Log.d("tla", email.text.toString())
-            Log.d("tla", password.text.toString())
+            emailLoginAuth(email.text.toString(), password.text.toString())
+//            Log.d("TestLogin", email.text.toString())
 
         }
+
+        // Anonymous 버튼 클릭시 동작
+        btnAnonymousLogin.setOnClickListener {
+
+            anonymousAuth()
+
+        }
+
+    } // end of onCreate()
+
+    private fun emailLoginAuth(email: String, password: String) { // 이메일 로그인 인증
+
+//        Toast.makeText(this, "email: ${email}, pw: ${password}", Toast.LENGTH_LONG).show()
+
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+//            .addOnCompleteListener(this) { task ->
+//                if (task.isSuccessful) { // 이메일 로그인 성공
+//                    Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_LONG).show()
+//                } else { // 실패
+//                    Toast.makeText(this, "이메일 로그인 실패", Toast.LENGTH_LONG).show()
+//                }
+//            }
+            .addOnSuccessListener {
+                Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_LONG).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, firebaseAuth.currentUser?.uid.toString(), Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "이메일 로그인 실패", Toast.LENGTH_LONG).show()
+            }
+
     }
 
-    private fun anonymousAuth() {
+    private fun anonymousAuth() { // 익명 로그인 인증
+
         firebaseAuth.signInAnonymously()
             .addOnSuccessListener {
                 Toast.makeText(
@@ -67,8 +95,9 @@ class TestLoginActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
             }
+
     }
-}
+} // end of TestLoginActivity
 
 //            firebaseAuth!!.createUserWithEmailAndPassword(
 //                email.text.toString(),
@@ -91,7 +120,6 @@ class TestLoginActivity : AppCompatActivity() {
 //                }
 //            }
 ////            startActivity(toCameraIntent)
-}
 
 
 // 익명 로그인 버튼 클릭시 동작
