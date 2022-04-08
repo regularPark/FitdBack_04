@@ -54,6 +54,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.fitdback.posedetection.R
 import java.io.IOException
+import java.lang.Long
 import java.util.ArrayList
 import java.util.Arrays
 import java.util.Collections
@@ -669,7 +670,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
       rhs: Size
     ): Int {
       // We cast here to ensure the multiplications won't overflow
-      return java.lang.Long.signum(
+      return Long.signum(
           lhs.width.toLong() * lhs.height - rhs.width.toLong() * rhs.height
       )
     }
