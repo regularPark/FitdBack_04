@@ -19,14 +19,14 @@ buildscript {
         ],
         'android': [
             'support': [
-                'annotations': "com.android.support:support-annotations:${versions.supportLibrary}",
-                'appcompatV7': "com.android.support:appcompat-v7:${versions.supportLibrary}",
-                'design': "com.android.support:design:${versions.supportLibrary}",
-                'supportV13': "com.android.support:support-v13:${versions.supportLibrary}",
-                'constraintLayout': 'com.android.support.constraint:constraint-layout:1.1.0',
+                'annotations': 'androidx.annotation:annotation:1.0.0',
+                'appcompatV7': 'androidx.appcompat:appcompat:1.0.0',
+                'design': 'com.google.android.material:material:1.0.0',
+                'supportV13': 'androidx.legacy:legacy-support-v13:1.0.0',
+                'constraintLayout': 'androidx.constraintlayout:constraintlayout:1.1.3',
             ],
             'test': [
-                'espresso': "com.android.support.test.espresso:espresso-core:2.2.2"
+                'espresso': 'androidx.test.espresso:espresso-core:3.1.0'
             ]
         ],
         'junit': 'junit:junit:4.12',
