@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.fitdback.posedetection.CameraActivity
 import com.fitdback.posedetection.R
 
@@ -17,9 +18,10 @@ class TestLoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_test_login)
 
         val btnLogin = findViewById<Button>(R.id.btnLogin)
-        var btnjoin = findViewById<Button>(R.id.btnJoin)
+        val btnjoin = findViewById<Button>(R.id.btnJoin)
+        val btnAnonymousLogin = findViewById<Button>(R.id.btnAnonymousLogin)
 
-        var toCameraIntent = Intent(this, CameraActivity::class.java)
+        val toCameraIntent = Intent(this, CameraActivity::class.java)
 
         btnLogin.setOnClickListener {
 
@@ -30,6 +32,12 @@ class TestLoginActivity : AppCompatActivity() {
             Log.d("tla", password.text.toString())
 
             startActivity(toCameraIntent)
+
+        }
+
+        btnAnonymousLogin.setOnClickListener{
+
+            Toast.makeText(this, "Anonymous Login", Toast.LENGTH_LONG).show()
 
         }
 
