@@ -9,8 +9,10 @@ import android.widget.EditText
 import android.widget.Toast
 import com.fitdback.posedetection.CameraActivity
 import com.fitdback.posedetection.R
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.auth.ktx.*
 
 class TestLoginActivity : AppCompatActivity() {
 
@@ -23,7 +25,7 @@ class TestLoginActivity : AppCompatActivity() {
 
         // 해당 라인 'Firebase.' 뒤의 'auth'가 자동 import 되지 않고 빨간줄로 표시 됨.
         // 팝업 메시지 : Unresolved reference: auth
-        auth = Firebase.auth
+//        auth = Firebase.auth
 
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val btnjoin = findViewById<Button>(R.id.btnJoin)
