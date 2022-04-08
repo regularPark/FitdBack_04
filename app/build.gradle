@@ -72,6 +72,7 @@ repositories {
 }
 
 dependencies {
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':openCVLibrary341')
     implementation deps.kotlin.stdlib.jdk
