@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "438564157104",
+    "project_id": "fitdback-03",
+    "storage_bucket": "fitdback-03.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:438564157104:android:145c7d3ae09010fc412d75",
+        "android_client_info": {
+          "package_name": "com.fitdback.userinterface"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "438564157104-c61t516s3j8k1ecf57b2vm4louju0up5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCX7m_cEf8B-F7yDsuXivp4wgt5iwRo1yw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "438564157104-c61t516s3j8k1ecf57b2vm4louju0up5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
