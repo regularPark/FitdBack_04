@@ -13,10 +13,11 @@
  * limitations under the License.
  */
 
-package com.edvard.poseestimation
+package com.fitdback.posedetection
 
 import android.app.Activity
 import android.os.Bundle
+import com.fitdback.posedetection.R
 
 import org.opencv.android.BaseLoaderCallback
 import org.opencv.android.LoaderCallbackInterface

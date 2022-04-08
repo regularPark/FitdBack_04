@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion buildConfig.compileSdk
     defaultConfig {
-        applicationId "com.edvard.poseestimation"
+        applicationId "com.fitdback.posedetection"
         minSdkVersion buildConfig.minSdk
         targetSdkVersion buildConfig.targetSdk
         versionCode 1

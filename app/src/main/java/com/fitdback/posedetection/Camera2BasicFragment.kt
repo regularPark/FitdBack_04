@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.edvard.poseestimation
+package com.fitdback.posedetection
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -52,6 +52,7 @@ import android.view.ViewGroup
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
+import com.fitdback.posedetection.R
 import java.io.IOException
 import java.util.ArrayList
 import java.util.Arrays
@@ -275,7 +276,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     radiogroup = view.findViewById(R.id.radiogroup);
 
     radiogroup!!.setOnCheckedChangeListener { group, checkedId ->
-      if(checkedId==R.id.radio_cpu){
+      if(checkedId== R.id.radio_cpu){
         startBackgroundThread(Runnable { classifier!!.initTflite(false) })
       } else {
         startBackgroundThread(Runnable { classifier!!.initTflite(true) })

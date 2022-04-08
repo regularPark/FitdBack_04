@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.edvard.poseestimation
+package com.fitdback.posedetection
 
 import android.app.Activity
 import android.graphics.Bitmap

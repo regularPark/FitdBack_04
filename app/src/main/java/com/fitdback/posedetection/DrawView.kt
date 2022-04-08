@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.edvard.poseestimation
+package com.fitdback.posedetection
 
 import android.content.Context
 import android.graphics.Canvas
@@ -22,6 +22,7 @@ import android.graphics.Paint.Style.FILL
 import android.graphics.PointF
 import android.util.AttributeSet
 import android.view.View
+import com.fitdback.posedetection.R
 import java.util.ArrayList
 
 /**

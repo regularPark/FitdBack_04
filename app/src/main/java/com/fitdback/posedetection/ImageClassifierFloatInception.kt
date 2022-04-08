@@ -13,17 +13,14 @@
  * limitations under the License.
  */
 
-package com.edvard.poseestimation
+package com.fitdback.posedetection
 
 import android.app.Activity
-import android.util.Log
 
 import org.opencv.core.CvType
 import org.opencv.core.Mat
 import org.opencv.core.Size
 import org.opencv.imgproc.Imgproc
-
-import java.io.IOException
 
 /**
  * Pose Estimator
