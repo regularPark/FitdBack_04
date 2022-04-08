@@ -4,11 +4,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion buildConfig.compileSdk
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.fitdback.userinterface"
         minSdkVersion buildConfig.minSdk
-        targetSdkVersion buildConfig.targetSdk
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -80,7 +80,7 @@ dependencies {
     implementation deps.android.support.constraintLayout
     implementation deps.android.support.design
     implementation deps.android.support.annotations
-    implementation deps.android.support.supportV13
+    implementation deps.android.support.supportV13 // 이게 문제인듯?
     implementation deps.timber
 
     implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly'
@@ -88,7 +88,7 @@ dependencies {
 
     // Firebase
     implementation platform('com.google.firebase:firebase-bom:29.2.1')
-    implementation 'com.google.firebase:firebase-auth-ktx'
+//    implementation 'com.google.firebase:firebase-auth-ktx'
 
     testImplementation deps.junit
 
