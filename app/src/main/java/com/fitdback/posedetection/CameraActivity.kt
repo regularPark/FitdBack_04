@@ -17,7 +17,7 @@ package com.fitdback.posedetection
 
 import android.app.Activity
 import android.os.Bundle
-import com.fitdback.posedetection.R
+import com.fitdback.algorithm.FeedbackAlgorithm
 
 import org.opencv.android.BaseLoaderCallback
 import org.opencv.android.LoaderCallbackInterface
@@ -50,11 +50,20 @@ class CameraActivity : Activity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_camera)
+
+    // FeedBack 알고리즘
+    FeedbackAlgorithm.exr_mode = "squat"
+
     if (null == savedInstanceState) {
       fragmentManager
           .beginTransaction()
           .replace(R.id.container, Camera2BasicFragment.newInstance())
           .commit()
+
+      when(FeedbackAlgorithm.exr_mode){
+        "squat" -> FeedbackAlgorithm.isPlaying = true
+      }
+
     }
   }
 

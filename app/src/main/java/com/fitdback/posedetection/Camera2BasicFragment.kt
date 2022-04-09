@@ -52,7 +52,7 @@ import android.view.ViewGroup
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
-import com.fitdback.posedetection.R
+import com.fitdback.algorithm.FeedbackAlgorithm
 import java.io.IOException
 import java.lang.Long
 import java.util.ArrayList
@@ -236,6 +236,14 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                 }
             }
             backgroundHandler!!.post(this)
+
+            // Feedback 알고리즘
+            if (FeedbackAlgorithm.exr_mode == "squat") {
+                if (FeedbackAlgorithm.exr_cnt == 1000) {
+                    activity?.finish()
+                }
+            }
+
         }
     }
 
