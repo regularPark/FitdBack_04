@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#ff000000"
+    card_view:cardCornerRadius="20dp"
+    tools:context="com.fitdback.userinterface.StatisticsPopUpActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/dailyStatBtn"
+            android:layout_width="300sp"
+            android:layout_height="100sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#003458"
+            android:text="Daily Statistics"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/totalStatBtn"
+            android:layout_width="300sp"
+            android:layout_height="100sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#003458"
+            android:text="Total Statistics"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/friendStatBtn"
+            android:layout_width="300sp"
+            android:layout_height="100sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="#003458"
+            android:text="Friends Statistics"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

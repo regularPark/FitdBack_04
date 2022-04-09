@@ -15,8 +15,8 @@ android {
 
         externalNativeBuild {
             cmake {
-                arguments  '-DANDROID_TOOLCHAIN=clang', '-DANDROID_STL=gnustl_static'
-                cppFlags "-std=c++11","-frtti", "-fexceptions"
+                arguments '-DANDROID_TOOLCHAIN=clang', '-DANDROID_STL=gnustl_static'
+                cppFlags "-std=c++11", "-frtti", "-fexceptions"
             }
         }
         ndk {
@@ -83,13 +83,18 @@ dependencies {
     implementation deps.android.support.annotations
     implementation deps.android.support.supportV13 // 이게 문제인듯?
     implementation deps.timber
-
     implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly'
     implementation 'org.tensorflow:tensorflow-lite-gpu:0.0.0-nightly'
+
+
+    // Layout
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
+    implementation("androidx.cardview:cardview:1.0.0")
 
     // Firebase
     implementation platform('com.google.firebase:firebase-bom:29.2.1')
     implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'androidx.cardview:cardview:1.0.0'
 
     testImplementation deps.junit
 

@@ -39,6 +39,9 @@ Go to the documentation to learn how to Fix dependency resolution errors.
 e: C:/Users/shine/.gradle/caches/transforms-2/files-2.1/440244369116d816b91e99eaa87dad4d/firebase-auth-ktx-21.0.2/jars/classes.jar!/META-INF/java.com.google.android.libraries.firebase.firebase_auth_ktx_granule.kotlin_module: Module was compiled with an incompatible version of Kotlin. The binary version of its metadata is 1.5.1, expected version is 1.1.13.
 ```
 
+## 22.04.09
 
+- StatisticPopUpActivity 오류 
 
+support.v7.widget.CardView -> androidx 로 변경하자 중앙 정렬이 안 되는 오류 발생   
 

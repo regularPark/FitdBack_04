@@ -29,7 +29,10 @@ class MainActivity : AppCompatActivity() {
         // 인텐트
         val toTutorialActivity = Intent(this, TutorialActivity::class.java)
         val toLoginActivity = Intent(this, LoginActivity::class.java)
+        val toMyPageActivity = Intent(this, MyPageActivity::class.java)
 
+
+        // 버튼 클릭 동작
         squatBtn.setOnClickListener {
             startActivity(toTutorialActivity)
         }
@@ -43,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         myPageBtn.setOnClickListener {
-            startActivity(toTutorialActivity)
+            startActivity(toMyPageActivity)
         }
 
         // Sign Out
