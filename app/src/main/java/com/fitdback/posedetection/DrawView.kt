@@ -152,7 +152,7 @@ class DrawView : View {
               }
                 else -> {
                     if (prePointF != null) {
-                        mPaint.color = 0xff6fa8dc.toInt()
+                        mPaint.color = 0xfffaff0d.toInt() // skeleton 색상 지정
                         canvas.drawLine(prePointF.x, prePointF.y, pointF.x, pointF.y, mPaint)
                     }
                 }

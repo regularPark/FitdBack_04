@@ -53,6 +53,12 @@ class TestLoginActivity : AppCompatActivity() {
 
         }
 
+        // 회원가입 버튼 클릭 시 동작
+        btnjoin.setOnClickListener {
+
+
+        }
+
         // Anonymous 버튼 클릭시 동작
         btnAnonymousLogin.setOnClickListener {
 
@@ -108,54 +114,3 @@ class TestLoginActivity : AppCompatActivity() {
 
     }
 } // end of TestLoginActivity
-
-//            firebaseAuth!!.createUserWithEmailAndPassword(
-//                email.text.toString(),
-//                password.text.toString()
-//            ).addOnCompleteListener(this) { task ->
-//                if (task.isSuccessful) {
-//                    val user = firebaseAuth!!.currentUser
-//
-//                    Toast.makeText(
-//                        baseContext, "Authentication Success.",
-//                        Toast.LENGTH_LONG
-//                    ).show()
-//
-//                } else {
-//                    // If sign in fails, display a message to the user.
-//                    Toast.makeText(
-//                        baseContext, "Authentication failed.",
-//                        Toast.LENGTH_LONG
-//                    ).show()
-//                }
-//            }
-////            startActivity(toCameraIntent)
-
-
-// 익명 로그인 버튼 클릭시 동작
-//        btnAnonymousLogin.setOnClickListener {
-//
-//            Toast.makeText(this, "Anonymous Login", Toast.LENGTH_LONG).show()
-//
-//            auth.signInAnonymously()
-//                .addOnCompleteListener(this) { task ->
-//                    if (task.isSuccessful) {
-//
-//                        val user = auth.currentUser
-//
-//                        Toast.makeText(
-//                            baseContext, "Authentication Success.",
-//                            Toast.LENGTH_LONG
-//                        ).show()
-//
-//
-//                    } else {
-//                        // If sign in fails, display a message to the user.
-//                        Toast.makeText(
-//                            baseContext, "Authentication failed.",
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//                    }
-//                }
-//
-//        }
