@@ -275,15 +275,17 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         layoutFrame = view.findViewById(R.id.layout_frame)
         drawView = view.findViewById(R.id.drawview)
         layoutBottom = view.findViewById(R.id.layout_bottom)
-        radiogroup = view.findViewById(R.id.radiogroup);
 
-        radiogroup!!.setOnCheckedChangeListener { group, checkedId ->
-            if (checkedId == R.id.radio_cpu) {
-                startBackgroundThread(Runnable { classifier!!.initTflite(false) })
-            } else {
-                startBackgroundThread(Runnable { classifier!!.initTflite(true) })
-            }
-        }
+        // 렌더링 옵션 : CPU or GPU
+//        radiogroup = view.findViewById(R.id.radiogroup);
+//
+//        radiogroup!!.setOnCheckedChangeListener { group, checkedId ->
+//            if (checkedId == R.id.radio_cpu) {
+//                startBackgroundThread(Runnable { classifier!!.initTflite(false) })
+//            } else {
+//                startBackgroundThread(Runnable { classifier!!.initTflite(true) })
+//            }
+//        }
     }
 
     /**
