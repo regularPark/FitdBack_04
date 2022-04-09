@@ -2,6 +2,7 @@ package com.fitdback.userinterface
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -11,6 +12,7 @@ import com.fitdback.posedetection.R
 
 // Firebase
 import com.google.firebase.auth.FirebaseAuth
+import java.lang.Exception
 
 
 class TestLoginActivity : AppCompatActivity() {
@@ -41,14 +43,18 @@ class TestLoginActivity : AppCompatActivity() {
         btnLogin.setOnClickListener {
 
             // 레이아웃의 EditText 에서 email과 password를 읽어들인다.
-            val email = findViewById<EditText>(R.id.areaID)
-            val password = findViewById<EditText>(R.id.areaPassword)
+            val email = findViewById<EditText>(R.id.areaID).text.toString().trim()
+            val password = findViewById<EditText>(R.id.areaPassword).text.toString().trim()
 
-            emailLoginAuth(
-                email.text.toString(),
-                password.text.toString(),
-                toLoginSuccessActivityIntent
-            )
+            if (checkIfBothEmailAndPasswordAreNotNull(email, password)) {
+                emailLoginAuth(
+                    email,
+                    password,
+                    toLoginSuccessActivityIntent
+                )
+            } else {
+                Toast.makeText(this, "이메일과 비밀번호를 모두 입력하세요", Toast.LENGTH_SHORT).show()
+            }
 //            Log.d("TestLogin", email.text.toString())
 
         }
@@ -56,6 +62,15 @@ class TestLoginActivity : AppCompatActivity() {
         // 회원가입 버튼 클릭 시 동작
         btnjoin.setOnClickListener {
 
+            // 레이아웃의 EditText 에서 email과 password를 읽어들인다.
+            val email = findViewById<EditText>(R.id.areaID).text.toString().trim()
+            val password = findViewById<EditText>(R.id.areaPassword).text.toString().trim()
+
+            if (checkIfBothEmailAndPasswordAreNotNull(email, password)) {
+                joinAuth(email, password, toLoginSuccessActivityIntent)
+            } else {
+                Toast.makeText(this, "이메일과 비밀번호를 모두 입력하세요", Toast.LENGTH_SHORT).show()
+            }
 
         }
 
@@ -68,30 +83,84 @@ class TestLoginActivity : AppCompatActivity() {
 
     } // end of onCreate()
 
+
+    /*
+        Login Function
+     */
+
+    // 사용자가 입력한 email과 password가 모두 null값이 아닌지 확인
+    private fun checkIfBothEmailAndPasswordAreNotNull(email: String?, password: String?): Boolean {
+
+        if (email.isNullOrEmpty() or password.isNullOrEmpty()) { // 둘 중 하나라도 null 이면
+            return false
+        }
+
+        return true
+    }
+
+    // Firebase 로그인 과정에서 발생한 오류들에 대한 처리
+    private fun checkTypesOfException(exception: Exception) {
+
+        val exceptionToString = exception.toString()
+
+        if (exceptionToString.contains("FirebaseAuthInvalidCredentialsException")) {
+            Toast.makeText(this, "이메일 형식이 올바르지 않습니다", Toast.LENGTH_SHORT).show()
+        } else if (exceptionToString.contains("FirebaseAuthUserCollisionException")) {
+            Toast.makeText(this, "이미 가입된 이메일 입니다.", Toast.LENGTH_SHORT).show()
+        } else if (exceptionToString.contains("FirebaseAuthWeakPasswordException")) {
+            Toast.makeText(this, "비밀번호는 6자리 이상이어야 합니다.", Toast.LENGTH_SHORT).show()
+        } else if (exceptionToString.contains("FirebaseAuthInvalidUserException")) {
+            Toast.makeText(this, "가입된 계정이 없습니다. 회원가입을 먼저 하세요.", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, exceptionToString, Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
     private fun emailLoginAuth(email: String, password: String, intent: Intent) { // 이메일 로그인 인증
 
-//        Toast.makeText(this, "email: ${email}, pw: ${password}", Toast.LENGTH_LONG).show()
-
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
+        firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) { // 이메일 로그인 성공
+                if (task.isSuccessful) {
 
-                    Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_SHORT).show()
                     startActivity(intent) // LoginSuccessActivity로 이동
 
-                } else { // 실패
+                } else {
 
-                    Toast.makeText(this, "이메일 로그인 실패", Toast.LENGTH_LONG).show()
+                    Log.w("TestLogin", "signInWithEmail:failure", task.exception)
+                    Toast.makeText(this, "이메일 로그인 실패", Toast.LENGTH_SHORT).show()
+                    checkTypesOfException(task.exception!!)
 
                 }
             }
 //            .addOnSuccessListener {
-//                Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_LONG).show()
+//                Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_SHORT).show()
 //            }
 //            .addOnFailureListener {
-//                Toast.makeText(this, firebaseAuth.currentUser?.uid.toString(), Toast.LENGTH_LONG).show()
-//                Toast.makeText(this, "이메일 로그인 실패", Toast.LENGTH_LONG).show()
+//                Toast.makeText(this, firebaseAuth.currentUser?.uid.toString(), Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "이메일 로그인 실패", Toast.LENGTH_SHORT).show()
 //            }
+
+    }
+
+    private fun joinAuth(email: String, password: String, intent: Intent) { // 회원가입하고 Intent로 이동
+
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) { // 회원 가입 성공
+
+                    Toast.makeText(this, "회원 가입 성공", Toast.LENGTH_SHORT).show()
+                    startActivity(intent) // LoginSuccessActivity로 이동
+
+                } else { // 실패
+
+                    Log.w("TestLogin", "createUserWithEmail:failure", task.exception)
+                    Toast.makeText(this, "회원 가입 실패", Toast.LENGTH_SHORT).show()
+                    checkTypesOfException(task.exception!!)
+
+                }
+            }
 
     }
 
@@ -101,14 +170,14 @@ class TestLoginActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 Toast.makeText(
                     this, "익명 로그인 성공",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_SHORT
                 ).show()
                 startActivity(intent)
             }
             .addOnFailureListener {
                 Toast.makeText(
                     this, "익명 로그인 실패",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_SHORT
                 ).show()
             }
 
