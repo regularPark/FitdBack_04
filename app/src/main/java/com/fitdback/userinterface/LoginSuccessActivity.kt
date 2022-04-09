@@ -28,7 +28,7 @@ class LoginSuccessActivity : AppCompatActivity() {
         val btnFitnessStart = findViewById<Button>(R.id.btnFitnessStart)
 
         // Intent
-        val toTestLoginActivityIntent = Intent(this, TestLoginActivity::class.java)
+        val toLoginActivityIntent = Intent(this, LoginActivity::class.java)
         val toCameraActivityIntent = Intent(this, CameraActivity::class.java)
 
         // 로그인에 성공해서 현재 액티비티로 전환되면, user의 ID를 화면에 표시
@@ -37,7 +37,7 @@ class LoginSuccessActivity : AppCompatActivity() {
         // LOGOUT 버튼을 클릭하면 로그아웃 처리를 하고 TestLoginActivity로 돌아감
         btnLogout.setOnClickListener {
 
-            signOut(toTestLoginActivityIntent)
+            signOut(toLoginActivityIntent)
 
         }
 

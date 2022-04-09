@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.fitdback.userinterface.TestLoginActivity">
+    tools:context="com.fitdback.userinterface.LoginActivity">
 
     <EditText
         android:id="@+id/areaID"
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_marginHorizontal="20dp"
-        android:text="Login"
+        android:text="Sign In"
         android:textSize="30sp" />
 
     <Button

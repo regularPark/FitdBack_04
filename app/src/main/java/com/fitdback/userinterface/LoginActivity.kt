@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import java.lang.Exception
 
 
-class TestLoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     //    private lateinit var auth: FirebaseAuth
     lateinit var firebaseAuth: FirebaseAuth
@@ -38,6 +38,7 @@ class TestLoginActivity : AppCompatActivity() {
         // Intent
         val toCameraAcitivityIntent = Intent(this, CameraActivity::class.java)
         val toLoginSuccessActivityIntent = Intent(this, LoginSuccessActivity::class.java)
+        val toMainActivityIntent = Intent(this, MainActivity::class.java)
 
         // 로그인 버튼 클릭 시 동작
         btnLogin.setOnClickListener {
@@ -50,7 +51,7 @@ class TestLoginActivity : AppCompatActivity() {
                 emailLoginAuth(
                     email,
                     password,
-                    toLoginSuccessActivityIntent
+                    toMainActivityIntent
                 )
             } else {
                 Toast.makeText(this, "이메일과 비밀번호를 모두 입력하세요", Toast.LENGTH_SHORT).show()
@@ -67,7 +68,7 @@ class TestLoginActivity : AppCompatActivity() {
             val password = findViewById<EditText>(R.id.areaPassword).text.toString().trim()
 
             if (checkIfBothEmailAndPasswordAreNotNull(email, password)) {
-                joinAuth(email, password, toLoginSuccessActivityIntent)
+                joinAuth(email, password, toMainActivityIntent)
             } else {
                 Toast.makeText(this, "이메일과 비밀번호를 모두 입력하세요", Toast.LENGTH_SHORT).show()
             }
@@ -77,7 +78,7 @@ class TestLoginActivity : AppCompatActivity() {
         // Anonymous 버튼 클릭시 동작
         btnAnonymousLogin.setOnClickListener {
 
-            anonymousAuth(toLoginSuccessActivityIntent)
+            anonymousAuth(toMainActivityIntent)
 
         }
 
@@ -182,4 +183,4 @@ class TestLoginActivity : AppCompatActivity() {
             }
 
     }
-} // end of TestLoginActivity
+} // end of LoginActivity
