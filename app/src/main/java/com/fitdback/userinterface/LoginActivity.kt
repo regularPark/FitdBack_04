@@ -13,6 +13,7 @@ import com.fitdback.posedetection.R
 // Firebase
 import com.google.firebase.auth.FirebaseAuth
 import java.lang.Exception
+//import com.google.firebase.auth.ktx.auth
 
 
 class LoginActivity : AppCompatActivity() {
@@ -56,7 +57,6 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "이메일과 비밀번호를 모두 입력하세요", Toast.LENGTH_SHORT).show()
             }
-//            Log.d("TestLogin", email.text.toString())
 
         }
 
