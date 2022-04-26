@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import com.fitdback.posedetection.R
+import com.fitdback.test.DevActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -25,12 +26,13 @@ class MainActivity : AppCompatActivity() {
         val plkBtn = findViewById<Button>(R.id.plkBtn)
         val myPageBtn = findViewById<Button>(R.id.mypageBtn)
         val btnSignOut = findViewById<Button>(R.id.btnSignOut)
+        val btnDevMode = findViewById<Button>(R.id.btnDevMode)
 
         // 인텐트
         val toTutorialActivity = Intent(this, TutorialActivity::class.java)
         val toLoginActivity = Intent(this, LoginActivity::class.java)
         val toMyPageActivity = Intent(this, MyPageActivity::class.java)
-
+        val toDevActivity = Intent(this, DevActivity::class.java)
 
         // 버튼 클릭 동작
         squatBtn.setOnClickListener {
@@ -49,11 +51,14 @@ class MainActivity : AppCompatActivity() {
             startActivity(toMyPageActivity)
         }
 
+        // Dev Mode
+        btnDevMode.setOnClickListener {
+            startActivity(toDevActivity)
+        }
+
         // Sign Out
         btnSignOut.setOnClickListener {
-
             signOut(toLoginActivity)
-
         }
 
     } // end of MainActivity

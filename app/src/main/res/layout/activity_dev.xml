@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.fitdback.test.DevActivity">
+
+    <TextView
+        android:id="@+id/userIDArea"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="현재 로그인 유저 아이디 표기"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/btnDBTest"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_margin="10dp"
+        android:text="DB TEST"
+        android:textSize="30sp" />
+
+
+
+    <Button
+        android:id="@+id/btnFeedbackTest"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_margin="10dp"
+        android:text="FEEDBACK TEST"
+        android:textSize="30sp" />
+
+
+</LinearLayout>
