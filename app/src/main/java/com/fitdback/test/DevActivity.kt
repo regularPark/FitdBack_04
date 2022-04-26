@@ -18,6 +18,7 @@ import com.google.firebase.ktx.Firebase
 22.04.26 일종의 개발자 옵션
 - 기능 테스트 용도
  */
+
 class DevActivity : AppCompatActivity() {
 
     lateinit var firebaseAuth: FirebaseAuth
@@ -46,6 +47,15 @@ class DevActivity : AppCompatActivity() {
 
 
         /* 버튼 관련 동작 */
+
+        // btnDBTest
+        btnDBTest.setOnClickListener {
+
+            startActivity(toHealthMemoTestActivity)
+
+        }
+
+
         // Feedback Test버튼을 클릭시 다이얼로그 띄움
         btnFeedbackTest.setOnClickListener {
 
