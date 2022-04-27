@@ -36,14 +36,17 @@ class MainActivity : AppCompatActivity() {
 
         // 버튼 클릭 동작
         squatBtn.setOnClickListener {
+            toTutorialActivity.putExtra("exr_mod","squat") // 모드 설정
             startActivity(toTutorialActivity)
         }
 
         puBtn.setOnClickListener {
+            toTutorialActivity.putExtra("exr_mod","pushup")
             startActivity(toTutorialActivity)
         }
 
         plkBtn.setOnClickListener {
+            toTutorialActivity.putExtra("exr_mod","plank")
             startActivity(toTutorialActivity)
         }
 

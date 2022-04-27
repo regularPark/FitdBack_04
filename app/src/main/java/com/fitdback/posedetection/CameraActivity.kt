@@ -52,7 +52,10 @@ class CameraActivity : Activity() {
         setContentView(R.layout.activity_camera)
 
         // FeedBack 알고리즘
-        FeedbackAlgorithm.exr_mode = "squat"
+        val exr = intent.getStringExtra("exr_mod") // 운동 모드 결정
+
+
+        FeedbackAlgorithm.exr_mode = exr
 
         if (null == savedInstanceState) {
             fragmentManager
