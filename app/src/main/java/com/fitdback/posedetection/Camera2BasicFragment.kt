@@ -239,7 +239,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
 
             // Feedback 알고리즘
             if (FeedbackAlgorithm.exr_mode == "squat") {
-                if (FeedbackAlgorithm.exr_cnt == 1000) {
+                if (FeedbackAlgorithm.exr_cnt == 3) {
                     activity?.finish()
                 }
             }
