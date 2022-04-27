@@ -23,14 +23,18 @@ class FeedbackAlgorithm {
         var hka_r_angle: Double = 0.0 //오른쪽 엉덩이, 무릎, 발 각도
 
         var total_exr_time: Long = 0
+        var exr_time_result: Double = 0.0
         var exr_time: Long = 0
+        var last_exr_time: Long = 0
 
         var isSquat: Boolean = false //스쿼트 동작 완료
         var isStand: Boolean = false //서있는지 판단
         var isPlaying: Boolean = false
         var cnt_tf: Boolean = false //성공 횟수 추가 판단
         var exr_cnt: Int = 0 //동작 완료 횟수
+        var exr_cal: Double = 0.0 // 운동 후 칼로리 소모량
         val pi: Double = 3.141592
+        val squat_cal : Double = 0.50 // 스쿼트 1회당 칼로리
         /*val soundPool = SoundPool.Builder().build()
         var soundId: Int = 0*/
 
@@ -50,7 +54,14 @@ class FeedbackAlgorithm {
 
         //DrawView 164줄에서 squat 함수 호출
         fun squat(context: Context, mDrawPoint: ArrayList<PointF>) {
-            //total_exr_time = System.currentTimeMillis() - exr_time // 운동시간
+            if(exr_cnt==0){
+                exr_time = System.currentTimeMillis()
+            }
+            else{
+                last_exr_time = System.currentTimeMillis() - exr_time
+                total_exr_time += last_exr_time
+            }
+
             hka_l_angle = cal_angle(mDrawPoint[8], mDrawPoint[9], mDrawPoint[10])
             hka_r_angle = cal_angle(mDrawPoint[11], mDrawPoint[12], mDrawPoint[13])
             //soundId = MediaPlayer.load(context, R.raw.sound1, 1)
@@ -61,10 +72,14 @@ class FeedbackAlgorithm {
 
                 //운동 횟수 추가 판단되면 스쿼트 동작 완료 후 기본자세(stand)로 돌아가면 횟수 추가
                 if (cnt_tf) {
+                    exr_time = System.currentTimeMillis()
+                    exr_time_result = total_exr_time/10000.toDouble()
                     cnt_tf = false
                     exr_cnt++
+                    exr_cal = exr_cnt.toDouble() * squat_cal
 
-                    println("Exercising : hkal = " + hka_l_angle + ", hkar = " + hka_r_angle + " cnt = " + exr_cnt)
+                    println("Exercising : hkal = " + hka_l_angle + ", hkar = " + hka_r_angle + " cnt = " + exr_cnt + " cal = " + String.format("%.1f", exr_cal))
+                    println("exer_time = " + exr_time_result)
                     //soundPool.play(soundId, 1.0f, 1.0f, 0, 0, 1.0f)
 
                     /*val mediaPlayer = MediaPlayer.create(this, R.raw.sound1)
