@@ -8,7 +8,10 @@ import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
+
 import com.fitdback.posedetection.R
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.acos
 import kotlin.math.sqrt
 
@@ -23,13 +26,13 @@ class FeedbackAlgorithm {
         var hka_r_angle: Double = 0.0 //오른쪽 엉덩이, 무릎, 발 각도
 
         var total_exr_time: Long = 0
-        var exr_time_result: Double = 0.0
-        var exr_time: Long = 0
-        var last_exr_time: Long = 0
+        var start_time: Long = 0
+        var exr_time_result: Double = 0.0 //최종 시간 값. (초 단위)
 
         var isSquat: Boolean = false //스쿼트 동작 완료
         var isStand: Boolean = false //서있는지 판단
         var isPlaying: Boolean = false
+        var time_tf: Boolean = true //시간 저장
         var cnt_tf: Boolean = false //성공 횟수 추가 판단
         var exr_cnt: Int = 0 //동작 완료 횟수
         var exr_cal: Double = 0.0 // 운동 후 칼로리 소모량
@@ -54,17 +57,16 @@ class FeedbackAlgorithm {
 
         //DrawView 164줄에서 squat 함수 호출
         fun squat(context: Context, mDrawPoint: ArrayList<PointF>) {
-            if(exr_cnt==0){
-                exr_time = System.currentTimeMillis()
-            }
-            else{
-                last_exr_time = System.currentTimeMillis() - exr_time
-                total_exr_time += last_exr_time
+            if(exr_cnt==0&&time_tf){
+                start_time = System.currentTimeMillis()
+                time_tf = false
             }
 
             hka_l_angle = cal_angle(mDrawPoint[8], mDrawPoint[9], mDrawPoint[10])
             hka_r_angle = cal_angle(mDrawPoint[11], mDrawPoint[12], mDrawPoint[13])
             //soundId = MediaPlayer.load(context, R.raw.sound1, 1)
+
+
 
             if ((170.toDouble() <= hka_l_angle && hka_l_angle <= 180.toDouble()) && (170.toDouble() <= hka_r_angle && hka_r_angle <= 180.toDouble())) {
                 isStand = true
@@ -72,14 +74,16 @@ class FeedbackAlgorithm {
 
                 //운동 횟수 추가 판단되면 스쿼트 동작 완료 후 기본자세(stand)로 돌아가면 횟수 추가
                 if (cnt_tf) {
-                    exr_time = System.currentTimeMillis()
-                    exr_time_result = total_exr_time/10000.toDouble()
                     cnt_tf = false
                     exr_cnt++
                     exr_cal = exr_cnt.toDouble() * squat_cal
+                    if(exr_cnt==3){
+                        total_exr_time = System.currentTimeMillis()- start_time
+                        exr_time_result = total_exr_time/1000.toDouble()
+                    }
 
                     println("Exercising : hkal = " + hka_l_angle + ", hkar = " + hka_r_angle + " cnt = " + exr_cnt + " cal = " + String.format("%.1f", exr_cal))
-                    println("exer_time = " + exr_time_result)
+                    if(exr_cnt==3) println("exer_time = " + exr_time_result)
                     //soundPool.play(soundId, 1.0f, 1.0f, 0, 0, 1.0f)
 
                     /*val mediaPlayer = MediaPlayer.create(this, R.raw.sound1)
@@ -89,11 +93,13 @@ class FeedbackAlgorithm {
                     Toast.makeText(context, "운동 성공~!", Toast.LENGTH_SHORT).show()
                     //Log.d("asdf", "squat complete")
                 }
-            } else if ((100.toDouble() >= hka_l_angle) && (100.toDouble() >= hka_r_angle) && isPlaying) {
+            }
+            else if ((100.toDouble() >= hka_l_angle) && (100.toDouble() >= hka_r_angle) && isPlaying) {
                 //스쿼트 자세로 판단되면 플래그들을 모두 바꿔줌
                 isStand = false
                 isSquat = true
                 cnt_tf = true
+
 
             }
         }

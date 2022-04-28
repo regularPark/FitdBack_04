@@ -17,6 +17,7 @@ package com.fitdback.posedetection
 
 import android.app.Activity
 import android.os.Bundle
+import android.os.Handler
 import com.fitdback.algorithm.FeedbackAlgorithm
 
 import org.opencv.android.BaseLoaderCallback
@@ -61,7 +62,10 @@ class CameraActivity : Activity() {
                 .commit()
 
             when (FeedbackAlgorithm.exr_mode) {
-              "squat" -> FeedbackAlgorithm.isPlaying = true
+
+              "squat" -> {FeedbackAlgorithm.exr_cnt = 0
+                  Handler().postDelayed({FeedbackAlgorithm.time_tf=true},5000)
+                  FeedbackAlgorithm.isPlaying = true}
             }
 
         }
