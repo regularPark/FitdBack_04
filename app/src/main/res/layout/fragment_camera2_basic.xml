@@ -15,6 +15,7 @@
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#67AED1">
@@ -36,6 +37,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical" />
+
+        <!--<com.mikhaellopez.circularprogressbar.CircularProgressBar
+            android:id="@+id/cntBar"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="350dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="right"
+            app:cpb_background_progressbar_color="#b6bbd8"
+            app:cpb_background_progressbar_width="5dp"
+            app:cpb_progress_direction="to_right"
+            app:cpb_progressbar_color="#3f51b5"
+            app:cpb_progressbar_width="10dp"
+            app:cpb_round_border="false" />-->
+
+
 
     </com.fitdback.posedetection.AutoFitFrameLayout>
 
@@ -136,12 +153,25 @@
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="600dp"
+        android:layout_marginTop="800dp"
         android:gravity="center"
-        android:textColor="#faff0d"
+        android:textColor="#67AED1"
         android:textSize="30sp"
         android:textStyle="italic"
         tools:text="latency" />
+
+
+    <TextView
+        android:id="@+id/cnt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="600dp"
+        android:layout_marginRight="20dp"
+        android:gravity="right"
+        android:textColor="#faff0d"
+        android:textSize="30sp"
+        tools:text="Count"
+        />
 
 
 <!--    CPU / GPU 활성 버튼 -->
@@ -168,4 +198,5 @@
 <!--            android:text="CPU"-->
 <!--            android:textColor="@color/black" />-->
 <!--    </RadioGroup>-->
+
 </FrameLayout>

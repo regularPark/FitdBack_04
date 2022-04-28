@@ -21,13 +21,10 @@ import android.app.Dialog
 import android.app.DialogFragment
 import android.app.Fragment
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.graphics.ImageFormat
-import android.graphics.Matrix
-import android.graphics.Point
-import android.graphics.RectF
-import android.graphics.SurfaceTexture
+import android.graphics.*
 import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraCaptureSession
 import android.hardware.camera2.CameraCharacteristics
@@ -53,6 +50,10 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import com.fitdback.algorithm.FeedbackAlgorithm
+import com.mikhaellopez.circularprogressbar.CircularProgressBar
+import com.dinuscxj.progressbar.CircleProgressBar
+import com.fitdback.test.FeedbackTestActivity
+import org.w3c.dom.Text
 import java.io.IOException
 import java.lang.Long
 import java.util.ArrayList
@@ -77,6 +78,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private var classifier: ImageClassifier? = null
     private var layoutBottom: ViewGroup? = null
     private var radiogroup: RadioGroup? = null
+    private var countView:TextView? = null
+
 
     /**
      * [TextureView.SurfaceTextureListener] handles several lifecycle events on a [ ].
@@ -206,6 +209,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         }
     }
 
+
     private val requiredPermissions: Array<String>
         get() {
             val activity = activity
@@ -238,9 +242,13 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             backgroundHandler!!.post(this)
 
             // Feedback 알고리즘
+            var intent = Intent(context, FeedbackTestActivity::class.java) // 운동 완료 시 화면 전환
+
             if (FeedbackAlgorithm.exr_mode == "squat") {
-                if (FeedbackAlgorithm.exr_cnt == 3) {
-                    activity?.finish()
+                if (FeedbackAlgorithm.exr_cnt == 1) {
+                    activity?.let{
+                        startActivity(intent)   // 운동 완료 시 화면 전환
+                    }
                 }
             }
 
@@ -260,6 +268,14 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         }
     }
 
+    private fun showCount(text: Int){
+        val activity = activity
+        activity?.runOnUiThread {
+            countView!!.text = text.toString()
+        }
+    }
+
+
     /**
      * Layout the preview and buttons.
      */
@@ -271,6 +287,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         return inflater.inflate(R.layout.fragment_camera2_basic, container, false)
     }
 
+
+
     /**
      * Connect the buttons to their event handler.
      */
@@ -280,9 +298,12 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     ) {
         textureView = view.findViewById(R.id.texture)
         textView = view.findViewById(R.id.text)
+        countView = view.findViewById(R.id.cnt)
         layoutFrame = view.findViewById(R.id.layout_frame)
         drawView = view.findViewById(R.id.drawview)
         layoutBottom = view.findViewById(R.id.layout_bottom)
+
+
 
         // 렌더링 옵션 : CPU or GPU
 //        radiogroup = view.findViewById(R.id.radiogroup);
@@ -295,6 +316,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
 //            }
 //        }
     }
+
+
 
     /**
      * Load the model and labels.
@@ -668,12 +691,14 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         }
         val bitmap = textureView!!.getBitmap(classifier!!.imageSizeX, classifier!!.imageSizeY)
         val textToShow = classifier!!.classifyFrame(bitmap)
+        val countToShow = FeedbackAlgorithm.exr_cnt
         bitmap.recycle()
 
 
         drawView!!.setDrawPoint(classifier!!.mPrintPointArray!!, 0.5f)
 
         showToast(textToShow)
+        showCount(countToShow)
     }
 
     /**
@@ -743,6 +768,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
          * Max preview height that is guaranteed by Camera2 API
          */
         private const val MAX_PREVIEW_HEIGHT = 1080
+
 
         /**
          * Resizes image.

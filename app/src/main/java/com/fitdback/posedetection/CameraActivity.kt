@@ -16,13 +16,14 @@
 package com.fitdback.posedetection
 
 import android.app.Activity
+import android.graphics.Color
 import android.os.Bundle
 import com.fitdback.algorithm.FeedbackAlgorithm
 
 import org.opencv.android.BaseLoaderCallback
 import org.opencv.android.LoaderCallbackInterface
 import org.opencv.android.OpenCVLoader
-
+import com.mikhaellopez.circularprogressbar.CircularProgressBar
 /**
  * Main `Activity` class for the Camera app.
  */
@@ -64,10 +65,15 @@ class CameraActivity : Activity() {
                 .commit()
 
             when (FeedbackAlgorithm.exr_mode) {
-              "squat" -> FeedbackAlgorithm.isPlaying = true
+                "squat" -> {FeedbackAlgorithm.exr_cnt = 0
+                    //FeedbackAlgorithm.time_tf=true
+                    FeedbackAlgorithm.isPlaying = true}
             }
 
         }
+
+        //val circleProgressBar = findViewById<CircleProgressBar>(R.id.cpb_circlebar)
+        //circleProgressBar.progress
     }
 
     override fun onResume() {
@@ -89,4 +95,7 @@ class CameraActivity : Activity() {
         @JvmStatic
         var isOpenCVInit = false
     }
+
+
+
 }
