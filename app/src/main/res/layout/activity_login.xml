@@ -48,4 +48,13 @@
 
         android:textSize="30sp" />
 
+    <Button
+        android:id="@+id/btnDevLogin"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginHorizontal="20dp"
+        android:text="Dev Login"
+        android:textAllCaps="false"
+        android:textSize="30sp" />
+
 </LinearLayout>

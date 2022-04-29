@@ -56,7 +56,7 @@ class DevActivity : AppCompatActivity() {
         }
 
 
-        // Feedback Test버튼을 클릭시 다이얼로그 띄움
+        // Feedback Test
         btnFeedbackTest.setOnClickListener {
 
             val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_feedback_test, null)
@@ -103,6 +103,8 @@ class DevActivity : AppCompatActivity() {
 
             }
         }
+
+        // 데이터 전달 테스트
 
 
     }
