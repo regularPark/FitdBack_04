@@ -16,6 +16,7 @@
 package com.fitdback.posedetection
 
 import android.app.Activity
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import com.fitdback.algorithm.FeedbackAlgorithm
@@ -23,7 +24,6 @@ import com.fitdback.algorithm.FeedbackAlgorithm
 import org.opencv.android.BaseLoaderCallback
 import org.opencv.android.LoaderCallbackInterface
 import org.opencv.android.OpenCVLoader
-
 /**
  * Main `Activity` class for the Camera app.
  */
@@ -53,7 +53,10 @@ class CameraActivity : Activity() {
         setContentView(R.layout.activity_camera)
 
         // FeedBack 알고리즘
-        FeedbackAlgorithm.exr_mode = "squat"
+        val exr = intent.getStringExtra("exr_mod") // 운동 모드 결정
+
+
+        FeedbackAlgorithm.exr_mode = exr
 
         if (null == savedInstanceState) {
             fragmentManager
@@ -63,12 +66,17 @@ class CameraActivity : Activity() {
 
             when (FeedbackAlgorithm.exr_mode) {
 
+
               "squat" -> {FeedbackAlgorithm.exr_cnt = 0
                   Handler().postDelayed({FeedbackAlgorithm.time_tf=true},5000)
                   FeedbackAlgorithm.isPlaying = true}
+
             }
 
         }
+
+        //val circleProgressBar = findViewById<CircleProgressBar>(R.id.cpb_circlebar)
+        //circleProgressBar.progress
     }
 
     override fun onResume() {
@@ -90,4 +98,7 @@ class CameraActivity : Activity() {
         @JvmStatic
         var isOpenCVInit = false
     }
+
+
+
 }

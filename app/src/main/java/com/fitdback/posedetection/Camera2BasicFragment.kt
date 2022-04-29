@@ -21,6 +21,7 @@ import android.app.Dialog
 import android.app.DialogFragment
 import android.app.Fragment
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.*
@@ -49,6 +50,8 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import com.fitdback.algorithm.FeedbackAlgorithm
+import com.fitdback.test.FeedbackTestActivity
+import com.fitdback.userinterface.FeedbackActivity
 import org.w3c.dom.Text
 import java.io.IOException
 import java.lang.Long
@@ -238,9 +241,19 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             backgroundHandler!!.post(this)
 
             // Feedback 알고리즘
+            var intent = Intent(context, FeedbackActivity::class.java) // 운동 완료 시 화면 전환
+
             if (FeedbackAlgorithm.exr_mode == "squat") {
-                if (FeedbackAlgorithm.exr_cnt == 3) {
-                    Handler().postDelayed({activity?.finish()}, 3000)
+
+                if (FeedbackAlgorithm.exr_cnt == 1) {
+                    Handler().postDelayed(
+                        {
+                            activity?.let{
+                                activity.finish()
+                                startActivity(intent)
+                            }
+                        }, 3000)
+
                 }
             }
 
