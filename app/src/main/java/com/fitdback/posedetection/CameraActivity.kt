@@ -24,7 +24,6 @@ import com.fitdback.algorithm.FeedbackAlgorithm
 import org.opencv.android.BaseLoaderCallback
 import org.opencv.android.LoaderCallbackInterface
 import org.opencv.android.OpenCVLoader
-import com.mikhaellopez.circularprogressbar.CircularProgressBar
 /**
  * Main `Activity` class for the Camera app.
  */

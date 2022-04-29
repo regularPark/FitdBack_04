@@ -245,7 +245,12 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             if (FeedbackAlgorithm.exr_mode == "squat") {
 
                 if (FeedbackAlgorithm.exr_cnt == 3) {
-                    Handler().postDelayed({activity?.finish()}, 3000)
+                    Handler().postDelayed(
+                        {
+                            activity?.let{
+                                startActivity(intent)
+                            }
+                        }, 3000)
 
                 }
             }
