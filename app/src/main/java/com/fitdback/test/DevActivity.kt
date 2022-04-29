@@ -65,7 +65,8 @@ class DevActivity : AppCompatActivity() {
 
             val mAlertDialog = mBuilder.show()
 
-            val btnToFeedbackTestActivity = mAlertDialog.findViewById<Button>(R.id.btnToFeedbackTestActivity) // mAlertDialog에서 찾아야함!!
+            val btnToFeedbackTestActivity =
+                mAlertDialog.findViewById<Button>(R.id.btnToFeedbackTestActivity) // mAlertDialog에서 찾아야함!!
 
             btnToFeedbackTestActivity?.setOnClickListener { // nullable type(?을 붙여줌) 붙여줘야 'pipe:qemud:wififorward' service 에러가 안남
 
@@ -73,22 +74,31 @@ class DevActivity : AppCompatActivity() {
 
                 // <EditText>에서 텍스트 가져오기
                 val totalCount =
-                    mAlertDialog.findViewById<EditText>(R.id.totalCountArea)?.text.toString().toInt()
+                    mAlertDialog.findViewById<EditText>(R.id.totalCountArea)?.text.toString()
+                        .toInt()
                 val successCount =
-                    mAlertDialog.findViewById<EditText>(R.id.successCountArea)?.text.toString().toInt()
+                    mAlertDialog.findViewById<EditText>(R.id.successCountArea)?.text.toString()
+                        .toInt()
                 val exerciseTime =
-                    mAlertDialog.findViewById<EditText>(R.id.exerciseTimeArea)?.text.toString().toInt()
+                    mAlertDialog.findViewById<EditText>(R.id.exerciseTimeArea)?.text.toString()
+                        .toInt()
 
                 // DB에 저장할 모델 생성
                 val model = FeedbackTestDataModel(totalCount, successCount, exerciseTime)
                 Log.d("datamodel", model.toString())
 
-                val myRefByUserID =
-                    database.getReference("userExerciseInfo").child(firebaseAuth.currentUser!!.uid)
+                val databaseRef =
+                    database.reference
+                        .child("users")
+                        .child(firebaseAuth.currentUser!!.uid) // uid 밑의 exerciseInfo 에 저장
+                        .child("exerciseInfo")
+//                val myRefByUserID =
+//                    database.getReference("userExerciseInfo").child(firebaseAuth.currentUser!!.uid)
 
-                myRefByUserID.push().setValue(model) // DB에 중복허용하여 데이터 삽입
-
+//                myRefByUserID.push().setValue(model) // DB에 중복허용하여 데이터 삽입
 //                startActivity(toFeedbackTestActivity)
+                databaseRef.push().setValue(model)
+
                 mAlertDialog.dismiss()
 
             }
