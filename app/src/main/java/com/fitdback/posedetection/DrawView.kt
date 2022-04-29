@@ -20,6 +20,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Paint.Style.FILL
 import android.graphics.PointF
+import android.os.Handler
 import android.util.AttributeSet
 import android.view.View
 import com.fitdback.algorithm.FeedbackAlgorithm
@@ -164,7 +165,7 @@ class DrawView : View {
         // FeedBack 알고리즘
         if(FeedbackAlgorithm.isPlaying) {
             when(FeedbackAlgorithm.exr_mode){
-                "squat" -> FeedbackAlgorithm.squat(context, mDrawPoint)
+                "squat" -> Handler().postDelayed({FeedbackAlgorithm.squat(context, mDrawPoint)},5000)
             }
         }
     }

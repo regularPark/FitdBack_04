@@ -136,12 +136,25 @@
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="600dp"
+        android:layout_marginTop="800dp"
         android:gravity="center"
-        android:textColor="#faff0d"
+        android:textColor="#67AED1"
         android:textSize="30sp"
         android:textStyle="italic"
         tools:text="latency" />
+
+
+    <TextView
+        android:id="@+id/cnt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="600dp"
+        android:layout_marginRight="20dp"
+        android:gravity="right"
+        android:textColor="#faff0d"
+        android:textSize="30sp"
+        tools:text="Count"
+        />
 
 
 <!--    CPU / GPU 활성 버튼 -->
