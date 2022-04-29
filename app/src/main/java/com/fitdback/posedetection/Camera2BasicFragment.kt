@@ -74,7 +74,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private var classifier: ImageClassifier? = null
     private var layoutBottom: ViewGroup? = null
     private var radiogroup: RadioGroup? = null
-    private var countView:TextView? = null
+    private var countView: TextView? = null
 
 
     /**
@@ -240,7 +240,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             // Feedback 알고리즘
             if (FeedbackAlgorithm.exr_mode == "squat") {
                 if (FeedbackAlgorithm.exr_cnt == 5) {
-                    Handler().postDelayed({activity?.finish()}, 3000) //카메라 종료 3초 지연
+                    Handler().postDelayed({ activity?.finish() }, 3000) //카메라 종료 3초 지연
                 }
             }
 
@@ -260,7 +260,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         }
     }
 
-    private fun showCount(text: Int){
+    private fun showCount(text: Int) {
         val activity = activity
         activity?.runOnUiThread {
             countView!!.text = text.toString()
@@ -280,7 +280,6 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     }
 
 
-
     /**
      * Connect the buttons to their event handler.
      */
@@ -296,7 +295,6 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         layoutBottom = view.findViewById(R.id.layout_bottom)
 
 
-
         // 렌더링 옵션 : CPU or GPU
 //        radiogroup = view.findViewById(R.id.radiogroup);
 //
@@ -308,7 +306,6 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
 //            }
 //        }
     }
-
 
 
     /**

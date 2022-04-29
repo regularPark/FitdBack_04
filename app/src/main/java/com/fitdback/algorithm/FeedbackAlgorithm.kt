@@ -42,7 +42,7 @@ class FeedbackAlgorithm {
         var exr_cnt_f: Int = 0 //동작 실패 횟수
         var exr_cal: Double = 0.0 // 운동 후 칼로리 소모량
         val pi: Double = 3.141592
-        val squat_cal : Double = 0.50 // 스쿼트 1회당 칼로리
+        val squat_cal: Double = 0.50 // 스쿼트 1회당 칼로리
         /*val soundPool = SoundPool.Builder().build()
         var soundId: Int = 0*/
 
@@ -62,7 +62,7 @@ class FeedbackAlgorithm {
 
         //DrawView 164줄에서 squat 함수 호출
         fun squat(context: Context, mDrawPoint: ArrayList<PointF>) {
-            if(exr_cnt==0&&time_tf){
+            if (exr_cnt == 0 && time_tf) {
                 start_time = System.currentTimeMillis()
                 time_tf = false
             }
@@ -72,7 +72,6 @@ class FeedbackAlgorithm {
             //soundId = MediaPlayer.load(context, R.raw.sound1, 1)
 
 
-
             if ((170.toDouble() <= hka_l_angle && hka_l_angle <= 180.toDouble()) && (170.toDouble() <= hka_r_angle && hka_r_angle <= 180.toDouble())) {
                 isStand = true
                 isSquat = false
@@ -80,16 +79,16 @@ class FeedbackAlgorithm {
 
                 //운동 횟수 추가 판단되면 스쿼트 동작 완료 후 기본자세(stand)로 돌아가면 횟수 추가
                 if (cnt_s_tf || cnt_f_tf) {
-                    if(cnt_s_tf) {
+                    if (cnt_s_tf) {
                         cnt_s_tf = false
                         exr_cnt_s++
                         Toast.makeText(context, "운동 성공~!", Toast.LENGTH_SHORT).show()
                         Log.d("exr_S", exr_cnt_s.toString())
                     }
                     //else if(cnt_f_tf && (isSquat==false)&&isWrong)
-                    if(cnt_f_tf) {
+                    if (cnt_f_tf) {
                         cnt_f_tf = false
-                        if((isSquat==false)&&isWrong) {
+                        if ((isSquat == false) && isWrong) {
                             exr_cnt_f++
                             Toast.makeText(context, "------FAIL------", Toast.LENGTH_SHORT).show()
                             Log.d("exr_F", exr_cnt_f.toString())
@@ -98,13 +97,13 @@ class FeedbackAlgorithm {
                     exr_cnt = exr_cnt_s + exr_cnt_f
                     exr_cal = exr_cnt.toDouble() * squat_cal
 
-                    if(exr_cnt==5){
-                        total_exr_time = System.currentTimeMillis()- start_time
-                        exr_time_result = ((total_exr_time/1000.toDouble())).roundToInt()
+                    if (exr_cnt == 5) {
+                        total_exr_time = System.currentTimeMillis() - start_time
+                        exr_time_result = ((total_exr_time / 1000.toDouble())).roundToInt()
                     }
 
                     println("S_cnt = " + exr_cnt_s + " F_cnt = " + exr_cnt_f + " T_cnt = " + exr_cnt + " cal = " + String.format("%.1f", exr_cal))
-                    if(exr_cnt==5) {
+                    if (exr_cnt == 5) {
                         Log.d("exr_T", "Total = " + exr_cnt + " S = " + exr_cnt_s + " F = " + exr_cnt_f + " Time = " + exr_time_result)
                     }
                     //soundPool.play(soundId, 1.0f, 1.0f, 0, 0, 1.0f)
@@ -116,18 +115,16 @@ class FeedbackAlgorithm {
                     //Toast.makeText(context, "운동 성공~!", Toast.LENGTH_SHORT).show()
                     //Log.d("asdf", "squat complete")
                 }
-            }
-            else if ((140.toDouble() >= hka_l_angle) && (140.toDouble() >= hka_r_angle)) {
+            } else if ((140.toDouble() >= hka_l_angle) && (140.toDouble() >= hka_r_angle)) {
                 //스쿼트 자세로 판단되면 Stand가 아님
                 isStand = false
-                if((100.toDouble() >= hka_l_angle) && (100.toDouble() >= hka_r_angle)){
+                if ((100.toDouble() >= hka_l_angle) && (100.toDouble() >= hka_r_angle)) {
                     cnt_s_tf = true
                     isSquat = true
                     isWrong = false
-                }
-                else {
+                } else {
                     cnt_f_tf = true
-                    if(isSquat==false){
+                    if (isSquat == false) {
                         isWrong = true
                     }
 

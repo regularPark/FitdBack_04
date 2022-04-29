@@ -33,15 +33,15 @@ class CameraActivity : Activity() {
     private val mLoaderCallback = object : BaseLoaderCallback(this) {
         override fun onManagerConnected(status: Int) {
             when (status) {
-              LoaderCallbackInterface.SUCCESS -> isOpenCVInit = true
-              LoaderCallbackInterface.INCOMPATIBLE_MANAGER_VERSION -> {
-              }
-              LoaderCallbackInterface.INIT_FAILED -> {
-              }
-              LoaderCallbackInterface.INSTALL_CANCELED -> {
-              }
-              LoaderCallbackInterface.MARKET_ERROR -> {
-              }
+                LoaderCallbackInterface.SUCCESS -> isOpenCVInit = true
+                LoaderCallbackInterface.INCOMPATIBLE_MANAGER_VERSION -> {
+                }
+                LoaderCallbackInterface.INIT_FAILED -> {
+                }
+                LoaderCallbackInterface.INSTALL_CANCELED -> {
+                }
+                LoaderCallbackInterface.MARKET_ERROR -> {
+                }
                 else -> {
                     super.onManagerConnected(status)
                 }
@@ -58,19 +58,19 @@ class CameraActivity : Activity() {
 
         if (null == savedInstanceState) {
             fragmentManager
-                .beginTransaction()
-                .replace(R.id.container, Camera2BasicFragment.newInstance())
-                .commit()
+                    .beginTransaction()
+                    .replace(R.id.container, Camera2BasicFragment.newInstance())
+                    .commit()
 
             when (FeedbackAlgorithm.exr_mode) {
 
-              "squat" -> {
-                  FeedbackAlgorithm.exr_cnt = 0
-                  FeedbackAlgorithm.exr_cnt_s = 0
-                  FeedbackAlgorithm.exr_cnt_f = 0
-                  Handler().postDelayed({ FeedbackAlgorithm.time_tf = true }, 5000) //5초 후 운동 시작 시간 설정
-                  FeedbackAlgorithm.isPlaying = true
-              }
+                "squat" -> {
+                    FeedbackAlgorithm.exr_cnt = 0
+                    FeedbackAlgorithm.exr_cnt_s = 0
+                    FeedbackAlgorithm.exr_cnt_f = 0
+                    Handler().postDelayed({ FeedbackAlgorithm.time_tf = true }, 5000) //5초 후 운동 시작 시간 설정
+                    FeedbackAlgorithm.isPlaying = true
+                }
 
             }
 
