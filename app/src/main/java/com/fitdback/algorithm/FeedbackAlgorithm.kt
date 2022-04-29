@@ -13,6 +13,7 @@ import com.fitdback.posedetection.R
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.acos
+import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 class FeedbackAlgorithm {
@@ -27,7 +28,7 @@ class FeedbackAlgorithm {
 
         var total_exr_time: Long = 0
         var start_time: Long = 0
-        var exr_time_result: Double = 0.0 //최종 시간 값. (초 단위)
+        var exr_time_result: Int = 0 //최종 시간 값. (초 단위)
 
         var isSquat: Boolean = false //스쿼트 동작 완료
         var isWrong: Boolean = false //올바르지 않은 자세
@@ -83,22 +84,29 @@ class FeedbackAlgorithm {
                         cnt_s_tf = false
                         exr_cnt_s++
                         Toast.makeText(context, "운동 성공~!", Toast.LENGTH_SHORT).show()
+                        Log.d("exr_S", exr_cnt_s.toString())
                     }
-                    else if(cnt_f_tf && (isSquat==false)&&isWrong) {
+                    //else if(cnt_f_tf && (isSquat==false)&&isWrong)
+                    if(cnt_f_tf) {
                         cnt_f_tf = false
-                        exr_cnt_f++
-                        Toast.makeText(context, "------FAIL------", Toast.LENGTH_SHORT).show()
+                        if((isSquat==false)&&isWrong) {
+                            exr_cnt_f++
+                            Toast.makeText(context, "------FAIL------", Toast.LENGTH_SHORT).show()
+                            Log.d("exr_F", exr_cnt_f.toString())
+                        }
                     }
                     exr_cnt = exr_cnt_s + exr_cnt_f
                     exr_cal = exr_cnt.toDouble() * squat_cal
 
-                    if(exr_cnt==3){
+                    if(exr_cnt==5){
                         total_exr_time = System.currentTimeMillis()- start_time
-                        exr_time_result = total_exr_time/1000.toDouble()
+                        exr_time_result = ((total_exr_time/1000.toDouble())).roundToInt()
                     }
 
                     println("S_cnt = " + exr_cnt_s + " F_cnt = " + exr_cnt_f + " T_cnt = " + exr_cnt + " cal = " + String.format("%.1f", exr_cal))
-                    if(exr_cnt==3) println("exer_time = " + exr_time_result)
+                    if(exr_cnt==5) {
+                        Log.d("exr_T", "Total = " + exr_cnt + " S = " + exr_cnt_s + " F = " + exr_cnt_f + " Time = " + exr_time_result)
+                    }
                     //soundPool.play(soundId, 1.0f, 1.0f, 0, 0, 1.0f)
 
                     /*val mediaPlayer = MediaPlayer.create(this, R.raw.sound1)
@@ -109,11 +117,8 @@ class FeedbackAlgorithm {
                     //Log.d("asdf", "squat complete")
                 }
             }
-            else if ((130.toDouble() >= hka_l_angle) && (130.toDouble() >= hka_r_angle)) {
-                //스쿼트 자세로 판단되면 플래그들을 모두 바꿔줌
-                /*isStand = false
-                isSquat = true
-                cnt_tf = true*/
+            else if ((140.toDouble() >= hka_l_angle) && (140.toDouble() >= hka_r_angle)) {
+                //스쿼트 자세로 판단되면 Stand가 아님
                 isStand = false
                 if((100.toDouble() >= hka_l_angle) && (100.toDouble() >= hka_r_angle)){
                     cnt_s_tf = true

@@ -18,6 +18,7 @@ package com.fitdback.posedetection
 import android.app.Activity
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import com.fitdback.algorithm.FeedbackAlgorithm
 
 import org.opencv.android.BaseLoaderCallback
@@ -65,6 +66,8 @@ class CameraActivity : Activity() {
 
               "squat" -> {
                   FeedbackAlgorithm.exr_cnt = 0
+                  FeedbackAlgorithm.exr_cnt_s = 0
+                  FeedbackAlgorithm.exr_cnt_f = 0
                   Handler().postDelayed({ FeedbackAlgorithm.time_tf = true }, 5000) //5초 후 운동 시작 시간 설정
                   FeedbackAlgorithm.isPlaying = true
               }
