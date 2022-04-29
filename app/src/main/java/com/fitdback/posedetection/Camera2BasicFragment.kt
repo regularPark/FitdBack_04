@@ -240,7 +240,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             // Feedback 알고리즘
             if (FeedbackAlgorithm.exr_mode == "squat") {
                 if (FeedbackAlgorithm.exr_cnt == 3) {
-                    Handler().postDelayed({activity?.finish()}, 3000)
+                    Handler().postDelayed({activity?.finish()}, 3000) //카메라 종료 3초 지연
                 }
             }
 

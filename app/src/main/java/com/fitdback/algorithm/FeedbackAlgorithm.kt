@@ -94,7 +94,7 @@ class FeedbackAlgorithm {
                     //Log.d("asdf", "squat complete")
                 }
             }
-            else if ((100.toDouble() >= hka_l_angle) && (100.toDouble() >= hka_r_angle) && isPlaying) {
+            else if ((130.toDouble() >= hka_l_angle) && (130.toDouble() >= hka_r_angle)) {
                 //스쿼트 자세로 판단되면 플래그들을 모두 바꿔줌
                 isStand = false
                 isSquat = true

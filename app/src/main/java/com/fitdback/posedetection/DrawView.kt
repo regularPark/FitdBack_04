@@ -165,7 +165,7 @@ class DrawView : View {
         // FeedBack 알고리즘
         if(FeedbackAlgorithm.isPlaying) {
             when(FeedbackAlgorithm.exr_mode){
-                "squat" -> Handler().postDelayed({FeedbackAlgorithm.squat(context, mDrawPoint)},5000)
+                "squat" -> Handler().postDelayed({FeedbackAlgorithm.squat(context, mDrawPoint)},5000) //5초동안 스쿼트 알고리즘 비활성화
             }
         }
     }

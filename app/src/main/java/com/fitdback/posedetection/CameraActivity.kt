@@ -63,9 +63,12 @@ class CameraActivity : Activity() {
 
             when (FeedbackAlgorithm.exr_mode) {
 
-              "squat" -> {FeedbackAlgorithm.exr_cnt = 0
-                  Handler().postDelayed({FeedbackAlgorithm.time_tf=true},5000)
-                  FeedbackAlgorithm.isPlaying = true}
+              "squat" -> {
+                  FeedbackAlgorithm.exr_cnt = 0
+                  Handler().postDelayed({ FeedbackAlgorithm.time_tf = true }, 5000) //5초 후 운동 시작 시간 설정
+                  FeedbackAlgorithm.isPlaying = true
+              }
+
             }
 
         }
