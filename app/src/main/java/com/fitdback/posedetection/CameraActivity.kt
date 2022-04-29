@@ -24,6 +24,7 @@ import com.fitdback.algorithm.FeedbackAlgorithm
 import org.opencv.android.BaseLoaderCallback
 import org.opencv.android.LoaderCallbackInterface
 import org.opencv.android.OpenCVLoader
+
 /**
  * Main `Activity` class for the Camera app.
  */
@@ -32,15 +33,15 @@ class CameraActivity : Activity() {
     private val mLoaderCallback = object : BaseLoaderCallback(this) {
         override fun onManagerConnected(status: Int) {
             when (status) {
-              LoaderCallbackInterface.SUCCESS -> isOpenCVInit = true
-              LoaderCallbackInterface.INCOMPATIBLE_MANAGER_VERSION -> {
-              }
-              LoaderCallbackInterface.INIT_FAILED -> {
-              }
-              LoaderCallbackInterface.INSTALL_CANCELED -> {
-              }
-              LoaderCallbackInterface.MARKET_ERROR -> {
-              }
+                LoaderCallbackInterface.SUCCESS -> isOpenCVInit = true
+                LoaderCallbackInterface.INCOMPATIBLE_MANAGER_VERSION -> {
+                }
+                LoaderCallbackInterface.INIT_FAILED -> {
+                }
+                LoaderCallbackInterface.INSTALL_CANCELED -> {
+                }
+                LoaderCallbackInterface.MARKET_ERROR -> {
+                }
                 else -> {
                     super.onManagerConnected(status)
                 }
@@ -67,9 +68,12 @@ class CameraActivity : Activity() {
             when (FeedbackAlgorithm.exr_mode) {
 
 
-              "squat" -> {FeedbackAlgorithm.exr_cnt = 0
-                  Handler().postDelayed({FeedbackAlgorithm.time_tf=true},5000)
-                  FeedbackAlgorithm.isPlaying = true}
+                "squat" -> {
+                    FeedbackAlgorithm.exr_cnt = 0
+                    FeedbackAlgorithm.isExrFinished = false
+                    Handler().postDelayed({ FeedbackAlgorithm.time_tf = true }, 5000)
+                    FeedbackAlgorithm.isPlaying = true
+                }
 
             }
 
@@ -98,7 +102,6 @@ class CameraActivity : Activity() {
         @JvmStatic
         var isOpenCVInit = false
     }
-
 
 
 }
