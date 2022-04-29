@@ -3,9 +3,11 @@ package com.fitdback.userinterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.fitdback.posedetection.CameraActivity
 import com.fitdback.posedetection.R
@@ -13,6 +15,7 @@ import com.fitdback.posedetection.R
 // Firebase
 import com.google.firebase.auth.FirebaseAuth
 import java.lang.Exception
+
 //import com.google.firebase.auth.ktx.auth
 
 
@@ -24,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_test_login)
+        setContentView(R.layout.activity_login)
 
         // 해당 라인 'Firebase.' 뒤의 'auth'가 자동 import 되지 않고 빨간줄로 표시 됨. 팝업 메시지 : Unresolved reference: auth
 //        auth = Firebase.auth
@@ -35,6 +38,7 @@ class LoginActivity : AppCompatActivity() {
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val btnjoin = findViewById<Button>(R.id.btnJoin)
         val btnAnonymousLogin = findViewById<Button>(R.id.btnAnonymousLogin)
+        val btnDevLogin = findViewById<Button>(R.id.btnDevLogin)
 
         // Intent
         val toCameraAcitivityIntent = Intent(this, CameraActivity::class.java)
@@ -82,6 +86,39 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
+        // Dev Login 버튼
+        btnDevLogin.setOnClickListener {
+
+            val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_dev_login, null)
+            val mBuilder =
+                AlertDialog.Builder(this).setView(mDialogView).setTitle("Dev Login")
+
+            val mAlertDialog = mBuilder.show()
+
+            val btnKshLogin =
+                mAlertDialog.findViewById<Button>(R.id.btnKshLogin)
+
+            val btnOmsLogin =
+                mAlertDialog.findViewById<Button>(R.id.btnOmsLogin)
+
+            val btnPjkLogin =
+                mAlertDialog.findViewById<Button>(R.id.btnPjkLogin)
+
+            btnKshLogin?.setOnClickListener {
+                emailLoginAuth("ksh@gmail.com", "123456", toMainActivityIntent)
+            }
+
+            btnOmsLogin?.setOnClickListener {
+                emailLoginAuth("oms@gmail.com", "123456", toMainActivityIntent)
+            }
+
+            btnPjkLogin?.setOnClickListener {
+                emailLoginAuth("pjk@gmail.com", "123456", toMainActivityIntent)
+            }
+
+        }
+
+
     } // end of onCreate()
 
 
@@ -125,7 +162,7 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
 
                     Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_SHORT).show()
-                    startActivity(intent) // LoginSuccessActivity로 이동
+                    startActivity(intent)
 
                 } else {
 
