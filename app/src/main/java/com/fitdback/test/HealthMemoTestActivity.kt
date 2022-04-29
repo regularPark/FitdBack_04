@@ -26,6 +26,7 @@ class HealthMemoTestActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
         val database = Firebase.database
         val myRef = database.getReference("userExerciseInfo")
+        val userID = firebaseAuth.currentUser!!.uid
 
         // ListView
         val listView = findViewById<ListView>(R.id.healthMemoListView)
@@ -34,41 +35,37 @@ class HealthMemoTestActivity : AppCompatActivity() {
         val adapter_list = ListViewAdapter(dataModelList)
         listView.adapter = adapter_list
 
-        // DB 불러오기 (사용자별)
-        myRef.child(firebaseAuth.currentUser!!.uid).addValueEventListener(object :
-            ValueEventListener {
+        Log.d("data1", dataModelList.toString())
 
-            override fun onDataChange(snapshot: DataSnapshot) { // snapshot : 모든 데이터를 가져옴
+        // DB 불러오기
+        database.getReference("users")
+            .child(userID)
+            .child("exerciseInfo")
+            .addValueEventListener(object : ValueEventListener {
 
-                Log.d("point", dataModelList.toString()) // 로그 계속 찍어보면서 공부
-                dataModelList.clear() // 리스트뷰 덧씌워짐 방지
-                Log.d("point", dataModelList.toString())
+                override fun onDataChange(snapshot: DataSnapshot) {
 
-                for (dataModel in snapshot.children) { // 반복문을 이용해 snapshot의 내용을 꺼냄
+                    Log.d("data2", dataModelList.toString())
+                    dataModelList.clear() // 리스트뷰 덧씌워짐 방지
 
-                    /* Log 결과
-                    D/Data: DataSnapshot { key = -N0ZpFxUwo3lpcwibAi2, value = {date=2022, 3, 20, memo=my health} }
-                    D/Data: DataSnapshot { key = -N0ZpFxUwo3lpcwibAi2, value = {date=2022, 3, 20, memo=my health} }
-                    D/Data: DataSnapshot { key = -N0ZsSSVw4cEgj_Ma8i0, value = {date=, memo=} }
-                     */
-                    Log.d("Data", dataModel.toString())
-                    dataModelList.add(dataModel.getValue(FeedbackTestDataModel::class.java)!!) // 내가 작성한 DataModel의 형태로 잘 들어옴
+                    for (dataSet in snapshot.children) { // uid/
+                        Log.d("data3", dataSet.toString())
+                        dataModelList.add(dataSet.getValue(FeedbackTestDataModel::class.java)!!) // 내가 작성한 DataModel의 형태로 잘 들어옴
+                        Log.d("data4", dataModelList.toString())
+                    }
+
+                    // 데이터모델리스트가 다 만들어지면 어댑터를 새롭게 만들어라
+                    adapter_list.notifyDataSetChanged()
 
                 }
 
-                // 데이터모델리스트가 다 만들어지면 어댑터를 새롭게 만들어라
-                adapter_list.notifyDataSetChanged()
+                override fun onCancelled(error: DatabaseError) {
 
-                Log.d("DataModel", dataModelList.toString())
+                    Log.w("loadPost:onCancelled", error.toException())
 
-            }
+                }
 
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-        })
-
+            })
 
     }
 
