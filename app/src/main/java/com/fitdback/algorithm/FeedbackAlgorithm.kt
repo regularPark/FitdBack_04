@@ -106,6 +106,11 @@ class FeedbackAlgorithm {
                     if (exr_cnt == 5) {
                         Log.d("exr_T", "Total = " + exr_cnt + " S = " + exr_cnt_s + " F = " + exr_cnt_f + " Time = " + exr_time_result)
                     }
+                    //--------------------------------------------------------------------------------------------------------
+                    //exr_cnt_s(int) = 운동 성공 횟수, exr_cnt_f(int) = 운동 실패 횟수, exr_cnt(int) = 총 운동 횟수
+                    //exr_cal(double) = 칼로리 소모량, exr_time_result(int) = 운동 시간(초), exr_mode(string) = 운동 종류(스쿼트)
+                    //--------------------------------------------------------------------------------------------------------
+
                     //soundPool.play(soundId, 1.0f, 1.0f, 0, 0, 1.0f)
 
                     /*val mediaPlayer = MediaPlayer.create(this, R.raw.sound1)
