@@ -30,11 +30,15 @@ class FeedbackAlgorithm {
         var exr_time_result: Double = 0.0 //최종 시간 값. (초 단위)
 
         var isSquat: Boolean = false //스쿼트 동작 완료
+        var isWrong: Boolean = false //올바르지 않은 자세
         var isStand: Boolean = false //서있는지 판단
         var isPlaying: Boolean = false
         var time_tf: Boolean = true //시간 저장
-        var cnt_tf: Boolean = false //성공 횟수 추가 판단
+        var cnt_s_tf: Boolean = false //성공 횟수 추가 판단
+        var cnt_f_tf: Boolean = false //성공 횟수 추가 판단
         var exr_cnt: Int = 0 //동작 완료 횟수
+        var exr_cnt_s: Int = 0 //동작 성공 횟수
+        var exr_cnt_f: Int = 0 //동작 실패 횟수
         var exr_cal: Double = 0.0 // 운동 후 칼로리 소모량
         val pi: Double = 3.141592
         val squat_cal : Double = 0.50 // 스쿼트 1회당 칼로리
@@ -70,19 +74,30 @@ class FeedbackAlgorithm {
 
             if ((170.toDouble() <= hka_l_angle && hka_l_angle <= 180.toDouble()) && (170.toDouble() <= hka_r_angle && hka_r_angle <= 180.toDouble())) {
                 isStand = true
+                isSquat = false
                 //Log.d("zxcv", "stand complete")
 
                 //운동 횟수 추가 판단되면 스쿼트 동작 완료 후 기본자세(stand)로 돌아가면 횟수 추가
-                if (cnt_tf) {
-                    cnt_tf = false
-                    exr_cnt++
+                if (cnt_s_tf || cnt_f_tf) {
+                    if(cnt_s_tf) {
+                        cnt_s_tf = false
+                        exr_cnt_s++
+                        Toast.makeText(context, "운동 성공~!", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(cnt_f_tf && (isSquat==false)&&isWrong) {
+                        cnt_f_tf = false
+                        exr_cnt_f++
+                        Toast.makeText(context, "------FAIL------", Toast.LENGTH_SHORT).show()
+                    }
+                    exr_cnt = exr_cnt_s + exr_cnt_f
                     exr_cal = exr_cnt.toDouble() * squat_cal
+
                     if(exr_cnt==3){
                         total_exr_time = System.currentTimeMillis()- start_time
                         exr_time_result = total_exr_time/1000.toDouble()
                     }
 
-                    println("Exercising : hkal = " + hka_l_angle + ", hkar = " + hka_r_angle + " cnt = " + exr_cnt + " cal = " + String.format("%.1f", exr_cal))
+                    println("S_cnt = " + exr_cnt_s + " F_cnt = " + exr_cnt_f + " T_cnt = " + exr_cnt + " cal = " + String.format("%.1f", exr_cal))
                     if(exr_cnt==3) println("exer_time = " + exr_time_result)
                     //soundPool.play(soundId, 1.0f, 1.0f, 0, 0, 1.0f)
 
@@ -90,15 +105,28 @@ class FeedbackAlgorithm {
                     mediaPlayer.start()
                     mediaPlayer.setOnCompletionListener { mediaPlayer.release()}*/
 
-                    Toast.makeText(context, "운동 성공~!", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "운동 성공~!", Toast.LENGTH_SHORT).show()
                     //Log.d("asdf", "squat complete")
                 }
             }
             else if ((130.toDouble() >= hka_l_angle) && (130.toDouble() >= hka_r_angle)) {
                 //스쿼트 자세로 판단되면 플래그들을 모두 바꿔줌
-                isStand = false
+                /*isStand = false
                 isSquat = true
-                cnt_tf = true
+                cnt_tf = true*/
+                isStand = false
+                if((100.toDouble() >= hka_l_angle) && (100.toDouble() >= hka_r_angle)){
+                    cnt_s_tf = true
+                    isSquat = true
+                    isWrong = false
+                }
+                else {
+                    cnt_f_tf = true
+                    if(isSquat==false){
+                        isWrong = true
+                    }
+
+                }
 
 
             }
