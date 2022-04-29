@@ -38,6 +38,8 @@ class FeedbackAlgorithm {
         var exr_cal: Double = 0.0 // 운동 후 칼로리 소모량
         val pi: Double = 3.141592
         val squat_cal : Double = 0.50 // 스쿼트 1회당 칼로리
+
+        var isExrFinished:Boolean = false
         /*val soundPool = SoundPool.Builder().build()
         var soundId: Int = 0*/
 
