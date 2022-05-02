@@ -46,7 +46,6 @@ class FeedbackAlgorithm {
         val squat_cal : Double = 0.50 // 스쿼트 1회당 칼로리
 
         var isExrFinished:Boolean = false
-
         /*val soundPool = SoundPool.Builder().build()
         var soundId: Int = 0*/
 
