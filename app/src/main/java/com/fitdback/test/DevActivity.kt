@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.fitdback.database.ExerciseDataModel
 import com.fitdback.posedetection.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
@@ -56,10 +57,11 @@ class DevActivity : AppCompatActivity() {
         }
 
 
-        // Feedback Test
+        // Data Write Test
         btnFeedbackTest.setOnClickListener {
 
-            val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_feedback_test, null)
+            val mDialogView =
+                LayoutInflater.from(this).inflate(R.layout.dialog_data_write_test, null)
             val mBuilder =
                 AlertDialog.Builder(this).setView(mDialogView).setTitle("FeedbackTest 다이얼로그")
 
@@ -73,35 +75,46 @@ class DevActivity : AppCompatActivity() {
 //                Toast.makeText(this, "버튼 클릭됨", Toast.LENGTH_SHORT).show()
 
                 // <EditText>에서 텍스트 가져오기
-                val totalCount =
-                    mAlertDialog.findViewById<EditText>(R.id.totalCountArea)?.text.toString()
-                        .toInt()
-                val successCount =
-                    mAlertDialog.findViewById<EditText>(R.id.successCountArea)?.text.toString()
-                        .toInt()
-                val exerciseTime =
-                    mAlertDialog.findViewById<EditText>(R.id.exerciseTimeArea)?.text.toString()
-                        .toInt()
+                val ex_date: String =
+                    mAlertDialog.findViewById<EditText>(R.id.ex_date_area)?.text.toString()
+
+                val ex_type: String =
+                    mAlertDialog.findViewById<EditText>(R.id.ex_type_area)?.text.toString()
+
+                val ex_time: Int =
+                    mAlertDialog.findViewById<EditText>(R.id.ex_time_area)?.text.toString().toInt()
+
+                val ex_count: Int =
+                    mAlertDialog.findViewById<EditText>(R.id.ex_count_area)?.text.toString().toInt()
+
+                val ex_success_count: Int =
+                    mAlertDialog.findViewById<EditText>(R.id.ex_success_count_area)?.text.toString().toInt()
+
+                val ex_calorie: Int =
+                    mAlertDialog.findViewById<EditText>(R.id.ex_calorie_area)?.text.toString().toInt()
 
                 // DB에 저장할 모델 생성
-                val model = FeedbackTestDataModel(totalCount, successCount, exerciseTime)
-                Log.d("datamodel", model.toString())
+                val ex_datamodel = ExerciseDataModel(ex_date, ex_type, ex_time, ex_count, ex_success_count, ex_calorie)
 
+                Log.d("datamodel", ex_datamodel.toString())
+
+                // 데이터 저장 path 지정
                 val databaseRef =
                     database.reference
                         .child("users")
-                        .child(firebaseAuth.currentUser!!.uid) // uid 밑의 exerciseInfo 에 저장
-                        .child("exerciseInfo")
+                        .child(firebaseAuth.currentUser!!.uid)
+                        .child("ex_data")
 //                val myRefByUserID =
 //                    database.getReference("userExerciseInfo").child(firebaseAuth.currentUser!!.uid)
 
 //                myRefByUserID.push().setValue(model) // DB에 중복허용하여 데이터 삽입
 //                startActivity(toFeedbackTestActivity)
-                databaseRef.push().setValue(model)
+                databaseRef.push().setValue(ex_datamodel)
 
                 mAlertDialog.dismiss()
 
             }
+
         }
 
         // 데이터 전달 테스트
