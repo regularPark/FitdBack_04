@@ -40,21 +40,21 @@ class DrawView : View {
     private var mImgHeight: Int = 0
 
     private val mColorArray = intArrayOf(
-        resources.getColor(R.color.color_top, null),
-        resources.getColor(R.color.color_neck, null),
-        resources.getColor(R.color.color_l_shoulder, null),
-        resources.getColor(R.color.color_l_elbow, null),
-        resources.getColor(R.color.color_l_wrist, null),
-        resources.getColor(R.color.color_r_shoulder, null),
-        resources.getColor(R.color.color_r_elbow, null),
-        resources.getColor(R.color.color_r_wrist, null),
-        resources.getColor(R.color.color_l_hip, null),
-        resources.getColor(R.color.color_l_knee, null),
-        resources.getColor(R.color.color_l_ankle, null),
-        resources.getColor(R.color.color_r_hip, null),
-        resources.getColor(R.color.color_r_knee, null),
-        resources.getColor(R.color.color_r_ankle, null),
-        resources.getColor(R.color.color_background, null)
+            resources.getColor(R.color.color_top, null),
+            resources.getColor(R.color.color_neck, null),
+            resources.getColor(R.color.color_l_shoulder, null),
+            resources.getColor(R.color.color_l_elbow, null),
+            resources.getColor(R.color.color_l_wrist, null),
+            resources.getColor(R.color.color_r_shoulder, null),
+            resources.getColor(R.color.color_r_elbow, null),
+            resources.getColor(R.color.color_r_wrist, null),
+            resources.getColor(R.color.color_l_hip, null),
+            resources.getColor(R.color.color_l_knee, null),
+            resources.getColor(R.color.color_l_ankle, null),
+            resources.getColor(R.color.color_r_hip, null),
+            resources.getColor(R.color.color_r_knee, null),
+            resources.getColor(R.color.color_r_ankle, null),
+            resources.getColor(R.color.color_background, null)
     )
 
     private val circleRadius: Float by lazy {
@@ -72,19 +72,19 @@ class DrawView : View {
     constructor(context: Context) : super(context)
 
     constructor(
-        context: Context,
-        attrs: AttributeSet?
+            context: Context,
+            attrs: AttributeSet?
     ) : super(context, attrs)
 
     constructor(
-        context: Context,
-        attrs: AttributeSet?,
-        defStyleAttr: Int
+            context: Context,
+            attrs: AttributeSet?,
+            defStyleAttr: Int
     ) : super(context, attrs, defStyleAttr)
 
     fun setImgSize(
-        width: Int,
-        height: Int
+            width: Int,
+            height: Int
     ) {
         mImgWidth = width
         mImgHeight = height
@@ -96,8 +96,8 @@ class DrawView : View {
      * @param point 2*14
      */
     fun setDrawPoint(
-        point: Array<FloatArray>,
-        ratio: Float
+            point: Array<FloatArray>,
+            ratio: Float
     ) {
         mDrawPoint.clear()
 
@@ -119,8 +119,8 @@ class DrawView : View {
      * @param height Relative vertical size
      */
     fun setAspectRatio(
-        width: Int,
-        height: Int
+            width: Int,
+            height: Int
     ) {
         if (width < 0 || height < 0) {
             throw IllegalArgumentException("Size cannot be negative.")
@@ -163,16 +163,16 @@ class DrawView : View {
         }
 
         // FeedBack 알고리즘
-        if(FeedbackAlgorithm.isPlaying) {
-            when(FeedbackAlgorithm.exr_mode){
-                "squat" -> Handler().postDelayed({FeedbackAlgorithm.squat(context, mDrawPoint)},5000)
+        if (FeedbackAlgorithm.isPlaying) {
+            when (FeedbackAlgorithm.exr_mode) {
+                "squat" -> Handler().postDelayed({ FeedbackAlgorithm.squat(context, mDrawPoint) }, 5000) //5초동안 스쿼트 알고리즘 비활성화
             }
         }
     }
 
     override fun onMeasure(
-        widthMeasureSpec: Int,
-        heightMeasureSpec: Int
+            widthMeasureSpec: Int,
+            heightMeasureSpec: Int
     ) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 

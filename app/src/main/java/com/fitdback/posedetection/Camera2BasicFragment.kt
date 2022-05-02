@@ -244,7 +244,6 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             var intent = Intent(context, FeedbackActivity::class.java) // 운동 완료 시 화면 전환
 
             if (FeedbackAlgorithm.exr_mode == "squat") {
-
                 if (FeedbackAlgorithm.exr_cnt == 1 && !FeedbackAlgorithm.isExrFinished) {
 
                     FeedbackAlgorithm.isExrFinished = true
