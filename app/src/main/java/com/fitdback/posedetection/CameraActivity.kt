@@ -68,6 +68,8 @@ class CameraActivity : Activity() {
 
             when (FeedbackAlgorithm.exr_mode) {
 
+
+
                 "squat" -> {
                     FeedbackAlgorithm.exr_cnt = 0
                     FeedbackAlgorithm.exr_cnt_s = 0

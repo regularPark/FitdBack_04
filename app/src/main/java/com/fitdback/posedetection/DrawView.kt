@@ -22,6 +22,7 @@ import android.graphics.Paint.Style.FILL
 import android.graphics.PointF
 import android.os.Handler
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import com.fitdback.algorithm.FeedbackAlgorithm
 import java.util.ArrayList
@@ -145,7 +146,20 @@ class DrawView : View {
                 }
                 // 1-2, 1-5, 1-8, 1-11
                 2, 5, 8, 11 -> {
+                    mPaint.color = 0xfffaff0d.toInt()
                     canvas.drawLine(p1.x, p1.y, pointF.x, pointF.y, mPaint)
+                }
+                /*else -> {
+                    if (prePointF != null) {
+                        mPaint.color = 0xfffaff0d.toInt() // skeleton 색상 지정
+                        canvas.drawLine(prePointF.x, prePointF.y, pointF.x, pointF.y, mPaint)
+                    }
+                }*/
+                9, 10 -> {
+                    if (prePointF != null) {
+                        mPaint.color = 0xffff0000.toInt() // skeleton 색상 지정
+                        canvas.drawLine(prePointF.x, prePointF.y, pointF.x, pointF.y, mPaint)
+                    }
                 }
                 else -> {
                     if (prePointF != null) {
