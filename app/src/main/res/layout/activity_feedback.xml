@@ -1,9 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.fitdback.userinterface.FeedbackActivity">
+    tools:context="com.fitdback.userinterface.FeedbackActivity"
+    android:columnCount="2"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/exr_name"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:layout_margin="20dp"
+        android:text="Exercise name"
+        />
+
+    <TextView
+        android:id="@+id/exr_cnt"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_row="0"
+        android:layout_column="1"
+        android:layout_margin="20dp"
+        android:textSize="30sp"
+        tools:text="Count" />
+
+    <TextView
+        android:id="@+id/cal_calories"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:layout_margin="20dp"
+        android:textSize="30sp"
+        android:text="Calories" />
+
+    <TextView
+        android:id="@+id/amt_calories"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_row="1"
+        android:layout_column="1"
+        android:layout_margin="20dp"
+        android:textSize="30sp"
+        tools:text="kcal"/>
+
+
+    <TextView
+        android:id="@+id/fdb_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_row="2"
+        android:layout_column="0"
+        android:layout_columnSpan="2"
+        android:layout_margin="20dp"
+        android:text="와우 친구들 빡빡이 아저씨야"
+        android:textSize="30sp"
+        tools:text="와우 친구들 빡빡이 아저씨야" />
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barChart"
+        android:layout_height="300dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        />
+</GridLayout>

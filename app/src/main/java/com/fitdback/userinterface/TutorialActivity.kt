@@ -17,11 +17,15 @@ class TutorialActivity : AppCompatActivity() {
         // 레이아웃
         val btnFitnessStart = findViewById<Button>(R.id.btnFitnessStart)
 
+        // 운동정보 넘기기
+        val exr = intent.getStringExtra("exr_mod")
+
         // 인텐트
         val intent = Intent(this, CameraActivity::class.java)
 
         // btnFitnessStart 버튼을 클릭하여 CameraActivity 실행
         btnFitnessStart.setOnClickListener {
+            intent.putExtra("exr_mod",exr)
             startActivity(intent)
         }
 

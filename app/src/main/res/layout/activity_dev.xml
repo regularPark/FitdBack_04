@@ -22,14 +22,12 @@
         android:text="DB TEST"
         android:textSize="30sp" />
 
-
-
     <Button
         android:id="@+id/btnFeedbackTest"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_margin="10dp"
-        android:text="FEEDBACK TEST"
+        android:text="data write test"
         android:textSize="30sp" />
 
 
