@@ -75,7 +75,8 @@ class FeedbackAlgorithm {
             //soundId = MediaPlayer.load(context, R.raw.sound1, 1)
 
 
-            if ((170.toDouble() <= hka_l_angle && hka_l_angle <= 180.toDouble()) && (170.toDouble() <= hka_r_angle && hka_r_angle <= 180.toDouble())) {
+            //if ((170.toDouble() <= hka_l_angle && hka_l_angle <= 180.toDouble()) && (170.toDouble() <= hka_r_angle && hka_r_angle <= 180.toDouble()))
+            if (170.toDouble() <= hka_l_angle && hka_l_angle <= 180.toDouble()){
                 isStand = true
                 isSquat = false
                 //Log.d("zxcv", "stand complete")
@@ -123,10 +124,10 @@ class FeedbackAlgorithm {
                     //Toast.makeText(context, "운동 성공~!", Toast.LENGTH_SHORT).show()
                     //Log.d("asdf", "squat complete")
                 }
-            } else if ((140.toDouble() >= hka_l_angle) && (140.toDouble() >= hka_r_angle)) {
+            } else if (140.toDouble() >= hka_l_angle) {
                 //스쿼트 자세로 판단되면 Stand가 아님
                 isStand = false
-                if ((100.toDouble() >= hka_l_angle) && (100.toDouble() >= hka_r_angle)) {
+                if (100.toDouble() >= hka_l_angle) {
                     cnt_s_tf = true
                     isSquat = true
                     isWrong = false

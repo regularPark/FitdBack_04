@@ -61,12 +61,12 @@
         android:textSize="30sp"
         tools:text="와우 친구들 빡빡이 아저씨야" />
 
-    <com.github.mikephil.charting.charts.BarChart
+    <!--<com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barChart"
         android:layout_height="300dp"
         android:layout_width="match_parent"
         android:layout_marginTop="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        />
+        />-->
 </GridLayout>

@@ -25,9 +25,9 @@
   <color name="color_l_shoulder">#faff0d</color>
   <color name="color_l_elbow">#faff0d</color>
   <color name="color_l_wrist">#faff0d</color>
-  <color name="color_l_hip">#faff0d</color>
-  <color name="color_l_knee">#faff0d</color>
-  <color name="color_l_ankle">#faff0d</color>
+  <color name="color_l_hip">#ff0000</color>
+  <color name="color_l_knee">#ff0000</color>
+  <color name="color_l_ankle">#ff0000</color>
 
 
   <color name="color_r_shoulder">#faff0d</color>

@@ -7,7 +7,7 @@ import android.util.EventLogTags
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.fitdback.posedetection.R
-import com.github.mikephil.charting.charts.BarChart
+/*import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
@@ -18,7 +18,7 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
-import com.github.mikephil.charting.utils.ColorTemplate
+import com.github.mikephil.charting.utils.ColorTemplate*/
 
 class FeedbackActivity : AppCompatActivity() {
 
@@ -33,7 +33,7 @@ class FeedbackActivity : AppCompatActivity() {
         // 운동 메모 기능 테스트
 
 
-        // Bar chart
+        /*// Bar chart
         var barChart: BarChart = findViewById(R.id.barChart) // barChart 생성
 
         // 데이터 셋
@@ -98,7 +98,7 @@ class FeedbackActivity : AppCompatActivity() {
         private val days = arrayOf("1차","2차","3차","4차","5차","6차","7차")
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
             return days.getOrNull(value.toInt()-1) ?: value.toString()
-        }
+        }*/
     }
 
 }
