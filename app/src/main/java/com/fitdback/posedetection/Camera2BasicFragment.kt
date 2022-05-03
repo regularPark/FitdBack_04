@@ -256,7 +256,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                             startActivity(intent)
                             activity.finish() 
 
-                        }, 3000) //카메라 종료 3초 지연
+                        }, 1000) //카메라 종료 3초 지연
                 }
             }
 
