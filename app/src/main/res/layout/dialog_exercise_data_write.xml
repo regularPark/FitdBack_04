@@ -11,6 +11,6 @@
         android:layout_margin="20dp"
         android:text="Save Data"
         android:textAllCaps="false"
-        android:textSize="30sp" />
+        android:textSize="15sp" />
 
 </LinearLayout>

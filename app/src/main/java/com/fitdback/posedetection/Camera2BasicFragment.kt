@@ -247,7 +247,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
 
             if (FeedbackAlgorithm.exr_mode == "squat") {
 
-                if (FeedbackAlgorithm.exr_cnt == 1 && !FeedbackAlgorithm.isExrFinished) {
+                if (FeedbackAlgorithm.exr_cnt == 2 && !FeedbackAlgorithm.isExrFinished) {
 
                     FeedbackAlgorithm.isExrFinished = true
                     Handler().postDelayed(
