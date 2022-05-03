@@ -4,7 +4,9 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.EventLogTags
+import android.view.LayoutInflater
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.fitdback.posedetection.R
 /*import com.github.mikephil.charting.charts.BarChart
@@ -28,10 +30,6 @@ class FeedbackActivity : AppCompatActivity() {
         setContentView(R.layout.activity_feedback)
 
         // 레이아웃
-        // DB 연동 테스트
-
-        // 운동 메모 기능 테스트
-
 
         /*// Bar chart
         var barChart: BarChart = findViewById(R.id.barChart) // barChart 생성

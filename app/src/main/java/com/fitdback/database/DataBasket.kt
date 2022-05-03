@@ -4,7 +4,7 @@ import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DataGenerate {
+class DataBasket {
 
     companion object {
 
