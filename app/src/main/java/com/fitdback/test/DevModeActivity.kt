@@ -20,7 +20,7 @@ import com.google.firebase.ktx.Firebase
 - 기능 테스트 용도
  */
 
-class DevActivity : AppCompatActivity() {
+class DevModeActivity : AppCompatActivity() {
 
     lateinit var firebaseAuth: FirebaseAuth
 

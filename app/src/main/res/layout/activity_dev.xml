@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.fitdback.test.DevActivity">
+    tools:context="com.fitdback.test.DevModeActivity">
 
     <TextView
         android:id="@+id/userIDArea"

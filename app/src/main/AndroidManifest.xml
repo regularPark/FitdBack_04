@@ -67,7 +67,7 @@
             android:name="com.fitdback.userinterface.FeedbackActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name="com.fitdback.test.DevActivity"
+            android:name="com.fitdback.test.DevModeActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
     </application>
