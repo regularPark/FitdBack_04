@@ -181,8 +181,8 @@ class DrawView : View {
             when (FeedbackAlgorithm.exr_mode) {
                 "squat" -> Handler().postDelayed(
                     { FeedbackAlgorithm.squat(context, mDrawPoint) },
-                    1000
-                ) //5초동안 스쿼트 알고리즘 비활성화
+                    3000
+                ) // 3초동안 스쿼트 알고리즘 비활성화
             }
         }
     }

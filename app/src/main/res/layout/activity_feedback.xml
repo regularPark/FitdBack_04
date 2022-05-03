@@ -56,9 +56,9 @@
         android:layout_column="0"
         android:layout_columnSpan="2"
         android:layout_margin="20dp"
-        android:text="와우 친구들 빡빡이 아저씨야"
+        android:text="Feedback Message"
         android:textSize="30sp"
-        tools:text="와우 친구들 빡빡이 아저씨야" />
+        tools:text="Feedback Message" />
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barChart"
@@ -67,4 +67,5 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp" />
+
 </GridLayout>

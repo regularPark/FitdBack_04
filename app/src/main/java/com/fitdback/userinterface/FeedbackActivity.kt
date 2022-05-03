@@ -1,35 +1,72 @@
 package com.fitdback.userinterface
 
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.EventLogTags
 import android.view.LayoutInflater
-import android.view.View
+import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.R
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class FeedbackActivity : AppCompatActivity() {
+
+    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feedback)
 
-        // 레이아웃
+        // Firebase
+        firebaseAuth = FirebaseAuth.getInstance()
+        val database = Firebase.database
+
+        // 다이얼로그
+        val mDialogView =
+            LayoutInflater.from(this).inflate(R.layout.dialog_exercise_data_write, null)
+        val mBuilder =
+            AlertDialog.Builder(this).setView(mDialogView).setTitle("FeedbackTest 다이얼로그")
+        val mAlertDialog = mBuilder.show()
+
+        val btnDataWrite =
+            mAlertDialog.findViewById<Button>(R.id.btnDataWrite)
+
+        btnDataWrite?.setOnClickListener {
+
+            val dataModel = DataBasket.tempExrModel
+
+            // 데이터를 저장할 path 지정
+            val databaseRef =
+                database.reference
+                    .child("users")
+                    .child(firebaseAuth.currentUser!!.uid)
+                    .child("ex_data")
+
+            // Data Write
+            databaseRef.push().setValue(dataModel)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "데이터가 저장되었습니다.", Toast.LENGTH_SHORT).show()
+                    mAlertDialog.dismiss()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "데이터가 저장실패", Toast.LENGTH_SHORT).show()
+                }
+
+        }
 
         // Bar chart
         val barChart: BarChart = findViewById(R.id.barChart) // barChart 생성
@@ -77,7 +114,7 @@ class FeedbackActivity : AppCompatActivity() {
             legend.isEnabled = false //차트 범례 설정
         }
 
-        var set = BarDataSet(entries, "DataSet") // 데이터셋 초기화
+        val set = BarDataSet(entries, "DataSet") // 데이터셋 초기화
         set.setColors(*ColorTemplate.COLORFUL_COLORS)
         //set.color = ContextCompat.getColor(applicationContext!!,R.color.design_default_color_primary_dark) // 바 그래프 색 설정
 

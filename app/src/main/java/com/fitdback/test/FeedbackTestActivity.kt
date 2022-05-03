@@ -33,7 +33,7 @@ class FeedbackTestActivity : AppCompatActivity() {
         val mAlertDialog = mBuilder.show()
 
         val btnDataWrite =
-            mAlertDialog.findViewById<Button>(R.id.btnDataWrite) // mAlertDialog에서 찾아야함!!
+            mAlertDialog.findViewById<Button>(R.id.btnDataWrite)
 
         btnDataWrite?.setOnClickListener {
 
