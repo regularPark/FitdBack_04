@@ -243,11 +243,9 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             backgroundHandler!!.post(this)
 
             // Feedback 알고리즘
-            var intent = Intent(context, FeedbackTestActivity::class.java) // 운동 완료 시 화면 전환
+            val intent = Intent(context, FeedbackActivity::class.java) // 운동 완료 시 화면 전환
 
             if (FeedbackAlgorithm.exr_mode == "squat") {
-
-
 
                 if (FeedbackAlgorithm.exr_cnt == 1 && !FeedbackAlgorithm.isExrFinished) {
 
@@ -268,9 +266,10 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                             DataBasket.tempExrModel = exerciseDataModel
 
                             startActivity(intent)
-                            activity.finish() 
+                            activity.finish()
 
-                        }, 1000) //카메라 종료 3초 지연
+                        }, 1000
+                    ) //카메라 종료 3초 지연
                 }
             }
 

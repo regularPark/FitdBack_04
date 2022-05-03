@@ -4,19 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.fitdback.userinterface.FeedbackActivity"
     android:columnCount="2"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.fitdback.userinterface.FeedbackActivity">
 
 
     <TextView
         android:id="@+id/exr_name"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
         android:layout_margin="20dp"
         android:text="Exercise name"
-        />
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/exr_cnt"
@@ -35,8 +34,8 @@
         android:layout_row="1"
         android:layout_column="0"
         android:layout_margin="20dp"
-        android:textSize="30sp"
-        android:text="Calories" />
+        android:text="Calories"
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/amt_calories"
@@ -46,7 +45,7 @@
         android:layout_column="1"
         android:layout_margin="20dp"
         android:textSize="30sp"
-        tools:text="kcal"/>
+        tools:text="kcal" />
 
 
     <TextView
@@ -61,12 +60,11 @@
         android:textSize="30sp"
         tools:text="와우 친구들 빡빡이 아저씨야" />
 
-    <!--<com.github.mikephil.charting.charts.BarChart
+    <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barChart"
-        android:layout_height="300dp"
         android:layout_width="match_parent"
-        android:layout_marginTop="8dp"
+        android:layout_height="300dp"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        />-->
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp" />
 </GridLayout>

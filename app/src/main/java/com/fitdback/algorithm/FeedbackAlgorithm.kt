@@ -43,9 +43,9 @@ class FeedbackAlgorithm {
         var exr_cal: Double = 0.0 // 운동 후 칼로리 소모량
         val pi: Double = 3.141592
 
-        val squat_cal : Double = 0.50 // 스쿼트 1회당 칼로리
+        val squat_cal: Double = 0.50 // 스쿼트 1회당 칼로리
 
-        var isExrFinished:Boolean = false
+        var isExrFinished: Boolean = false
         /*val soundPool = SoundPool.Builder().build()
         var soundId: Int = 0*/
 
@@ -76,7 +76,7 @@ class FeedbackAlgorithm {
 
 
             //if ((170.toDouble() <= hka_l_angle && hka_l_angle <= 180.toDouble()) && (170.toDouble() <= hka_r_angle && hka_r_angle <= 180.toDouble()))
-            if (170.toDouble() <= hka_l_angle && hka_l_angle <= 180.toDouble()){
+            if (170.toDouble() <= hka_l_angle && hka_l_angle <= 180.toDouble()) {
                 isStand = true
                 isSquat = false
                 //Log.d("zxcv", "stand complete")
@@ -106,9 +106,17 @@ class FeedbackAlgorithm {
                         exr_time_result = ((total_exr_time / 1000.toDouble())).roundToInt()
                     }
 
-                    println("S_cnt = " + exr_cnt_s + " F_cnt = " + exr_cnt_f + " T_cnt = " + exr_cnt + " cal = " + String.format("%.1f", exr_cal))
+                    println(
+                        "S_cnt = " + exr_cnt_s + " F_cnt = " + exr_cnt_f + " T_cnt = " + exr_cnt + " cal = " + String.format(
+                            "%.1f",
+                            exr_cal
+                        )
+                    )
                     if (exr_cnt == 5) {
-                        Log.d("exr_T", "Total = " + exr_cnt + " S = " + exr_cnt_s + " F = " + exr_cnt_f + " Time = " + exr_time_result)
+                        Log.d(
+                            "exr_T",
+                            "Total = " + exr_cnt + " S = " + exr_cnt_s + " F = " + exr_cnt_f + " Time = " + exr_time_result
+                        )
                     }
                     //--------------------------------------------------------------------------------------------------------
                     //exr_cnt_s(int) = 운동 성공 횟수, exr_cnt_f(int) = 운동 실패 횟수, exr_cnt(int) = 총 운동 횟수
