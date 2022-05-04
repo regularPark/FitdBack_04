@@ -26,13 +26,17 @@ class FeedbackAlgorithm {
 
         var hka_l_angle: Double = 0.0 //왼쪽 엉덩이, 무릎, 발 각도
         var hka_r_angle: Double = 0.0 //오른쪽 엉덩이, 무릎, 발 각도
+        var nhk_l_angle: Double = 0.0 //목, 왼골반, 왼무릎 각도
 
         var total_exr_time: Long = 0
         var start_time: Long = 0
         var exr_time_result: Int = 0 //최종 시간 값. (초 단위)
+        var head_y: Float = 0.0f
+        var ank_l_y: Float = 0.0f
 
+        var no_exr: Boolean = false // 운동 판별 할건지(머리가 가장 위에, 왼발목이 가장 아래에 있어야 운동 판별)
         var isSquat: Boolean = false //스쿼트 동작 완료
-        var isWrong: Boolean = false //올바르지 않은 자세
+        var isWrong: Int = 0 //올바르지 않은 자세
         var isStand: Boolean = false //서있는지 판단
         var isPlaying: Boolean = false
         var time_tf: Boolean = true //시간 저장
@@ -66,6 +70,8 @@ class FeedbackAlgorithm {
 
         //DrawView 164줄에서 squat 함수 호출
         fun squat(context: Context, mDrawPoint: ArrayList<PointF>) {
+            no_exr = false
+            isWrong = 0
             if (exr_cnt == 0 && time_tf) {
                 start_time = System.currentTimeMillis()
                 time_tf = false
@@ -73,11 +79,30 @@ class FeedbackAlgorithm {
 
             hka_l_angle = cal_angle(mDrawPoint[8], mDrawPoint[9], mDrawPoint[10])
             hka_r_angle = cal_angle(mDrawPoint[11], mDrawPoint[12], mDrawPoint[13])
+            nhk_l_angle = cal_angle(mDrawPoint[1], mDrawPoint[8], mDrawPoint[9])
             //soundId = MediaPlayer.load(context, R.raw.sound1, 1)
 
+            head_y = mDrawPoint[0].y
+            ank_l_y = mDrawPoint[10].y
+
+            for(i in 1..13){
+                if(head_y >= mDrawPoint[i].y){
+                    no_exr = true
+                    Log.d("좌표", "좌표 = head "+ head_y +" " + i + " " + mDrawPoint[i].y)
+                    break
+                }
+            }
+            for(i in 0..9){
+                if(mDrawPoint[i].y >= ank_l_y){
+                    no_exr = true
+                    Log.d("좌표", "좌표 = ank "+ ank_l_y +" " +  i + " " + mDrawPoint[i].y)
+                    break
+                }
+            }
+            Log.d("no_exr", no_exr.toString())
 
             //if ((170.toDouble() <= hka_l_angle && hka_l_angle <= 180.toDouble()) && (170.toDouble() <= hka_r_angle && hka_r_angle <= 180.toDouble()))
-            if (170.toDouble() <= hka_l_angle && hka_l_angle <= 180.toDouble()) {
+            if (170.toDouble() <= hka_l_angle && hka_l_angle <= 180.toDouble() && !no_exr) {
                 isStand = true
                 isSquat = false
                 //Log.d("zxcv", "stand complete")
@@ -93,9 +118,13 @@ class FeedbackAlgorithm {
                     //else if(cnt_f_tf && (isSquat==false)&&isWrong)
                     if (cnt_f_tf) {
                         cnt_f_tf = false
-                        if ((isSquat == false) && isWrong) {
+                        if ((isSquat == false) && isWrong >= 1) {
                             exr_cnt_f++
-                            Toast.makeText(context, "------FAIL------", Toast.LENGTH_SHORT).show()
+                            if(isWrong==1) Toast.makeText(context, "------FAIL1------", Toast.LENGTH_SHORT).show() // 1 -> 허리때문에 실패
+                            else if(isWrong==2) Toast.makeText(context, "------FAIL2------", Toast.LENGTH_SHORT).show() // 2 -> 다리때문에 실패
+                            else if(isWrong==5) Toast.makeText(context, "------FAIL5------", Toast.LENGTH_SHORT).show() // 5 -> 다리때문에 실패
+                            else if(isWrong==3) Toast.makeText(context, "------FAIL3------", Toast.LENGTH_SHORT).show() // 1+2 -> 둘 다 실패
+                            else if(isWrong==6) Toast.makeText(context, "------FAIL6------", Toast.LENGTH_SHORT).show() // 1+5 -> 둘 다 실패
                             Log.d("exr_F", exr_cnt_f.toString())
                         }
                     }
@@ -133,25 +162,25 @@ class FeedbackAlgorithm {
                     //Toast.makeText(context, "운동 성공~!", Toast.LENGTH_SHORT).show()
                     //Log.d("asdf", "squat complete")
                 }
-            } else if (140.toDouble() >= hka_l_angle) {
+            } else if (140.toDouble() >= hka_l_angle && !no_exr) {
                 //스쿼트 자세로 판단되면 Stand가 아님
                 isStand = false
-                if (100.toDouble() >= hka_l_angle) {
+                if (100.toDouble() >= hka_l_angle && 70.toDouble() <= nhk_l_angle && 70.toDouble()<= hka_l_angle) {
                     cnt_s_tf = true
                     isSquat = true
-                    isWrong = false
-                } else {
+                }
+                else {
                     cnt_f_tf = true
-                    if (isSquat == false) {
-                        isWrong = true
-                    }
+                    if (isSquat == false){
+                        if(nhk_l_angle<70.toDouble()) isWrong = 1 //허리가 70도보다 더 굽어지면 실패
+                        if(hka_l_angle>100.toDouble()) isWrong += 2 //다리가 100도 아래로 내려가지 않으면 실패
+                        if(hka_l_angle<70.toDouble()) isWrong +=5 //다리가 70도보다 더 굽어지면 실패
 
+                    }
                 }
 
 
             }
         }
-
-
     }
 }

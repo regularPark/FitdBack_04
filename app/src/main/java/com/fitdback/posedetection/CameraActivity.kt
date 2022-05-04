@@ -73,6 +73,7 @@ class CameraActivity : Activity() {
                     FeedbackAlgorithm.exr_cnt = 0
                     FeedbackAlgorithm.exr_cnt_s = 0
                     FeedbackAlgorithm.exr_cnt_f = 0
+                    FeedbackAlgorithm.no_exr = false
                     FeedbackAlgorithm.isExrFinished = false
                     Handler().postDelayed(
                         { FeedbackAlgorithm.time_tf = true },
