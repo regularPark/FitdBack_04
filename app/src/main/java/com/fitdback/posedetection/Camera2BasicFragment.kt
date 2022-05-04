@@ -54,6 +54,7 @@ import com.fitdback.database.DataBasket
 import com.fitdback.database.ExerciseDataModel
 import com.fitdback.test.FeedbackTestActivity
 import com.fitdback.userinterface.FeedbackActivity
+import com.fitdback.userinterface.TimerClass
 import org.w3c.dom.Text
 import java.io.IOException
 import java.lang.Long
@@ -80,6 +81,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private var layoutBottom: ViewGroup? = null
     private var radiogroup: RadioGroup? = null
     private var countView: TextView? = null
+    private var countTimer:TextView? = null
 
 
     /**
@@ -297,6 +299,21 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     }
 
 
+    private fun showCountDown(text:Int){
+        val activity = activity
+        if(text <= 0){
+            activity?.runOnUiThread {
+                countTimer!!.text = "운동 시작!"
+            }
+        }
+        else {
+            activity?.runOnUiThread {
+                countTimer!!.text = text.toString() + "초 후 운동 시작"
+            }
+        }
+    }
+
+
     /**
      * Layout the preview and buttons.
      */
@@ -322,6 +339,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         layoutFrame = view.findViewById(R.id.layout_frame)
         drawView = view.findViewById(R.id.drawview)
         layoutBottom = view.findViewById(R.id.layout_bottom)
+        countTimer = view.findViewById(R.id.cntDown)
 
 
         // 렌더링 옵션 : CPU or GPU
@@ -342,6 +360,11 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        // 카운트 다운
+        TimerClass.second = 6
+        TimerClass.cdStart()
+
         try {
             // create either a new ImageClassifierQuantizedMobileNet or an ImageClassifierFloatInception
             //      classifier = new ImageClassifierQuantizedMobileNet(getActivity());
@@ -379,11 +402,13 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     override fun onPause() {
         closeCamera()
         stopBackgroundThread()
+        TimerClass.cdStop()
         super.onPause()
     }
 
     override fun onDestroy() {
         classifier!!.close()
+        TimerClass.cdStop()
         super.onDestroy()
     }
 
@@ -717,6 +742,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
 
         showToast(textToShow)
         showCount(countToShow)
+        showCountDown(TimerClass.second)
     }
 
     /**

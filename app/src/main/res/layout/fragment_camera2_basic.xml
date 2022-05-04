@@ -173,7 +173,16 @@
         tools:text="Count"
         />
 
-
+    <TextView
+        android:id="@+id/cntDown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="600dp"
+        android:textColor="#9B111E"
+        android:textSize="30sp"
+        android:layout_marginLeft="20dp"
+        tools:text="countDown"
+        />
 <!--    CPU / GPU 활성 버튼 -->
 
 <!--    <RadioGroup-->
