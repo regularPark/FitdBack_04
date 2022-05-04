@@ -149,27 +149,31 @@ class DevModeActivity : AppCompatActivity() {
 //                mAlertDialog.findViewById<TextView>(R.id.testExSuccessCountArea)
 //            val testExCalorieArea = mAlertDialog.findViewById<TextView>(R.id.testExCalorieArea)
 //
-//            val databaseRef =
-//                database.getReference("users")
-//                    .child(firebaseAuth.currentUser!!.uid)
-//                    .child("ex_data")
-//                    .addValueEventListener(object : ValueEventListener {
-//
-//                        override fun onDataChange(dataSnapshot: DataSnapshot) {
-//
-//                            for (exDataSet in dataSnapshot.children) {
-//
-//                                val exData = exDataSet.getValue(ExerciseDataModel::class.java)
-//
-//                            }
-//
-//                        }
-//
-//                        override fun onCancelled(error: DatabaseError) {
-//                            TODO("Not yet implemented")
-//                        }
-//
-//                    })
+            val databaseRef =
+                database.getReference("users")
+                    .child(firebaseAuth.currentUser!!.uid)
+                    .child("ex_data")
+                    .addValueEventListener(object : ValueEventListener {
+
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                            for (exDataSet in dataSnapshot.children) {
+
+                                val exData = exDataSet.getValue(ExerciseDataModel::class.java)
+//                                val exDataToString = exData.toString()
+                                Log.d("exData", exData.toString())
+
+                            }
+
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+
+                            Log.d("exData", "DB Read Error")
+
+                        }
+
+                    })
 
         }
     }

@@ -72,8 +72,10 @@ class FeedbackActivity : AppCompatActivity() {
 
         }
 
-
-
+        /*
+        bar chart를 그리기 위해 필요한 데이터
+        일주일간의 운동 데이터에서 같은 운동 종목인 것을 찾아서 날짜별 카운트 개수, 칼로리 개수 데이터 저장 (maximum도 함께 저장)
+         */
 
         // Bar chart
         val barChart: BarChart = findViewById(R.id.barChart) // barChart 생성
