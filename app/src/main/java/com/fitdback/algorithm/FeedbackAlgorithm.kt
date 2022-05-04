@@ -13,6 +13,7 @@ import com.fitdback.posedetection.R
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.acos
+import kotlin.math.ceil
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
@@ -99,11 +100,11 @@ class FeedbackAlgorithm {
                         }
                     }
                     exr_cnt = exr_cnt_s + exr_cnt_f
-                    exr_cal = exr_cnt.toDouble() * squat_cal
+                    exr_cal = ceil((exr_cnt.toDouble() * squat_cal))
 
                     if (exr_cnt == 5) {
                         total_exr_time = System.currentTimeMillis() - start_time
-                        exr_time_result = ((total_exr_time / 1000.toDouble())).roundToInt()
+                        exr_time_result = (ceil((total_exr_time / 1000.toDouble()))).toInt()
                     }
 
                     println(
