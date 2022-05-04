@@ -1,5 +1,6 @@
 package com.fitdback.database
 
+import android.annotation.SuppressLint
 import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
@@ -10,13 +11,15 @@ class DataBasket {
 
         var tempExrModel = ExerciseDataModel()
 
-        fun getDateOfToday(): String? { // "yyMMdd"형태로 오늘 날짜를 반환
+        @SuppressLint("SimpleDateFormat")
+        fun getDateOfDay(days: Int): String? { // "yyMMdd"형태로 원하는 날짜를 반환, 최대 30일 전까지 변환
 
             val now = System.currentTimeMillis()
-            val dateOfToday = Date(now)
+            val daysAgo = now - (days * 24 * 60 * 60 * 1000)
+            val dateOfDay = Date(daysAgo)
             val dateFormat = SimpleDateFormat("yyMMdd")
 
-            return dateFormat.format(dateOfToday)
+            return dateFormat.format(dateOfDay)
 
         }
 

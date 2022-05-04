@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.fitdback.database.DataBasket
 import com.fitdback.database.ExerciseDataModel
 import com.fitdback.posedetection.R
 import com.google.firebase.auth.FirebaseAuth
@@ -134,46 +135,49 @@ class DevModeActivity : AppCompatActivity() {
         // Data Read Test
         btnDataReadTest.setOnClickListener {
 
-            val mDialogView =
-                LayoutInflater.from(this).inflate(R.layout.dialog_data_read_write_test, null)
-            val mBuilder =
-                AlertDialog.Builder(this).setView(mDialogView).setTitle("FeedbackTest 다이얼로그")
+            val maxOfDailyExCount: Int = 0
+            val dailyExCountList = mutableListOf<Int>()
 
-            val mAlertDialog = mBuilder.show()
-
-//            val testUserIDArea = mAlertDialog.findViewById<TextView>(R.id.testUserIDArea)
-//            val testExTypeArea = mAlertDialog.findViewById<TextView>(R.id.testExTypeArea)
-//            val testExTimeArea = mAlertDialog.findViewById<TextView>(R.id.testExTimeArea)
-//            val testExCountArea = mAlertDialog.findViewById<TextView>(R.id.testExCountArea)
-//            val testExSuccessCountArea =
-//                mAlertDialog.findViewById<TextView>(R.id.testExSuccessCountArea)
-//            val testExCalorieArea = mAlertDialog.findViewById<TextView>(R.id.testExCalorieArea)
-//
             val databaseRef =
                 database.getReference("users")
                     .child(firebaseAuth.currentUser!!.uid)
                     .child("ex_data")
-                    .addValueEventListener(object : ValueEventListener {
 
-                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            databaseRef.addValueEventListener(object : ValueEventListener {
 
-                            for (exDataSet in dataSnapshot.children) {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                                val exData = exDataSet.getValue(ExerciseDataModel::class.java)
-//                                val exDataToString = exData.toString()
-                                Log.d("exData", exData.toString())
+                    var sumOfDailyExCount: Int = 0
 
-                            }
+                    for (exDataSet in dataSnapshot.children) {
 
+                        val exData = exDataSet.getValue(ExerciseDataModel::class.java)
+
+                        if (exData!!.ex_date.equals("220503") && exData.ex_type.equals("squat")) {
+                            sumOfDailyExCount += exData.ex_count // 220503의 전체
+//                            Log.d("exData", exData.ex_count.toString())
                         }
 
-                        override fun onCancelled(error: DatabaseError) {
 
-                            Log.d("exData", "DB Read Error")
+                    }
 
-                        }
+                    dailyExCountList.add(sumOfDailyExCount)
 
-                    })
+                    Log.d("exData", dailyExCountList.get(0).toString())
+
+                    for (i in 0..20) {
+                        Log.d("exData", DataBasket.getDateOfDay(i))
+                    }
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                    Log.d("exData", "DB Read Error")
+
+                }
+
+            })
 
         }
     }

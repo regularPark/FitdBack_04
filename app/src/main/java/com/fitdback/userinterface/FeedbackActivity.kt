@@ -1,6 +1,7 @@
 package com.fitdback.userinterface
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.Toast
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.fitdback.database.DataBasket
+import com.fitdback.database.ExerciseDataModel
 import com.fitdback.posedetection.R
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
@@ -19,6 +21,9 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
@@ -39,7 +44,7 @@ class FeedbackActivity : AppCompatActivity() {
             Database read / write 코드
          */
 
-        // 다이얼로그
+        // 다이얼로그 - Data Write
         val mDialogView =
             LayoutInflater.from(this).inflate(R.layout.dialog_exercise_data_write, null)
         val mBuilder =
@@ -73,9 +78,16 @@ class FeedbackActivity : AppCompatActivity() {
         }
 
         /*
-        bar chart를 그리기 위해 필요한 데이터
-        일주일간의 운동 데이터에서 같은 운동 종목인 것을 찾아서 날짜별 카운트 개수, 칼로리 개수 데이터 저장 (maximum도 함께 저장)
-         */
+       bar chart를 그리기 위해 필요한 데이터
+       일주일간의 운동 데이터에서
+           날짜별 sum(ex_count), sum(ex_calorie) // 배열로 저장
+           max(sum(ex_count)), max(sum(ex_calorie)
+
+       System.currentMillTimes()를 이용하여 날짜 계산 1/1000초 단위로 반환하므로 * 1000을 해서 이용하면 된다.
+        */
+
+        // Data Read
+
 
         // Bar chart
         val barChart: BarChart = findViewById(R.id.barChart) // barChart 생성
