@@ -35,6 +35,10 @@ class FeedbackActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
         val database = Firebase.database
 
+        /*
+            Database read / write 코드
+         */
+
         // 다이얼로그
         val mDialogView =
             LayoutInflater.from(this).inflate(R.layout.dialog_exercise_data_write, null)
@@ -67,6 +71,9 @@ class FeedbackActivity : AppCompatActivity() {
                 }
 
         }
+
+
+
 
         // Bar chart
         val barChart: BarChart = findViewById(R.id.barChart) // barChart 생성

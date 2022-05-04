@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.fitdback.database.ExerciseDataModel
 import com.fitdback.posedetection.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
@@ -27,7 +30,7 @@ class DevModeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dev)
+        setContentView(R.layout.activity_dev_mode)
 
         // Firebase
         firebaseAuth = FirebaseAuth.getInstance()
@@ -38,6 +41,7 @@ class DevModeActivity : AppCompatActivity() {
         val userIDArea = findViewById<TextView>(R.id.userIDArea)
         val btnDBTest = findViewById<Button>(R.id.btnDBTest)
         val btnFeedbackTest = findViewById<Button>(R.id.btnFeedbackTest)
+        val btnDataReadTest = findViewById<Button>(R.id.btnDataReadTest)
 
         // Intent
         val toHealthMemoTestActivity = Intent(this, HealthMemoTestActivity::class.java)
@@ -47,7 +51,9 @@ class DevModeActivity : AppCompatActivity() {
         userIDArea.text = firebaseAuth.currentUser?.uid
 
 
-        /* 버튼 관련 동작 */
+        /*
+            버튼 관련 동작
+        */
 
         // btnDBTest
         btnDBTest.setOnClickListener {
@@ -56,12 +62,11 @@ class DevModeActivity : AppCompatActivity() {
 
         }
 
-
         // Data Write Test
         btnFeedbackTest.setOnClickListener {
 
             val mDialogView =
-                LayoutInflater.from(this).inflate(R.layout.dialog_data_write_test, null)
+                LayoutInflater.from(this).inflate(R.layout.dialog_data_read_write_test, null)
             val mBuilder =
                 AlertDialog.Builder(this).setView(mDialogView).setTitle("FeedbackTest 다이얼로그")
 
@@ -88,13 +93,22 @@ class DevModeActivity : AppCompatActivity() {
                     mAlertDialog.findViewById<EditText>(R.id.ex_count_area)?.text.toString().toInt()
 
                 val ex_success_count: Int =
-                    mAlertDialog.findViewById<EditText>(R.id.ex_success_count_area)?.text.toString().toInt()
+                    mAlertDialog.findViewById<EditText>(R.id.ex_success_count_area)?.text.toString()
+                        .toInt()
 
                 val ex_calorie: Int =
-                    mAlertDialog.findViewById<EditText>(R.id.ex_calorie_area)?.text.toString().toInt()
+                    mAlertDialog.findViewById<EditText>(R.id.ex_calorie_area)?.text.toString()
+                        .toInt()
 
                 // DB에 저장할 모델 생성
-                val ex_datamodel = ExerciseDataModel(ex_date, ex_type, ex_time, ex_count, ex_success_count, ex_calorie)
+                val ex_datamodel = ExerciseDataModel(
+                    ex_date,
+                    ex_type,
+                    ex_time,
+                    ex_count,
+                    ex_success_count,
+                    ex_calorie
+                )
 
                 Log.d("datamodel", ex_datamodel.toString())
 
@@ -117,8 +131,46 @@ class DevModeActivity : AppCompatActivity() {
 
         }
 
-        // 데이터 전달 테스트
+        // Data Read Test
+        btnDataReadTest.setOnClickListener {
 
+            val mDialogView =
+                LayoutInflater.from(this).inflate(R.layout.dialog_data_read_write_test, null)
+            val mBuilder =
+                AlertDialog.Builder(this).setView(mDialogView).setTitle("FeedbackTest 다이얼로그")
 
+            val mAlertDialog = mBuilder.show()
+
+//            val testUserIDArea = mAlertDialog.findViewById<TextView>(R.id.testUserIDArea)
+//            val testExTypeArea = mAlertDialog.findViewById<TextView>(R.id.testExTypeArea)
+//            val testExTimeArea = mAlertDialog.findViewById<TextView>(R.id.testExTimeArea)
+//            val testExCountArea = mAlertDialog.findViewById<TextView>(R.id.testExCountArea)
+//            val testExSuccessCountArea =
+//                mAlertDialog.findViewById<TextView>(R.id.testExSuccessCountArea)
+//            val testExCalorieArea = mAlertDialog.findViewById<TextView>(R.id.testExCalorieArea)
+//
+//            val databaseRef =
+//                database.getReference("users")
+//                    .child(firebaseAuth.currentUser!!.uid)
+//                    .child("ex_data")
+//                    .addValueEventListener(object : ValueEventListener {
+//
+//                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+//
+//                            for (exDataSet in dataSnapshot.children) {
+//
+//                                val exData = exDataSet.getValue(ExerciseDataModel::class.java)
+//
+//                            }
+//
+//                        }
+//
+//                        override fun onCancelled(error: DatabaseError) {
+//                            TODO("Not yet implemented")
+//                        }
+//
+//                    })
+
+        }
     }
 }
