@@ -13,9 +13,7 @@ import com.fitdback.database.DataBasket
 import com.fitdback.database.ExerciseDataModel
 import com.fitdback.posedetection.R
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
@@ -114,17 +112,10 @@ class DevModeActivity : AppCompatActivity() {
                 Log.d("datamodel", ex_datamodel.toString())
 
                 // 데이터 저장 path 지정
-                val databaseRef =
-                    database.reference
-                        .child("users")
-                        .child(firebaseAuth.currentUser!!.uid)
-                        .child("ex_data")
-//                val myRefByUserID =
-//                    database.getReference("userExerciseInfo").child(firebaseAuth.currentUser!!.uid)
+                val dbPath =
+                    DataBasket.getDBPath(firebaseAuth, database, "users", "ex_data", true)
 
-//                myRefByUserID.push().setValue(model) // DB에 중복허용하여 데이터 삽입
-//                startActivity(toFeedbackTestActivity)
-                databaseRef.push().setValue(ex_datamodel)
+                dbPath?.push()?.setValue(ex_datamodel)
 
                 mAlertDialog.dismiss()
 
@@ -132,18 +123,17 @@ class DevModeActivity : AppCompatActivity() {
 
         }
 
+
         // Data Read Test
         btnDataReadTest.setOnClickListener {
 
             val maxOfDailyExCount: Int = 0
             val dailyExCountList = mutableListOf<Int>()
 
-            val databaseRef =
-                database.getReference("users")
-                    .child(firebaseAuth.currentUser!!.uid)
-                    .child("ex_data")
+            val databasePath =
+                DataBasket.getDBPath(firebaseAuth, database, "users", "ex_data", true)
 
-            databaseRef.addValueEventListener(object : ValueEventListener {
+            databasePath!!.addValueEventListener(object : ValueEventListener {
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
 
@@ -160,25 +150,53 @@ class DevModeActivity : AppCompatActivity() {
                             when (exData.ex_date) {
 
                                 dateOfWeekList[0] -> {
-                                    DataBasket.updateMap(exCountMap, dateOfWeekList[0], exData.ex_count)
+                                    DataBasket.updateMap(
+                                        exCountMap,
+                                        dateOfWeekList[0],
+                                        exData.ex_count
+                                    )
                                 }
                                 dateOfWeekList[1] -> {
-                                    DataBasket.updateMap(exCountMap, dateOfWeekList[1], exData.ex_count)
+                                    DataBasket.updateMap(
+                                        exCountMap,
+                                        dateOfWeekList[1],
+                                        exData.ex_count
+                                    )
                                 }
                                 dateOfWeekList[2] -> {
-                                    DataBasket.updateMap(exCountMap, dateOfWeekList[2], exData.ex_count)
+                                    DataBasket.updateMap(
+                                        exCountMap,
+                                        dateOfWeekList[2],
+                                        exData.ex_count
+                                    )
                                 }
                                 dateOfWeekList[3] -> {
-                                    DataBasket.updateMap(exCountMap, dateOfWeekList[3], exData.ex_count)
+                                    DataBasket.updateMap(
+                                        exCountMap,
+                                        dateOfWeekList[3],
+                                        exData.ex_count
+                                    )
                                 }
                                 dateOfWeekList[4] -> {
-                                    DataBasket.updateMap(exCountMap, dateOfWeekList[4], exData.ex_count)
+                                    DataBasket.updateMap(
+                                        exCountMap,
+                                        dateOfWeekList[4],
+                                        exData.ex_count
+                                    )
                                 }
                                 dateOfWeekList[5] -> {
-                                    DataBasket.updateMap(exCountMap, dateOfWeekList[5], exData.ex_count)
+                                    DataBasket.updateMap(
+                                        exCountMap,
+                                        dateOfWeekList[5],
+                                        exData.ex_count
+                                    )
                                 }
                                 dateOfWeekList[6] -> {
-                                    DataBasket.updateMap(exCountMap, dateOfWeekList[6], exData.ex_count)
+                                    DataBasket.updateMap(
+                                        exCountMap,
+                                        dateOfWeekList[6],
+                                        exData.ex_count
+                                    )
                                 }
 
                             }

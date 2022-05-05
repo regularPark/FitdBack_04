@@ -2,6 +2,9 @@ package com.fitdback.database
 
 import android.annotation.SuppressLint
 import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,9 +31,7 @@ class DataBasket {
             val dateOfWeekList = mutableListOf<String>()
 
             for (i in 6 downTo 0) {
-
                 dateOfWeekList.add(getDateOfDay(i)!!)
-
             }
 
             return dateOfWeekList
@@ -46,6 +47,25 @@ class DataBasket {
             }
 
         }
+
+        fun getDBPath(
+            firebaseAuth: FirebaseAuth,
+            database: FirebaseDatabase,
+            node1: String,
+            node2: String,
+            isUsingUserId: Boolean
+        ): DatabaseReference? {
+
+            var databaseRef: DatabaseReference? = null
+
+            if (isUsingUserId) {
+                databaseRef = database.getReference(node1).child(firebaseAuth.currentUser!!.uid).child(node2)
+            }
+
+            return databaseRef
+
+        }
+
 
     }
 
