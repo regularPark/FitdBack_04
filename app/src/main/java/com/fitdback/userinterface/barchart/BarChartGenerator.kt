@@ -1,15 +1,7 @@
-package com.fitdback.userinterface
+package com.fitdback.userinterface.barchart
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.widget.Button
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.R
-
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
@@ -20,81 +12,9 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+class BarChartGenerator {
 
-class FeedbackActivity : AppCompatActivity() {
-
-    private lateinit var firebaseAuth: FirebaseAuth
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_feedback)
-
-        // Firebase
-        firebaseAuth = FirebaseAuth.getInstance()
-        val database = Firebase.database
-
-        /*
-            Database read / write 코드
-         */
-
-        // 다이얼로그 - Data Write
-        val mDialogView =
-            LayoutInflater.from(this).inflate(R.layout.dialog_exercise_data_write, null)
-        val mBuilder =
-            AlertDialog.Builder(this).setView(mDialogView).setTitle("FeedbackTest 다이얼로그")
-        val mAlertDialog = mBuilder.show()
-
-        val btnDataWrite =
-            mAlertDialog.findViewById<Button>(R.id.btnDataWrite)
-
-        btnDataWrite?.setOnClickListener {
-
-            val dataModel = DataBasket.tempExrModel
-
-            // 데이터를 저장할 path 지정
-            val dbPath =
-                DataBasket.getDBPath(firebaseAuth, database, "users", "ex_data", true)
-
-            // Data Write
-            dbPath!!.push().setValue(dataModel)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "데이터가 저장되었습니다.", Toast.LENGTH_SHORT).show()
-                    mAlertDialog.dismiss()
-                }
-                .addOnFailureListener {
-                    Toast.makeText(this, "데이터가 저장실패", Toast.LENGTH_SHORT).show()
-                }
-
-        }
-
-        /*
-       bar chart를 그리기 위해 필요한 데이터
-       일주일간의 운동 데이터에서
-           날짜별 sum(ex_count), sum(ex_calorie) // 배열로 저장
-           max(sum(ex_count)), max(sum(ex_calorie)
-
-       System.currentMillTimes()를 이용하여 날짜 계산 1/1000초 단위로 반환하므로 * 1000을 해서 이용하면 된다.
-        */
-
-        // Data Read
-
-
-        // Bar chart
-        val barChart: BarChart = findViewById(R.id.barChart) // barChart 생성
-
-        // 데이터 셋
-        val entries = ArrayList<BarEntry>()
-        entries.add(BarEntry(1.2f, 20.0f))
-        entries.add(BarEntry(2.2f, 70.0f))
-        entries.add(BarEntry(3.2f, 30.0f))
-        entries.add(BarEntry(4.2f, 90.0f))
-        entries.add(BarEntry(5.2f, 70.0f))
-        entries.add(BarEntry(6.2f, 30.0f))
-        entries.add(BarEntry(7.2f, 90.0f))
+    fun runBarChart(barChart: BarChart, entries: ArrayList<BarEntry>) {
 
         barChart.run {
             description.isEnabled = false // 차트 옆에 별도로 표기되는 description을 안보이게 설정 (false)
@@ -145,10 +65,15 @@ class FeedbackActivity : AppCompatActivity() {
     }
 
     inner class MyXAxisFormatter : ValueFormatter() {
-        private val days = arrayOf("1차", "2차", "3차", "4차", "5차", "6차", "7차")
+        private val days = arrayOf("김", "선", "호", "4차", "5차", "6차", "7차")
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
             return days.getOrNull(value.toInt() - 1) ?: value.toString()
         }
     }
 
 }
+
+
+
+
+
