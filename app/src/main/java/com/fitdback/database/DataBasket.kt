@@ -23,6 +23,30 @@ class DataBasket {
 
         }
 
+        fun getDateOfWeek(): MutableList<String> {
+
+            val dateOfWeekList = mutableListOf<String>()
+
+            for (i in 6 downTo 0) {
+
+                dateOfWeekList.add(getDateOfDay(i)!!)
+
+            }
+
+            return dateOfWeekList
+
+        }
+
+        fun updateMap(targetMap: MutableMap<String, Int>, key: String, value: Int) {
+
+            if (targetMap.containsKey(key)) {
+                targetMap[key] = targetMap[key]!! + value // update
+            } else {
+                targetMap[key] = value // put(key, value)
+            }
+
+        }
+
     }
 
 }

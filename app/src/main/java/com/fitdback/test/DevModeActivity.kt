@@ -147,27 +147,48 @@ class DevModeActivity : AppCompatActivity() {
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                    var sumOfDailyExCount: Int = 0
+                    val dateOfWeekList = DataBasket.getDateOfWeek()
+                    val exCountMap = mutableMapOf<String, Int>()
 
                     for (exDataSet in dataSnapshot.children) {
 
                         val exData = exDataSet.getValue(ExerciseDataModel::class.java)
 
-                        if (exData!!.ex_date.equals("220503") && exData.ex_type.equals("squat")) {
-                            sumOfDailyExCount += exData.ex_count // 220503의 전체
-//                            Log.d("exData", exData.ex_count.toString())
+                        // exCountMap에 <"yyMMdd", sumOfExCount> key-value 형태로 update
+                        if (exData!!.ex_type.equals("squat")) {
+
+                            when (exData.ex_date) {
+
+                                dateOfWeekList[0] -> {
+                                    DataBasket.updateMap(exCountMap, dateOfWeekList[0], exData.ex_count)
+                                }
+                                dateOfWeekList[1] -> {
+                                    DataBasket.updateMap(exCountMap, dateOfWeekList[1], exData.ex_count)
+                                }
+                                dateOfWeekList[2] -> {
+                                    DataBasket.updateMap(exCountMap, dateOfWeekList[2], exData.ex_count)
+                                }
+                                dateOfWeekList[3] -> {
+                                    DataBasket.updateMap(exCountMap, dateOfWeekList[3], exData.ex_count)
+                                }
+                                dateOfWeekList[4] -> {
+                                    DataBasket.updateMap(exCountMap, dateOfWeekList[4], exData.ex_count)
+                                }
+                                dateOfWeekList[5] -> {
+                                    DataBasket.updateMap(exCountMap, dateOfWeekList[5], exData.ex_count)
+                                }
+                                dateOfWeekList[6] -> {
+                                    DataBasket.updateMap(exCountMap, dateOfWeekList[6], exData.ex_count)
+                                }
+
+                            }
+
                         }
 
-
                     }
 
-                    dailyExCountList.add(sumOfDailyExCount)
-
-                    Log.d("exData", dailyExCountList.get(0).toString())
-
-                    for (i in 0..20) {
-                        Log.d("exData", DataBasket.getDateOfDay(i))
-                    }
+                    Log.d("exData", dateOfWeekList.toString())
+                    Log.d("exData", exCountMap.toString())
 
                 }
 
@@ -181,4 +202,5 @@ class DevModeActivity : AppCompatActivity() {
 
         }
     }
+
 }
