@@ -3,11 +3,9 @@ package com.fitdback.test
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.fitdback.database.DataBasket
 import com.fitdback.database.ExerciseDataModel
@@ -64,15 +62,12 @@ class DevModeActivity : AppCompatActivity() {
         // Data Write Test
         btnFeedbackTest.setOnClickListener {
 
-            val mDialogView =
-                LayoutInflater.from(this).inflate(R.layout.dialog_data_read_write_test, null)
-            val mBuilder =
-                AlertDialog.Builder(this).setView(mDialogView).setTitle("FeedbackTest 다이얼로그")
-
-            val mAlertDialog = mBuilder.show()
+            val dialog = CustomDialog(this, R.layout.dialog_data_read_write_test, "testing")
+            val mAlertDialog = dialog.showDialog()
 
             val btnToFeedbackTestActivity =
-                mAlertDialog.findViewById<Button>(R.id.btnToFeedbackTestActivity) // mAlertDialog에서 찾아야함!!
+                mAlertDialog?.findViewById<Button>(R.id.btnToFeedbackTestActivity) // mAlertDialog에서 찾아야함!!
+
 
             btnToFeedbackTestActivity?.setOnClickListener { // nullable type(?을 붙여줌) 붙여줘야 'pipe:qemud:wififorward' service 에러가 안남
 
@@ -219,6 +214,9 @@ class DevModeActivity : AppCompatActivity() {
             })
 
         }
+
+
     }
+
 
 }

@@ -1,7 +1,6 @@
 package com.fitdback.userinterface
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.Toast
@@ -9,7 +8,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.fitdback.database.DataBasket
-import com.fitdback.database.ExerciseDataModel
 import com.fitdback.posedetection.R
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
@@ -21,9 +19,6 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
@@ -59,14 +54,11 @@ class FeedbackActivity : AppCompatActivity() {
             val dataModel = DataBasket.tempExrModel
 
             // 데이터를 저장할 path 지정
-            val databaseRef =
-                database.reference
-                    .child("users")
-                    .child(firebaseAuth.currentUser!!.uid)
-                    .child("ex_data")
+            val dbPath =
+                DataBasket.getDBPath(firebaseAuth, database, "users", "ex_data", true)
 
             // Data Write
-            databaseRef.push().setValue(dataModel)
+            dbPath!!.push().setValue(dataModel)
                 .addOnSuccessListener {
                     Toast.makeText(this, "데이터가 저장되었습니다.", Toast.LENGTH_SHORT).show()
                     mAlertDialog.dismiss()
