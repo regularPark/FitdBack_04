@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.fitdback.userinterface.fragment.MyPageFragment"
+    android:orientation="vertical">
+
+    <!-- TODO: Update blank fragment layout -->
+    <Button
+        android:id="@+id/loginInfoBtn"
+        android:text="Login Info"
+        android:textSize="30sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#003458"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="100sp"/>
+
+    <Button
+        android:id="@+id/statBtn"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:text="Daily Statistics"
+        android:textSize="30sp"
+        android:textColor="@color/white"
+        android:background="#003458"
+        android:layout_width="match_parent"
+        android:layout_height="100sp"/>
+
+    <Button
+        android:id="@+id/devBtn"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:text="Developers"
+        android:textSize="30sp"
+        android:textColor="@color/white"
+        android:background="#003458"
+        android:layout_width="match_parent"
+        android:layout_height="100sp"/>
+
+</LinearLayout>
