@@ -7,6 +7,7 @@ import com.google.firebase.database.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+@SuppressLint("LogNotTimber")
 class DataBasket {
 
     companion object {
@@ -66,10 +67,10 @@ class DataBasket {
 
         }
 
-        fun getMapOfDailyExCountSum(dbPath: DatabaseReference): MutableMap<String, Int> {
+        fun getDailySum(dbPath: DatabaseReference): MutableMap<String, Int> {
 
-            val dateOfWeekList = DataBasket.getDateOfWeek()
-            val dailyExCountSumMap = mutableMapOf<String, Int>()
+            val dateOfWeek = DataBasket.getDateOfWeek()
+            val dailySum = mutableMapOf<String, Int>()
 
             dbPath.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -81,56 +82,30 @@ class DataBasket {
                         // exCountMap에 <"yyMMdd", sumOfExCount> key-value 형태로 update
                         if (exData!!.ex_type.equals("squat")) {
 
+                            val exCount = exData.ex_count
+
                             when (exData.ex_date) {
 
-                                dateOfWeekList[0] -> {
-                                    DataBasket.updateMap(
-                                        dailyExCountSumMap,
-                                        dateOfWeekList[0],
-                                        exData.ex_count
-                                    )
+                                dateOfWeek[0] -> {
+                                    updateMap(dailySum, dateOfWeek[0], exCount)
                                 }
-                                dateOfWeekList[1] -> {
-                                    DataBasket.updateMap(
-                                        dailyExCountSumMap,
-                                        dateOfWeekList[1],
-                                        exData.ex_count
-                                    )
+                                dateOfWeek[1] -> {
+                                    updateMap(dailySum, dateOfWeek[1], exCount)
                                 }
-                                dateOfWeekList[2] -> {
-                                    DataBasket.updateMap(
-                                        dailyExCountSumMap,
-                                        dateOfWeekList[2],
-                                        exData.ex_count
-                                    )
+                                dateOfWeek[2] -> {
+                                    updateMap(dailySum, dateOfWeek[2], exCount)
                                 }
-                                dateOfWeekList[3] -> {
-                                    DataBasket.updateMap(
-                                        dailyExCountSumMap,
-                                        dateOfWeekList[3],
-                                        exData.ex_count
-                                    )
+                                dateOfWeek[3] -> {
+                                    updateMap(dailySum, dateOfWeek[3], exCount)
                                 }
-                                dateOfWeekList[4] -> {
-                                    DataBasket.updateMap(
-                                        dailyExCountSumMap,
-                                        dateOfWeekList[4],
-                                        exData.ex_count
-                                    )
+                                dateOfWeek[4] -> {
+                                    updateMap(dailySum, dateOfWeek[4], exCount)
                                 }
-                                dateOfWeekList[5] -> {
-                                    DataBasket.updateMap(
-                                        dailyExCountSumMap,
-                                        dateOfWeekList[5],
-                                        exData.ex_count
-                                    )
+                                dateOfWeek[5] -> {
+                                    updateMap(dailySum, dateOfWeek[5], exCount)
                                 }
-                                dateOfWeekList[6] -> {
-                                    DataBasket.updateMap(
-                                        dailyExCountSumMap,
-                                        dateOfWeekList[6],
-                                        exData.ex_count
-                                    )
+                                dateOfWeek[6] -> {
+                                    updateMap(dailySum, dateOfWeek[6], exCount)
                                 }
 
                             }
@@ -139,17 +114,18 @@ class DataBasket {
 
                     }
 
-                    Log.d("exData", dateOfWeekList.toString())
-                    Log.d("exData", dailyExCountSumMap.toString())
+                    Log.d("exData", dateOfWeek.toString())
+                    Log.d("exData", dailySum.toString())
 
 
                 }
+
                 override fun onCancelled(error: DatabaseError) {
                     Log.d("exData", "DB Read Error")
                 }
             })
 
-            return dailyExCountSumMap
+            return dailySum
 
         }
 
