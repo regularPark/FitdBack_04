@@ -57,7 +57,7 @@ class FeedbackActivity : AppCompatActivity() {
 
             // 데이터를 저장할 path 지정
             val dbPath =
-                DataBasket.getDBPath(firebaseAuth, database, "users", "ex_data", true)
+                DataBasket.getDBPath("users", "ex_data", true)
 
             // Data Write
             dbPath!!.push().setValue(dataModel)

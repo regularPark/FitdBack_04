@@ -103,10 +103,15 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.firebase:firebase-database-ktx'
 
+    // coroutine
+    implementation files('libs/kotlinx-coroutines-play-services-1.4.2.jar')
+    implementation files('libs/kotlinx-coroutines-android-1.3.3.jar')
+    implementation files('libs/kotlinx-coroutines-core-1.3.3.jar')
 
     testImplementation deps.junit
 
     androidTestImplementation(deps.android.test.espresso, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
 }
