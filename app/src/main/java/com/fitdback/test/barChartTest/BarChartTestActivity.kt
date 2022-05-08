@@ -4,11 +4,9 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.R
 import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
@@ -46,8 +44,19 @@ class BarChartTestActivity : AppCompatActivity() {
         sampleEntryList.add(BarEntry(6f, 2f))
         sampleEntryList.add(BarEntry(7f, 20f))
 
+        /*
+            Bar Data Set을 만들기 위한 Data Entry
+         */
+
+        // 날짜별 ex_count Sum
+        val dailyExCountSumBarEntry = getDailySumBarEntry("ex_count")
+
+        // 날짜별 ex_calorie Sum
+        val dailyExCalorieSumBarEntry = getDailySumBarEntry("ex_calorie")
+
         // 실제 Bar Data Set 생성.
-        val barDataSet = BarDataSet(sampleEntryList, "MySampleEntryList").apply {
+        // dailyExCountSumBarEntry 또는 dailyExCalorieSumBarEntry로 argument변경하여 사용
+        val barDataSet = BarDataSet(dailyExCalorieSumBarEntry, "exDataList").apply {
 
             valueTextColor = Color.WHITE
             valueTextSize = 10f
@@ -59,17 +68,26 @@ class BarChartTestActivity : AppCompatActivity() {
         barChart.data = data
 
         val barChartGenerator2 = BarChartGenerator2()
-        BarChartGenerator2.initXLabels(BarChartGenerator2.testXLabels)
+        BarChartGenerator2().runBarChart(barChart, barDataSet.yMax + 1.0f)
 
-        BarChartGenerator2().runBarChart(barChart, barDataSet.yMax)
+    }
 
-//        val barDataSet = BarDataSet(entryList, "MyBarDataSet")
-//        val barData = BarData(barDataSet)
-//        barChart.data =
-//        val barChartGenerator = BarChartGenerator()
-//        barChartGenerator.
-//        BarChartGenerator().runBarChart(barChart, entryList)
+    private fun getDailySumBarEntry(targetData: String): MutableList<BarEntry> {
+        /*
+            targetData: String 종류 : "ex_count" , "ex_calorie" // 스펠링 주의!
+         */
 
+        val dailySumBarEntry = mutableListOf<BarEntry>()
+        val dailySumList    =
+            DataBasket.enhancedGetDailySum(DataBasket.individualExData!!, targetData)
+        var xValue = 1f
+
+        for (keyAndValue in dailySumList) {
+            dailySumBarEntry.add(BarEntry(xValue, keyAndValue.value.toFloat()))
+            xValue += 1f
+        }
+
+        return dailySumBarEntry
     }
 
 }

@@ -194,7 +194,7 @@ class DataBasket {
                         "ex_time" -> targetInt = exData.ex_time
                     }
 
-                    when (exData!!.ex_date) {
+                    when (exData.ex_date) {
 
                         dateOfWeek[0] -> {
                             updateMap(dailySum, dateOfWeek[0], targetInt, false)
