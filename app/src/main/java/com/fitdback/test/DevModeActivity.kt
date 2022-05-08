@@ -14,6 +14,7 @@ import com.fitdback.posedetection.R
 import com.fitdback.test.barChartTest.BarChartTestActivity
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.fitdback.userinterface.MainTestActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -141,11 +142,18 @@ class DevModeActivity : AppCompatActivity() {
 
     }
 
+
     inner class MyXAxisFormatter : ValueFormatter() {
         private val days = arrayOf("1차", "2차", "3차", "4차", "5차", "6차", "7차")
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
             return days.getOrNull(value.toInt() - 1) ?: value.toString()
         }
+    }
+
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, MainTestActivity::class.java))
+        finish()
     }
 
 }

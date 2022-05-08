@@ -1,0 +1,110 @@
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.fitdback.userinterface.fragment.HomeFragment"
+    android:orientation="horizontal"
+    android:columnCount="3"
+    android:rowCount="6"
+    >
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:layout_margin="10dp"
+        android:text="Choose Training"
+        android:textSize="30sp"
+        android:layout_columnSpan="3"
+        android:textStyle="bold"
+        />TextView>
+    <Button
+        android:id="@+id/squatBtn"
+        android:layout_width="0dp"
+        android:layout_height="100sp"
+        android:layout_row="1"
+        android:layout_column="1"
+        android:layout_columnWeight="1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/button_radius_color"
+        android:drawableLeft="@drawable/ic_squat"
+        android:text="squat"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+         />
+
+
+    <Button
+        android:id="@+id/puBtn"
+        android:layout_width="0dp"
+        android:layout_height="100sp"
+        android:layout_row="2"
+        android:layout_column="1"
+        android:layout_columnWeight="1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/button_radius_color"
+        android:text="push up"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="-30dp"
+        tools:layout_editor_absoluteY="265dp" />
+
+    <Button
+            android:id="@+id/plkBtn"
+        android:layout_width="0dp"
+        android:layout_height="100sp"
+        android:layout_row="1"
+        android:layout_column="2"
+        android:layout_columnWeight="1"
+        android:drawableLeft="@drawable/ic_plank"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/button_radius_color"
+        android:text="plank"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="-30dp"
+        tools:layout_editor_absoluteY="265dp" />
+
+
+    <!--  비 운동 관련   -->
+    <Button
+        android:id="@+id/btnDevMode"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/button_radius_color"
+        android:layout_row="3"
+        android:layout_columnSpan="3"
+        android:text="DEV MODE"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="-30dp"
+        tools:layout_editor_absoluteY="265dp" />
+
+        <Button
+            android:id="@+id/btnSignOut"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="100dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/button_radius_color"
+            android:layout_row="4"
+            android:layout_columnSpan="3"
+            android:text="Sign Out"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="-30dp"
+            tools:layout_editor_absoluteY="265dp" />
+
+</GridLayout>

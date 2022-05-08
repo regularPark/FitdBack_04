@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
         // Intent
         val toCameraAcitivityIntent = Intent(this, CameraActivity::class.java)
         val toLoginSuccessActivityIntent = Intent(this, LoginSuccessActivity::class.java)
-        val toMainActivityIntent = Intent(this, MainActivity::class.java)
+        val toMainActivityIntent = Intent(this, MainTestActivity::class.java)
 
         // 로그인 버튼 클릭 시 동작
         btnLogin.setOnClickListener {
