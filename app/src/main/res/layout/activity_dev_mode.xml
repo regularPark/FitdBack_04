@@ -17,18 +17,41 @@
     <Button
         android:id="@+id/btnDBTest"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="50dp"
         android:layout_margin="10dp"
         android:text="DB TEST"
-        android:textSize="30sp" />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btnFeedbackTest"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="50dp"
         android:layout_margin="10dp"
         android:text="data write test"
-        android:textSize="30sp" />
+        android:textSize="20sp" />
 
+    <Button
+        android:id="@+id/btnDataReadTest"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:text="data read test"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btnBarChartTest"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:text="bar chart test"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btnBarChartTest2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:text="bar chart test2"
+        android:textSize="20sp" />
 
 </LinearLayout>

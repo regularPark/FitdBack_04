@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="100sp"
         android:text="User Information"
-        android:textColor="@color/white"
-        android:textSize="50sp" />
+        android:textColor="#808080"
+        android:textSize="40sp" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             android:layout_margin="10sp"
             android:background="@android:color/transparent"
             android:src="@drawable/profile_default"
-            app:civ_border_color="#000000"
+            app:civ_border_color="#808080"
             app:civ_border_overlay="true"
             app:civ_border_width="5dp"
             tools:ignore="MissingClass" />
@@ -43,56 +43,56 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name"
-                android:textColor="@color/white"
+                android:textColor="#808080"
                 android:textSize="40sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" -"
-                android:textColor="@color/white"
+                android:textColor="#808080"
                 android:textSize="40sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nickname"
-                android:textColor="@color/white"
+                android:textColor="#808080"
                 android:textSize="40sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" -"
-                android:textColor="@color/white"
+                android:textColor="#808080"
                 android:textSize="40sp" />
 
             <TextView
                 android:layout_width="200sp"
                 android:layout_height="50sp"
                 android:text="Height"
-                android:textColor="@color/white"
+                android:textColor="#808080"
                 android:textSize="40sp" />
 
             <TextView
                 android:layout_width="200sp"
                 android:layout_height="50sp"
                 android:text=" - cm"
-                android:textColor="@color/white"
+                android:textColor="#808080"
                 android:textSize="40sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Weight"
-                android:textColor="@color/white"
+                android:textColor="#808080"
                 android:textSize="40sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" - kg"
-                android:textColor="@color/white"
+                android:textColor="#808080"
                 android:textSize="40sp" />
 
         </LinearLayout>

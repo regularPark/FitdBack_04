@@ -3,21 +3,22 @@
     <item
         android:title="Home"
         android:enabled="true"
-        android:icon="@mipmap/ic_fitdback_foreground"
+
+        android:icon="@drawable/ic_home"
         android:id="@+id/menu_home"
         />
 
     <item
         android:title="MyTown"
         android:enabled="true"
-        android:icon="@mipmap/ic_fitdback_foreground"
+        android:icon="@drawable/ic_chart"
         android:id="@+id/menu_mytown"
         />
 
     <item
         android:title="MyPage"
         android:enabled="true"
-        android:icon="@mipmap/ic_fitdback_foreground"
+        android:icon="@drawable/ic_mypage"
         android:id="@+id/menu_mypage"
         />
 

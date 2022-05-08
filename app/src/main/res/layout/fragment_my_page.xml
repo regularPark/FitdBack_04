@@ -1,45 +1,141 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.fitdback.userinterface.fragment.MyPageFragment"
     android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <Button
-        android:id="@+id/loginInfoBtn"
-        android:text="Login Info"
-        android:textSize="30sp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:background="#003458"
-        android:textColor="@color/white"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="100sp"/>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/statBtn"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:text="Daily Statistics"
-        android:textSize="30sp"
-        android:textColor="@color/white"
-        android:background="#003458"
-        android:layout_width="match_parent"
-        android:layout_height="100sp"/>
+            <!-- TODO: Update blank fragment layout -->
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:rowCount="20"
+                android:columnCount="2"
+                android:verticalSpacing="100dp">
 
-    <Button
-        android:id="@+id/devBtn"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:text="Developers"
-        android:textSize="30sp"
-        android:textColor="@color/white"
-        android:background="#003458"
-        android:layout_width="match_parent"
-        android:layout_height="100sp"/>
+                <!--프로필 사진-->
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profileImg"
+                    android:layout_width="150sp"
+                    android:layout_height="150sp"
+                    android:layout_column="0"
+                    android:layout_margin="10sp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/profile_default"
+                    app:civ_border_color="#808080"
+                    app:civ_border_overlay="true"
+                    app:civ_border_width="5dp"
+                    tools:ignore="MissingClass" />
 
-</LinearLayout>
+                <TextView
+                    android:text="이름"
+                    android:textSize="50sp"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginLeft="10sp"/>
+
+
+                <Button
+                    android:id="@+id/loginInfoBtn"
+                    android:layout_width="150dp"
+                    android:layout_height="50sp"
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/button_radius_color"
+                    android:text="내 정보"
+                    android:textColor="@color/white"
+                    android:textSize="30sp" />
+
+
+                <!-- 통계 -->
+
+                <TextView
+                    android:text="통계"
+                    android:textSize="30sp"
+                    android:layout_row="1"
+                    android:layout_marginTop="20sp"
+                    />
+
+
+
+                <Button
+                    android:id="@+id/statBtn"
+                    android:layout_width="150dp"
+                    android:layout_height="50sp"
+                    android:layout_row="3"
+                    android:layout_column="0"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/button_radius_color"
+                    android:text="일일 통계"
+                    android:textColor="@color/white"
+                    android:textSize="30sp" />
+                <Button
+                    android:id="@+id/weeklyStatBtn"
+                    android:layout_width="150dp"
+                    android:layout_height="50sp"
+                    android:layout_row="4"
+                    android:layout_column="0"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/button_radius_color"
+                    android:text="주간 통계"
+                    android:textColor="@color/white"
+                    android:textSize="30sp" />
+                <Button
+                    android:id="@+id/monthlyStatBtn"
+                    android:layout_width="150dp"
+                    android:layout_height="50sp"
+                    android:layout_row="5"
+                    android:layout_column="0"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/button_radius_color"
+                    android:text="월간 통계"
+                    android:textColor="@color/white"
+                    android:textSize="30sp" />
+
+
+                <!-- 개발자 -->
+                <TextView
+                    android:text="개발자"
+                    android:textSize="30sp"
+                    android:layout_row="6"
+                    android:layout_column="0"
+                    android:layout_marginTop="20sp"
+                    />
+                <Button
+                    android:id="@+id/devBtn"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_row="7"
+                    android:layout_column="0"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/button_radius_color"
+                    android:text="개발자"
+                    android:textColor="@color/white"
+                    android:textSize="30sp" />
+            </GridLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>
+

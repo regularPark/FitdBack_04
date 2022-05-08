@@ -48,8 +48,10 @@ class MyPageFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_my_page, container, false)
@@ -89,12 +91,14 @@ class MyPageFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            MyPageFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
+                MyPageFragment().apply {
+                    arguments = Bundle().apply {
+                        putString(ARG_PARAM1, param1)
+                        putString(ARG_PARAM2, param2)
+                    }
                 }
-            }
+
     }
 
 

@@ -1,5 +1,7 @@
 package com.fitdback.userinterface
 
+
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
@@ -58,6 +60,12 @@ class MainTestActivity : AppCompatActivity() {
                 else -> MyPageFragment()
             }
         }
+    }
+
+
+    override fun onBackPressed() {
+        startActivity(Intent(this,LoginActivity::class.java))
+        finish()
     }
 
 
