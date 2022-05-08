@@ -2,6 +2,7 @@ package com.fitdback.database
 
 import android.annotation.SuppressLint
 import android.util.Log
+import com.fitdback.database.datamodel.ExerciseDataModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database

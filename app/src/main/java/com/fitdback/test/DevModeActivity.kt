@@ -9,8 +9,9 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.fitdback.database.DataBasket
-import com.fitdback.database.ExerciseDataModel
+import com.fitdback.database.datamodel.ExerciseDataModel
 import com.fitdback.posedetection.R
+import com.fitdback.test.barChartTest.BarChartTestActivity
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.firebase.auth.FirebaseAuth

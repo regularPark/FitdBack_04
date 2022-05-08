@@ -1,4 +1,4 @@
-package com.fitdback.userinterface.barchart
+package com.fitdback.test.barChartTest
 
 import androidx.core.content.ContextCompat
 import com.fitdback.posedetection.R
@@ -12,7 +12,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 
-class BarChartGenerator {
+class BarChartGenerator() {
 
     fun runBarChart(barChart: BarChart, entries: ArrayList<BarEntry>) {
 

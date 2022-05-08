@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/MaterialTheme">
         <activity
-            android:name="com.fitdback.test.BarChartTestActivity"
+            android:name="com.fitdback.test.barChartTest.BarChartTestActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
 
         </activity>

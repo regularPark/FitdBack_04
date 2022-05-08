@@ -51,7 +51,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.fitdback.algorithm.FeedbackAlgorithm
 import com.fitdback.database.DataBasket
-import com.fitdback.database.ExerciseDataModel
+import com.fitdback.database.datamodel.ExerciseDataModel
 import com.fitdback.userinterface.FeedbackActivity
 import com.fitdback.userinterface.TimerClass
 import java.io.IOException
