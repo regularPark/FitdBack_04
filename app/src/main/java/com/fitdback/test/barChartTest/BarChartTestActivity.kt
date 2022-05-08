@@ -20,19 +20,8 @@ class BarChartTestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bar_chart_test)
 
-        // Bar chart
-        val barChart: BarChart = findViewById(R.id.barChart) // barChart 생성
-
-        // 사용할 데이터
-//        val entryList = mutableListOf<BarEntry>()
-//        val dailySum = DataBasket.enhancedGetDailySum(DataBasket.individualExData!!, "ex_count")
-//        var xValue = 1.2f
-
-        // 엔트리에 데이터 추가
-//        for (data in dailySum) {
-//            entryList.add(BarEntry(xValue, data.value.toFloat()))
-//            xValue += 1
-//        }
+        // Bar chart Layout
+        val barChart: BarChart = findViewById(R.id.barChart)
 
         // test sample
         val sampleEntryList = mutableListOf<BarEntry>()
@@ -55,8 +44,8 @@ class BarChartTestActivity : AppCompatActivity() {
         val dailyExCalorieSumBarEntry = getDailySumBarEntry("ex_calorie")
 
         // 실제 Bar Data Set 생성.
-        // dailyExCountSumBarEntry 또는 dailyExCalorieSumBarEntry로 argument변경하여 사용
-        val barDataSet = BarDataSet(dailyExCalorieSumBarEntry, "exDataList").apply {
+        // dailyExCountSumBarEntry 또는 dailyExCalorieSumBarEntry 로 argument변경하여 사용
+        val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList").apply {
 
             valueTextColor = Color.WHITE
             valueTextSize = 10f
@@ -76,7 +65,6 @@ class BarChartTestActivity : AppCompatActivity() {
         /*
             targetData: String 종류 : "ex_count" , "ex_calorie" // 스펠링 주의!
          */
-
         val dailySumBarEntry = mutableListOf<BarEntry>()
         val dailySumList    =
             DataBasket.enhancedGetDailySum(DataBasket.individualExData!!, targetData)

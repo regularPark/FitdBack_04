@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp">
+
+        <Button
+            android:id="@+id/btnSelectFirstDate"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:text="choose first date"
+            android:textAllCaps="false" />
+
+
+        <Button
+            android:id="@+id/btnSelectSecondDate"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:text="second date"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btnDBDummyDataWrite"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:text="Firebase DB Write"
+        android:textAllCaps="false" />
+
+</LinearLayout>

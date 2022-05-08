@@ -1,10 +1,13 @@
 package com.fitdback.test
 
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.widget.Button
+import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -12,11 +15,10 @@ import com.fitdback.database.DataBasket
 import com.fitdback.database.datamodel.ExerciseDataModel
 import com.fitdback.posedetection.R
 import com.fitdback.test.barChartTest.BarChartTestActivity
-import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.util.*
 
 
 /*
@@ -24,6 +26,7 @@ import com.google.firebase.ktx.Firebase
 - 기능 테스트 용도
  */
 
+@SuppressLint("LogNotTimber")
 class DevModeActivity : AppCompatActivity() {
 
     private lateinit var firebaseAuth: FirebaseAuth
@@ -44,7 +47,7 @@ class DevModeActivity : AppCompatActivity() {
         val btnFeedbackTest = findViewById<Button>(R.id.btnFeedbackTest)
         val btnDataReadTest = findViewById<Button>(R.id.btnDataReadTest)
         val btnBarChartTest = findViewById<Button>(R.id.btnBarChartTest)
-        val btnBarChartTest2 = findViewById<Button>(R.id.btnBarChartTest2)
+        val btnCreateDummyData = findViewById<Button>(R.id.btnCreateDummyData)
 
         // Intent
         val toHealthMemoTestActivity = Intent(this, HealthMemoTestActivity::class.java)
@@ -123,12 +126,8 @@ class DevModeActivity : AppCompatActivity() {
 
         }
 
-
-
-
         // barChart manipulation Test
-
-        btnBarChartTest2.setOnClickListener {
+        btnBarChartTest.setOnClickListener {
 
             val dbPath = DataBasket.getDBPath("users", "ex_data", true)
             DataBasket.getDataFromFB(dbPath!!, "individualExData")
@@ -139,13 +138,61 @@ class DevModeActivity : AppCompatActivity() {
 
         }
 
+        /*
+           Create Dummy Data
+
+           다이얼로그가 떠서 -> 날짜 선택
+            -> 해당하는 날짜 길이만큼 날짜 List 로드.
+            -> 랜덤을 이용하여 ExerciseDataModel을 날짜 개수 만큼 만듦(리스트에 저장)
+            -> 해당 리스트를 하나씩 DB에 write
+
+         */
+        btnCreateDummyData.setOnClickListener {
+
+            val dialog = CustomDialog(this, R.layout.dialog_create_dummy_data, "testing")
+            val mAlertDialog = dialog.showDialog()
+            val btnSelectFirstDate = mAlertDialog!!.findViewById<Button>(R.id.btnSelectFirstDate)
+            val btnSelectSecondDate = mAlertDialog.findViewById<Button>(R.id.btnSelectSecondDate)
+
+            val dateText1 = selectDate(btnSelectFirstDate)
+            val dateText2 = selectDate(btnSelectSecondDate)
+
+        }
+
     }
 
-    inner class MyXAxisFormatter : ValueFormatter() {
-        private val days = arrayOf("1차", "2차", "3차", "4차", "5차", "6차", "7차")
-        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
-            return days.getOrNull(value.toInt() - 1) ?: value.toString()
+    private fun selectDate(btnSelectDate: Button?): String {
+
+        var dateText: String = ""
+
+        btnSelectDate?.setOnClickListener {
+
+            val today = GregorianCalendar()
+            val year: Int = today.get(Calendar.YEAR)
+            val month: Int = today.get(Calendar.MONTH)
+            val date: Int = today.get(Calendar.DATE)
+
+            val dlg = DatePickerDialog(this, object : DatePickerDialog.OnDateSetListener {
+                override fun onDateSet(
+                    view: DatePicker?,
+                    year: Int,
+                    month: Int,
+                    dayOfMonth: Int
+                ) {
+                    btnSelectDate.text = "${year}, ${month}, ${dayOfMonth}"
+
+                    dateText = "${year}, ${month}, ${dayOfMonth}"
+                }
+
+            }, year, month, date)
+
+            dlg.show()
+
         }
+
+        Log.d("Date", "$dateText")
+
+        return dateText
     }
 
 }
