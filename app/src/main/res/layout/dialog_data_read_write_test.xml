@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/ex_date_area"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:hint="ex_date:String?" />
+
+        <EditText
+            android:id="@+id/ex_type_area"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:hint="ex_type:String?" />
+
+        <EditText
+            android:id="@+id/ex_time_area"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:hint="ex_time" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/ex_count_area"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:hint="ex_count" />
+
+        <EditText
+            android:id="@+id/ex_success_count_area"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:hint="ex_success_count" />
+
+        <EditText
+            android:id="@+id/ex_calorie_area"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:hint="ex_calorie" />
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btnToFeedbackTestActivity"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:text="Firebase DB로 데이터전달"
+        android:textAllCaps="false" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/test_1"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:id="@+id/test_2"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:id="@+id/test_3"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:id="@+id/test_4"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:id="@+id/test_5"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+            android:textSize="15sp"
+            android:text="show me the data" />
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/testUserIDArea"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="30dp" />-->
+
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/testExTypeArea"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="30dp" />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/testExTimeArea"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="30dp" />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/testExCountArea"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="30dp" />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/testExSuccessCountArea"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="30dp" />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/testExCalorieArea"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="30dp" />-->
+
+    </LinearLayout>
+
+</LinearLayout>
