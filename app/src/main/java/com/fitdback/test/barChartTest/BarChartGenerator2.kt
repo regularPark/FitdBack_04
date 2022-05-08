@@ -3,13 +3,14 @@ package com.fitdback.test.barChartTest
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.core.content.ContextCompat
+import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.R
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.formatter.ValueFormatter
 import java.lang.Exception
+import java.lang.StringBuilder
 
 @SuppressLint("LogNotTimber")
 class BarChartGenerator2() {
@@ -17,6 +18,7 @@ class BarChartGenerator2() {
     companion object {
 
         val testXLabels = mutableListOf<String>()
+        val dateOfWeek: MutableList<String> = DataBasket.getDateOfWeek()
 
         fun initXLabels(xLabels: MutableList<String>) {
 
@@ -30,9 +32,10 @@ class BarChartGenerator2() {
             Log.d("BarChartGenerator", "$xLabels")
 
         }
+
     }
 
-    fun runBarChart(barChart: BarChart) {
+    fun runBarChart(barChart: BarChart, yMax: Float) {
 
         barChart.apply { // barChart 설정
 
@@ -52,7 +55,7 @@ class BarChartGenerator2() {
 
             // y축 설정
             axisLeft.axisMinimum = 0f
-            axisLeft.axisMaximum = 100f
+            axisLeft.axisMaximum = yMax
             axisLeft.textColor = ContextCompat.getColor(context, R.color.white) // 라벨 텍스트 컬러 설정
             axisLeft.axisLineWidth = 2.0f
 
@@ -61,6 +64,7 @@ class BarChartGenerator2() {
             xAxis.axisLineWidth = 5.0f
             xAxis.textColor = ContextCompat.getColor(context, R.color.white) // 라벨 텍스트 컬러 설정
             xAxis.setDrawAxisLine(true) // 축 그리기
+            xAxis.textSize = 12.0f
             xAxis.valueFormatter = MyXAxisFormatter()
 
             //add animation
@@ -75,22 +79,28 @@ class BarChartGenerator2() {
 
     inner class MyXAxisFormatter : IndexAxisValueFormatter() {
 
-        private val testSample: MutableList<String> = testXLabels
+        private val targetList: MutableList<String> = dateOfWeek
 
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
 
-            Log.d("testSample", testSample.toString())
             val index = value.toInt()
-            Log.d("ValueFormatter", "getAxisLabel: index$index")
+            val tempValue = targetList[index - 1] // IndexOutOfRange Error 주의
 
-            try {
-                Log.d("ValueFormatter", "getAxisLabel: index${testSample[index - 1]}")
-            } catch (e: Exception) {
-                Log.d("ValueFormatter", "getAxisLabel: Error${e}")
-            }
+            // x축 인덱스 가공. 예) "220508" -> "05.08"
+            val stringBuilder = StringBuilder()
+            stringBuilder.append(tempValue.slice(IntRange(2, 3))) // "220508" -> "05"
+            stringBuilder.append(".")
+            stringBuilder.append(tempValue.slice(IntRange(4, 5))) // "220508" -> "08"
 
-            return if (index - 1 < testSample.size) {
-                testSample[index - 1]
+//            try {
+//                Log.d("ValueFormatter", "getAxisLabel: index${targetList[index - 1]}")
+//            } catch (e: Exception) {
+//                Log.d("ValueFormatter", "getAxisLabel: Error${e}")
+//            }
+
+            return if (index - 1 < targetList.size) {
+//                testSample[index - 1]
+                stringBuilder.toString()
             } else {
                 "i am null"
             }

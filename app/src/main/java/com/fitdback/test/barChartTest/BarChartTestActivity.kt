@@ -61,7 +61,7 @@ class BarChartTestActivity : AppCompatActivity() {
         val barChartGenerator2 = BarChartGenerator2()
         BarChartGenerator2.initXLabels(BarChartGenerator2.testXLabels)
 
-        BarChartGenerator2().runBarChart(barChart)
+        BarChartGenerator2().runBarChart(barChart, barDataSet.yMax)
 
 //        val barDataSet = BarDataSet(entryList, "MyBarDataSet")
 //        val barData = BarData(barDataSet)
