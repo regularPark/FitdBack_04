@@ -30,6 +30,7 @@ import android.hardware.camera2.CameraCaptureSession
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraDevice
 import android.hardware.camera2.CameraManager
+import android.hardware.camera2.CameraMetadata.LENS_FACING_BACK
 import android.hardware.camera2.CaptureRequest
 import android.hardware.camera2.CaptureResult
 import android.hardware.camera2.TotalCaptureResult
@@ -48,6 +49,7 @@ import android.view.Surface
 import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
@@ -56,6 +58,7 @@ import com.fitdback.database.DataBasket
 import com.fitdback.database.datamodel.ExerciseDataModel
 import com.fitdback.userinterface.FeedbackActivity
 import com.fitdback.userinterface.TimerClass
+import com.fitdback.userinterface.TutorialActivity
 import java.io.IOException
 import java.lang.Long
 import java.util.ArrayList
@@ -323,6 +326,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return inflater.inflate(R.layout.fragment_camera2_basic, container, false)
     }
 
@@ -419,6 +423,9 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
      * @param width  The width of available size for camera preview
      * @param height The height of available size for camera preview
      */
+
+
+
     private fun setUpCameraOutputs(
         width: Int,
         height: Int
@@ -435,6 +442,14 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                 if (facing != null && facing == CameraCharacteristics.LENS_FACING_BACK) { // 전면 카메라 사용
                     continue
                 }
+                view.findViewById<Button>(R.id.switchBtn).setOnClickListener{
+                    if (facing == CameraCharacteristics.LENS_FACING_BACK) { // 전면 카메라 사용
+                        CameraCharacteristics.LENS_FACING_FRONT
+                    } else {
+                        CameraCharacteristics.LENS_FACING_BACK
+                    }
+                }
+
 
                 val map =
                     characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)

@@ -183,6 +183,12 @@
         android:layout_marginLeft="20dp"
         tools:text="countDown"
         />
+
+    <Button
+        android:id="@+id/switchBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Switch Camera"/>
 <!--    CPU / GPU 활성 버튼 -->
 
 <!--    <RadioGroup-->

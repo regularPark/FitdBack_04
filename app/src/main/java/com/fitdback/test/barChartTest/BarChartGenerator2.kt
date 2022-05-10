@@ -56,13 +56,13 @@ class BarChartGenerator2() {
             // y축 설정
             axisLeft.axisMinimum = 0f
             axisLeft.axisMaximum = yMax
-            axisLeft.textColor = ContextCompat.getColor(context, R.color.white) // 라벨 텍스트 컬러 설정
+            axisLeft.textColor = ContextCompat.getColor(context, R.color.browser_actions_divider_color) // 라벨 텍스트 컬러 설정
             axisLeft.axisLineWidth = 2.0f
 
             // x축 설정
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.axisLineWidth = 5.0f
-            xAxis.textColor = ContextCompat.getColor(context, R.color.white) // 라벨 텍스트 컬러 설정
+            xAxis.textColor = ContextCompat.getColor(context, R.color.browser_actions_divider_color) // 라벨 텍스트 컬러 설정
             xAxis.setDrawAxisLine(true) // 축 그리기
             xAxis.textSize = 12.0f
             xAxis.valueFormatter = MyXAxisFormatter()
