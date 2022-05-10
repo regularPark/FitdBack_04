@@ -29,10 +29,12 @@
         android:layout_marginRight="10dp"
         android:background="@drawable/button_radius_color"
         android:drawableLeft="@drawable/ic_squat"
+
         android:text="squat"
         android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold"
+
          />
 
 
@@ -55,7 +57,8 @@
         tools:layout_editor_absoluteY="265dp" />
 
     <Button
-            android:id="@+id/plkBtn"
+
+        android:id="@+id/plkBtn"
         android:layout_width="0dp"
         android:layout_height="100sp"
         android:layout_row="1"
@@ -65,6 +68,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/button_radius_color"
+
         android:text="plank"
         android:textColor="@color/white"
         android:textSize="30sp"
@@ -94,6 +98,7 @@
             android:id="@+id/btnSignOut"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+
             android:layout_marginTop="50dp"
             android:layout_marginBottom="100dp"
             android:layout_marginHorizontal="20dp"
@@ -107,4 +112,6 @@
             tools:layout_editor_absoluteX="-30dp"
             tools:layout_editor_absoluteY="265dp" />
 
+
 </GridLayout>
+

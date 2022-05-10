@@ -14,25 +14,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-        <Button
-            android:id="@+id/youtube"
-            android:layout_width="match_parent"
-            android:layout_height="240sp"
-            android:background="#c4302b"
-            android:text="youtube"
-            android:textColor="@color/white"
-            android:textSize="30sp"
-            android:textStyle="italic" />
+            <com.google.android.youtube.player.YouTubePlayerView
+                android:id="@+id/youtubePlayer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-        <Button
-            android:id="@+id/howTo"
-            android:layout_width="match_parent"
-            android:layout_height="330dp"
-            android:background="#000000"
-            android:text="description"
-            android:textColor="@color/white"
-            android:textSize="30sp"
-            android:textStyle="italic" />
+
+            <Button
+                android:id="@+id/howTo"
+                android:layout_width="match_parent"
+                android:layout_height="330dp"
+                android:background="#000000"
+                android:text="description"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:textStyle="italic" />
 
 
             <Button

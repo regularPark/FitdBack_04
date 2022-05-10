@@ -53,8 +53,10 @@ class HomeFragment : Fragment() {
 
     // TODO:버튼 관련 함수 여기에
     override fun onCreateView(
+
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
+
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_home, container, false)
@@ -96,7 +98,9 @@ class HomeFragment : Fragment() {
             override fun onClick(v: View?) {
                 val toLoginActivity = Intent(context, LoginActivity::class.java)
                 signOut(toLoginActivity)
+
             }
+
         })
 
         // 개발자 모드
@@ -129,11 +133,13 @@ class HomeFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
+
                 HomeFragment().apply {
                     arguments = Bundle().apply {
                         putString(ARG_PARAM1, param1)
                         putString(ARG_PARAM2, param2)
                     }
                 }
+
     }
 }

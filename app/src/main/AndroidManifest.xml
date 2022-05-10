@@ -15,6 +15,7 @@
         android:theme="@style/MaterialTheme">
 
 
+
         <activity android:name="com.fitdback.userinterface.MainTestActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <!-- 앱 중단 에러 방지 -->
             >
@@ -23,6 +24,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         </activity>
+
         <activity
             android:name="com.fitdback.userinterface.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <!-- 앱 중단 에러 방지 -->
@@ -66,7 +68,9 @@
         </activity>
         <activity
             android:name="com.fitdback.test.HealthMemoTestActivity"
+
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
         <activity
             android:name="com.fitdback.test.FeedbackTestActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -75,7 +79,9 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name="com.fitdback.test.DevModeActivity"
+
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
     </application>
 
 </manifest>

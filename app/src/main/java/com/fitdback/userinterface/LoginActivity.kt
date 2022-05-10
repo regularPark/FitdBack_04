@@ -171,6 +171,8 @@ class LoginActivity : AppCompatActivity() {
 
                     Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_SHORT).show()
                     startActivity(intent)
+                    finish() // 액티비티가 두개 존재하는 오류 수정!
+
 
                 } else {
 
@@ -198,6 +200,8 @@ class LoginActivity : AppCompatActivity() {
 
                     Toast.makeText(this, "회원 가입 성공", Toast.LENGTH_SHORT).show()
                     startActivity(intent) // LoginSuccessActivity로 이동
+                    finish() // 액티비티가 두개 존재하는 오류 수정!
+
 
                 } else { // 실패
 
@@ -219,6 +223,8 @@ class LoginActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
                 startActivity(intent)
+                finish() // 액티비티가 두개 존재하는 오류 수정!
+
             }
             .addOnFailureListener {
                 Toast.makeText(
