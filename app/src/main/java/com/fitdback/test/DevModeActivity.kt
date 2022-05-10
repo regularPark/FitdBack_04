@@ -18,6 +18,7 @@ import com.fitdback.test.barChartTest.BarChartTestActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -151,48 +152,132 @@ class DevModeActivity : AppCompatActivity() {
 
             val dialog = CustomDialog(this, R.layout.dialog_create_dummy_data, "testing")
             val mAlertDialog = dialog.showDialog()
-            val btnSelectFirstDate = mAlertDialog!!.findViewById<Button>(R.id.btnSelectFirstDate)
-            val btnSelectSecondDate = mAlertDialog.findViewById<Button>(R.id.btnSelectSecondDate)
+            val btnSelectDate = mAlertDialog!!.findViewById<Button>(R.id.btnSelectFirstDate)
+//            val btnSelectSecondDate = mAlertDialog.findViewById<Button>(R.id.btnSelectSecondDate)
+            val btnDBDummyDataWrite = mAlertDialog.findViewById<Button>(R.id.btnDBDummyDataWrite)
+//            var dateText: String = ""
 
-            val dateText1 = selectDate(btnSelectFirstDate)
-            val dateText2 = selectDate(btnSelectSecondDate)
+            btnSelectDate?.setOnClickListener {
+
+                val today = GregorianCalendar()
+                val year: Int = today.get(Calendar.YEAR)
+                val month: Int = today.get(Calendar.MONTH)
+                val date: Int = today.get(Calendar.DATE)
+
+                val dlg = DatePickerDialog(this, object : DatePickerDialog.OnDateSetListener {
+                    override fun onDateSet(
+                        view: DatePicker?,
+                        year: Int,
+                        month: Int,
+                        dayOfMonth: Int
+                    ) {
+                        btnSelectDate.text = "${year},${month},${dayOfMonth}"
+//                        dateText = "${year}${month}${dayOfMonth}"
+                    }
+
+                }, year, month, date)
+
+                dlg.show()
+
+            }
+
+            btnDBDummyDataWrite?.setOnClickListener {
+
+                val dateTextArray = btnSelectDate?.text!!.split(",").toMutableList()
+
+                val year = dateTextArray[0].toInt()
+                val month = dateTextArray[1].toInt() - 1
+                val date = dateTextArray[2].toInt()
+
+                val dateList = getOneWeekFromDate(year, month, date)
+                Log.d("select_date", "btnDBDummyDataWrite : $dateList")
+
+
+                Log.d("select_date", "getOneWeekFromDate() : $dateList")
+                val exerciseDataModelList = createDummyData(dateList, "squat")
+                Log.d("dummy", "exerciseDataModelList $exerciseDataModelList")
+
+            }
 
         }
+
 
     }
 
-    private fun selectDate(btnSelectDate: Button?): String {
+    @SuppressLint("SimpleDateFormat")
+    private fun getOneWeekFromDate(year: Int, month: Int, date: Int): MutableList<String> {
 
-        var dateText: String = ""
+        val dateList = mutableListOf<String>()
 
-        btnSelectDate?.setOnClickListener {
+        val cal = GregorianCalendar(year, month, date) // month: 0~11
+        val simpleDateFormat = SimpleDateFormat("yyMMdd")
 
-            val today = GregorianCalendar()
-            val year: Int = today.get(Calendar.YEAR)
-            val month: Int = today.get(Calendar.MONTH)
-            val date: Int = today.get(Calendar.DATE)
+        cal.add(GregorianCalendar.DATE, - 7)
 
-            val dlg = DatePickerDialog(this, object : DatePickerDialog.OnDateSetListener {
-                override fun onDateSet(
-                    view: DatePicker?,
-                    year: Int,
-                    month: Int,
-                    dayOfMonth: Int
-                ) {
-                    btnSelectDate.text = "${year}, ${month}, ${dayOfMonth}"
-
-                    dateText = "${year}, ${month}, ${dayOfMonth}"
-                }
-
-            }, year, month, date)
-
-            dlg.show()
-
+        for (i in 0..6) {
+            cal.add(GregorianCalendar.DATE, +1)
+            dateList.add(simpleDateFormat.format(cal.time))
         }
 
-        Log.d("Date", "$dateText")
+        return dateList
 
-        return dateText
+    }
+
+    // 운동 데이터 모델을 firebase에 write
+    /*
+        squat 개수를 랜덤으로 생성 (10 ~ 50개)
+            운동시간은 개수의 2배
+            성공 개수는 개수의 1/2배
+            운동시간은 개수의 2.0배 ~ 3.0배
+        Firebase에 저장 
+     */
+    private fun createDummyData(
+        dateList: MutableList<String>,
+        exType: String
+    ): MutableList<ExerciseDataModel> {
+
+        val exerciseDataModelList = mutableListOf<ExerciseDataModel>()
+
+        for (i in 0..6) {
+            val exDate = dateList[i]
+            val exCount = rand(10, 50, "int")[0].toInt()
+            val exTime = (exCount.toFloat() * rand(2, 0, "float")[0].toFloat()).toInt()
+            val exSuccessCount = (exCount * 0.5).toInt()
+            val exCalorie = (exCount * 0.5).toInt()
+
+            val exerciseDataModel =
+                ExerciseDataModel(
+                    exDate,
+                    exType,
+                    exTime,
+                    exCount,
+                    exSuccessCount,
+                    exCalorie
+                )
+            exerciseDataModelList.add(exerciseDataModel)
+        }
+
+        Log.d("dummy", "exerciseDataModelList $exerciseDataModelList")
+        return exerciseDataModelList
+
+    }
+
+    private fun rand(
+        from: Int,
+        to: Int,
+        type: String
+    ): MutableList<String> { // from ~ to 사이의 정수를 출력
+
+        val random = Random()
+        val mutableList = mutableListOf<String>()
+
+        when (type) {
+            "int" -> mutableList.add((random.nextInt(to - from) + from).toString())
+            "float" -> mutableList.add((random.nextFloat() + from.toFloat()).toString())
+        }
+
+        return mutableList
+
     }
 
 }

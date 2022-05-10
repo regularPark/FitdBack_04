@@ -65,68 +65,6 @@ class DataBasket {
 
         }
 
-        // getDailySum 원형
-//        fun getDailySum(dbPath: DatabaseReference): MutableMap<String, Int> {
-//
-//            val dateOfWeek = DataBasket.getDateOfWeek()
-//            val dailySum = mutableMapOf<String, Int>()
-//
-//            dbPath.addListenerForSingleValueEvent(object : ValueEventListener {
-//                override fun onDataChange(dataSnapshot: DataSnapshot) {
-//
-//                    for (exDataSet in dataSnapshot.children) {
-//
-//                        val exData = exDataSet.getValue(ExerciseDataModel::class.java)
-//
-//                        // exCountMap에 <"yyMMdd", sumOfExCount> key-value 형태로 update
-//                        if (exData!!.ex_type.equals("squat")) {
-//
-//                            val targetInt = exData.ex_count
-//
-//                            when (exData.ex_date) {
-//
-//                                dateOfWeek[0] -> {
-//                                    updateMap(dailySum, dateOfWeek[0], targetInt)
-//                                }
-//                                dateOfWeek[1] -> {
-//                                    updateMap(dailySum, dateOfWeek[1], targetInt)
-//                                }
-//                                dateOfWeek[2] -> {
-//                                    updateMap(dailySum, dateOfWeek[2], targetInt)
-//                                }
-//                                dateOfWeek[3] -> {
-//                                    updateMap(dailySum, dateOfWeek[3], targetInt)
-//                                }
-//                                dateOfWeek[4] -> {
-//                                    updateMap(dailySum, dateOfWeek[4], targetInt)
-//                                }
-//                                dateOfWeek[5] -> {
-//                                    updateMap(dailySum, dateOfWeek[5], targetInt)
-//                                }
-//                                dateOfWeek[6] -> {
-//                                    updateMap(dailySum, dateOfWeek[6], targetInt)
-//                                }
-//
-//                            }
-//
-//                        }
-//
-//                    }
-//
-//                    Log.d("exData", dateOfWeek.toString())
-//                    Log.d("exData", dailySum.toString())
-//
-//                }
-//
-//                override fun onCancelled(error: DatabaseError) {
-//                    Log.d("exData", "DB Read Error")
-//                }
-//            })
-//
-//            return dailySum
-//
-//        }
-
         fun getDataFromFB(
             dbPath: DatabaseReference,
             dataDescription: String
@@ -242,49 +180,6 @@ class DataBasket {
 
     } // end of companion object
 }
-
-
-//        suspend fun checkMyExCount(exDate: String) {
-//
-//            firebaseAuth = FirebaseAuth.getInstance()
-//            val dbPath = getDBPath("users", "ex_data", true)
-//            var returnValue:Boolean = false
-//            Log.d("exData", "From checkMyExCount OuterScope of suspendCoroutine: $returnValue")
-//
-//            suspendCoroutine<Boolean> {
-//                Handler(Looper.getMainLooper()).postDelayed({
-//
-//                    dbPath!!.addListenerForSingleValueEvent(object : ValueEventListener {
-//                        override fun onDataChange(snapshot: DataSnapshot) {
-//
-//                            for (data in snapshot.children) {
-//
-//                                val exData = data.getValue(ExerciseDataModel::class.java)
-//
-//                                if (exData!!.ex_date.equals(exDate)) {
-//                                    returnValue = true
-//                                    Log.d("exData", "From checkMyExCount Inner of suspendCoroutine: $returnValue")
-//                                    it.resume(returnValue) // return
-//                                }
-//
-//                            }
-//
-//                        }
-//
-//                        override fun onCancelled(error: DatabaseError) {
-//
-//                        }
-//
-//                    })
-//
-//                }, 500)
-//
-//            }
-//
-//        }
-
-
-
 
 
 

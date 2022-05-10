@@ -10,20 +10,20 @@
 
         <Button
             android:id="@+id/btnSelectFirstDate"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:text="choose first date"
+            android:text="choose date"
             android:textAllCaps="false" />
 
 
-        <Button
-            android:id="@+id/btnSelectSecondDate"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:text="second date"
-            android:textAllCaps="false" />
+<!--        <Button-->
+<!--            android:id="@+id/btnSelectSecondDate"-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:text="second date"-->
+<!--            android:textAllCaps="false" />-->
 
     </LinearLayout>
 
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="20dp"
-        android:text="Firebase DB Write"
+        android:text="일주일 전부터 위 날짜까지 데이터 생성"
         android:textAllCaps="false" />
 
 </LinearLayout>
