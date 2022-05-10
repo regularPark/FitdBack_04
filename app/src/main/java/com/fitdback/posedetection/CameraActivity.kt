@@ -62,9 +62,9 @@ class CameraActivity : Activity() {
 
         if (null == savedInstanceState) {
             fragmentManager
-                .beginTransaction()
-                .replace(R.id.container, Camera2BasicFragment.newInstance())
-                .commit()
+                    .beginTransaction()
+                    .replace(R.id.container, Camera2BasicFragment.newInstance())
+                    .commit()
 
             when (FeedbackAlgorithm.exr_mode) {
 
@@ -73,11 +73,11 @@ class CameraActivity : Activity() {
                     FeedbackAlgorithm.exr_cnt = 0
                     FeedbackAlgorithm.exr_cnt_s = 0
                     FeedbackAlgorithm.exr_cnt_f = 0
-                    FeedbackAlgorithm.no_exr = false
+                    FeedbackAlgorithm.wrong_mode = 0
                     FeedbackAlgorithm.isExrFinished = false
                     Handler().postDelayed(
-                        { FeedbackAlgorithm.time_tf = true },
-                        5000
+                            { FeedbackAlgorithm.time_tf = true },
+                            5000
                     ) //5초 후 운동 시작 시간 설정
                     FeedbackAlgorithm.isPlaying = true
                 }

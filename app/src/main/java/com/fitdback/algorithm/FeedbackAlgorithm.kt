@@ -5,11 +5,13 @@ import android.graphics.PointF
 import android.media.MediaPlayer
 import android.media.SoundPool
 import android.net.Uri
+import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 
 import com.fitdback.posedetection.R
+import com.google.firebase.database.Transaction
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.acos
@@ -36,7 +38,9 @@ class FeedbackAlgorithm {
 
         var no_exr: Boolean = false // 운동 판별 할건지(머리가 가장 위에, 왼발목이 가장 아래에 있어야 운동 판별)
         var isSquat: Boolean = false //스쿼트 동작 완료
-        var isWrong: Int = 0 //올바르지 않은 자세
+        var isSound: Boolean = false
+        var wrong_mode: Int = 0 //올바르지 않은 자세
+        var isWrong: Boolean = false
         var isStand: Boolean = false //서있는지 판단
         var isPlaying: Boolean = false
         var time_tf: Boolean = true //시간 저장
@@ -51,9 +55,7 @@ class FeedbackAlgorithm {
         val squat_cal: Double = 0.50 // 스쿼트 1회당 칼로리
 
         var isExrFinished: Boolean = false
-        /*val soundPool = SoundPool.Builder().build()
-        var soundId: Int = 0*/
-
+        //val soundPool = SoundPool.Builder().build()
 
         private fun cal_dist(p1: PointF, p2: PointF): Double {
             return sqrt((((p1.x - p2.x) * (p1.x - p2.x)) + ((p1.y - p2.y) * (p1.y - p2.y))).toDouble())
@@ -68,10 +70,26 @@ class FeedbackAlgorithm {
             return acos((((dist1 * dist1) + (dist2 * dist2) - (dist3 * dist3)) / (2 * dist1 * dist2))) * 180 / pi
         }
 
+
+        fun sound_play(context: Context, sound: Int) {
+            var sound: MediaPlayer = MediaPlayer.create(context, sound)
+            if (!isSound) {
+                sound.start()
+                isSound = true
+
+                Handler().postDelayed({
+                    sound.release()
+                    isSound = false
+                }, sound.duration.toLong())
+
+            }
+
+        }
+
         //DrawView 164줄에서 squat 함수 호출
         fun squat(context: Context, mDrawPoint: ArrayList<PointF>) {
             no_exr = false
-            isWrong = 0
+
             if (exr_cnt == 0 && time_tf) {
                 start_time = System.currentTimeMillis()
                 time_tf = false
@@ -80,106 +98,120 @@ class FeedbackAlgorithm {
             hka_l_angle = cal_angle(mDrawPoint[8], mDrawPoint[9], mDrawPoint[10])
             hka_r_angle = cal_angle(mDrawPoint[11], mDrawPoint[12], mDrawPoint[13])
             nhk_l_angle = cal_angle(mDrawPoint[1], mDrawPoint[8], mDrawPoint[9])
-            //soundId = MediaPlayer.load(context, R.raw.sound1, 1)
 
             head_y = mDrawPoint[0].y
             ank_l_y = mDrawPoint[10].y
 
-            for(i in 1..13){
-                if(head_y >= mDrawPoint[i].y){
+            //------------------------------
+            //머리가 가장 위, 왼발목이 가장 아래 있는지 체크 -> 아니면 스쿼트 판별x
+            for (i in 1..13) {
+                if (head_y >= mDrawPoint[i].y) {
                     no_exr = true
-                    Log.d("좌표", "좌표 = head "+ head_y +" " + i + " " + mDrawPoint[i].y)
                     break
                 }
             }
-            for(i in 0..9){
-                if(mDrawPoint[i].y >= ank_l_y){
+            for (i in 0..9) {
+                if (mDrawPoint[i].y >= ank_l_y) {
                     no_exr = true
-                    Log.d("좌표", "좌표 = ank "+ ank_l_y +" " +  i + " " + mDrawPoint[i].y)
                     break
                 }
             }
-            Log.d("no_exr", no_exr.toString())
+            //------------------------------
 
-            //if ((170.toDouble() <= hka_l_angle && hka_l_angle <= 180.toDouble()) && (170.toDouble() <= hka_r_angle && hka_r_angle <= 180.toDouble()))
-            if (170.toDouble() <= hka_l_angle && hka_l_angle <= 180.toDouble() && !no_exr) {
+            //스쿼트 판별 시작
+            if (150.toDouble() <= hka_l_angle && hka_l_angle <= 190.toDouble() && !no_exr) {
                 isStand = true
-                isSquat = false
                 //Log.d("zxcv", "stand complete")
 
                 //운동 횟수 추가 판단되면 스쿼트 동작 완료 후 기본자세(stand)로 돌아가면 횟수 추가
                 if (cnt_s_tf || cnt_f_tf) {
-                    if (cnt_s_tf) {
+                    if (cnt_s_tf && isSquat && wrong_mode < 5) {
                         cnt_s_tf = false
-                        exr_cnt_s++
-                        Toast.makeText(context, "운동 성공~!", Toast.LENGTH_SHORT).show()
-                        Log.d("exr_S", exr_cnt_s.toString())
-                    }
-                    //else if(cnt_f_tf && (isSquat==false)&&isWrong)
-                    if (cnt_f_tf) {
+                        isSquat = false
                         cnt_f_tf = false
-                        if ((isSquat == false) && isWrong >= 1) {
+                        isWrong = false
+                        wrong_mode = 0
+                        exr_cnt_s++
+                        sound_play(context, R.raw.sound1) // "띠링" (성공사운드)
+                        Toast.makeText(context, "운동 성공~!", Toast.LENGTH_SHORT).show()
+                    } else if (cnt_f_tf && isWrong) {
+                        cnt_f_tf = false
+                        if (isWrong && wrong_mode >= 1) {
                             exr_cnt_f++
-                            if(isWrong==1) Toast.makeText(context, "------FAIL1------", Toast.LENGTH_SHORT).show() // 1 -> 허리때문에 실패
-                            else if(isWrong==2) Toast.makeText(context, "------FAIL2------", Toast.LENGTH_SHORT).show() // 2 -> 다리때문에 실패
-                            else if(isWrong==5) Toast.makeText(context, "------FAIL5------", Toast.LENGTH_SHORT).show() // 5 -> 다리때문에 실패
-                            else if(isWrong==3) Toast.makeText(context, "------FAIL3------", Toast.LENGTH_SHORT).show() // 1+2 -> 둘 다 실패
-                            else if(isWrong==6) Toast.makeText(context, "------FAIL6------", Toast.LENGTH_SHORT).show() // 1+5 -> 둘 다 실패
-                            Log.d("exr_F", exr_cnt_f.toString())
+
+                            if (wrong_mode == 2) {
+                                sound_play(context, R.raw.leg_feedback) // "다리 더 굽히세요"
+                                Toast.makeText(context, "------FAIL2------", Toast.LENGTH_SHORT).show()
+                            } // 2 -> 다리가 덜 굽혀져 실패
+
+                            /*else if(wrong_mode==1) {
+                                sound_play(context, R.raw.back_feedback)
+                                Toast.makeText(context, "------FAIL1------", Toast.LENGTH_SHORT).show()
+                            } // 1 -> 허리 굽혀져 실패*/
+                            else if (wrong_mode == 5) {
+                                sound_play(context, R.raw.leg_feedback_2) // "다리 너무 굽혔어요"
+                                Toast.makeText(context, "------FAIL5------", Toast.LENGTH_SHORT).show()
+                                cnt_s_tf = false
+                                isSquat = false
+                            } // 5 -> 다리가 너무 굽혀져 실패
+
+                            /*else if(wrong_mode==3) {
+                                Toast.makeText(context, "------FAIL3------", Toast.LENGTH_SHORT).show()
+                            } // 1+2 -> 다리가 덜 굽혀지고 허리도 덜 굽혀져 실패*/
                         }
+                        Log.d("exr_F", "wrong_mode = " + wrong_mode + " exr_cnt_f = " + exr_cnt_f)
+                        isWrong = false
+                        wrong_mode = 0
                     }
                     exr_cnt = exr_cnt_s + exr_cnt_f
+                    Log.d("exr_cnt", "S = " + exr_cnt_s + " F = " + exr_cnt_f + " T = " + exr_cnt)
                     exr_cal = ceil((exr_cnt.toDouble() * squat_cal))
 
-                    if (exr_cnt == 5) {
+                    if (exr_cnt == 10) {
                         total_exr_time = System.currentTimeMillis() - start_time
                         exr_time_result = (ceil((total_exr_time / 1000.toDouble()))).toInt()
-                    }
-
-                    println(
-                        "S_cnt = " + exr_cnt_s + " F_cnt = " + exr_cnt_f + " T_cnt = " + exr_cnt + " cal = " + String.format(
-                            "%.1f",
-                            exr_cal
-                        )
-                    )
-                    if (exr_cnt == 5) {
-                        Log.d(
-                            "exr_T",
-                            "Total = " + exr_cnt + " S = " + exr_cnt_s + " F = " + exr_cnt_f + " Time = " + exr_time_result
-                        )
                     }
                     //--------------------------------------------------------------------------------------------------------
                     //exr_cnt_s(int) = 운동 성공 횟수, exr_cnt_f(int) = 운동 실패 횟수, exr_cnt(int) = 총 운동 횟수
                     //exr_cal(double) = 칼로리 소모량, exr_time_result(int) = 운동 시간(초), exr_mode(string) = 운동 종류(스쿼트)
                     //--------------------------------------------------------------------------------------------------------
 
-                    //soundPool.play(soundId, 1.0f, 1.0f, 0, 0, 1.0f)
-
-                    /*val mediaPlayer = MediaPlayer.create(this, R.raw.sound1)
-                    mediaPlayer.start()
-                    mediaPlayer.setOnCompletionListener { mediaPlayer.release()}*/
-
-                    //Toast.makeText(context, "운동 성공~!", Toast.LENGTH_SHORT).show()
-                    //Log.d("asdf", "squat complete")
                 }
             } else if (140.toDouble() >= hka_l_angle && !no_exr) {
                 //스쿼트 자세로 판단되면 Stand가 아님
                 isStand = false
-                if (100.toDouble() >= hka_l_angle && 70.toDouble() <= nhk_l_angle && 70.toDouble()<= hka_l_angle) {
+
+                //스쿼트 성공
+                if (105.toDouble() >= hka_l_angle && 60.toDouble() <= hka_l_angle && 90.toDouble() <= nhk_l_angle && wrong_mode != 5) {
                     cnt_s_tf = true
                     isSquat = true
+                    Log.d("exr_S", "Success 각도 = 무릎 " + hka_l_angle)
                 }
-                else {
-                    cnt_f_tf = true
-                    if (isSquat == false){
-                        if(nhk_l_angle<70.toDouble()) isWrong = 1 //허리가 70도보다 더 굽어지면 실패
-                        if(hka_l_angle>100.toDouble()) isWrong += 2 //다리가 100도 아래로 내려가지 않으면 실패
-                        if(hka_l_angle<70.toDouble()) isWrong +=5 //다리가 70도보다 더 굽어지면 실패
 
+                //다리가 70도 이하로 내려가면 너무 굽혀져 실패
+                else if (60.toDouble() > hka_l_angle) {
+                    cnt_f_tf = true
+                    wrong_mode = 5
+                    isWrong = true
+                    Log.d("exr_F5", "F5 각도 = 무릎 " + hka_l_angle)
+                } else if (!isSquat) {
+                    cnt_f_tf = true
+                    if (isSquat == false && wrong_mode < 5) {
+                        wrong_mode = 0
+
+                        /*//허리가 70도 이상 굽혀져 실패
+                        if(nhk_l_angle<90.toDouble()) {
+                            wrong_mode += 1
+                            isWrong = true
+                        }*/
+
+                        //다리가 105도 이하로 굽혀지지 않아 실패
+                        if (hka_l_angle > 105.toDouble()) {
+                            wrong_mode += 2
+                            isWrong = true
+                        }
                     }
                 }
-
-
             }
         }
     }
