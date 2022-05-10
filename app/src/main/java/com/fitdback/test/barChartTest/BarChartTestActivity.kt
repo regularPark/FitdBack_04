@@ -47,7 +47,7 @@ class BarChartTestActivity : AppCompatActivity() {
         // dailyExCountSumBarEntry 또는 dailyExCalorieSumBarEntry 로 argument변경하여 사용
         val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList").apply {
 
-            valueTextColor = Color.WHITE
+            valueTextColor = Color.BLACK
             valueTextSize = 10f
             setColors(*ColorTemplate.COLORFUL_COLORS)
 
