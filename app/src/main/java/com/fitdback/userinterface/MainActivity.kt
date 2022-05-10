@@ -27,12 +27,14 @@ class MainActivity : AppCompatActivity() {
         val myPageBtn = findViewById<Button>(R.id.mypageBtn)
         val btnSignOut = findViewById<Button>(R.id.btnSignOut)
         val btnDevMode = findViewById<Button>(R.id.btnDevMode)
+        val testBtn = findViewById<Button>(R.id.mainTest)
 
         // 인텐트
         val toTutorialActivity = Intent(this, TutorialActivity::class.java)
         val toLoginActivity = Intent(this, LoginActivity::class.java)
         val toMyPageActivity = Intent(this, MyPageActivity::class.java)
         val toDevActivity = Intent(this, DevModeActivity::class.java)
+        val toMainTestActivity = Intent(this, MainTestActivity::class.java)
 
         // 버튼 클릭 동작
         squatBtn.setOnClickListener {
@@ -54,6 +56,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(toMyPageActivity)
         }
 
+        // Main Test
+        testBtn.setOnClickListener {
+            startActivity(toMainTestActivity)
+        }
+
+
         // Dev Mode
         btnDevMode.setOnClickListener {
             startActivity(toDevActivity)
@@ -74,6 +82,11 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
 
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this,LoginActivity::class.java))
+        finish()
     }
 
 }
