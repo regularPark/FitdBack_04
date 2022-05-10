@@ -6,10 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.widget.Button
-import android.widget.DatePicker
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.fitdback.database.DataBasket
 import com.fitdback.database.datamodel.ExerciseDataModel
@@ -171,7 +168,7 @@ class DevModeActivity : AppCompatActivity() {
                         month: Int,
                         dayOfMonth: Int
                     ) {
-                        btnSelectDate.text = "${year},${month},${dayOfMonth}"
+                        btnSelectDate.text = "${year},${month + 1},${dayOfMonth}"
 //                        dateText = "${year}${month}${dayOfMonth}"
                     }
 
@@ -190,12 +187,26 @@ class DevModeActivity : AppCompatActivity() {
                 val date = dateTextArray[2].toInt()
 
                 val dateList = getOneWeekFromDate(year, month, date)
-                Log.d("select_date", "btnDBDummyDataWrite : $dateList")
 
-
-                Log.d("select_date", "getOneWeekFromDate() : $dateList")
+//                Log.d("select_date", "getOneWeekFromDate() : $dateList")
                 val exerciseDataModelList = createDummyData(dateList, "squat")
-                Log.d("dummy", "exerciseDataModelList $exerciseDataModelList")
+//                Log.d("dummy", "exerciseDataModelList $exerciseDataModelList")
+
+                val dbPath = DataBasket.getDBPath("users", "ex_data", true)
+
+                // DB Writing
+                for (dataModel in exerciseDataModelList) {
+                    dbPath!!.push().setValue(dataModel)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "데이터가 저장되었습니다.", Toast.LENGTH_SHORT).show()
+                            mAlertDialog.dismiss()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this, "데이터가 저장실패", Toast.LENGTH_SHORT).show()
+                        }
+
+                }
+
 
             }
 
@@ -212,7 +223,7 @@ class DevModeActivity : AppCompatActivity() {
         val cal = GregorianCalendar(year, month, date) // month: 0~11
         val simpleDateFormat = SimpleDateFormat("yyMMdd")
 
-        cal.add(GregorianCalendar.DATE, - 7)
+        cal.add(GregorianCalendar.DATE, -7)
 
         for (i in 0..6) {
             cal.add(GregorianCalendar.DATE, +1)
@@ -241,7 +252,7 @@ class DevModeActivity : AppCompatActivity() {
         for (i in 0..6) {
             val exDate = dateList[i]
             val exCount = rand(10, 50, "int")[0].toInt()
-            val exTime = (exCount.toFloat() * rand(2, 0, "float")[0].toFloat()).toInt()
+            val exTime = (exCount.toFloat() * rand(4, 0, "float")[0].toFloat()).toInt()
             val exSuccessCount = (exCount * 0.5).toInt()
             val exCalorie = (exCount * 0.5).toInt()
 
