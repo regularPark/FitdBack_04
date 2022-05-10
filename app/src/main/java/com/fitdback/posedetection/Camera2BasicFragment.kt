@@ -33,6 +33,7 @@ import android.hardware.camera2.CameraManager
 import android.hardware.camera2.CaptureRequest
 import android.hardware.camera2.CaptureResult
 import android.hardware.camera2.TotalCaptureResult
+import android.media.ExifInterface
 import android.media.ImageReader
 import android.os.Bundle
 import android.os.Handler
@@ -41,6 +42,7 @@ import androidx.legacy.app.FragmentCompat
 import androidx.core.content.ContextCompat
 import android.util.Log
 import android.util.Size
+import android.util.SparseIntArray
 import android.view.LayoutInflater
 import android.view.Surface
 import android.view.TextureView
@@ -80,6 +82,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private var radiogroup: RadioGroup? = null
     private var countView: TextView? = null
     private var countTimer:TextView? = null
+
 
 
     /**
