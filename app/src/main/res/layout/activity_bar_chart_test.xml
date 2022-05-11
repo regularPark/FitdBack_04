@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.fitdback.test.barChartTest.BarChartTestActivity">
 
     <com.github.mikephil.charting.charts.BarChart
@@ -11,6 +12,30 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_margin="32dp" />
+
+    <Button
+        android:id="@+id/btnLaunchChartAgain"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="차트 다시 실행"
+        android:textSize="15sp">
+    </Button>
+
+    <Button
+        android:id="@+id/btnShowPreviousWeek"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="지난 주 차트 보기"
+        android:textSize="15sp">
+    </Button>
+
+    <Button
+        android:id="@+id/btnShowNextWeek"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="다음 주 차트 보기"
+        android:textSize="15sp">
+    </Button>
 
 
 </LinearLayout>

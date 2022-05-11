@@ -22,6 +22,9 @@ class DataBasket {
         var dataSample: DataSnapshot? = null
         var individualExData: DataSnapshot? = null
 
+        /*
+            날짜 관련
+        */
         @SuppressLint("SimpleDateFormat")
         fun getDateOfDay(days: Int): String? { // "yyMMdd"형태로 원하는 날짜를 반환, 최대 30일 전까지 변환
 
@@ -34,7 +37,7 @@ class DataBasket {
 
         }
 
-        fun getDateOfWeek(): MutableList<String> {
+        fun getDateListOfThisWeek(): MutableList<String> {
 
             val dateOfWeekList = mutableListOf<String>()
 
@@ -43,6 +46,38 @@ class DataBasket {
             }
 
             return dateOfWeekList
+
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun getOneWeekListBeforeTheDate(year: Int, month: Int, date: Int): MutableList<String> {
+
+            val dateList = mutableListOf<String>()
+
+            val cal = GregorianCalendar(year, month, date) // month: 0~11
+            val simpleDateFormat = SimpleDateFormat("yyMMdd")
+
+            cal.add(GregorianCalendar.DATE, -7)
+
+            for (i in 0..6) {
+                cal.add(GregorianCalendar.DATE, +1)
+                dateList.add(simpleDateFormat.format(cal.time))
+            }
+
+            return dateList
+
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun getDateOneWeekBefore(year: Int, month: Int, date: Int): String {
+
+            val cal = GregorianCalendar(year, month, date) // month: 0~11
+            val simpleDateFormat = SimpleDateFormat("yyMMdd")
+
+            cal.add(GregorianCalendar.DATE, -7)
+
+            Log.d("Date", "DataBasket.getDateOneWeekBefore() : ${simpleDateFormat.format(cal.time)}")
+            return simpleDateFormat.format(cal.time)
 
         }
 
@@ -90,13 +125,14 @@ class DataBasket {
 
         fun enhancedGetDailySum(
             dataSnapshot: DataSnapshot,
+            dateOfWeek: MutableList<String>,
             targetData: String
         ): MutableMap<String, Int> {
 
-            val dateOfWeek = DataBasket.getDateOfWeek()
             Log.d("Data - dateOfWeek", "$dateOfWeek")
             val dailySum = mutableMapOf<String, Int>()
 
+            // dailySum Map을 (날짜, 0) 형태로 initialization
             for (i in 0 .. 6) {
                 updateMap(dailySum, dateOfWeek[i], 0, true)
                 Log.d("Data - dailySum Init", dailySum.toString())

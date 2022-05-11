@@ -15,7 +15,6 @@ import com.fitdback.test.barChartTest.BarChartTestActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -186,7 +185,7 @@ class DevModeActivity : AppCompatActivity() {
                 val month = dateTextArray[1].toInt() - 1
                 val date = dateTextArray[2].toInt()
 
-                val dateList = getOneWeekFromDate(year, month, date)
+                val dateList = DataBasket.getOneWeekListBeforeTheDate(year, month, date)
 
 //                Log.d("select_date", "getOneWeekFromDate() : $dateList")
                 val exerciseDataModelList = createDummyData(dateList, "squat")
@@ -198,7 +197,7 @@ class DevModeActivity : AppCompatActivity() {
                 for (dataModel in exerciseDataModelList) {
                     dbPath!!.push().setValue(dataModel)
                         .addOnSuccessListener {
-                            Toast.makeText(this, "데이터가 저장되었습니다.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "${dataModel.ex_date} 데이터 저장완료.", Toast.LENGTH_SHORT).show()
                             mAlertDialog.dismiss()
                         }
                         .addOnFailureListener {
@@ -215,24 +214,24 @@ class DevModeActivity : AppCompatActivity() {
 
     }
 
-    @SuppressLint("SimpleDateFormat")
-    private fun getOneWeekFromDate(year: Int, month: Int, date: Int): MutableList<String> {
-
-        val dateList = mutableListOf<String>()
-
-        val cal = GregorianCalendar(year, month, date) // month: 0~11
-        val simpleDateFormat = SimpleDateFormat("yyMMdd")
-
-        cal.add(GregorianCalendar.DATE, -7)
-
-        for (i in 0..6) {
-            cal.add(GregorianCalendar.DATE, +1)
-            dateList.add(simpleDateFormat.format(cal.time))
-        }
-
-        return dateList
-
-    }
+//    @SuppressLint("SimpleDateFormat")
+//    private fun getOneWeekFromDate(year: Int, month: Int, date: Int): MutableList<String> {
+//
+//        val dateList = mutableListOf<String>()
+//
+//        val cal = GregorianCalendar(year, month, date) // month: 0~11
+//        val simpleDateFormat = SimpleDateFormat("yyMMdd")
+//
+//        cal.add(GregorianCalendar.DATE, -7)
+//
+//        for (i in 0..6) {
+//            cal.add(GregorianCalendar.DATE, +1)
+//            dateList.add(simpleDateFormat.format(cal.time))
+//        }
+//
+//        return dateList
+//
+//    }
 
     // 운동 데이터 모델을 firebase에 write
     /*

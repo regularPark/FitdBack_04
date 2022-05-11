@@ -9,7 +9,6 @@ import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import java.lang.Exception
 import java.lang.StringBuilder
 
 @SuppressLint("LogNotTimber")
@@ -18,7 +17,7 @@ class BarChartGenerator2() {
     companion object {
 
         val testXLabels = mutableListOf<String>()
-        val dateOfWeek: MutableList<String> = DataBasket.getDateOfWeek()
+        val dateOfWeek: MutableList<String> = DataBasket.getDateListOfThisWeek()
 
         fun initXLabels(xLabels: MutableList<String>) {
 
@@ -79,10 +78,11 @@ class BarChartGenerator2() {
 
     inner class MyXAxisFormatter : IndexAxisValueFormatter() {
 
-        private val targetList: MutableList<String> = dateOfWeek
+        private val targetList: MutableList<String> = BarChartData.dateListOfWeek
 
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
 
+            Log.d("BarChart", "MyXAxisFormatter - targetList $targetList")
             val index = value.toInt()
             val tempValue = targetList[index - 1] // IndexOutOfRange Error 주의
 
