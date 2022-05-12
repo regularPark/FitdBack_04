@@ -82,6 +82,31 @@ class CameraActivity : Activity() {
                     FeedbackAlgorithm.isPlaying = true
                 }
 
+                "plank" -> {
+                    Handler().postDelayed(
+                            { FeedbackAlgorithm.time_tf = true },
+                            5000
+                    ) //5초 후 운동 시작 시간 설정
+                    FeedbackAlgorithm.exr_time_result = 0
+                    FeedbackAlgorithm.start_time = 0
+                    FeedbackAlgorithm.exr_cnt = 0
+                    FeedbackAlgorithm.isPlaying = true
+
+                }
+
+                "pushup" -> {
+                    FeedbackAlgorithm.exr_cnt = 0
+                    FeedbackAlgorithm.exr_cnt_s = 0
+                    FeedbackAlgorithm.exr_cnt_f = 0
+                    FeedbackAlgorithm.wrong_mode = 0
+                    FeedbackAlgorithm.isExrFinished = false
+                    Handler().postDelayed(
+                            { FeedbackAlgorithm.time_tf = true },
+                            5000
+                    ) //5초 후 운동 시작 시간 설정
+                    FeedbackAlgorithm.isPlaying = true
+                }
+
             }
 
         }

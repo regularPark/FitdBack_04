@@ -273,6 +273,55 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                             }, 3000
                     ) //카메라 종료 3초 지연
                 }
+            } else if (FeedbackAlgorithm.exr_mode == "plank") {
+                //if (FeedbackAlgorithm.exr_time_result == 10 && !FeedbackAlgorithm.isExrFinished) {
+                if (FeedbackAlgorithm.exr_cnt == 10 && !FeedbackAlgorithm.isExrFinished) {
+                    FeedbackAlgorithm.isExrFinished = true
+                    Handler().postDelayed(
+                            {
+
+                                // 데이터 모델 생성
+                                val exerciseDataModel = ExerciseDataModel(
+                                        DataBasket.getDateOfToday(),
+                                        FeedbackAlgorithm.exr_mode,
+                                        FeedbackAlgorithm.exr_time_result,
+                                        FeedbackAlgorithm.exr_cnt,
+                                        FeedbackAlgorithm.exr_cnt_s,
+                                        FeedbackAlgorithm.exr_cal.toInt()
+                                )
+
+                                DataBasket.tempExrModel = exerciseDataModel
+
+                                startActivity(intent)
+                                activity.finish()
+
+                            }, 3000
+                    ) //카메라 종료 3초 지연
+                }
+            } else if (FeedbackAlgorithm.exr_mode == "pushup") {
+                if (FeedbackAlgorithm.exr_cnt == 10 && !FeedbackAlgorithm.isExrFinished) {
+                    FeedbackAlgorithm.isExrFinished = true
+                    Handler().postDelayed(
+                            {
+
+                                // 데이터 모델 생성
+                                val exerciseDataModel = ExerciseDataModel(
+                                        DataBasket.getDateOfToday(),
+                                        FeedbackAlgorithm.exr_mode,
+                                        FeedbackAlgorithm.exr_time_result,
+                                        FeedbackAlgorithm.exr_cnt,
+                                        FeedbackAlgorithm.exr_cnt_s,
+                                        FeedbackAlgorithm.exr_cal.toInt()
+                                )
+
+                                DataBasket.tempExrModel = exerciseDataModel
+
+                                startActivity(intent)
+                                activity.finish()
+
+                            }, 3000
+                    ) //카메라 종료 3초 지연
+                }
             }
 
         }
