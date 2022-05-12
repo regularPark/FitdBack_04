@@ -42,27 +42,20 @@ class BarChartTestActivity : AppCompatActivity() {
             Bar Data Set을 만들기 위한 Data Entry
          */
 
-        btnLaunchChartAgain.setOnClickListener {
+        btnLaunchChartAgain.setOnClickListener { // 이번 주(1주일 전 ~ 오늘) 차트보기
 
-            // 오래된 데이터 삭제
-            barChart.clear()
-            if (!barChart.isEmpty) { // 기존 데이터가 있으면 clear
-                barChart.clearValues()
-            }
+            // barChart 초기화
+            clearBarChart(barChart)
 
             // 보고자 하는 날짜 리스트
             val dateListOfTargetWeek = DataBasket.getDateListOfThisWeek()
-            BarChartData.dateListOfWeek =
-                dateListOfTargetWeek // BarChartData.dateListOfWeek 변수가 lateinit으로 선언된 것에 주의!
-            BarChartData.lastDateOfXIndex = dateListOfTargetWeek[6]
+            updateBarChartData(dateListOfTargetWeek) // BarChartData 클래스의 전역변수 update
+
             Log.d("BarChart", "BarChartData.lastDateOfXIndex: ${BarChartData.lastDateOfXIndex}")
 
             // 이번 주 날짜별 ex_count Sum
             val dailyExCountSumBarEntry =
-                getDailySumBarEntry("ex_count", dateListOfTargetWeek)
-
-            // 이번 주 날짜별 ex_calorie Sum
-//            val dailyExCalorieSumBarEntry = getDailySumBarEntry("ex_calorie", DataBasket.getDateListOfThisWeek())
+                getDailySumBarEntry(dateListOfTargetWeek, "squat", "ex_count")
 
             // 실제 Bar Data Set 생성.
             // dailyExCountSumBarEntry 또는 dailyExCalorieSumBarEntry 로 argument변경하여 사용
@@ -74,9 +67,9 @@ class BarChartTestActivity : AppCompatActivity() {
 
             }
 
+            // Bar Chart 데이터 삽입
             val data = BarData(barDataSet)
             barChart.data = data
-            BarChartData.lastDateOfXIndex = dateListOfTargetWeek[6] // ex) "220504" 가 저장됨
             Log.d("BarChart", "BarChartData.lastDateOfXIndex: ${BarChartData.lastDateOfXIndex}")
 
             // Bar Chart 실행
@@ -86,35 +79,27 @@ class BarChartTestActivity : AppCompatActivity() {
 
         btnShowPreviousWeek.setOnClickListener {
 
-            // 오래된 데이터 삭제
-            barChart.clear()
-            if (!barChart.isEmpty) { // 기존 데이터가 있으면 clear
-                barChart.clearValues()
-            }
+            clearBarChart(barChart)
 
-            // DB의 데이터 가공
+            // 마지막에 저장된 X Index를 이용하여 일주일 전의 dateListOfTargetWeek을 생성
             val lastDateOfXIndex = BarChartData.lastDateOfXIndex
-            var year: Int = lastDateOfXIndex.slice(0..1).toInt() + 2000 // 22 + 2000 = 2022
-            var month: Int =
-                lastDateOfXIndex.slice(2..3).toInt() - 1 // Gregorian Calendar 사용시 month 주의
-            var date: Int = lastDateOfXIndex.slice(4..5).toInt()
+            var (year: Int, month: Int, date: Int) = getYearMonthDateOfLastDate(lastDateOfXIndex)
 
             val dateOneWeekBefore = DataBasket.getDateOneWeekBefore(year, month, date)
-            year = dateOneWeekBefore.slice(0..1).toInt() + 2000 // 22 + 2000 = 2022
-            month = dateOneWeekBefore.slice(2..3).toInt() - 1
-            date = dateOneWeekBefore.slice(4..5).toInt()
+
+            val triple = getYearMonthDateOfLastDate(dateOneWeekBefore)
+            year = triple.first
+            month = triple.second
+            date = triple.third
 
             val dateListOfTargetWeek = DataBasket.getOneWeekListBeforeTheDate(year, month, date)
-
-            // BarChartData 전역 변수 변경
-            BarChartData.dateListOfWeek = dateListOfTargetWeek
-            BarChartData.lastDateOfXIndex = dateListOfTargetWeek[6]
+            
+            updateBarChartData(dateListOfTargetWeek)
             Log.d("BarChart", "BarChartData.lastDateOfXIndex: ${BarChartData.lastDateOfXIndex}")
-
 
             // Bar Chart 용 데이터 생성
             val dailyExCountSumBarEntry =
-                getDailySumBarEntry("ex_count", dateListOfTargetWeek)
+                getDailySumBarEntry(dateListOfTargetWeek, "squat", "ex_count")
 
             val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList").apply {
 
@@ -143,19 +128,49 @@ class BarChartTestActivity : AppCompatActivity() {
 
     }
 
+    private fun getYearMonthDateOfLastDate(lastDateOfXIndex: String): Triple<Int, Int, Int> {
+        val year: Int = lastDateOfXIndex.slice(0..1).toInt() + 2000 // 22 + 2000 = 2022
+        val month: Int =
+            lastDateOfXIndex.slice(2..3).toInt() - 1 // Gregorian Calendar 사용시 month 주의
+        val date: Int = lastDateOfXIndex.slice(4..5).toInt()
+        return Triple(year, month, date)
+    }
+
+    private fun updateBarChartData(dateListOfTargetWeek: MutableList<String>) {
+        BarChartData.dateListOfWeek =
+            dateListOfTargetWeek // BarChartData.dateListOfWeek 변수가 lateinit으로 선언된 것에 주의!
+        BarChartData.lastDateOfXIndex = dateListOfTargetWeek[6]
+    }
+
+    private fun clearBarChart(barChart: BarChart) {
+        // 오래된 데이터 삭제
+        barChart.clear()
+        if (!barChart.isEmpty) { // 기존 데이터가 있으면 clear
+            barChart.clearValues()
+        }
+    }
+
     private fun getDailySumBarEntry(
-        targetData: String,
-        dateList: MutableList<String>
+        dateList: MutableList<String>,
+        firstTargetData: String,
+        secondTargetData: String
     ): MutableList<BarEntry> {
         /*
-            targetData: String 종류 : "ex_count" , "ex_calorie" // 스펠링 주의!
-            String 종료 "ex_time" 추가 예정
+        dataSnapshot: 이미 로드한 Firebase DataSnapshot (users/ex_data)
+        firstTargetData: ex_type 중 하나. "squat", "plank", "sideLateralRaise"
+        secondtargetData: "ex_count", "ex_calorie", "ex_time"
          */
+
         val dailySumBarEntry = mutableListOf<BarEntry>()
 
         // (날짜, targetData의 합)의 Key-Value 구조의 Map
         val dailySumList =
-            DataBasket.enhancedGetDailySum(DataBasket.individualExData!!, dateList, targetData)
+            DataBasket.enhancedGetDailySum(
+                DataBasket.individualExData!!,
+                dateList,
+                firstTargetData,
+                secondTargetData
+            )
 
         var xValue = 1f
 

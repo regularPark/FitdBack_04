@@ -76,7 +76,10 @@ class DataBasket {
 
             cal.add(GregorianCalendar.DATE, -7)
 
-            Log.d("Date", "DataBasket.getDateOneWeekBefore() : ${simpleDateFormat.format(cal.time)}")
+            Log.d(
+                "Date",
+                "DataBasket.getDateOneWeekBefore() : ${simpleDateFormat.format(cal.time)}"
+            )
             return simpleDateFormat.format(cal.time)
 
         }
@@ -126,19 +129,25 @@ class DataBasket {
         fun enhancedGetDailySum(
             dataSnapshot: DataSnapshot,
             dateOfWeek: MutableList<String>,
-            targetData: String
+            firstTargetData: String,
+            secondTargetData: String
         ): MutableMap<String, Int> {
 
             Log.d("Data - dateOfWeek", "$dateOfWeek")
             val dailySum = mutableMapOf<String, Int>()
 
             // dailySum Map을 (날짜, 0) 형태로 initialization
-            for (i in 0 .. 6) {
+            for (i in 0..6) {
                 updateMap(dailySum, dateOfWeek[i], 0, true)
                 Log.d("Data - dailySum Init", dailySum.toString())
             }
 
-            calculateDailySum(dataSnapshot, targetData, dateOfWeek, dailySum)
+            /*
+            dataSnapshot: 이미 로드한 Firebase DataSnapshot (users/ex_data)
+            firstTargetData: ex_type 중 하나. "squat", "plank", "sideLateralRaise"
+            secondtargetData: "ex_count", "ex_calorie", "ex_time"
+             */
+            calculateDailySum(dataSnapshot, dateOfWeek, firstTargetData, secondTargetData, dailySum)
 
             Log.d("Data - dailySum ", dailySum.toString())
             return dailySum
@@ -147,8 +156,9 @@ class DataBasket {
 
         private fun calculateDailySum(
             dataSnapshot: DataSnapshot,
-            targetData: String,
             dateOfWeek: MutableList<String>,
+            firstTargetData: String,
+            secondTargetData: String,
             dailySum: MutableMap<String, Int>
         ) {
             for (exDataSet in dataSnapshot.children) {
@@ -158,11 +168,11 @@ class DataBasket {
 //                Log.d("Data - exData.ex_date", exData!!.ex_date)
 //                Log.d("Data - exData.ex_count", exData.ex_count.toString())
                 // exCountMap에 <"yyMMdd", sumOfExCount> key-value 형태로 update
-                if (exData!!.ex_type.equals("squat")) {
+                if (exData!!.ex_type.equals(firstTargetData)) { // firstTargetData: ex_type 중 하나. "squat", "plank", "sideLateralRaise"
 
                     var targetInt = 0
 
-                    when (targetData) {
+                    when (secondTargetData) {
                         "ex_count" -> targetInt = exData.ex_count
                         "ex_calorie" -> targetInt = exData.ex_calorie
                         "ex_time" -> targetInt = exData.ex_time
