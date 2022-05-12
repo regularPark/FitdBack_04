@@ -85,15 +85,17 @@ class BarChartTestActivity : AppCompatActivity() {
             val lastDateOfXIndex = BarChartData.lastDateOfXIndex
             var (year: Int, month: Int, date: Int) = getYearMonthDateOfLastDate(lastDateOfXIndex)
 
-            val dateOneWeekBefore = DataBasket.getDateOneWeekBefore(year, month, date)
+            val dateOneWeekBefore =
+                DataBasket.getDateOfOneWeekBeforeOrTomorrow(year, month, date, "Before")
 
             val triple = getYearMonthDateOfLastDate(dateOneWeekBefore)
             year = triple.first
             month = triple.second
             date = triple.third
 
-            val dateListOfTargetWeek = DataBasket.getOneWeekListBeforeTheDate(year, month, date)
-            
+            val dateListOfTargetWeek =
+                DataBasket.getOneWeekListFromDate(year, month, date, "Before")
+
             updateBarChartData(dateListOfTargetWeek)
             Log.d("BarChart", "BarChartData.lastDateOfXIndex: ${BarChartData.lastDateOfXIndex}")
 
@@ -120,9 +122,43 @@ class BarChartTestActivity : AppCompatActivity() {
 
         btnShowNextWeek.setOnClickListener {
 
-//            barChart.clearValues()
-//            barChart.clear()
-//            BarChartGenerator2().runBarChart(barChart, barDataSet.yMax + 1.0f)
+            clearBarChart(barChart)
+
+            // 마지막에 저장된 X Index를 이용하여 일주일 후의 dateListOfTargetWeek을 생성
+            val lastDateOfXIndex = BarChartData.lastDateOfXIndex
+            var (year: Int, month: Int, date: Int) = getYearMonthDateOfLastDate(lastDateOfXIndex)
+
+            val dateOneWeekBefore =
+                DataBasket.getDateOfOneWeekBeforeOrTomorrow(year, month, date, "Tomorrow")
+
+            val triple = getYearMonthDateOfLastDate(dateOneWeekBefore)
+            year = triple.first
+            month = triple.second
+            date = triple.third
+
+            val dateListOfTargetWeek = DataBasket.getOneWeekListFromDate(year, month, date, "After")
+
+            updateBarChartData(dateListOfTargetWeek)
+            Log.d("BarChart", "BarChartData.lastDateOfXIndex: ${BarChartData.lastDateOfXIndex}")
+
+            // Bar Chart 용 데이터 생성
+            val dailyExCountSumBarEntry =
+                getDailySumBarEntry(dateListOfTargetWeek, "squat", "ex_count")
+
+            val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList").apply {
+
+                valueTextColor = Color.BLACK
+                valueTextSize = 10f
+                setColors(*ColorTemplate.COLORFUL_COLORS)
+
+            }
+
+            // Bar Chart 데이터 삽입
+            val data = BarData(barDataSet)
+            barChart.data = data
+
+            // Bar Chart 실행
+            BarChartGenerator2().runBarChart(barChart, barDataSet.yMax + 1.0f)
 
         }
 

@@ -185,7 +185,7 @@ class DevModeActivity : AppCompatActivity() {
                 val month = dateTextArray[1].toInt() - 1
                 val date = dateTextArray[2].toInt()
 
-                val dateList = DataBasket.getOneWeekListBeforeTheDate(year, month, date)
+                val dateList = DataBasket.getOneWeekListFromDate(year, month, date, "Before")
 
 //                Log.d("select_date", "getOneWeekFromDate() : $dateList")
                 val exerciseDataModelList = createDummyData(dateList, "squat")

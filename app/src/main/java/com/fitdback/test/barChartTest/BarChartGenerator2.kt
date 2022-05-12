@@ -82,7 +82,7 @@ class BarChartGenerator2() {
 
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
 
-            Log.d("BarChart", "MyXAxisFormatter - targetList $targetList")
+//            Log.d("BarChart", "MyXAxisFormatter - targetList $targetList")
             val index = value.toInt()
             val tempValue = targetList[index - 1] // IndexOutOfRange Error 주의
 

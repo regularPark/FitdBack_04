@@ -37,6 +37,29 @@ class DataBasket {
 
         }
 
+        @SuppressLint("SimpleDateFormat")
+        fun getDateOfOneWeekBeforeOrTomorrow(
+            year: Int,
+            month: Int,
+            date: Int,
+            BeforeOrTomorrow: String
+        ): String {
+
+            val cal = GregorianCalendar(year, month, date) // month: 0~11
+            val simpleDateFormat = SimpleDateFormat("yyMMdd")
+
+            if (BeforeOrTomorrow == "Before") {
+                cal.add(GregorianCalendar.DATE, -7)
+            }
+
+            Log.d(
+                "Date",
+                "DataBasket.getDateOneWeekBefore() : ${simpleDateFormat.format(cal.time)}"
+            )
+            return simpleDateFormat.format(cal.time)
+
+        }
+
         fun getDateListOfThisWeek(): MutableList<String> {
 
             val dateOfWeekList = mutableListOf<String>()
@@ -50,14 +73,21 @@ class DataBasket {
         }
 
         @SuppressLint("SimpleDateFormat")
-        fun getOneWeekListBeforeTheDate(year: Int, month: Int, date: Int): MutableList<String> {
+        fun getOneWeekListFromDate(
+            year: Int,
+            month: Int,
+            date: Int,
+            BeforeOrAfter: String
+        ): MutableList<String> {
 
             val dateList = mutableListOf<String>()
 
             val cal = GregorianCalendar(year, month, date) // month: 0~11
             val simpleDateFormat = SimpleDateFormat("yyMMdd")
 
-            cal.add(GregorianCalendar.DATE, -7)
+            if (BeforeOrAfter == "Before") { // "Before" 이면 6일전~오늘(7일)로 셋팅
+                cal.add(GregorianCalendar.DATE, -7)
+            }
 
             for (i in 0..6) {
                 cal.add(GregorianCalendar.DATE, +1)
@@ -67,23 +97,6 @@ class DataBasket {
             return dateList
 
         }
-
-        @SuppressLint("SimpleDateFormat")
-        fun getDateOneWeekBefore(year: Int, month: Int, date: Int): String {
-
-            val cal = GregorianCalendar(year, month, date) // month: 0~11
-            val simpleDateFormat = SimpleDateFormat("yyMMdd")
-
-            cal.add(GregorianCalendar.DATE, -7)
-
-            Log.d(
-                "Date",
-                "DataBasket.getDateOneWeekBefore() : ${simpleDateFormat.format(cal.time)}"
-            )
-            return simpleDateFormat.format(cal.time)
-
-        }
-
 
         fun getDBPath(
             node1: String,
