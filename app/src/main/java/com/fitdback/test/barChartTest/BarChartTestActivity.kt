@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.R
 import com.github.mikephil.charting.charts.BarChart
@@ -24,25 +25,22 @@ class BarChartTestActivity : AppCompatActivity() {
 
         // Bar chart Layout
         val barChart: BarChart = findViewById(R.id.barChart)
-        val btnLaunchChartAgain = findViewById<Button>(R.id.btnLaunchChartAgain)
+
+        val selectedExTypeArea = findViewById<TextView>(R.id.selectedExTypeArea)
+
+        val btnSetSquatChart = findViewById<Button>(R.id.btnSetSquatChart)
+        val btnSetPlankChart = findViewById<Button>(R.id.btnSetPlankChart)
+        val btnSetSideLateralRaiseChart = findViewById<Button>(R.id.btnSetSideLateralRaiseChart)
+
+        val btnShowThisWeek = findViewById<Button>(R.id.btnShowThisWeek)
         val btnShowPreviousWeek = findViewById<Button>(R.id.btnShowPreviousWeek)
         val btnShowNextWeek = findViewById<Button>(R.id.btnShowNextWeek)
 
-        // test sample
-        val sampleEntryList = mutableListOf<BarEntry>()
-        sampleEntryList.add(BarEntry(1f, 4f))
-        sampleEntryList.add(BarEntry(2f, 10f))
-        sampleEntryList.add(BarEntry(3f, 2f))
-        sampleEntryList.add(BarEntry(4f, 15f))
-        sampleEntryList.add(BarEntry(5f, 13f))
-        sampleEntryList.add(BarEntry(6f, 2f))
-        sampleEntryList.add(BarEntry(7f, 20f))
+        val btnShowExCalorieChart = findViewById<Button>(R.id.btnShowExCalorieChart)
+        val btnShowExCountChart = findViewById<Button>(R.id.btnShowExCountChart)
+        val btnShowExTimeChart = findViewById<Button>(R.id.btnShowExTimeChart)
 
-        /*
-            Bar Data Set을 만들기 위한 Data Entry
-         */
-
-        btnLaunchChartAgain.setOnClickListener { // 이번 주(1주일 전 ~ 오늘) 차트보기
+        btnShowThisWeek.setOnClickListener { // 이번 주(1주일 전 ~ 오늘) 차트보기
 
             // barChart 초기화
             clearBarChart(barChart)
@@ -162,6 +160,54 @@ class BarChartTestActivity : AppCompatActivity() {
 
         }
 
+        btnShowExCalorieChart.setOnClickListener {
+
+            showEachChart(barChart, "ex_calorie")
+
+        }
+
+        btnShowExCountChart.setOnClickListener {
+
+            showEachChart(barChart, "ex_count")
+
+        }
+
+        btnShowExTimeChart.setOnClickListener {
+
+            showEachChart(barChart, "ex_time")
+
+        }
+
+
+    } // end of onCreate()
+
+    @SuppressLint("LogNotTimber")
+    private fun showEachChart(barChart: BarChart, secondTargetData: String) {
+
+        /*
+            기능 : 칼로리 소모량, 운동 횟수, 운동 시간 별로 차트 보기
+            secondTargetData: "ex_count" or "ex_calorie" or "ex_time"
+         */
+
+        clearBarChart(barChart)
+
+        val dailyExCountSumBarEntry =
+            getDailySumBarEntry(BarChartData.dateListOfWeek, "squat", secondTargetData)
+
+        val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList").apply {
+
+            valueTextColor = Color.BLACK
+            valueTextSize = 10f
+            setColors(*ColorTemplate.COLORFUL_COLORS)
+
+        }
+
+        val data = BarData(barDataSet)
+        barChart.data = data
+        Log.d("BarChart", "BarChartData.lastDateOfXIndex: ${BarChartData.lastDateOfXIndex}")
+
+        BarChartGenerator2().runBarChart(barChart, barDataSet.yMax + 1.0f)
+
     }
 
     private fun getYearMonthDateOfLastDate(lastDateOfXIndex: String): Triple<Int, Int, Int> {
@@ -194,7 +240,7 @@ class BarChartTestActivity : AppCompatActivity() {
         /*
         dataSnapshot: 이미 로드한 Firebase DataSnapshot (users/ex_data)
         firstTargetData: ex_type 중 하나. "squat", "plank", "sideLateralRaise"
-        secondtargetData: "ex_count", "ex_calorie", "ex_time"
+        secondTargetData: "ex_count", "ex_calorie", "ex_time"
          */
 
         val dailySumBarEntry = mutableListOf<BarEntry>()
