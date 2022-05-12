@@ -15,6 +15,8 @@ import com.fitdback.userinterface.fragment.MyPageFragment
 import com.fitdback.userinterface.fragment.MyTownFragment
 import com.fitdback.userinterface.fragment.StatisticFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.skydoves.transformationlayout.onTransformationEndContainer
+import com.skydoves.transformationlayout.onTransformationStartContainer
 
 class MainTestActivity : AppCompatActivity() {
 
