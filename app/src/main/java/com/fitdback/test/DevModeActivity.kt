@@ -28,6 +28,7 @@ class DevModeActivity : AppCompatActivity() {
 
     private lateinit var firebaseAuth: FirebaseAuth
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -151,7 +152,12 @@ class DevModeActivity : AppCompatActivity() {
             val btnSelectDate = mAlertDialog!!.findViewById<Button>(R.id.btnSelectFirstDate)
 //            val btnSelectSecondDate = mAlertDialog.findViewById<Button>(R.id.btnSelectSecondDate)
             val btnDBDummyDataWrite = mAlertDialog.findViewById<Button>(R.id.btnDBDummyDataWrite)
+            val btnSetExTypeToSquat = mAlertDialog.findViewById<Button>(R.id.btnSetExTypeToSquat)
+            val btnSetExTypeToPlank = mAlertDialog.findViewById<Button>(R.id.btnSetExTypeToPlank)
+            val btnSetExTypeToSideLateralRaise = mAlertDialog.findViewById<Button>(R.id.btnSetExTypeToSideLateralRaise)
 //            var dateText: String = ""
+
+            var selectedExType: String? = null
 
             btnSelectDate?.setOnClickListener {
 
@@ -177,6 +183,27 @@ class DevModeActivity : AppCompatActivity() {
 
             }
 
+            btnSetExTypeToSquat?.setOnClickListener{
+
+                selectedExType = "squat"
+                btnDBDummyDataWrite!!.setText("일주일 전부터 위 날짜까지 $selectedExType 데이터 생성")
+
+            }
+
+            btnSetExTypeToPlank?.setOnClickListener{
+
+                selectedExType = "plank"
+                btnDBDummyDataWrite?.text = "일주일 전부터 위 날짜까지 $selectedExType 데이터 생성"
+
+            }
+
+            btnSetExTypeToSideLateralRaise?.setOnClickListener{
+
+                selectedExType = "sideLateralRaise"
+                btnDBDummyDataWrite?.text = "6일전부터 위 날짜까지 $selectedExType 데이터 생성"
+
+            }
+
             btnDBDummyDataWrite?.setOnClickListener {
 
                 val dateTextArray = btnSelectDate?.text!!.split(",").toMutableList()
@@ -188,7 +215,7 @@ class DevModeActivity : AppCompatActivity() {
                 val dateList = DataBasket.getOneWeekListFromDate(year, month, date, "Before")
 
 //                Log.d("select_date", "getOneWeekFromDate() : $dateList")
-                val exerciseDataModelList = createDummyData(dateList, "squat")
+                val exerciseDataModelList = createDummyData(dateList, selectedExType!!)
 //                Log.d("dummy", "exerciseDataModelList $exerciseDataModelList")
 
                 val dbPath = DataBasket.getDBPath("users", "ex_data", true)
@@ -203,7 +230,6 @@ class DevModeActivity : AppCompatActivity() {
                         .addOnFailureListener {
                             Toast.makeText(this, "데이터가 저장실패", Toast.LENGTH_SHORT).show()
                         }
-
                 }
 
 

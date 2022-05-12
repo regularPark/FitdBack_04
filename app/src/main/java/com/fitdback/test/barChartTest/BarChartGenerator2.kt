@@ -78,7 +78,7 @@ class BarChartGenerator2() {
 
     inner class MyXAxisFormatter : IndexAxisValueFormatter() {
 
-        private val targetList: MutableList<String> = BarChartData.dateListOfWeek
+        private val targetList: MutableList<String> = BarChartVariables.dateListOfWeek
 
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
 
