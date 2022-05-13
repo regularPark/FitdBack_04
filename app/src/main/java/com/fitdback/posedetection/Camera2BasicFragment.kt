@@ -280,7 +280,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
 
                                 // 데이터 모델 생성
                                 val exerciseDataModel = ExerciseDataModel(
-                                        DataBasket.getDateOfToday(),
+                                        DataBasket.getDateOfDay(0),
                                         FeedbackAlgorithm.exr_mode,
                                         FeedbackAlgorithm.exr_time_result,
                                         FeedbackAlgorithm.exr_cnt,
