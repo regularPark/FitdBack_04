@@ -82,9 +82,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private var radiogroup: RadioGroup? = null
     private var countView: TextView? = null
     private var countTimer: TextView? = null
-    private var countTimer:TextView? = null
-    private var prgBar:ProgressBar? = null
-
+    private var prgBar: ProgressBar? = null
 
 
     /**
@@ -258,15 +256,15 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                     Handler().postDelayed(
                             {
 
-                            // 데이터 모델 생성
-                            val exerciseDataModel = ExerciseDataModel(
-                                DataBasket.getDateOfDay(0), // 오늘 날짜
-                                FeedbackAlgorithm.exr_mode,
-                                FeedbackAlgorithm.exr_time_result,
-                                FeedbackAlgorithm.exr_cnt,
-                                FeedbackAlgorithm.exr_cnt_s,
-                                FeedbackAlgorithm.exr_cal.toInt()
-                            )
+                                // 데이터 모델 생성
+                                val exerciseDataModel = ExerciseDataModel(
+                                        DataBasket.getDateOfDay(0), // 오늘 날짜
+                                        FeedbackAlgorithm.exr_mode,
+                                        FeedbackAlgorithm.exr_time_result,
+                                        FeedbackAlgorithm.exr_cnt,
+                                        FeedbackAlgorithm.exr_cnt_s,
+                                        FeedbackAlgorithm.exr_cal.toInt()
+                                )
 
                                 DataBasket.tempExrModel = exerciseDataModel
 
@@ -309,7 +307,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
 
                                 // 데이터 모델 생성
                                 val exerciseDataModel = ExerciseDataModel(
-                                        DataBasket.getDateOfToday(),
+                                        DataBasket.getDateOfDay(0),
                                         FeedbackAlgorithm.exr_mode,
                                         FeedbackAlgorithm.exr_time_result,
                                         FeedbackAlgorithm.exr_cnt,
@@ -478,7 +476,6 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
      * @param width  The width of available size for camera preview
      * @param height The height of available size for camera preview
      */
-
 
 
     private fun setUpCameraOutputs(

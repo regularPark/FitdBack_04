@@ -44,9 +44,9 @@ class StatisticFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.fragment_statistic, container, false)
+        return inflater.inflate(R.layout.fragment_statistic, container, false)
 
-        val barChart: BarChart = view.findViewById(R.id.barChart_frag) // barChart 생성
+        /*val barChart: BarChart = view.findViewById(R.id.barChart_frag) // barChart 생성
 
         // 사용할 데이터
 //        val entryList = mutableListOf<BarEntry>()
@@ -115,7 +115,8 @@ class StatisticFragment : Fragment() {
             xValue += 1f
         }
 
-        return dailySumBarEntry
+        return dailySumBarEntry*/
+
     }
 
     companion object {
