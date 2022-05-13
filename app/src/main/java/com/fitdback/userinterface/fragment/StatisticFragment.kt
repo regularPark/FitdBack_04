@@ -13,6 +13,8 @@ import android.widget.TextView
 import android.widget.Toast
 import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.R
+import com.fitdback.test.barChartTest.BarChartVariables
+import com.fitdback.test.barChartTest.MyBarChartGenerator
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -55,6 +57,7 @@ class StatisticFragment : Fragment() {
 
         val selectedExTypeArea = view.findViewById<TextView>(R.id.selectedExTypeArea)
         val selectedDataArea = view.findViewById<TextView>(R.id.selectedDataArea)
+        val yAxisTitleArea = view.findViewById<TextView>(R.id.yAxisTitleArea)
 
         val btnSetSquatChart = view.findViewById<Button>(R.id.btnSetSquatChart)
         val btnSetPlankChart = view.findViewById<Button>(R.id.btnSetPlankChart)
@@ -109,6 +112,9 @@ class StatisticFragment : Fragment() {
                 // barChart 초기화
                 clearBarChart(barChart)
 
+                // yAxis Title
+                setYAxisTitle(yAxisTitleArea)
+
                 // 보고자 하는 날짜 리스트
                 val dateListOfTargetWeek = DataBasket.getDateListOfThisWeek()
                 updateBarChartData(dateListOfTargetWeek) // BarChartVariables 클래스의 전역변수 update
@@ -126,15 +132,11 @@ class StatisticFragment : Fragment() {
                         BarChartVariables.secondTargetData!!
                     )
 
+
                 // 실제 Bar Data Set 생성.
                 // dailyExCountSumBarEntry 또는 dailyExCalorieSumBarEntry 로 argument변경하여 사용
-                val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList").apply {
-
-                    valueTextColor = Color.BLACK
-                    valueTextSize = 10f
-                    setColors(*ColorTemplate.COLORFUL_COLORS)
-
-                }
+                val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList")
+                setExpressedDataFormat(barDataSet)
 
                 // Bar Chart 데이터 삽입
                 val data = BarData(barDataSet)
@@ -145,7 +147,7 @@ class StatisticFragment : Fragment() {
                 )
 
                 // Bar Chart 실행
-                BarChartGenerator2().runBarChart(barChart, barDataSet.yMax + 1.0f)
+                MyBarChartGenerator().runBarChart(barChart, barDataSet.yMax + 1.0f)
 
             }
 
@@ -161,6 +163,9 @@ class StatisticFragment : Fragment() {
             } else {
 
                 clearBarChart(barChart)
+
+                // yAxis Title
+                setYAxisTitle(yAxisTitleArea)
 
                 // 마지막에 저장된 X Index를 이용하여 일주일 전의 dateListOfTargetWeek을 생성
                 val lastDateOfXIndex = BarChartVariables.lastDateOfXIndex
@@ -191,20 +196,15 @@ class StatisticFragment : Fragment() {
                         BarChartVariables.secondTargetData!!
                     )
 
-                val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList").apply {
-
-                    valueTextColor = Color.BLACK
-                    valueTextSize = 10f
-                    setColors(*ColorTemplate.COLORFUL_COLORS)
-
-                }
+                val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList")
+                setExpressedDataFormat(barDataSet)
 
                 // Bar Chart 데이터 삽입
                 val data = BarData(barDataSet)
                 barChart.data = data
 
                 // Bar Chart 실행
-                BarChartGenerator2().runBarChart(barChart, barDataSet.yMax + 1.0f)
+                MyBarChartGenerator().runBarChart(barChart, barDataSet.yMax + 1.0f)
 
             }
 
@@ -220,6 +220,9 @@ class StatisticFragment : Fragment() {
             } else {
 
                 clearBarChart(barChart)
+
+                // yAxis Title
+                setYAxisTitle(yAxisTitleArea)
 
                 // 마지막에 저장된 X Index를 이용하여 일주일 후의 dateListOfTargetWeek을 생성
                 val lastDateOfXIndex = BarChartVariables.lastDateOfXIndex
@@ -250,28 +253,33 @@ class StatisticFragment : Fragment() {
                         BarChartVariables.secondTargetData!!
                     )
 
-                val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList").apply {
-
-                    valueTextColor = Color.BLACK
-                    valueTextSize = 10f
-                    setColors(*ColorTemplate.COLORFUL_COLORS)
-
-                }
+                val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList")
+                setExpressedDataFormat(barDataSet)
 
                 // Bar Chart 데이터 삽입
                 val data = BarData(barDataSet)
                 barChart.data = data
 
                 // Bar Chart 실행
-                BarChartGenerator2().runBarChart(barChart, barDataSet.yMax + 1.0f)
+                MyBarChartGenerator().runBarChart(barChart, barDataSet.yMax + 1.0f)
 
             }
 
         }
 
+
         return view
     }
 
+
+    private fun setYAxisTitle(yAxisTitleArea: TextView) {
+        yAxisTitleArea.text = when (BarChartVariables.secondTargetData) {
+            "ex_count" -> "개수"
+            "ex_calorie" -> "kcal"
+            "ex_time" -> "시간"
+            else -> "오류"
+        }
+    }
 
     private fun setFirstTargetData(firstTargetData: String, selectedExTypeArea: TextView) {
         BarChartVariables.firstTargetData = firstTargetData
@@ -311,7 +319,7 @@ class StatisticFragment : Fragment() {
             "BarChartVariables.lastDateOfXIndex: ${BarChartVariables.lastDateOfXIndex}"
         )
 
-        BarChartGenerator2().runBarChart(barChart, barDataSet.yMax + 1.0f)
+        MyBarChartGenerator().runBarChart(barChart, barDataSet.yMax + 1.0f)
 
     }
 
@@ -367,6 +375,19 @@ class StatisticFragment : Fragment() {
         }
 
         return dailySumBarEntry
+    }
+
+    private fun setExpressedDataFormat(barDataSet: BarDataSet) {
+
+        barDataSet.apply {
+
+            valueTextColor = Color.BLACK
+            valueTextSize = 10f
+            setColors(*ColorTemplate.COLORFUL_COLORS)
+            valueFormatter = BarChartVariables.expressedDataFormatter // 데이터 소수점 표기 -> 정수 표기
+
+        }
+
     }
 
     companion object {
