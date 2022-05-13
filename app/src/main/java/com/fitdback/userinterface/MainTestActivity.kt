@@ -13,7 +13,10 @@ import com.fitdback.posedetection.R
 import com.fitdback.userinterface.fragment.HomeFragment
 import com.fitdback.userinterface.fragment.MyPageFragment
 import com.fitdback.userinterface.fragment.MyTownFragment
+import com.fitdback.userinterface.fragment.StatisticFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.skydoves.transformationlayout.onTransformationEndContainer
+import com.skydoves.transformationlayout.onTransformationStartContainer
 
 class MainTestActivity : AppCompatActivity() {
 
@@ -34,6 +37,7 @@ class MainTestActivity : AppCompatActivity() {
                     bn.selectedItemId = when (position) {
                         0 ->R.id.menu_home
                         1 ->R.id.menu_mytown
+                        2 ->R.id.menu_stat
                         else -> R.id.menu_mypage
                     }
                 }
@@ -44,19 +48,21 @@ class MainTestActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.menu_home -> vp.currentItem = 0
                 R.id.menu_mytown -> vp.currentItem = 1
-                else -> vp.currentItem = 2
+                R.id.menu_stat -> vp.currentItem = 2
+                else -> vp.currentItem = 3
             }
             true
         }
     }
 
     inner class ViewPagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-        override fun getItemCount() = 3
+        override fun getItemCount() = 4
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
                 0 -> HomeFragment()
                 1 -> MyTownFragment()
+                2 -> StatisticFragment()
                 else -> MyPageFragment()
             }
         }

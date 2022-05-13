@@ -38,6 +38,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical" />
 
+
+
         <!--<com.mikhaellopez.circularprogressbar.CircularProgressBar
             android:id="@+id/cntBar"
             android:layout_marginRight="10dp"
@@ -175,15 +177,30 @@
 
     <TextView
         android:id="@+id/cntDown"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="600dp"
-        android:textColor="#9B111E"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="#d95652"
         android:textSize="30sp"
-        android:layout_marginLeft="20dp"
-        tools:text="countDown"
-        />
-<!--    CPU / GPU 활성 버튼 -->
+        android:textStyle="bold"
+        tools:text="countDown" />
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="90dp"
+        android:indeterminate="false"
+        android:max="5"
+        android:progressBackgroundTint="#FBE7C6"
+        android:progressDrawable="@drawable/circle_progressbar"
+        android:progressTint="#edbf41" />
+
+
+    <!--    CPU / GPU 활성 버튼 -->
 
 <!--    <RadioGroup-->
 <!--        android:id="@+id/radiogroup"-->

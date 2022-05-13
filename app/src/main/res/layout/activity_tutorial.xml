@@ -33,12 +33,20 @@
 
             <Button
                 android:id="@+id/btnFitnessStart"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="100dp"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="start !"
+                android:text="전면 카메라 사용"
                 android:textSize="30sp"
                 android:textStyle="bold" />
+            <Button
+                android:id="@+id/btnFitnessStartBack"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="후면 카메라 사용"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                />
         </LinearLayout>
 
     </ScrollView>

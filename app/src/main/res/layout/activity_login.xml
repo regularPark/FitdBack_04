@@ -21,50 +21,69 @@
         android:layout_margin="20dp"
         android:hint="password"
         android:inputType="textPassword" />
-
-    <Button
-        android:id="@+id/btnLogin"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:layout_marginHorizontal="20dp"
-        android:text="Sign In"
-        android:textSize="30sp" />
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_radius_color"
+                android:textColor="@color/white"
+                android:text="Sign In"
+                android:textSize="30sp" />
 
-    <Button
-        android:id="@+id/btnJoin"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:layout_marginHorizontal="20dp"
-        android:text="Join"
+            <Button
+                android:id="@+id/btnJoin"
+                android:layout_width="match_parent"
+                android:background="@drawable/button_radius_color_3"
+                android:textColor="@color/white"
+                android:layout_height="70dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:text="Join"
 
-        android:textSize="30sp" />
+                android:textSize="30sp" />
 
-    <Button
-        android:id="@+id/btnAnonymousLogin"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:layout_marginHorizontal="20dp"
-        android:text="Anonymous"
+            <Button
+                android:id="@+id/btnAnonymousLogin"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@drawable/button_radius_color"
+                android:textColor="@color/white"
+                android:text="Anonymous"
 
-        android:textSize="30sp" />
+                android:textSize="30sp" />
 
-    <Button
-        android:id="@+id/btnDevLogin"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:layout_marginHorizontal="20dp"
-        android:text="Dev Login"
-        android:textAllCaps="false"
-        android:textSize="30sp" />
+            <Button
+                android:id="@+id/btnDevLogin"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:text="Dev Login"
+                android:background="@drawable/button_radius_color"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:textSize="30sp" />
 
-    <Button
-        android:id="@+id/btnRunBarChart"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginHorizontal="20dp"
-        android:text="Bar Chart"
-        android:textAllCaps="false"
-        android:textSize="15sp" />
-
+            <Button
+                android:id="@+id/btnRunBarChart"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginHorizontal="20dp"
+                android:text="Bar Chart"
+                android:textAllCaps="false"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
