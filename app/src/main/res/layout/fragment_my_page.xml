@@ -25,10 +25,11 @@
                 <!--프로필 사진-->
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profileImg"
-                    android:layout_width="150sp"
-                    android:layout_height="150sp"
+                    android:layout_width="100sp"
+                    android:layout_height="100sp"
                     android:layout_column="0"
-                    android:layout_margin="10sp"
+                    android:layout_marginTop="30sp"
+                    android:layout_marginLeft="30sp"
                     android:background="@android:color/transparent"
                     android:src="@drawable/profile_default"
                     app:civ_border_color="#808080"

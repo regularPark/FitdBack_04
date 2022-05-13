@@ -1,23 +1,21 @@
 package com.fitdback.test
 
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.fitdback.database.DataBasket
 import com.fitdback.database.datamodel.ExerciseDataModel
 import com.fitdback.posedetection.R
 import com.fitdback.test.barChartTest.BarChartTestActivity
-import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.formatter.ValueFormatter
-import com.fitdback.userinterface.MainTestActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.util.*
 
 
 /*
@@ -25,10 +23,12 @@ import com.google.firebase.ktx.Firebase
 - 기능 테스트 용도
  */
 
+@SuppressLint("LogNotTimber")
 class DevModeActivity : AppCompatActivity() {
 
     private lateinit var firebaseAuth: FirebaseAuth
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -45,7 +45,7 @@ class DevModeActivity : AppCompatActivity() {
         val btnFeedbackTest = findViewById<Button>(R.id.btnFeedbackTest)
         val btnDataReadTest = findViewById<Button>(R.id.btnDataReadTest)
         val btnBarChartTest = findViewById<Button>(R.id.btnBarChartTest)
-        val btnBarChartTest2 = findViewById<Button>(R.id.btnBarChartTest2)
+        val btnCreateDummyData = findViewById<Button>(R.id.btnCreateDummyData)
 
         // Intent
         val toHealthMemoTestActivity = Intent(this, HealthMemoTestActivity::class.java)
@@ -124,12 +124,8 @@ class DevModeActivity : AppCompatActivity() {
 
         }
 
-
-
-
         // barChart manipulation Test
-
-        btnBarChartTest2.setOnClickListener {
+        btnBarChartTest.setOnClickListener {
 
             val dbPath = DataBasket.getDBPath("users", "ex_data", true)
             DataBasket.getDataFromFB(dbPath!!, "individualExData")
@@ -140,20 +136,184 @@ class DevModeActivity : AppCompatActivity() {
 
         }
 
-    }
+        /*
+           Create Dummy Data
+
+           다이얼로그가 떠서 -> 날짜 선택
+            -> 해당하는 날짜 길이만큼 날짜 List 로드.
+            -> 랜덤을 이용하여 ExerciseDataModel을 날짜 개수 만큼 만듦(리스트에 저장)
+            -> 해당 리스트를 하나씩 DB에 write
+
+         */
+        btnCreateDummyData.setOnClickListener {
+
+            val dialog = CustomDialog(this, R.layout.dialog_create_dummy_data, "testing")
+            val mAlertDialog = dialog.showDialog()
+            val btnSelectDate = mAlertDialog!!.findViewById<Button>(R.id.btnSelectFirstDate)
+//            val btnSelectSecondDate = mAlertDialog.findViewById<Button>(R.id.btnSelectSecondDate)
+            val btnDBDummyDataWrite = mAlertDialog.findViewById<Button>(R.id.btnDBDummyDataWrite)
+            val btnSetExTypeToSquat = mAlertDialog.findViewById<Button>(R.id.btnSetExTypeToSquat)
+            val btnSetExTypeToPlank = mAlertDialog.findViewById<Button>(R.id.btnSetExTypeToPlank)
+            val btnSetExTypeToSideLateralRaise = mAlertDialog.findViewById<Button>(R.id.btnSetExTypeToSideLateralRaise)
+//            var dateText: String = ""
+
+            var selectedExType: String? = null
+
+            btnSelectDate?.setOnClickListener {
+
+                val today = GregorianCalendar()
+                val year: Int = today.get(Calendar.YEAR)
+                val month: Int = today.get(Calendar.MONTH)
+                val date: Int = today.get(Calendar.DATE)
+
+                val dlg = DatePickerDialog(this, object : DatePickerDialog.OnDateSetListener {
+                    override fun onDateSet(
+                        view: DatePicker?,
+                        year: Int,
+                        month: Int,
+                        dayOfMonth: Int
+                    ) {
+                        btnSelectDate.text = "${year},${month + 1},${dayOfMonth}"
+//                        dateText = "${year}${month}${dayOfMonth}"
+                    }
+
+                }, year, month, date)
+
+                dlg.show()
+
+            }
+
+            btnSetExTypeToSquat?.setOnClickListener{
+
+                selectedExType = "squat"
+                btnDBDummyDataWrite!!.setText("일주일 전부터 위 날짜까지 $selectedExType 데이터 생성")
+
+            }
+
+            btnSetExTypeToPlank?.setOnClickListener{
+
+                selectedExType = "plank"
+                btnDBDummyDataWrite?.text = "일주일 전부터 위 날짜까지 $selectedExType 데이터 생성"
+
+            }
+
+            btnSetExTypeToSideLateralRaise?.setOnClickListener{
+
+                selectedExType = "sideLateralRaise"
+                btnDBDummyDataWrite?.text = "6일전부터 위 날짜까지 $selectedExType 데이터 생성"
+
+            }
+
+            btnDBDummyDataWrite?.setOnClickListener {
+
+                val dateTextArray = btnSelectDate?.text!!.split(",").toMutableList()
+
+                val year = dateTextArray[0].toInt()
+                val month = dateTextArray[1].toInt() - 1
+                val date = dateTextArray[2].toInt()
+
+                val dateList = DataBasket.getOneWeekListFromDate(year, month, date, "Before")
+
+//                Log.d("select_date", "getOneWeekFromDate() : $dateList")
+                val exerciseDataModelList = createDummyData(dateList, selectedExType!!)
+//                Log.d("dummy", "exerciseDataModelList $exerciseDataModelList")
+
+                val dbPath = DataBasket.getDBPath("users", "ex_data", true)
+
+                // DB Writing
+                for (dataModel in exerciseDataModelList) {
+                    dbPath!!.push().setValue(dataModel)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "${dataModel.ex_date} 데이터 저장완료.", Toast.LENGTH_SHORT).show()
+                            mAlertDialog.dismiss()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this, "데이터가 저장실패", Toast.LENGTH_SHORT).show()
+                        }
+                }
 
 
-    inner class MyXAxisFormatter : ValueFormatter() {
-        private val days = arrayOf("1차", "2차", "3차", "4차", "5차", "6차", "7차")
-        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
-            return days.getOrNull(value.toInt() - 1) ?: value.toString()
+            }
+
         }
+
+
     }
 
+//    @SuppressLint("SimpleDateFormat")
+//    private fun getOneWeekFromDate(year: Int, month: Int, date: Int): MutableList<String> {
+//
+//        val dateList = mutableListOf<String>()
+//
+//        val cal = GregorianCalendar(year, month, date) // month: 0~11
+//        val simpleDateFormat = SimpleDateFormat("yyMMdd")
+//
+//        cal.add(GregorianCalendar.DATE, -7)
+//
+//        for (i in 0..6) {
+//            cal.add(GregorianCalendar.DATE, +1)
+//            dateList.add(simpleDateFormat.format(cal.time))
+//        }
+//
+//        return dateList
+//
+//    }
 
-    override fun onBackPressed() {
-        startActivity(Intent(this, MainTestActivity::class.java))
-        finish()
+    // 운동 데이터 모델을 firebase에 write
+    /*
+        squat 개수를 랜덤으로 생성 (10 ~ 50개)
+            운동시간은 개수의 2배
+            성공 개수는 개수의 1/2배
+            운동시간은 개수의 2.0배 ~ 3.0배
+        Firebase에 저장 
+     */
+    private fun createDummyData(
+        dateList: MutableList<String>,
+        exType: String
+    ): MutableList<ExerciseDataModel> {
+
+        val exerciseDataModelList = mutableListOf<ExerciseDataModel>()
+
+        for (i in 0..6) {
+            val exDate = dateList[i]
+            val exCount = rand(10, 50, "int")[0].toInt()
+            val exTime = (exCount.toFloat() * rand(4, 0, "float")[0].toFloat()).toInt()
+            val exSuccessCount = (exCount * 0.5).toInt()
+            val exCalorie = (exCount * 0.5).toInt()
+
+            val exerciseDataModel =
+                ExerciseDataModel(
+                    exDate,
+                    exType,
+                    exTime,
+                    exCount,
+                    exSuccessCount,
+                    exCalorie
+                )
+            exerciseDataModelList.add(exerciseDataModel)
+        }
+
+        Log.d("dummy", "exerciseDataModelList $exerciseDataModelList")
+        return exerciseDataModelList
+
+    }
+
+    private fun rand(
+        from: Int,
+        to: Int,
+        type: String
+    ): MutableList<String> { // from ~ to 사이의 정수를 출력
+
+        val random = Random()
+        val mutableList = mutableListOf<String>()
+
+        when (type) {
+            "int" -> mutableList.add((random.nextInt(to - from) + from).toString())
+            "float" -> mutableList.add((random.nextFloat() + from.toFloat()).toString())
+        }
+
+        return mutableList
+
     }
 
 }

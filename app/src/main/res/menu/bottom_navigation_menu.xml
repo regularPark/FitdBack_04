@@ -9,12 +9,17 @@
         />
 
     <item
-        android:title="MyTown"
+        android:title="Friends"
         android:enabled="true"
-        android:icon="@drawable/ic_chart"
+        android:icon="@drawable/ic_users"
         android:id="@+id/menu_mytown"
         />
-
+    <item
+        android:title="Statistic"
+        android:enabled="true"
+        android:icon="@drawable/ic_chart"
+        android:id="@+id/menu_stat"
+        />
     <item
         android:title="MyPage"
         android:enabled="true"

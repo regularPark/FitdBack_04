@@ -15,12 +15,17 @@ class TutorialActivity : YouTubeBaseActivity() {
 
     val api_key = "AIzaSyD-RJXgEjAgWZsO1LAO5sIgrpFob8k2qEk"
     val videoId = "5_SIHTd6Pqo"
-
+    companion object{
+        var cameramode : String = "back"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tutorial)
+
+        // 프래그먼트로 데이터 전송
+        var bundle : Bundle = Bundle()
 
         // 유튜브
         val youtubeView = findViewById<YouTubePlayerView>(R.id.youtubePlayer)
@@ -68,6 +73,15 @@ class TutorialActivity : YouTubeBaseActivity() {
         // btnFitnessStart 버튼을 클릭하여 CameraActivity 실행
         btnFitnessStart.setOnClickListener {
             intent.putExtra("exr_mod",exr)
+            cameramode = "back"
+            startActivity(intent)
+        }
+
+        val btnFitnessStartFront = findViewById<Button>(R.id.btnFitnessStartBack)
+
+        btnFitnessStartFront.setOnClickListener {
+            intent.putExtra("exr_mod",exr)
+            cameramode = "front"
             startActivity(intent)
         }
 

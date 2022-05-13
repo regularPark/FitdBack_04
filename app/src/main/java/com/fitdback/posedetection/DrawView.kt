@@ -41,25 +41,25 @@ class DrawView : View {
     private var mImgHeight: Int = 0
 
     private val mColorArray = intArrayOf(
-            resources.getColor(R.color.color_top, null),
-            resources.getColor(R.color.color_neck, null),
-            resources.getColor(R.color.color_l_shoulder, null),
-            resources.getColor(R.color.color_l_elbow, null),
-            resources.getColor(R.color.color_l_wrist, null),
-            resources.getColor(R.color.color_r_shoulder, null),
-            resources.getColor(R.color.color_r_elbow, null),
-            resources.getColor(R.color.color_r_wrist, null),
-            resources.getColor(R.color.color_l_hip, null),
-            resources.getColor(R.color.color_l_knee, null),
-            resources.getColor(R.color.color_l_ankle, null),
-            resources.getColor(R.color.color_r_hip, null),
-            resources.getColor(R.color.color_r_knee, null),
-            resources.getColor(R.color.color_r_ankle, null),
-            resources.getColor(R.color.color_background, null)
+        resources.getColor(R.color.color_top, null),        // 0
+        resources.getColor(R.color.color_neck, null),       // 1
+        resources.getColor(R.color.color_l_shoulder, null), // 2
+        resources.getColor(R.color.color_l_elbow, null),    // 3
+        resources.getColor(R.color.color_l_wrist, null),    // 4
+        resources.getColor(R.color.color_r_shoulder, null), // 5
+        resources.getColor(R.color.color_r_elbow, null),    // 6
+        resources.getColor(R.color.color_r_wrist, null),    // 7
+        resources.getColor(R.color.color_l_hip, null),      // 8
+        resources.getColor(R.color.color_l_knee, null),     // 9
+        resources.getColor(R.color.color_l_ankle, null),    // 10
+        resources.getColor(R.color.color_r_hip, null),      // 11
+        resources.getColor(R.color.color_r_knee, null),     // 12
+        resources.getColor(R.color.color_r_ankle, null),    // 13
+        resources.getColor(R.color.color_background, null)
     )
 
     private val circleRadius: Float by lazy {
-        dip(3).toFloat()
+        dip(2).toFloat()
     }
 
     private val mPaint: Paint by lazy {
@@ -138,43 +138,57 @@ class DrawView : View {
         mPaint.color = 0xfffaff0d.toInt() //  목윗부분 color
         val p1 = mDrawPoint[1]
         for ((index, pointF) in mDrawPoint.withIndex()) {
-            if (index == 1) continue
-            when (index) {
-                //0-1
-                0 -> {
-                    canvas.drawLine(pointF.x, pointF.y, p1.x, p1.y, mPaint)
-                }
-                // 1-2, 1-5, 1-8, 1-11
-                2, 5, 8, 11 -> {
-                    mPaint.color = 0xfffaff0d.toInt()
-                    canvas.drawLine(p1.x, p1.y, pointF.x, pointF.y, mPaint)
-                }
-                /*else -> {
+            // 관절 튈 때 그리지 않는 방법
+            if (mDrawPoint[13].y > mDrawPoint[2].y && mDrawPoint[13].y > mDrawPoint[5].y &&
+                mDrawPoint[10].y > mDrawPoint[5].y && mDrawPoint[10].y > mDrawPoint[2].y) {
+                if (index == 1) continue
+                when (index) {
+                    //0-1
+                    0 -> {
+                        canvas.drawLine(pointF.x, pointF.y, p1.x, p1.y, mPaint)
+                        Log.d("머리", mDrawPoint[0].y.toString())
+                        Log.d("발", mDrawPoint[13].y.toString())
+                    }
+                    // 1-2, 1-5, 1-8, 1-11
+                    2, 5, 8, 11 -> {
+                        mPaint.color = 0xfffaff0d.toInt()
+                        canvas.drawLine(p1.x, p1.y, pointF.x, pointF.y, mPaint)
+                    }
+                    /*else -> {
                     if (prePointF != null) {
                         mPaint.color = 0xfffaff0d.toInt() // skeleton 색상 지정
                         canvas.drawLine(prePointF.x, prePointF.y, pointF.x, pointF.y, mPaint)
                     }
                 }*/
-                9, 10 -> {
-                    if (prePointF != null) {
-                        mPaint.color = 0xffff0000.toInt() // skeleton 색상 지정
-                        canvas.drawLine(prePointF.x, prePointF.y, pointF.x, pointF.y, mPaint)
+                    9, 10 -> {
+                        if (prePointF != null) {
+                            mPaint.color = 0xffff0000.toInt() // skeleton 색상 지정
+                            canvas.drawLine(prePointF.x, prePointF.y, pointF.x, pointF.y, mPaint)
+                        }
+                    }
+                    else -> {
+                        if (prePointF != null) {
+                            mPaint.color = 0xfffaff0d.toInt() // skeleton 색상 지정
+                            canvas.drawLine(prePointF.x, prePointF.y, pointF.x, pointF.y, mPaint)
+                        }
                     }
                 }
-                else -> {
-                    if (prePointF != null) {
-                        mPaint.color = 0xfffaff0d.toInt() // skeleton 색상 지정
-                        canvas.drawLine(prePointF.x, prePointF.y, pointF.x, pointF.y, mPaint)
-                    }
-                }
+                prePointF = pointF
             }
-            prePointF = pointF
         }
 
+        // 점 그리기
+
         for ((index, pointF) in mDrawPoint.withIndex()) {
-            mPaint.color = mColorArray[index]
-            canvas.drawCircle(pointF.x, pointF.y, circleRadius, mPaint)
+            if (mDrawPoint[13].y > mDrawPoint[2].y && mDrawPoint[13].y > mDrawPoint[5].y &&
+                mDrawPoint[10].y > mDrawPoint[5].y && mDrawPoint[10].y > mDrawPoint[2].y) {
+                mPaint.color = mColorArray[index]
+                canvas.drawCircle(pointF.x, pointF.y, circleRadius, mPaint)
+            }
         }
+
+
+
 
         // FeedBack 알고리즘
         if (FeedbackAlgorithm.isPlaying) {

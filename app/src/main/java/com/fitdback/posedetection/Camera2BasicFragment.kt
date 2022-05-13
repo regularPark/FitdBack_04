@@ -30,9 +30,11 @@ import android.hardware.camera2.CameraCaptureSession
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraDevice
 import android.hardware.camera2.CameraManager
+import android.hardware.camera2.CameraMetadata.LENS_FACING_BACK
 import android.hardware.camera2.CaptureRequest
 import android.hardware.camera2.CaptureResult
 import android.hardware.camera2.TotalCaptureResult
+import android.media.ExifInterface
 import android.media.ImageReader
 import android.os.Bundle
 import android.os.Handler
@@ -41,19 +43,19 @@ import androidx.legacy.app.FragmentCompat
 import androidx.core.content.ContextCompat
 import android.util.Log
 import android.util.Size
+import android.util.SparseIntArray
 import android.view.LayoutInflater
 import android.view.Surface
 import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioGroup
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.fitdback.algorithm.FeedbackAlgorithm
 import com.fitdback.database.DataBasket
 import com.fitdback.database.datamodel.ExerciseDataModel
 import com.fitdback.userinterface.FeedbackActivity
 import com.fitdback.userinterface.TimerClass
+import com.fitdback.userinterface.TutorialActivity
 import java.io.IOException
 import java.lang.Long
 import java.util.ArrayList
@@ -80,6 +82,9 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private var radiogroup: RadioGroup? = null
     private var countView: TextView? = null
     private var countTimer: TextView? = null
+    private var countTimer:TextView? = null
+    private var prgBar:ProgressBar? = null
+
 
 
     /**
@@ -351,10 +356,17 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         if (text <= 0) {
             activity?.runOnUiThread {
                 countTimer!!.text = "운동 시작!"
+                prgBar!!.visibility = View.INVISIBLE
+                drawView!!.visibility = View.VISIBLE
+                Handler().postDelayed(
+                        { countTimer!!.visibility = View.INVISIBLE },
+                        1000
+                )
             }
         } else {
             activity?.runOnUiThread {
-                countTimer!!.text = text.toString() + "초 후 운동 시작"
+                countTimer!!.text = "정확한 측정을 위해\n전신이 보이도록 뒤로 물러나 주세요\n\n\n" + text.toString()
+                drawView!!.visibility = View.INVISIBLE
             }
         }
     }
@@ -368,6 +380,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+
         return inflater.inflate(R.layout.fragment_camera2_basic, container, false)
     }
 
@@ -386,6 +399,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         drawView = view.findViewById(R.id.drawview)
         layoutBottom = view.findViewById(R.id.layout_bottom)
         countTimer = view.findViewById(R.id.cntDown)
+        prgBar = view.findViewById(R.id.progressbar)
 
 
         // 렌더링 옵션 : CPU or GPU
@@ -464,6 +478,9 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
      * @param width  The width of available size for camera preview
      * @param height The height of available size for camera preview
      */
+
+
+
     private fun setUpCameraOutputs(
             width: Int,
             height: Int
@@ -476,11 +493,12 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
 
                 // We don't use a front facing camera in this sample.
                 val facing = characteristics.get(CameraCharacteristics.LENS_FACING)
-//        if (facing != null && facing == CameraCharacteristics.LENS_FACING_FRONT) {
-                if (facing != null && facing == CameraCharacteristics.LENS_FACING_BACK) { // 전면 카메라 사용
+                if (TutorialActivity.cameramode == "front" && facing != null && facing == CameraCharacteristics.LENS_FACING_FRONT) {
                     continue
                 }
-
+                if (TutorialActivity.cameramode == "back" && facing != null && facing == CameraCharacteristics.LENS_FACING_BACK) { // 전면 카메라 사용
+                    continue
+                }
                 val map =
                         characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
                                 ?: continue
@@ -784,11 +802,13 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         bitmap.recycle()
 
 
-        drawView!!.setDrawPoint(classifier!!.mPrintPointArray!!, 0.5f)
+        drawView!!.setDrawPoint(classifier!!.mPrintPointArray!!, 0.5f)  // 지우기
 
         showToast(textToShow)
         showCount(countToShow)
         showCountDown(TimerClass.second)
+        prgBar!!.progress = 5 - TimerClass.second
+
     }
 
     /**

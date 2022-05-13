@@ -9,7 +9,6 @@ import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import java.lang.Exception
 import java.lang.StringBuilder
 
 @SuppressLint("LogNotTimber")
@@ -18,7 +17,7 @@ class BarChartGenerator2() {
     companion object {
 
         val testXLabels = mutableListOf<String>()
-        val dateOfWeek: MutableList<String> = DataBasket.getDateOfWeek()
+        val dateOfWeek: MutableList<String> = DataBasket.getDateListOfThisWeek()
 
         fun initXLabels(xLabels: MutableList<String>) {
 
@@ -55,14 +54,14 @@ class BarChartGenerator2() {
 
             // y축 설정
             axisLeft.axisMinimum = 0f
-            axisLeft.axisMaximum = yMax
-            axisLeft.textColor = ContextCompat.getColor(context, R.color.white) // 라벨 텍스트 컬러 설정
+            axisLeft.axisMaximum = yMax + 1f
+            axisLeft.textColor = ContextCompat.getColor(context, R.color.black) // 라벨 텍스트 컬러 설정
             axisLeft.axisLineWidth = 2.0f
 
             // x축 설정
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.axisLineWidth = 5.0f
-            xAxis.textColor = ContextCompat.getColor(context, R.color.white) // 라벨 텍스트 컬러 설정
+            xAxis.textColor = ContextCompat.getColor(context, R.color.black) // 라벨 텍스트 컬러 설정
             xAxis.setDrawAxisLine(true) // 축 그리기
             xAxis.textSize = 12.0f
             xAxis.valueFormatter = MyXAxisFormatter()
@@ -79,10 +78,11 @@ class BarChartGenerator2() {
 
     inner class MyXAxisFormatter : IndexAxisValueFormatter() {
 
-        private val targetList: MutableList<String> = dateOfWeek
+        private val targetList: MutableList<String> = BarChartVariables.dateListOfWeek
 
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
 
+//            Log.d("BarChart", "MyXAxisFormatter - targetList $targetList")
             val index = value.toInt()
             val tempValue = targetList[index - 1] // IndexOutOfRange Error 주의
 

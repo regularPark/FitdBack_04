@@ -57,7 +57,6 @@ class CameraActivity : Activity() {
         // FeedBack 알고리즘
         val exr = intent.getStringExtra("exr_mod") // 운동 모드 결정
 
-
         FeedbackAlgorithm.exr_mode = exr
 
         if (null == savedInstanceState) {
@@ -67,7 +66,6 @@ class CameraActivity : Activity() {
                     .commit()
 
             when (FeedbackAlgorithm.exr_mode) {
-
 
                 "squat" -> {
                     FeedbackAlgorithm.exr_cnt = 0
