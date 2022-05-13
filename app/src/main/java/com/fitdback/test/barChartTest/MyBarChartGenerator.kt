@@ -12,27 +12,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import java.lang.StringBuilder
 
 @SuppressLint("LogNotTimber")
-class BarChartGenerator2() {
-
-    companion object {
-
-        val testXLabels = mutableListOf<String>()
-        val dateOfWeek: MutableList<String> = DataBasket.getDateListOfThisWeek()
-
-        fun initXLabels(xLabels: MutableList<String>) {
-
-            xLabels.add(0, "월")
-            xLabels.add(1, "화")
-            xLabels.add(2, "수")
-            xLabels.add(3, "목")
-            xLabels.add(4, "금")
-            xLabels.add(5, "토")
-            xLabels.add(6, "일")
-            Log.d("BarChartGenerator", "$xLabels")
-
-        }
-
-    }
+class MyBarChartGenerator() {
 
     fun runBarChart(barChart: BarChart, yMax: Float) {
 
@@ -57,6 +37,7 @@ class BarChartGenerator2() {
             axisLeft.axisMaximum = yMax + 1f
             axisLeft.textColor = ContextCompat.getColor(context, R.color.black) // 라벨 텍스트 컬러 설정
             axisLeft.axisLineWidth = 2.0f
+            axisLeft.valueFormatter = BarChartVariables.MyYAxisFormatter
 
             // x축 설정
             xAxis.position = XAxis.XAxisPosition.BOTTOM
@@ -67,8 +48,7 @@ class BarChartGenerator2() {
             xAxis.valueFormatter = MyXAxisFormatter()
 
             //add animation
-//            animateXY(0, 1000)
-            animateY(800)
+            animateY(1000)
 
         }
 
@@ -109,5 +89,4 @@ class BarChartGenerator2() {
 
     }
 }
-
 

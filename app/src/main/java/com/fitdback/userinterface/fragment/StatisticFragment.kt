@@ -13,8 +13,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.R
-import com.fitdback.test.barChartTest.BarChartGenerator2
-import com.fitdback.test.barChartTest.BarChartVariables
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet

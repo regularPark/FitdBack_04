@@ -102,16 +102,25 @@
     </LinearLayout>
 
 
+    <TextView
+        android:id="@+id/yAxisTitleArea"
+        android:textAlignment="center"
+        android:layout_width="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_height="20dp" />
+
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barChart"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_margin="32dp" />
+        android:layout_marginHorizontal="20dp" />
 
     <Button
         android:id="@+id/btnShowThisWeek"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="15dp"
         android:text="이번 주 차트 보기 "
         android:textSize="15sp" />
 
@@ -140,8 +149,6 @@
             android:textSize="15sp" />
 
     </LinearLayout>
-
-
 
 
 </LinearLayout>
