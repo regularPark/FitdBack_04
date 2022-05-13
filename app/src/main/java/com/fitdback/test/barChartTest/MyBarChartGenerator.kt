@@ -14,26 +14,6 @@ import java.lang.StringBuilder
 @SuppressLint("LogNotTimber")
 class MyBarChartGenerator() {
 
-    companion object {
-
-        val testXLabels = mutableListOf<String>()
-        val dateOfWeek: MutableList<String> = DataBasket.getDateListOfThisWeek()
-
-        fun initXLabels(xLabels: MutableList<String>) {
-
-            xLabels.add(0, "월")
-            xLabels.add(1, "화")
-            xLabels.add(2, "수")
-            xLabels.add(3, "목")
-            xLabels.add(4, "금")
-            xLabels.add(5, "토")
-            xLabels.add(6, "일")
-            Log.d("BarChartGenerator", "$xLabels")
-
-        }
-
-    }
-
     fun runBarChart(barChart: BarChart, yMax: Float) {
 
         barChart.apply { // barChart 설정
@@ -47,7 +27,7 @@ class MyBarChartGenerator() {
             axisRight.isEnabled = false
 
             //remove legend
-            legend.isEnabled = true  // 하단 범례 보이기 여부
+            legend.isEnabled = false  // 하단 범례 보이기 여부
 
             //remove description label
             description.isEnabled = false // 차트 우측 하단 Description Label 여부
@@ -57,6 +37,7 @@ class MyBarChartGenerator() {
             axisLeft.axisMaximum = yMax + 1f
             axisLeft.textColor = ContextCompat.getColor(context, R.color.black) // 라벨 텍스트 컬러 설정
             axisLeft.axisLineWidth = 2.0f
+            axisLeft.valueFormatter = BarChartVariables.MyYAxisFormatter
 
             // x축 설정
             xAxis.position = XAxis.XAxisPosition.BOTTOM
@@ -67,8 +48,7 @@ class MyBarChartGenerator() {
             xAxis.valueFormatter = MyXAxisFormatter()
 
             //add animation
-//            animateXY(0, 1000)
-            animateY(800)
+            animateY(1000)
 
         }
 

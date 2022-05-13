@@ -30,6 +30,7 @@ class BarChartTestActivity : AppCompatActivity() {
 
         val selectedExTypeArea = findViewById<TextView>(R.id.selectedExTypeArea)
         val selectedDataArea = findViewById<TextView>(R.id.selectedDataArea)
+        val yAxisTitleArea = findViewById<TextView>(R.id.yAxisTitleArea)
 
         val btnSetSquatChart = findViewById<Button>(R.id.btnSetSquatChart)
         val btnSetPlankChart = findViewById<Button>(R.id.btnSetPlankChart)
@@ -84,6 +85,9 @@ class BarChartTestActivity : AppCompatActivity() {
                 // barChart 초기화
                 clearBarChart(barChart)
 
+                // yAxis Title
+                setYAxisTitle(yAxisTitleArea)
+
                 // 보고자 하는 날짜 리스트
                 val dateListOfTargetWeek = DataBasket.getDateListOfThisWeek()
                 updateBarChartData(dateListOfTargetWeek) // BarChartVariables 클래스의 전역변수 update
@@ -132,6 +136,9 @@ class BarChartTestActivity : AppCompatActivity() {
             } else {
 
                 clearBarChart(barChart)
+
+                // yAxis Title
+                setYAxisTitle(yAxisTitleArea)
 
                 // 마지막에 저장된 X Index를 이용하여 일주일 전의 dateListOfTargetWeek을 생성
                 val lastDateOfXIndex = BarChartVariables.lastDateOfXIndex
@@ -187,6 +194,9 @@ class BarChartTestActivity : AppCompatActivity() {
 
                 clearBarChart(barChart)
 
+                // yAxis Title
+                setYAxisTitle(yAxisTitleArea)
+
                 // 마지막에 저장된 X Index를 이용하여 일주일 후의 dateListOfTargetWeek을 생성
                 val lastDateOfXIndex = BarChartVariables.lastDateOfXIndex
                 var (year: Int, month: Int, date: Int) = getYearMonthDateOfLastDate(lastDateOfXIndex)
@@ -231,6 +241,15 @@ class BarChartTestActivity : AppCompatActivity() {
         }
 
     } // end of onCreate()
+
+    private fun setYAxisTitle(yAxisTitleArea: TextView) {
+        yAxisTitleArea.text = when (BarChartVariables.secondTargetData) {
+            "ex_count" -> "개수"
+            "ex_calorie" -> "kcal"
+            "ex_time" -> "시간"
+            else -> "오류"
+        }
+    }
 
     private fun setFirstTargetData(firstTargetData: String, selectedExTypeArea: TextView) {
         BarChartVariables.firstTargetData = firstTargetData
@@ -335,7 +354,7 @@ class BarChartTestActivity : AppCompatActivity() {
             valueTextColor = Color.BLACK
             valueTextSize = 10f
             setColors(*ColorTemplate.COLORFUL_COLORS)
-            valueFormatter = BarChartVariables.vf // 데이터 소수점 표기 -> 정수 표기
+            valueFormatter = BarChartVariables.expressedDataFormatter // 데이터 소수점 표기 -> 정수 표기
 
         }
 
