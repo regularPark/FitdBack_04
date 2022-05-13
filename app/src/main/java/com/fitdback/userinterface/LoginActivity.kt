@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.fitdback.posedetection.CameraActivity
 import com.fitdback.posedetection.R
+import com.fitdback.test.barChartTest.BarChartTestActivity
 
 // Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -36,14 +37,15 @@ class LoginActivity : AppCompatActivity() {
 
         // 레이아웃
         val btnLogin = findViewById<Button>(R.id.btnLogin)
-        val btnjoin = findViewById<Button>(R.id.btnJoin)
+        val btnJoin = findViewById<Button>(R.id.btnJoin)
         val btnAnonymousLogin = findViewById<Button>(R.id.btnAnonymousLogin)
         val btnDevLogin = findViewById<Button>(R.id.btnDevLogin)
+        val btnRunBarChart = findViewById<Button>(R.id.btnRunBarChart)
 
         // Intent
         val toCameraAcitivityIntent = Intent(this, CameraActivity::class.java)
         val toLoginSuccessActivityIntent = Intent(this, LoginSuccessActivity::class.java)
-        val toMainActivityIntent = Intent(this, MainActivity::class.java)
+        val toMainActivityIntent = Intent(this, MainTestActivity::class.java)
 
         // 로그인 버튼 클릭 시 동작
         btnLogin.setOnClickListener {
@@ -65,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         // 회원가입 버튼 클릭 시 동작
-        btnjoin.setOnClickListener {
+        btnJoin.setOnClickListener {
 
             // 레이아웃의 EditText 에서 email과 password를 읽어들인다.
             val email = findViewById<EditText>(R.id.areaID).text.toString().trim()
@@ -118,6 +120,12 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
+        btnRunBarChart.setOnClickListener {
+
+            startActivity(Intent(this, BarChartTestActivity::class.java))
+
+        }
+
 
     } // end of onCreate()
 
@@ -163,6 +171,8 @@ class LoginActivity : AppCompatActivity() {
 
                     Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_SHORT).show()
                     startActivity(intent)
+                    finish() // 액티비티가 두개 존재하는 오류 수정!
+
 
                 } else {
 
@@ -190,6 +200,8 @@ class LoginActivity : AppCompatActivity() {
 
                     Toast.makeText(this, "회원 가입 성공", Toast.LENGTH_SHORT).show()
                     startActivity(intent) // LoginSuccessActivity로 이동
+                    finish() // 액티비티가 두개 존재하는 오류 수정!
+
 
                 } else { // 실패
 
@@ -211,6 +223,8 @@ class LoginActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
                 startActivity(intent)
+                finish() // 액티비티가 두개 존재하는 오류 수정!
+
             }
             .addOnFailureListener {
                 Toast.makeText(

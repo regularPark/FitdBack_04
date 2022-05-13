@@ -51,11 +51,9 @@ import android.widget.TextView
 import android.widget.Toast
 import com.fitdback.algorithm.FeedbackAlgorithm
 import com.fitdback.database.DataBasket
-import com.fitdback.database.ExerciseDataModel
-import com.fitdback.test.FeedbackTestActivity
+import com.fitdback.database.datamodel.ExerciseDataModel
 import com.fitdback.userinterface.FeedbackActivity
 import com.fitdback.userinterface.TimerClass
-import org.w3c.dom.Text
 import java.io.IOException
 import java.lang.Long
 import java.util.ArrayList
@@ -255,15 +253,15 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                     Handler().postDelayed(
                             {
 
-                                // 데이터 모델 생성
-                                val exerciseDataModel = ExerciseDataModel(
-                                        DataBasket.getDateOfToday(),
-                                        FeedbackAlgorithm.exr_mode,
-                                        FeedbackAlgorithm.exr_time_result,
-                                        FeedbackAlgorithm.exr_cnt,
-                                        FeedbackAlgorithm.exr_cnt_s,
-                                        FeedbackAlgorithm.exr_cal.toInt()
-                                )
+                            // 데이터 모델 생성
+                            val exerciseDataModel = ExerciseDataModel(
+                                DataBasket.getDateOfDay(0), // 오늘 날짜
+                                FeedbackAlgorithm.exr_mode,
+                                FeedbackAlgorithm.exr_time_result,
+                                FeedbackAlgorithm.exr_cnt,
+                                FeedbackAlgorithm.exr_cnt_s,
+                                FeedbackAlgorithm.exr_cal.toInt()
+                            )
 
                                 DataBasket.tempExrModel = exerciseDataModel
 

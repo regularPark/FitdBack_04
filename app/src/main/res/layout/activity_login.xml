@@ -57,4 +57,14 @@
         android:textAllCaps="false"
         android:textSize="30sp" />
 
+    <Button
+        android:id="@+id/btnRunBarChart"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginHorizontal="20dp"
+        android:text="Bar Chart"
+        android:textAllCaps="false"
+        android:textSize="15sp" />
+
 </LinearLayout>

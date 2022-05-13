@@ -5,8 +5,8 @@ import com.google.firebase.ktx.Firebase
 
 class DatabaseReadWrite {
 
-    companion object {
-
+//    companion object {
+//
 //        val database = Firebase.database
 //
 //        fun readDatabase() {
@@ -24,7 +24,7 @@ class DatabaseReadWrite {
 //            }
 //
 //        }
-
-    }
+//
+//    }
 
 }

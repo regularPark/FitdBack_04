@@ -1,4 +1,4 @@
-package com.fitdback.database
+package com.fitdback.database.datamodel
 
 data class StatisticsDataModel(
 
