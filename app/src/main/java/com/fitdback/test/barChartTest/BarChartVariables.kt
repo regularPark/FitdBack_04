@@ -1,6 +1,7 @@
 package com.fitdback.test.barChartTest
 
 import com.fitdback.database.DataBasket
+import com.github.mikephil.charting.formatter.ValueFormatter
 
 class BarChartVariables {
 
@@ -12,6 +13,16 @@ class BarChartVariables {
             null // firstTargetData: "squat" or "plank" or "sideLateralRaise"
         var secondTargetData: String? =
             null // secondTargetData: "ex_count" or "ex_calorie" or "ex_time"
+
+        val vf: ValueFormatter = object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return if (value.toInt() == 0) {
+                    ""
+                } else {
+                    "" + value.toInt()
+                }
+            }
+        }
 
     }
 

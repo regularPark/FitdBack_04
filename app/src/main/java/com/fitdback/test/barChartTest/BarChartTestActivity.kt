@@ -2,12 +2,12 @@ package com.fitdback.test.barChartTest
 
 import android.annotation.SuppressLint
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.R
 import com.github.mikephil.charting.charts.BarChart
@@ -15,6 +15,7 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.utils.ColorTemplate
+
 
 class BarChartTestActivity : AppCompatActivity() {
 
@@ -100,15 +101,11 @@ class BarChartTestActivity : AppCompatActivity() {
                         BarChartVariables.secondTargetData!!
                     )
 
+
                 // 실제 Bar Data Set 생성.
                 // dailyExCountSumBarEntry 또는 dailyExCalorieSumBarEntry 로 argument변경하여 사용
-                val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList").apply {
-
-                    valueTextColor = Color.BLACK
-                    valueTextSize = 10f
-                    setColors(*ColorTemplate.COLORFUL_COLORS)
-
-                }
+                val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList")
+                setExpressedDataFormat(barDataSet)
 
                 // Bar Chart 데이터 삽입
                 val data = BarData(barDataSet)
@@ -119,7 +116,7 @@ class BarChartTestActivity : AppCompatActivity() {
                 )
 
                 // Bar Chart 실행
-                BarChartGenerator2().runBarChart(barChart, barDataSet.yMax + 1.0f)
+                MyBarChartGenerator().runBarChart(barChart, barDataSet.yMax + 1.0f)
 
             }
 
@@ -165,20 +162,15 @@ class BarChartTestActivity : AppCompatActivity() {
                         BarChartVariables.secondTargetData!!
                     )
 
-                val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList").apply {
-
-                    valueTextColor = Color.BLACK
-                    valueTextSize = 10f
-                    setColors(*ColorTemplate.COLORFUL_COLORS)
-
-                }
+                val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList")
+                setExpressedDataFormat(barDataSet)
 
                 // Bar Chart 데이터 삽입
                 val data = BarData(barDataSet)
                 barChart.data = data
 
                 // Bar Chart 실행
-                BarChartGenerator2().runBarChart(barChart, barDataSet.yMax + 1.0f)
+                MyBarChartGenerator().runBarChart(barChart, barDataSet.yMax + 1.0f)
 
             }
 
@@ -224,20 +216,15 @@ class BarChartTestActivity : AppCompatActivity() {
                         BarChartVariables.secondTargetData!!
                     )
 
-                val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList").apply {
-
-                    valueTextColor = Color.BLACK
-                    valueTextSize = 10f
-                    setColors(*ColorTemplate.COLORFUL_COLORS)
-
-                }
+                val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList")
+                setExpressedDataFormat(barDataSet)
 
                 // Bar Chart 데이터 삽입
                 val data = BarData(barDataSet)
                 barChart.data = data
 
                 // Bar Chart 실행
-                BarChartGenerator2().runBarChart(barChart, barDataSet.yMax + 1.0f)
+                MyBarChartGenerator().runBarChart(barChart, barDataSet.yMax + 1.0f)
 
             }
 
@@ -283,7 +270,7 @@ class BarChartTestActivity : AppCompatActivity() {
             "BarChartVariables.lastDateOfXIndex: ${BarChartVariables.lastDateOfXIndex}"
         )
 
-        BarChartGenerator2().runBarChart(barChart, barDataSet.yMax + 1.0f)
+        MyBarChartGenerator().runBarChart(barChart, barDataSet.yMax + 1.0f)
 
     }
 
@@ -341,4 +328,16 @@ class BarChartTestActivity : AppCompatActivity() {
         return dailySumBarEntry
     }
 
+    private fun setExpressedDataFormat(barDataSet: BarDataSet) {
+
+        barDataSet.apply {
+
+            valueTextColor = Color.BLACK
+            valueTextSize = 10f
+            setColors(*ColorTemplate.COLORFUL_COLORS)
+            valueFormatter = BarChartVariables.vf // 데이터 소수점 표기 -> 정수 표기
+
+        }
+
+    }
 }

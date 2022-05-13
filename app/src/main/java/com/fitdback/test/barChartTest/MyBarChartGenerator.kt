@@ -12,7 +12,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import java.lang.StringBuilder
 
 @SuppressLint("LogNotTimber")
-class BarChartGenerator2() {
+class MyBarChartGenerator() {
 
     companion object {
 
@@ -47,7 +47,7 @@ class BarChartGenerator2() {
             axisRight.isEnabled = false
 
             //remove legend
-            legend.isEnabled = false  // 하단 범례 보이기 여부
+            legend.isEnabled = true  // 하단 범례 보이기 여부
 
             //remove description label
             description.isEnabled = false // 차트 우측 하단 Description Label 여부
@@ -109,5 +109,4 @@ class BarChartGenerator2() {
 
     }
 }
-
 
