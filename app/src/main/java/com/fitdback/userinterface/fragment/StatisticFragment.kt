@@ -44,6 +44,7 @@ class StatisticFragment : Fragment() {
     ): View? {
 
         return inflater.inflate(R.layout.fragment_statistic, container, false)
+
     }
 
     companion object {
