@@ -107,9 +107,11 @@ class DataBasket {
             var databaseRef: DatabaseReference? = null
             firebaseAuth = FirebaseAuth.getInstance()
 
-            if (isUsingUserId) {
+            if (isUsingUserId) { // 개인별 데이터
                 databaseRef =
                     database.getReference(node1).child(firebaseAuth.currentUser!!.uid).child(node2)
+            } else {
+                // TODO : 전체 회원의 child 데이터 경로
             }
 
             return databaseRef

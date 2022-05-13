@@ -43,7 +43,7 @@ class BarChartTestActivity : AppCompatActivity() {
         val btnShowNextWeek = findViewById<Button>(R.id.btnShowNextWeek)
 
         /*
-            운동 종류 선택
+            운동 종류, 데이터 종류 선택
          */
         btnSetSquatChart.setOnClickListener {
             setFirstTargetData("squat", selectedExTypeArea)
@@ -199,10 +199,10 @@ class BarChartTestActivity : AppCompatActivity() {
                 val lastDateOfXIndex = BarChartVariables.lastDateOfXIndex
                 var (year: Int, month: Int, date: Int) = getYearMonthDateOfLastDate(lastDateOfXIndex)
 
-                val dateOneWeekBefore =
+                val dateOfTomorrow =
                     DataBasket.getDateOfOneWeekBeforeOrTomorrow(year, month, date, "Tomorrow")
 
-                val triple = getYearMonthDateOfLastDate(dateOneWeekBefore)
+                val triple = getYearMonthDateOfLastDate(dateOfTomorrow)
                 year = triple.first
                 month = triple.second
                 date = triple.third
