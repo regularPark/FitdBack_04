@@ -17,17 +17,17 @@
 
 
         <activity android:name="com.fitdback.userinterface.MainTestActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <!-- 앱 중단 에러 방지 -->
+            android:theme="@style/Theme.AppCompat.NoActionBar"> <!-- 앱 중단 에러 방지 -->
             >
         </activity>
         <activity android:name="com.fitdback.test.barChartTest.BarChartTestActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar">
 
         </activity>
 
         <activity
             android:name="com.fitdback.userinterface.LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <!-- 앱 중단 에러 방지 -->
+            android:theme="@style/Theme.AppCompat.NoActionBar"> <!-- 앱 중단 에러 방지 -->
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,17 +38,17 @@
 
         <activity
             android:name="com.fitdback.userinterface.LoginSuccessActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <!-- 앱 중단 에러 방지 -->
+            android:theme="@style/Theme.AppCompat.NoActionBar"> <!-- 앱 중단 에러 방지 -->
 
         </activity>
         <activity
             android:name="com.fitdback.userinterface.MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <!-- 앱 중단 에러 방지 -->
+            android:theme="@style/Theme.AppCompat.NoActionBar"> <!-- 앱 중단 에러 방지 -->
 
         </activity>
         <activity
             android:name="com.fitdback.userinterface.TutorialActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <!-- 앱 중단 에러 방지 -->
+            android:theme="@style/Theme.AppCompat.NoActionBar"> <!-- 앱 중단 에러 방지 -->
         </activity>
         <activity
             android:name=".CameraActivity"
@@ -56,31 +56,31 @@
             android:screenOrientation="portrait" /> <!-- MyPageFragement ~ -->
         <activity
             android:name="com.fitdback.userinterface.MyPageActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <!-- 앱 중단 에러 방지 -->
+            android:theme="@style/Theme.AppCompat.NoActionBar"> <!-- 앱 중단 에러 방지 -->
         </activity>
         <activity
             android:name="com.fitdback.userinterface.UserInformationActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <!-- 앱 중단 에러 방지 -->
+            android:theme="@style/Theme.AppCompat.NoActionBar"> <!-- 앱 중단 에러 방지 -->
         </activity>
         <activity
             android:name="com.fitdback.userinterface.StatisticsPopUpActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <!-- 앱 중단 에러 방지 -->
+            android:theme="@style/Theme.AppCompat.NoActionBar"> <!-- 앱 중단 에러 방지 -->
         </activity>
         <activity
             android:name="com.fitdback.test.HealthMemoTestActivity"
 
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
 
         <activity
             android:name="com.fitdback.test.FeedbackTestActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name="com.fitdback.userinterface.FeedbackActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name="com.fitdback.test.DevModeActivity"
 
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
 
     </application>
 

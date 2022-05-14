@@ -54,9 +54,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/button_radius_color"
                     android:text="내 정보"
-                    android:textColor="@color/white"
                     android:textSize="30sp" />
 
 
@@ -80,9 +78,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/button_radius_color"
                     android:text="일일 통계"
-                    android:textColor="@color/white"
                     android:textSize="30sp" />
                 <Button
                     android:id="@+id/weeklyStatBtn"
@@ -93,9 +89,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/button_radius_color"
                     android:text="주간 통계"
-                    android:textColor="@color/white"
                     android:textSize="30sp" />
                 <Button
                     android:id="@+id/monthlyStatBtn"
@@ -106,9 +100,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/button_radius_color"
                     android:text="월간 통계"
-                    android:textColor="@color/white"
                     android:textSize="30sp" />
 
 
@@ -129,9 +121,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/button_radius_color"
                     android:text="개발자"
-                    android:textColor="@color/white"
                     android:textSize="30sp" />
             </GridLayout>
 

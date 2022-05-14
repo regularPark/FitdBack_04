@@ -20,13 +20,10 @@
         android:id="@+id/bn_"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
         app:menu="@menu/bottom_navigation_menu"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:itemIconTint="@drawable/menu_selector_color"
-        app:itemTextColor="@drawable/menu_selector_color"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

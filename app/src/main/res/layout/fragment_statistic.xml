@@ -37,8 +37,6 @@
                     android:layout_columnWeight="1"
                     android:layout_margin="5dp"
                     android:text="스쿼트"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_radius_color"
                     android:textStyle="bold"
                     android:textSize="15sp" />
 
@@ -50,8 +48,6 @@
                     android:layout_columnSpan="2"
                     android:layout_margin="5dp"
                     android:text="플랭크"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_radius_color"
                     android:textStyle="bold"
                     android:textSize="15sp" />
                 <Button
@@ -62,8 +58,6 @@
                     android:layout_margin="5dp"
                     android:layout_marginBottom="10dp"
                     android:text="사이드 래터럴"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_radius_color"
                     android:textStyle="bold"
                     android:textSize="15sp" />
             </GridLayout>
@@ -93,8 +87,6 @@
                     android:layout_weight="0.3"
                     android:layout_margin="5dp"
                     android:text="칼로리 소모량"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_radius_color"
                     android:textStyle="bold"
                     android:textSize="15sp" />
 
@@ -106,8 +98,6 @@
                     android:layout_weight="0.3"
                     android:layout_margin="5dp"
                     android:text="운동 횟수"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_radius_color"
                     android:textStyle="bold"
                     android:textSize="15sp" />
 
@@ -119,8 +109,6 @@
                     android:layout_weight="0.3"
                     android:layout_margin="5dp"
                     android:text="운동 시간"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_radius_color"
                     android:textStyle="bold"
                     android:textSize="15sp" />
 
@@ -147,9 +135,7 @@
                     android:layout_column="0"
                     android:layout_columnSpan="2"
                     android:layout_marginHorizontal="5dp"
-                    android:background="@drawable/button_radius_color_3"
                     android:text="이번 주 차트 보기 "
-                    android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -162,9 +148,7 @@
                     android:layout_columnWeight="1"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/button_radius_color"
                     android:text="지난 주 차트 보기"
-                    android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -178,8 +162,6 @@
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp"
                     android:text="다음 주 차트 보기"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_radius_color"
                     android:textStyle="bold"
                     android:textSize="15sp" />
             </GridLayout>

@@ -28,6 +28,7 @@ class TutorialActivity : YouTubeBaseActivity() {
         var bundle : Bundle = Bundle()
 
         // 유튜브
+        /*
         val youtubeView = findViewById<YouTubePlayerView>(R.id.youtubePlayer)
         youtubeView.initialize(api_key, object : YouTubePlayer.OnInitializedListener {
             override fun onInitializationSuccess(
@@ -59,7 +60,7 @@ class TutorialActivity : YouTubeBaseActivity() {
             ) {
                 TODO("Not yet implemented")
             }
-        })
+        })*/
 
         // 레이아웃
         val btnFitnessStart = findViewById<Button>(R.id.btnFitnessStart)
