@@ -12,6 +12,8 @@ import com.fitdback.database.DataBasket
 import com.fitdback.database.datamodel.ExerciseDataModel
 import com.fitdback.posedetection.R
 import com.fitdback.test.barChartTest.BarChartTestActivity
+import com.fitdback.userinterface.LoginActivity
+import com.fitdback.userinterface.MainTestActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -314,6 +316,10 @@ class DevModeActivity : AppCompatActivity() {
 
         return mutableList
 
+    }
+    override fun onBackPressed() {
+        startActivity(Intent(this, MainTestActivity::class.java))
+        finish()
     }
 
 }

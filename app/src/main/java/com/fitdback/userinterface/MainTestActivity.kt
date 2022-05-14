@@ -4,11 +4,13 @@ package com.fitdback.userinterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.R
 import com.fitdback.userinterface.fragment.HomeFragment
 import com.fitdback.userinterface.fragment.MyPageFragment
@@ -67,6 +69,7 @@ class MainTestActivity : AppCompatActivity() {
             }
         }
     }
+
 
 
     override fun onBackPressed() {

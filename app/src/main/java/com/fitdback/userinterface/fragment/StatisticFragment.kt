@@ -1,8 +1,10 @@
 package com.fitdback.userinterface.fragment
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.R
+import com.fitdback.test.barChartTest.BarChartTestActivity
 import com.fitdback.test.barChartTest.BarChartVariables
 import com.fitdback.test.barChartTest.MyBarChartGenerator
 import com.github.mikephil.charting.charts.BarChart
@@ -39,8 +42,6 @@ class StatisticFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
         }
     }
 
@@ -59,17 +60,17 @@ class StatisticFragment : Fragment() {
         val selectedDataArea = view.findViewById<TextView>(R.id.selectedDataArea)
         val yAxisTitleArea = view.findViewById<TextView>(R.id.yAxisTitleArea)
 
-        val btnSetSquatChart = view.findViewById<Button>(R.id.btnSetSquatChart)
-        val btnSetPlankChart = view.findViewById<Button>(R.id.btnSetPlankChart)
-        val btnSetSideLateralRaiseChart = view.findViewById<Button>(R.id.btnSetSideLateralRaiseChart)
+        val btnSetSquatChart = view.findViewById<Button>(R.id.btnSetSquatChart_)
+        val btnSetPlankChart = view.findViewById<Button>(R.id.btnSetPlankChart_)
+        val btnSetSideLateralRaiseChart = view.findViewById<Button>(R.id.btnSetSideLateralRaiseChart_)
 
-        val btnSetExCalorieChart = view.findViewById<Button>(R.id.btnShowExCalorieChart)
-        val btnSetExCountChart = view.findViewById<Button>(R.id.btnShowExCountChart)
-        val btnSetExTimeChart = view.findViewById<Button>(R.id.btnShowExTimeChart)
+        val btnSetExCalorieChart = view.findViewById<Button>(R.id.btnShowExCalorieChart_)
+        val btnSetExCountChart = view.findViewById<Button>(R.id.btnShowExCountChart_)
+        val btnSetExTimeChart = view.findViewById<Button>(R.id.btnShowExTimeChart_)
 
-        val btnShowThisWeek = view.findViewById<Button>(R.id.btnShowThisWeek)
-        val btnShowPreviousWeek = view.findViewById<Button>(R.id.btnShowPreviousWeek)
-        val btnShowNextWeek = view.findViewById<Button>(R.id.btnShowNextWeek)
+        val btnShowThisWeek = view.findViewById<Button>(R.id.btnShowThisWeek_)
+        val btnShowPreviousWeek = view.findViewById<Button>(R.id.btnShowPreviousWeek_)
+        val btnShowNextWeek = view.findViewById<Button>(R.id.btnShowNextWeek_)
 
         /*
             운동 종류, 데이터 종류 선택
@@ -266,10 +267,9 @@ class StatisticFragment : Fragment() {
             }
 
         }
-
-
         return view
     }
+
 
 
     private fun setYAxisTitle(yAxisTitleArea: TextView) {
