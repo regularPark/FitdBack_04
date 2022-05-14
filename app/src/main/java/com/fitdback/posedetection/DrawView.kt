@@ -73,19 +73,19 @@ class DrawView : View {
     constructor(context: Context) : super(context)
 
     constructor(
-        context: Context,
-        attrs: AttributeSet?
+            context: Context,
+            attrs: AttributeSet?
     ) : super(context, attrs)
 
     constructor(
-        context: Context,
-        attrs: AttributeSet?,
-        defStyleAttr: Int
+            context: Context,
+            attrs: AttributeSet?,
+            defStyleAttr: Int
     ) : super(context, attrs, defStyleAttr)
 
     fun setImgSize(
-        width: Int,
-        height: Int
+            width: Int,
+            height: Int
     ) {
         mImgWidth = width
         mImgHeight = height
@@ -97,8 +97,8 @@ class DrawView : View {
      * @param point 2*14
      */
     fun setDrawPoint(
-        point: Array<FloatArray>,
-        ratio: Float
+            point: Array<FloatArray>,
+            ratio: Float
     ) {
         mDrawPoint.clear()
 
@@ -120,8 +120,8 @@ class DrawView : View {
      * @param height Relative vertical size
      */
     fun setAspectRatio(
-        width: Int,
-        height: Int
+            width: Int,
+            height: Int
     ) {
         if (width < 0 || height < 0) {
             throw IllegalArgumentException("Size cannot be negative.")
@@ -194,16 +194,24 @@ class DrawView : View {
         if (FeedbackAlgorithm.isPlaying) {
             when (FeedbackAlgorithm.exr_mode) {
                 "squat" -> Handler().postDelayed(
-                    { FeedbackAlgorithm.squat(context, mDrawPoint) },
-                    5000
-                ) // 3초동안 스쿼트 알고리즘 비활성화
+                        { FeedbackAlgorithm.squat(context, mDrawPoint) },
+                        5000
+                ) // 5초동안 스쿼트 알고리즘 비활성화
+                "plank" -> Handler().postDelayed(
+                        { FeedbackAlgorithm.plank(context, mDrawPoint) },
+                        5000
+                ) // 5초동안 플랭크 알고리즘 비활성화
+                "pushup" -> Handler().postDelayed(
+                        { FeedbackAlgorithm.pushup(context, mDrawPoint) },
+                        5000
+                ) // 5초동안 플랭크 알고리즘 비활성화
             }
         }
     }
 
     override fun onMeasure(
-        widthMeasureSpec: Int,
-        heightMeasureSpec: Int
+            widthMeasureSpec: Int,
+            heightMeasureSpec: Int
     ) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 

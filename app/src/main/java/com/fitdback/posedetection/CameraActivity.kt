@@ -16,15 +16,12 @@
 package com.fitdback.posedetection
 
 import android.app.Activity
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import com.fitdback.algorithm.FeedbackAlgorithm
-
 import org.opencv.android.BaseLoaderCallback
 import org.opencv.android.LoaderCallbackInterface
-import org.opencv.android.OpenCVLoader
+import org.opencv.android.OpenCVLoader 
 
 /**
  * Main `Activity` class for the Camera app.
@@ -61,19 +58,46 @@ class CameraActivity : Activity() {
 
         if (null == savedInstanceState) {
             fragmentManager
-                .beginTransaction()
-                .replace(R.id.container, Camera2BasicFragment.newInstance())
-                .commit()
+                    .beginTransaction()
+                    .replace(R.id.container, Camera2BasicFragment.newInstance())
+                    .commit()
 
             when (FeedbackAlgorithm.exr_mode) {
+
                 "squat" -> {
                     FeedbackAlgorithm.exr_cnt = 0
                     FeedbackAlgorithm.exr_cnt_s = 0
                     FeedbackAlgorithm.exr_cnt_f = 0
+                    FeedbackAlgorithm.wrong_mode = 0
                     FeedbackAlgorithm.isExrFinished = false
                     Handler().postDelayed(
-                        { FeedbackAlgorithm.time_tf = true },
-                        5000
+                            { FeedbackAlgorithm.time_tf = true },
+                            5000
+                    ) //5초 후 운동 시작 시간 설정
+                    FeedbackAlgorithm.isPlaying = true
+                }
+
+                "plank" -> {
+                    Handler().postDelayed(
+                            { FeedbackAlgorithm.time_tf = true },
+                            5000
+                    ) //5초 후 운동 시작 시간 설정
+                    FeedbackAlgorithm.exr_time_result = 0
+                    FeedbackAlgorithm.start_time = 0
+                    FeedbackAlgorithm.exr_cnt = 0
+                    FeedbackAlgorithm.isPlaying = true
+
+                }
+
+                "pushup" -> {
+                    FeedbackAlgorithm.exr_cnt = 0
+                    FeedbackAlgorithm.exr_cnt_s = 0
+                    FeedbackAlgorithm.exr_cnt_f = 0
+                    FeedbackAlgorithm.wrong_mode = 0
+                    FeedbackAlgorithm.isExrFinished = false
+                    Handler().postDelayed(
+                            { FeedbackAlgorithm.time_tf = true },
+                            5000
                     ) //5초 후 운동 시작 시간 설정
                     FeedbackAlgorithm.isPlaying = true
                 }

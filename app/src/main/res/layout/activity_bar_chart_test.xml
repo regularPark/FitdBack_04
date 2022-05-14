@@ -4,13 +4,151 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.fitdback.test.barChartTest.BarChartTestActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        android:weightSum="1">
+
+    <TextView
+        android:id="@+id/selectedExTypeArea"
+        android:layout_width="match_parent"
+        android:text="운동 종류 선택"
+        android:layout_weight="0.5"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:layout_height="50dp" />
+
+    <TextView
+        android:id="@+id/selectedDataArea"
+        android:layout_width="match_parent"
+        android:layout_weight="0.5"
+        android:text="원하는 데이터"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:layout_height="50dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:weightSum="0.9">
+
+        <Button
+            android:id="@+id/btnSetSquatChart"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.3"
+            android:text="스쿼트"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btnSetPlankChart"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.3"
+            android:text="플랭크"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btnSetSideLateralRaiseChart"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.3"
+            android:text="사이드 래터럴"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:weightSum="0.9">
+
+        <Button
+            android:id="@+id/btnShowExCalorieChart"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.3"
+            android:text="칼로리 소모량"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btnShowExCountChart"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.3"
+            android:text="운동 횟수"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btnShowExTimeChart"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.3"
+            android:text="운동 시간"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/yAxisTitleArea"
+        android:textAlignment="center"
+        android:layout_width="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_height="20dp" />
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barChart"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_margin="32dp" />
+        android:layout_marginHorizontal="20dp" />
+
+    <Button
+        android:id="@+id/btnShowThisWeek"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:text="이번 주 차트 보기 "
+        android:textSize="15sp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/btnShowPreviousWeek"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.5"
+            android:text="지난 주 차트 보기"
+            android:textSize="15sp" />
+
+
+        <Button
+            android:id="@+id/btnShowNextWeek"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.5"
+            android:text="다음 주 차트 보기"
+            android:textSize="15sp" />
+
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -38,6 +38,7 @@
         android:text="data read test"
         android:textSize="20sp" />
 
+
     <Button
         android:id="@+id/btnBarChartTest"
         android:layout_width="match_parent"
@@ -47,11 +48,11 @@
         android:textSize="20sp" />
 
     <Button
-        android:id="@+id/btnBarChartTest2"
+        android:id="@+id/btnCreateDummyData"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="10dp"
-        android:text="bar chart test2"
+        android:text="Create Dummy Data"
         android:textSize="20sp" />
 
 </LinearLayout>

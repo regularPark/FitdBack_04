@@ -9,31 +9,10 @@ import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import java.lang.Exception
 import java.lang.StringBuilder
 
 @SuppressLint("LogNotTimber")
-class BarChartGenerator2() {
-
-    companion object {
-
-        val testXLabels = mutableListOf<String>()
-        val dateOfWeek: MutableList<String> = DataBasket.getDateOfWeek()
-
-        fun initXLabels(xLabels: MutableList<String>) {
-
-            xLabels.add(0, "월")
-            xLabels.add(1, "화")
-            xLabels.add(2, "수")
-            xLabels.add(3, "목")
-            xLabels.add(4, "금")
-            xLabels.add(5, "토")
-            xLabels.add(6, "일")
-            Log.d("BarChartGenerator", "$xLabels")
-
-        }
-
-    }
+class MyBarChartGenerator() {
 
     fun runBarChart(barChart: BarChart, yMax: Float) {
 
@@ -55,21 +34,21 @@ class BarChartGenerator2() {
 
             // y축 설정
             axisLeft.axisMinimum = 0f
-            axisLeft.axisMaximum = yMax
-            axisLeft.textColor = ContextCompat.getColor(context, R.color.browser_actions_divider_color) // 라벨 텍스트 컬러 설정
+            axisLeft.axisMaximum = yMax + 1f
+            axisLeft.textColor = ContextCompat.getColor(context, R.color.black) // 라벨 텍스트 컬러 설정
             axisLeft.axisLineWidth = 2.0f
+            axisLeft.valueFormatter = BarChartVariables.MyYAxisFormatter
 
             // x축 설정
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.axisLineWidth = 5.0f
-            xAxis.textColor = ContextCompat.getColor(context, R.color.browser_actions_divider_color) // 라벨 텍스트 컬러 설정
+            xAxis.textColor = ContextCompat.getColor(context, R.color.black) // 라벨 텍스트 컬러 설정
             xAxis.setDrawAxisLine(true) // 축 그리기
             xAxis.textSize = 12.0f
             xAxis.valueFormatter = MyXAxisFormatter()
 
             //add animation
-//            animateXY(0, 1000)
-            animateY(800)
+            animateY(1000)
 
         }
 
@@ -79,10 +58,11 @@ class BarChartGenerator2() {
 
     inner class MyXAxisFormatter : IndexAxisValueFormatter() {
 
-        private val targetList: MutableList<String> = dateOfWeek
+        private val targetList: MutableList<String> = BarChartVariables.dateListOfWeek
 
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
 
+//            Log.d("BarChart", "MyXAxisFormatter - targetList $targetList")
             val index = value.toInt()
             val tempValue = targetList[index - 1] // IndexOutOfRange Error 주의
 
@@ -109,5 +89,4 @@ class BarChartGenerator2() {
 
     }
 }
-
 

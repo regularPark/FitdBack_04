@@ -22,6 +22,9 @@ class DataBasket {
         var dataSample: DataSnapshot? = null
         var individualExData: DataSnapshot? = null
 
+        /*
+            날짜 관련
+        */
         @SuppressLint("SimpleDateFormat")
         fun getDateOfDay(days: Int): String? { // "yyMMdd"형태로 원하는 날짜를 반환, 최대 30일 전까지 변환
 
@@ -34,7 +37,30 @@ class DataBasket {
 
         }
 
-        fun getDateOfWeek(): MutableList<String> {
+        @SuppressLint("SimpleDateFormat")
+        fun getDateOfOneWeekBeforeOrTomorrow(
+            year: Int,
+            month: Int,
+            date: Int,
+            BeforeOrTomorrow: String
+        ): String {
+
+            val cal = GregorianCalendar(year, month, date) // month: 0~11
+            val simpleDateFormat = SimpleDateFormat("yyMMdd")
+
+            if (BeforeOrTomorrow == "Before") {
+                cal.add(GregorianCalendar.DATE, -7)
+            }
+
+            Log.d(
+                "Date",
+                "DataBasket.getDateOneWeekBefore() : ${simpleDateFormat.format(cal.time)}"
+            )
+            return simpleDateFormat.format(cal.time)
+
+        }
+
+        fun getDateListOfThisWeek(): MutableList<String> {
 
             val dateOfWeekList = mutableListOf<String>()
 
@@ -46,6 +72,31 @@ class DataBasket {
 
         }
 
+        @SuppressLint("SimpleDateFormat")
+        fun getOneWeekListFromDate(
+            year: Int,
+            month: Int,
+            date: Int,
+            BeforeOrAfter: String
+        ): MutableList<String> {
+
+            val dateList = mutableListOf<String>()
+
+            val cal = GregorianCalendar(year, month, date) // month: 0~11
+            val simpleDateFormat = SimpleDateFormat("yyMMdd")
+
+            if (BeforeOrAfter == "Before") { // "Before" 이면 6일전~오늘(7일)로 셋팅
+                cal.add(GregorianCalendar.DATE, -7)
+            }
+
+            for (i in 0..6) {
+                cal.add(GregorianCalendar.DATE, +1)
+                dateList.add(simpleDateFormat.format(cal.time))
+            }
+
+            return dateList
+
+        }
 
         fun getDBPath(
             node1: String,
@@ -56,76 +107,16 @@ class DataBasket {
             var databaseRef: DatabaseReference? = null
             firebaseAuth = FirebaseAuth.getInstance()
 
-            if (isUsingUserId) {
+            if (isUsingUserId) { // 개인별 데이터
                 databaseRef =
                     database.getReference(node1).child(firebaseAuth.currentUser!!.uid).child(node2)
+            } else {
+                // TODO : 전체 회원의 child 데이터 경로
             }
 
             return databaseRef
 
         }
-
-        // getDailySum 원형
-//        fun getDailySum(dbPath: DatabaseReference): MutableMap<String, Int> {
-//
-//            val dateOfWeek = DataBasket.getDateOfWeek()
-//            val dailySum = mutableMapOf<String, Int>()
-//
-//            dbPath.addListenerForSingleValueEvent(object : ValueEventListener {
-//                override fun onDataChange(dataSnapshot: DataSnapshot) {
-//
-//                    for (exDataSet in dataSnapshot.children) {
-//
-//                        val exData = exDataSet.getValue(ExerciseDataModel::class.java)
-//
-//                        // exCountMap에 <"yyMMdd", sumOfExCount> key-value 형태로 update
-//                        if (exData!!.ex_type.equals("squat")) {
-//
-//                            val targetInt = exData.ex_count
-//
-//                            when (exData.ex_date) {
-//
-//                                dateOfWeek[0] -> {
-//                                    updateMap(dailySum, dateOfWeek[0], targetInt)
-//                                }
-//                                dateOfWeek[1] -> {
-//                                    updateMap(dailySum, dateOfWeek[1], targetInt)
-//                                }
-//                                dateOfWeek[2] -> {
-//                                    updateMap(dailySum, dateOfWeek[2], targetInt)
-//                                }
-//                                dateOfWeek[3] -> {
-//                                    updateMap(dailySum, dateOfWeek[3], targetInt)
-//                                }
-//                                dateOfWeek[4] -> {
-//                                    updateMap(dailySum, dateOfWeek[4], targetInt)
-//                                }
-//                                dateOfWeek[5] -> {
-//                                    updateMap(dailySum, dateOfWeek[5], targetInt)
-//                                }
-//                                dateOfWeek[6] -> {
-//                                    updateMap(dailySum, dateOfWeek[6], targetInt)
-//                                }
-//
-//                            }
-//
-//                        }
-//
-//                    }
-//
-//                    Log.d("exData", dateOfWeek.toString())
-//                    Log.d("exData", dailySum.toString())
-//
-//                }
-//
-//                override fun onCancelled(error: DatabaseError) {
-//                    Log.d("exData", "DB Read Error")
-//                }
-//            })
-//
-//            return dailySum
-//
-//        }
 
         fun getDataFromFB(
             dbPath: DatabaseReference,
@@ -152,19 +143,26 @@ class DataBasket {
 
         fun enhancedGetDailySum(
             dataSnapshot: DataSnapshot,
-            targetData: String
+            dateOfWeek: MutableList<String>,
+            firstTargetData: String,
+            secondTargetData: String
         ): MutableMap<String, Int> {
 
-            val dateOfWeek = DataBasket.getDateOfWeek()
             Log.d("Data - dateOfWeek", "$dateOfWeek")
             val dailySum = mutableMapOf<String, Int>()
 
-            for (i in 0 .. 6) {
+            // dailySum Map을 (날짜, 0) 형태로 initialization
+            for (i in 0..6) {
                 updateMap(dailySum, dateOfWeek[i], 0, true)
                 Log.d("Data - dailySum Init", dailySum.toString())
             }
 
-            calculateDailySum(dataSnapshot, targetData, dateOfWeek, dailySum)
+            /*
+            dataSnapshot: 이미 로드한 Firebase DataSnapshot (users/ex_data)
+            firstTargetData: ex_type 중 하나. "squat", "plank", "sideLateralRaise"
+            secondtargetData: "ex_count", "ex_calorie", "ex_time"
+             */
+            calculateDailySum(dataSnapshot, dateOfWeek, firstTargetData, secondTargetData, dailySum)
 
             Log.d("Data - dailySum ", dailySum.toString())
             return dailySum
@@ -173,8 +171,9 @@ class DataBasket {
 
         private fun calculateDailySum(
             dataSnapshot: DataSnapshot,
-            targetData: String,
             dateOfWeek: MutableList<String>,
+            firstTargetData: String,
+            secondTargetData: String,
             dailySum: MutableMap<String, Int>
         ) {
             for (exDataSet in dataSnapshot.children) {
@@ -184,11 +183,11 @@ class DataBasket {
 //                Log.d("Data - exData.ex_date", exData!!.ex_date)
 //                Log.d("Data - exData.ex_count", exData.ex_count.toString())
                 // exCountMap에 <"yyMMdd", sumOfExCount> key-value 형태로 update
-                if (exData!!.ex_type.equals("squat")) {
+                if (exData!!.ex_type.equals(firstTargetData)) { // firstTargetData: ex_type 중 하나. "squat", "plank", "sideLateralRaise"
 
                     var targetInt = 0
 
-                    when (targetData) {
+                    when (secondTargetData) {
                         "ex_count" -> targetInt = exData.ex_count
                         "ex_calorie" -> targetInt = exData.ex_calorie
                         "ex_time" -> targetInt = exData.ex_time
@@ -242,49 +241,6 @@ class DataBasket {
 
     } // end of companion object
 }
-
-
-//        suspend fun checkMyExCount(exDate: String) {
-//
-//            firebaseAuth = FirebaseAuth.getInstance()
-//            val dbPath = getDBPath("users", "ex_data", true)
-//            var returnValue:Boolean = false
-//            Log.d("exData", "From checkMyExCount OuterScope of suspendCoroutine: $returnValue")
-//
-//            suspendCoroutine<Boolean> {
-//                Handler(Looper.getMainLooper()).postDelayed({
-//
-//                    dbPath!!.addListenerForSingleValueEvent(object : ValueEventListener {
-//                        override fun onDataChange(snapshot: DataSnapshot) {
-//
-//                            for (data in snapshot.children) {
-//
-//                                val exData = data.getValue(ExerciseDataModel::class.java)
-//
-//                                if (exData!!.ex_date.equals(exDate)) {
-//                                    returnValue = true
-//                                    Log.d("exData", "From checkMyExCount Inner of suspendCoroutine: $returnValue")
-//                                    it.resume(returnValue) // return
-//                                }
-//
-//                            }
-//
-//                        }
-//
-//                        override fun onCancelled(error: DatabaseError) {
-//
-//                        }
-//
-//                    })
-//
-//                }, 500)
-//
-//            }
-//
-//        }
-
-
-
 
 
 
