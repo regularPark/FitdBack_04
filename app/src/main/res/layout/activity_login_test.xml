@@ -19,15 +19,14 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="5dp"
-        android:text="이메일 로그인"/>
+        android:text="이메일 로그인" />
 
 
-    <Button
+    <com.google.android.gms.common.SignInButton
         android:id="@+id/btnRunGoogleLogin"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_margin="5dp"
-        android:text="구글 로그인" />
+        android:layout_margin="5dp" />
 
 
     <Button
@@ -40,11 +39,11 @@
     <TextView
         android:id="@+id/joinTextView"
         android:layout_width="match_parent"
-        android:textAlignment="center"
+        android:layout_height="50dp"
         android:layout_margin="5dp"
-        android:textSize="20sp"
         android:text="계정이 없으신가요?(클릭)"
-        android:layout_height="50dp" />
+        android:textAlignment="center"
+        android:textSize="20sp" />
 
 
 </LinearLayout>

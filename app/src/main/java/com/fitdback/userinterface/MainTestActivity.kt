@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.fitdback.posedetection.R
+import com.fitdback.test.loginTest.LoginTestActivity
 import com.fitdback.userinterface.fragment.HomeFragment
 import com.fitdback.userinterface.fragment.MyPageFragment
 import com.fitdback.userinterface.fragment.MyTownFragment
@@ -23,7 +24,6 @@ class MainTestActivity : AppCompatActivity() {
     private val vp: ViewPager2 by lazy { findViewById(R.id.vp_) }   // TODO:빨간줄 무시할 것!!! 고치면 실행 안됨
 
     private val bn: BottomNavigationView by lazy { findViewById(R.id.bn_) }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +70,7 @@ class MainTestActivity : AppCompatActivity() {
 
 
     override fun onBackPressed() {
-        startActivity(Intent(this,LoginActivity::class.java))
+        startActivity(Intent(this,LoginTestActivity::class.java))
         finish()
     }
 

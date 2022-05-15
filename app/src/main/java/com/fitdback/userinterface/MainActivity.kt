@@ -62,7 +62,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(toMainTestActivity)
         }
 
-
         // Dev Mode
         btnDevMode.setOnClickListener {
             startActivity(toDevActivity)

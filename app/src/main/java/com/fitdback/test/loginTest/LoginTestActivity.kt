@@ -14,12 +14,23 @@ import com.fitdback.database.datamodel.UserInfoDataModel
 import com.fitdback.posedetection.R
 import com.fitdback.test.CustomDialog
 import com.fitdback.userinterface.MainTestActivity
+import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import java.lang.Exception
 
 class LoginTestActivity : AppCompatActivity() {
 
     lateinit var firebaseAuth: FirebaseAuth
+
+    //google client
+    private lateinit var googleSignInClient: GoogleSignInClient
+    var GOOGLE_LOGIN_CODE = 9001
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -30,7 +41,7 @@ class LoginTestActivity : AppCompatActivity() {
 
         // 레이아웃
         val btnRunEmailLogin = findViewById<Button>(R.id.btnRunEmailLogin)
-        val btnRunGoogleLogin = findViewById<Button>(R.id.btnRunGoogleLogin)
+        val btnRunGoogleLogin = findViewById<SignInButton>(R.id.btnRunGoogleLogin)
         val btnRunDevLogin = findViewById<Button>(R.id.btnRunDevLogin)
         val joinTextView = findViewById<TextView>(R.id.joinTextView)
 
@@ -47,9 +58,11 @@ class LoginTestActivity : AppCompatActivity() {
             btnEmailLogin?.setOnClickListener {
 
                 val email =
-                    mAlertDialog!!.findViewById<EditText>(R.id.loginEmailArea)!!.text.toString().trim()
+                    mAlertDialog.findViewById<EditText>(R.id.loginEmailArea)!!.text.toString()
+                        .trim()
                 val password =
-                    mAlertDialog.findViewById<EditText>(R.id.loginPasswordArea)!!.text.toString().trim()
+                    mAlertDialog.findViewById<EditText>(R.id.loginPasswordArea)!!.text.toString()
+                        .trim()
 
                 if (checkIfBothEmailAndPasswordAreNotNull(email, password)) {
                     emailLoginAuth(
@@ -65,9 +78,18 @@ class LoginTestActivity : AppCompatActivity() {
 
         }
 
+        // 구글 로그인
         btnRunGoogleLogin.setOnClickListener {
-
+            googleLogin()
         }
+
+        // 구글 로그인을 위해 구성되어야 하는 코드 (Id, Email request)
+        var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
 
         btnRunDevLogin.setOnClickListener {
             val dialog = CustomDialog(this, R.layout.dialog_dev_login, "Email Login")
@@ -167,7 +189,42 @@ class LoginTestActivity : AppCompatActivity() {
 
         }
 
+    } // onCreate()
+
+    // 구글 로그인 관련
+    private fun googleLogin() {
+        val signInIntent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, GOOGLE_LOGIN_CODE)
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == GOOGLE_LOGIN_CODE) {
+            val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data!!)
+            if (result != null) {
+                if (result.isSuccess) {
+                    val account = result.signInAccount
+                    firebaseAuthWithGoogle(account)
+                }
+            }
+        } //if
+    } // onActivityResult()
+
+    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
+        val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
+        firebaseAuth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // 로그인 성공 시
+                    DataBasket.googleSignInClient = googleSignInClient
+                    Toast.makeText(this, "구글 로그인 성공", Toast.LENGTH_LONG).show()
+                    startActivity(Intent(this, MainTestActivity::class.java))
+                } else {
+                    // 로그인 실패 시
+                    Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
+                }
+            }
+    } //firebaseAuthWithGoogle()
 
     // 공란이 있는지 체크
     private fun checkIfBothEmailAndPasswordAreNotNull(email: String?, password: String?): Boolean {
@@ -209,16 +266,22 @@ class LoginTestActivity : AppCompatActivity() {
 
         val exceptionToString = exception.toString()
 
-        if (exceptionToString.contains("FirebaseAuthInvalidCredentialsException")) {
-            Toast.makeText(this, "이메일 형식이 올바르지 않습니다", Toast.LENGTH_SHORT).show()
-        } else if (exceptionToString.contains("FirebaseAuthUserCollisionException")) {
-            Toast.makeText(this, "이미 가입된 이메일 입니다.", Toast.LENGTH_SHORT).show()
-        } else if (exceptionToString.contains("FirebaseAuthWeakPasswordException")) {
-            Toast.makeText(this, "비밀번호는 6자리 이상이어야 합니다.", Toast.LENGTH_SHORT).show()
-        } else if (exceptionToString.contains("FirebaseAuthInvalidUserException")) {
-            Toast.makeText(this, "가입된 계정이 없습니다. 회원가입을 먼저 하세요.", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, exceptionToString, Toast.LENGTH_SHORT).show()
+        when {
+            exceptionToString.contains("FirebaseAuthInvalidCredentialsException") -> {
+                Toast.makeText(this, "이메일 형식이 올바르지 않습니다", Toast.LENGTH_SHORT).show()
+            }
+            exceptionToString.contains("FirebaseAuthUserCollisionException") -> {
+                Toast.makeText(this, "이미 가입된 이메일 입니다.", Toast.LENGTH_SHORT).show()
+            }
+            exceptionToString.contains("FirebaseAuthWeakPasswordException") -> {
+                Toast.makeText(this, "비밀번호는 6자리 이상이어야 합니다.", Toast.LENGTH_SHORT).show()
+            }
+            exceptionToString.contains("FirebaseAuthInvalidUserException") -> {
+                Toast.makeText(this, "가입된 계정이 없습니다. 회원가입을 먼저 하세요.", Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                Toast.makeText(this, exceptionToString, Toast.LENGTH_SHORT).show()
+            }
         }
 
     }
@@ -242,14 +305,6 @@ class LoginTestActivity : AppCompatActivity() {
 
                 }
             }
-//            .addOnSuccessListener {
-//                Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_SHORT).show()
-//            }
-//            .addOnFailureListener {
-//                Toast.makeText(this, firebaseAuth.currentUser?.uid.toString(), Toast.LENGTH_SHORT).show()
-//                Toast.makeText(this, "이메일 로그인 실패", Toast.LENGTH_SHORT).show()
-//            }
-
     }
 
     @SuppressLint("LogNotTimber")
@@ -289,24 +344,4 @@ class LoginTestActivity : AppCompatActivity() {
 
     }
 
-    private fun anonymousAuth(intent: Intent) { // 익명 로그인 인증
-
-        firebaseAuth.signInAnonymously()
-            .addOnSuccessListener {
-                Toast.makeText(
-                    this, "익명 로그인 성공",
-                    Toast.LENGTH_SHORT
-                ).show()
-                startActivity(intent)
-                finish() // 액티비티가 두개 존재하는 오류 수정!
-
-            }
-            .addOnFailureListener {
-                Toast.makeText(
-                    this, "익명 로그인 실패",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-    }
 }
