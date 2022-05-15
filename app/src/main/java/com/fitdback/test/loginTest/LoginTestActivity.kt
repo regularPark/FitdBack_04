@@ -39,24 +39,30 @@ class LoginTestActivity : AppCompatActivity() {
 
         // 클릭 이벤트
         btnRunEmailLogin.setOnClickListener {
+
             val dialog = CustomDialog(this, R.layout.dialog_login_email_login, "Email Login")
             val mAlertDialog = dialog.showDialog()
+            val btnEmailLogin = mAlertDialog!!.findViewById<Button>(R.id.btnEmailLogin)
 
-            // 레이아웃의 EditText 에서 email과 password를 읽어들인다.
-            val email =
-                mAlertDialog!!.findViewById<EditText>(R.id.loginEmailArea)!!.text.toString().trim()
-            val password =
-                mAlertDialog.findViewById<EditText>(R.id.loginPasswordArea)!!.text.toString().trim()
+            btnEmailLogin?.setOnClickListener {
 
-            if (checkIfBothEmailAndPasswordAreNotNull(email, password)) {
-                emailLoginAuth(
-                    email,
-                    password,
-                    toMainActivity
-                )
-            } else {
-                Toast.makeText(this, "이메일과 비밀번호를 모두 입력하세요", Toast.LENGTH_SHORT).show()
+                val email =
+                    mAlertDialog!!.findViewById<EditText>(R.id.loginEmailArea)!!.text.toString().trim()
+                val password =
+                    mAlertDialog.findViewById<EditText>(R.id.loginPasswordArea)!!.text.toString().trim()
+
+                if (checkIfBothEmailAndPasswordAreNotNull(email, password)) {
+                    emailLoginAuth(
+                        email,
+                        password,
+                        toMainActivity
+                    )
+                } else {
+                    Toast.makeText(this, "이메일과 비밀번호를 모두 입력하세요", Toast.LENGTH_SHORT).show()
+                }
+
             }
+
         }
 
         btnRunGoogleLogin.setOnClickListener {
@@ -227,7 +233,6 @@ class LoginTestActivity : AppCompatActivity() {
                     Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_SHORT).show()
                     startActivity(intent)
                     finish() // 액티비티가 두개 존재하는 오류 수정!
-
 
                 } else {
 

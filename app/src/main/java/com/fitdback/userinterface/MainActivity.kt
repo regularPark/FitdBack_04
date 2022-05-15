@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.Toast
 import com.fitdback.posedetection.R
 import com.fitdback.test.DevModeActivity
+import com.fitdback.test.loginTest.LoginTestActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -31,24 +32,24 @@ class MainActivity : AppCompatActivity() {
 
         // 인텐트
         val toTutorialActivity = Intent(this, TutorialActivity::class.java)
-        val toLoginActivity = Intent(this, LoginActivity::class.java)
+        val toLoginActivity = Intent(this, LoginTestActivity::class.java)
         val toMyPageActivity = Intent(this, MyPageActivity::class.java)
         val toDevActivity = Intent(this, DevModeActivity::class.java)
         val toMainTestActivity = Intent(this, MainTestActivity::class.java)
 
         // 버튼 클릭 동작
         squatBtn.setOnClickListener {
-            toTutorialActivity.putExtra("exr_mod","squat") // 모드 설정
+            toTutorialActivity.putExtra("exr_mod", "squat") // 모드 설정
             startActivity(toTutorialActivity)
         }
 
         puBtn.setOnClickListener {
-            toTutorialActivity.putExtra("exr_mod","pushup")
+            toTutorialActivity.putExtra("exr_mod", "pushup")
             startActivity(toTutorialActivity)
         }
 
         plkBtn.setOnClickListener {
-            toTutorialActivity.putExtra("exr_mod","plank")
+            toTutorialActivity.putExtra("exr_mod", "plank")
             startActivity(toTutorialActivity)
         }
 
@@ -85,7 +86,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        startActivity(Intent(this,LoginActivity::class.java))
+        startActivity(Intent(this, LoginTestActivity::class.java))
         finish()
     }
 
