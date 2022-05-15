@@ -1,5 +1,6 @@
 package com.fitdback.test.loginTest
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.fitdback.database.DataBasket
+import com.fitdback.database.datamodel.UserInfoDataModel
 import com.fitdback.posedetection.R
 import com.fitdback.test.CustomDialog
 import com.fitdback.userinterface.MainTestActivity
@@ -99,30 +102,31 @@ class LoginTestActivity : AppCompatActivity() {
                     CustomDialog(this, R.layout.dialog_login_join_email, "Email Join")
                 val emailJoinAlertDialog = emailJoinDialog.showDialog()
 
-                val email =
-                    emailJoinAlertDialog!!.findViewById<EditText>(R.id.joinEmailArea)!!.text.toString()
-                        .trim()
-                val password =
-                    emailJoinAlertDialog.findViewById<EditText>(R.id.joinPasswordArea)!!.text.toString()
-                        .trim()
-                val passwordCheck =
-                    emailJoinAlertDialog.findViewById<EditText>(R.id.joinPasswordCheckArea)!!.text.toString()
-                        .trim()
-                val nickname =
-                    emailJoinAlertDialog.findViewById<EditText>(R.id.joinNicknameArea)!!.text.toString()
-                        .trim()
-                val height =
-                    emailJoinAlertDialog.findViewById<EditText>(R.id.joinHeightArea)!!.text.toString()
-                        .trim()
-                val weight =
-                    emailJoinAlertDialog.findViewById<EditText>(R.id.joinWeightArea)!!.text.toString()
-                        .trim()
-
                 // Firebase Join 처리
                 val btnRunFirebaseEmailJoin =
-                    emailJoinAlertDialog.findViewById<Button>(R.id.btnRunFirebaseEmailJoin)
+                    emailJoinAlertDialog!!.findViewById<Button>(R.id.btnRunFirebaseEmailJoin)
 
                 btnRunFirebaseEmailJoin?.setOnClickListener {
+
+                    val email =
+                        emailJoinAlertDialog.findViewById<EditText>(R.id.joinEmailArea)!!.text.toString()
+                            .trim()
+                    val password =
+                        emailJoinAlertDialog.findViewById<EditText>(R.id.joinPasswordArea)!!.text.toString()
+                            .trim()
+                    val passwordCheck =
+                        emailJoinAlertDialog.findViewById<EditText>(R.id.joinPasswordCheckArea)!!.text.toString()
+                            .trim()
+                    val nickname =
+                        emailJoinAlertDialog.findViewById<EditText>(R.id.joinNicknameArea)!!.text.toString()
+                            .trim()
+                    val height =
+                        emailJoinAlertDialog.findViewById<EditText>(R.id.joinHeightArea)!!.text.toString()
+                            .trim()
+                    val weight =
+                        emailJoinAlertDialog.findViewById<EditText>(R.id.joinWeightArea)!!.text.toString()
+                            .trim()
+
                     val joinAvailability = checkJoinAvailability(
                         email,
                         password,
@@ -131,8 +135,19 @@ class LoginTestActivity : AppCompatActivity() {
                         height,
                         weight
                     )
+
                     var toastMessage = ""
 
+                    when (joinAvailability) {
+                        "blankExists" ->
+                            Toast.makeText(this, "오류: 공란이 있습니다.", Toast.LENGTH_SHORT).show()
+                        "passwordNotMatch" ->
+                            Toast.makeText(this, "오류: 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+                        "joinAvailable" -> emailJoinAuth(
+                            email, password, nickname, height.toFloat(), weight.toFloat(),
+                            toMainActivity
+                        )
+                    }
                 }
 
                 // Firebase에 writing
@@ -158,6 +173,7 @@ class LoginTestActivity : AppCompatActivity() {
         return true
     }
 
+    @SuppressLint("LogNotTimber")
     private fun checkJoinAvailability(
         email: String,
         password: String,
@@ -167,6 +183,7 @@ class LoginTestActivity : AppCompatActivity() {
         weight: String
     ): String {
 
+        Log.d("Login", "checkJoinAvailability() ... ")
         val isBlankExists = email.isEmpty() || password.isEmpty() ||
                 passwordCheck.isEmpty() || nickname.isEmpty() || height.isEmpty() || weight.isEmpty()
 
@@ -200,6 +217,7 @@ class LoginTestActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("LogNotTimber")
     private fun emailLoginAuth(email: String, password: String, intent: Intent) { // 이메일 로그인 인증
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -229,9 +247,13 @@ class LoginTestActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("LogNotTimber")
     private fun emailJoinAuth(
         email: String,
         password: String,
+        nickname: String,
+        height: Float,
+        weight: Float,
         intent: Intent
     ) { // 회원가입하고 Intent로 이동
 
@@ -240,9 +262,16 @@ class LoginTestActivity : AppCompatActivity() {
                 if (task.isSuccessful) { // 회원 가입 성공
 
                     Toast.makeText(this, "회원 가입 성공", Toast.LENGTH_SHORT).show()
-                    startActivity(intent) // LoginSuccessActivity로 이동
-                    finish() // 액티비티가 두개 존재하는 오류 수정!
+                    val dataModel = UserInfoDataModel(email, password, nickname, height, weight)
 
+                    if (DataBasket.addUserInfoDataModel(dataModel)) {
+                        Toast.makeText(this, "회원정보가 저장되었습니다.", Toast.LENGTH_SHORT).show()
+                        Log.d("DebugLogin", "emailJoinAuth()...")
+                        startActivity(intent)
+                        finish() // 액티비티가 두개 존재하는 오류 수정!
+                    } else {
+                        Toast.makeText(this, "회원정보 저장에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                    }
 
                 } else { // 실패
 
