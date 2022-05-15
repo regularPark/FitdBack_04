@@ -7,10 +7,9 @@ import android.os.Handler
 import android.util.Log
 import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.R
-import com.fitdback.test.barChartTest.BarChartTestActivity
 
 class LoadingActivity : AppCompatActivity() {
-    private val SPLASH_TIME_OUT:Long = 3000
+    private val SPLASH_TIME_OUT:Long = 500
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading)
@@ -20,7 +19,7 @@ class LoadingActivity : AppCompatActivity() {
         Log.d("데베", dbPath.toString())
 
         Handler().postDelayed({
-            startActivity(Intent(this, MainTestActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }, SPLASH_TIME_OUT)
     }

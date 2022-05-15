@@ -1,120 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.fitdback.userinterface.MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="600sp"
-        android:orientation="vertical">
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp_"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bn_"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+         />
 
-        <Button
-            android:id="@+id/squatBtn"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bn_"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:menu="@menu/bottom_navigation_menu"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:itemIconTint="@drawable/menu_selector_color"
+        app:itemTextColor="@drawable/menu_selector_color"
+        />
 
-            android:layout_width="match_parent"
-            android:layout_height="100sp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:background="#50bcdf"
-            android:text="squat"
-            android:textColor="@color/white"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteX="-30dp"
-            tools:layout_editor_absoluteY="265dp" />
-
-        <Button
-            android:id="@+id/puBtn"
-            android:layout_width="match_parent"
-            android:layout_height="100sp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:background="#50bcdf"
-            android:text="push up"
-            android:textColor="@color/white"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteX="-30dp"
-            tools:layout_editor_absoluteY="265dp" />
-
-        <Button
-            android:id="@+id/plkBtn"
-            android:layout_width="match_parent"
-            android:layout_height="100sp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:background="#50bcdf"
-            android:text="plank"
-            android:textColor="@color/white"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteX="-30dp"
-            tools:layout_editor_absoluteY="265dp" />
-
-
-        <!--  비 운동 관련   -->
-        <Button
-            android:id="@+id/btnDevMode"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="75dp"
-            android:layout_marginHorizontal="20dp"
-            android:background="#50bcdf"
-            android:text="DEV MODE"
-            android:textColor="@color/white"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteX="-30dp"
-            tools:layout_editor_absoluteY="265dp" />
-
-
-        <Button
-            android:id="@+id/btnSignOut"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="75dp"
-            android:layout_marginHorizontal="20dp"
-            android:background="#50bcdf"
-            android:text="Sign Out"
-            android:textColor="@color/white"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteX="-30dp"
-            tools:layout_editor_absoluteY="265dp" />
-
-    </LinearLayout>
-
-
-    <!-- fragment: EXERCIES / MY PAGE -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:weightSum="2">
-
-        <Button
-            android:id="@+id/mainTest"
-            android:layout_width="match_parent"
-            android:layout_height="120sp"
-            android:layout_weight="1"
-            android:text="exercise"
-            android:textSize="30sp" />
-
-        <Button
-            android:id="@+id/mypageBtn"
-            android:layout_width="match_parent"
-            android:layout_height="120sp"
-            android:layout_weight="1"
-            android:text="my page"
-            android:textSize="30sp" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
