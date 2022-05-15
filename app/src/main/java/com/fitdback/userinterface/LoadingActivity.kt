@@ -18,6 +18,7 @@ class LoadingActivity : AppCompatActivity() {
         val dbPath = DataBasket.getDBPath("users", "ex_data", true)
         DataBasket.getDataFromFB(dbPath!!, "individualExData")
         Log.d("데베", dbPath.toString())
+
         Handler().postDelayed({
             startActivity(Intent(this, MainTestActivity::class.java))
             finish()
