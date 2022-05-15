@@ -56,9 +56,9 @@ class StatisticFragment : Fragment() {
         // Bar chart Layout
         val barChart: BarChart = view.findViewById(R.id.barChart)
 
-        val selectedExTypeArea = view.findViewById<TextView>(R.id.selectedExTypeArea)
-        val selectedDataArea = view.findViewById<TextView>(R.id.selectedDataArea)
-        val yAxisTitleArea = view.findViewById<TextView>(R.id.yAxisTitleArea)
+        val selectedExTypeArea = view.findViewById<TextView>(R.id.selectedExTypeArea_)
+        val selectedDataArea = view.findViewById<TextView>(R.id.selectedDataArea_)
+        val yAxisTitleArea = view.findViewById<TextView>(R.id.yAxisTitleArea_)
 
         val btnSetSquatChart = view.findViewById<Button>(R.id.btnSetSquatChart_)
         val btnSetPlankChart = view.findViewById<Button>(R.id.btnSetPlankChart_)
@@ -289,38 +289,6 @@ class StatisticFragment : Fragment() {
     private fun setSecondTargetData(secondTargetData: String, selectedDataArea: TextView) {
         BarChartVariables.secondTargetData = secondTargetData
         selectedDataArea.text = BarChartVariables.secondTargetData
-    }
-
-    @SuppressLint("LogNotTimber")
-    private fun showEachChart(barChart: BarChart, secondTargetData: String) {
-
-        /*
-            기능 : 칼로리 소모량, 운동 횟수, 운동 시간 별로 차트 보기
-            secondTargetData: "ex_count" or "ex_calorie" or "ex_time"
-         */
-
-        clearBarChart(barChart)
-
-        val dailyExCountSumBarEntry =
-            getDailySumBarEntry(BarChartVariables.dateListOfWeek, "squat", secondTargetData)
-
-        val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList").apply {
-
-            valueTextColor = Color.BLACK
-            valueTextSize = 10f
-            setColors(*ColorTemplate.COLORFUL_COLORS)
-
-        }
-
-        val data = BarData(barDataSet)
-        barChart.data = data
-        Log.d(
-            "BarChart",
-            "BarChartVariables.lastDateOfXIndex: ${BarChartVariables.lastDateOfXIndex}"
-        )
-
-        MyBarChartGenerator().runBarChart(barChart, barDataSet.yMax + 1.0f)
-
     }
 
     private fun getYearMonthDateOfLastDate(lastDateOfXIndex: String): Triple<Int, Int, Int> {
