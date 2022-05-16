@@ -797,13 +797,20 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         val bitmap = textureView!!.getBitmap(classifier!!.imageSizeX, classifier!!.imageSizeY)
         val textToShow = classifier!!.classifyFrame(bitmap)
         val countToShow = FeedbackAlgorithm.exr_cnt
+        val cntTimeToShow = FeedbackAlgorithm.exr_time_result
+
         bitmap.recycle()
 
 
         drawView!!.setDrawPoint(classifier!!.mPrintPointArray!!, 0.5f)  // 지우기
 
         showToast(textToShow)
-        showCount(countToShow)
+        if (FeedbackAlgorithm.exr_mode == "plank"){
+            showCount(cntTimeToShow)
+        }
+        else{
+            showCount(countToShow)
+        }
         showCountDown(TimerClass.second)
         prgBar!!.progress = 5 - TimerClass.second
 

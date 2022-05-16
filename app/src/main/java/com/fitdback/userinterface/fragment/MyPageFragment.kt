@@ -57,7 +57,6 @@ class MyPageFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_my_page, container, false)
 
 
-        val statisticBtn : Button = view.findViewById(R.id.statBtn)
         // 마이 페이지 프래그먼트 -> 액티비티 전환
         val loginInfoBtn : Button = view.findViewById(R.id.loginInfoBtn)
         loginInfoBtn.setOnClickListener(object :View.OnClickListener {
@@ -67,12 +66,6 @@ class MyPageFragment : Fragment() {
             }
         })
 
-        statisticBtn.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                val toStaticsPopupActivityIntent = Intent(context, StatisticsPopUpActivity::class.java)
-                startActivity(toStaticsPopupActivityIntent)
-            }
-        })
 
 
         // Inflate the layout for this fragment

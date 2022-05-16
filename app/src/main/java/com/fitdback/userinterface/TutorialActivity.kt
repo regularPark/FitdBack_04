@@ -14,7 +14,7 @@ import com.google.android.youtube.player.YouTubePlayerView
 class TutorialActivity : YouTubeBaseActivity() {
 
     val api_key = "AIzaSyD-RJXgEjAgWZsO1LAO5sIgrpFob8k2qEk"
-    val videoId = "5_SIHTd6Pqo"
+    var videoId:String = ""
     companion object{
         var cameramode : String = "back"
     }
@@ -26,7 +26,8 @@ class TutorialActivity : YouTubeBaseActivity() {
 
         // 프래그먼트로 데이터 전송
         var bundle : Bundle = Bundle()
-
+        // 운동정보 넘기기
+        val exr = intent.getStringExtra("exr_mod")
         // 유튜브
         val youtubeView = findViewById<YouTubePlayerView>(R.id.youtubePlayer)
         youtubeView.initialize(api_key, object : YouTubePlayer.OnInitializedListener {
@@ -35,6 +36,16 @@ class TutorialActivity : YouTubeBaseActivity() {
                 player: YouTubePlayer,
                 wasRestored: Boolean
             ) {
+                if (exr == "squat"){
+                    videoId = "Fk9j6pQ6ej8"
+                }
+                else if(exr == "plank"){
+                    videoId = "B--6YfhmBGc"
+                }
+                else{
+                    videoId = "YdhHnZxcpgY"
+                }
+
                if (!wasRestored) {
                    player.cueVideo(videoId)
                }
@@ -64,8 +75,7 @@ class TutorialActivity : YouTubeBaseActivity() {
         // 레이아웃
         val btnFitnessStart = findViewById<Button>(R.id.btnFitnessStart)
 
-        // 운동정보 넘기기
-        val exr = intent.getStringExtra("exr_mod")
+
 
         // 인텐트
         val intent = Intent(this, CameraActivity::class.java)
