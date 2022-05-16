@@ -55,21 +55,21 @@ class StatisticFragment : Fragment() {
         // Bar chart Layout
         val barChart: BarChart = view.findViewById(R.id.barChart)
 
-        val selectedExTypeArea = view.findViewById<TextView>(R.id.selectedExTypeArea)
-        val selectedDataArea = view.findViewById<TextView>(R.id.selectedDataArea)
+        val selectedExTypeArea = view.findViewById<TextView>(R.id.selectedExTypeArea_)
+        val selectedDataArea = view.findViewById<TextView>(R.id.selectedDataArea_)
         val yAxisTitleArea = view.findViewById<TextView>(R.id.yAxisTitleArea)
 
-        val btnSetSquatChart = view.findViewById<Button>(R.id.btnSetSquatChart)
-        val btnSetPlankChart = view.findViewById<Button>(R.id.btnSetPlankChart)
-        val btnSetSideLateralRaiseChart = view.findViewById<Button>(R.id.btnSetSideLateralRaiseChart)
+        val btnSetSquatChart = view.findViewById<Button>(R.id.btnSetSquatChart_)
+        val btnSetPlankChart = view.findViewById<Button>(R.id.btnSetPlankChart_)
+        val btnSetSideLateralRaiseChart = view.findViewById<Button>(R.id.btnSetSideLateralRaiseChart_)
 
-        val btnSetExCalorieChart = view.findViewById<Button>(R.id.btnShowExCalorieChart)
-        val btnSetExCountChart = view.findViewById<Button>(R.id.btnShowExCountChart)
-        val btnSetExTimeChart = view.findViewById<Button>(R.id.btnShowExTimeChart)
+        val btnSetExCalorieChart = view.findViewById<Button>(R.id.btnShowExCalorieChart_)
+        val btnSetExCountChart = view.findViewById<Button>(R.id.btnShowExCountChart_)
+        val btnSetExTimeChart = view.findViewById<Button>(R.id.btnShowExTimeChart_)
 
-        val btnShowThisWeek = view.findViewById<Button>(R.id.btnShowThisWeek)
-        val btnShowPreviousWeek = view.findViewById<Button>(R.id.btnShowPreviousWeek)
-        val btnShowNextWeek = view.findViewById<Button>(R.id.btnShowNextWeek)
+        val btnShowThisWeek = view.findViewById<Button>(R.id.btnShowThisWeek_)
+        val btnShowPreviousWeek = view.findViewById<Button>(R.id.btnShowPreviousWeek_)
+        val btnShowNextWeek = view.findViewById<Button>(R.id.btnShowNextWeek_)
 
         /*
             운동 종류, 데이터 종류 선택

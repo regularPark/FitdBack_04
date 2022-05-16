@@ -2,6 +2,7 @@ package com.fitdback.userinterface
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
@@ -116,7 +117,10 @@ class LoginActivity : AppCompatActivity() {
             }
 
             btnPjkLogin?.setOnClickListener {
-                emailLoginAuth("pjk@gmail.com", "123456", toMainActivityIntent)
+                Handler().postDelayed({
+                    emailLoginAuth("pjk@gmail.com", "123456", toMainActivityIntent)
+
+                }, 500)
             }
 
         }
@@ -175,8 +179,8 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
 
                     Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_SHORT).show()
-                    startActivity(intent)
                     getDB()
+                    startActivity(intent)
                     finish() // 액티비티가 두개 존재하는 오류 수정!
 
 
