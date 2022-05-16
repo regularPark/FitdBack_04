@@ -3,187 +3,184 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
     android:fillViewport="true"
+    android:orientation="vertical"
+    android:layout_gravity="center"
     tools:context="com.fitdback.userinterface.fragment.StatisticFragment">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/selectedExTypeArea"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="운동 종류 선택"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:textSize="30sp" />
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/btnSetSquatChart"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_row="3"
-                    android:layout_column="0"
-                    android:layout_columnSpan="3"
-                    android:layout_columnWeight="1"
+        <TextView
+            android:id="@+id/selectedExTypeArea_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:text="운동 종류 선택"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+        <RadioGroup
+            android:id="@+id/radioGp_1"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+                <RadioButton
+                    android:id="@+id/btnSetSquatChart_"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
                     android:layout_margin="5dp"
+                    android:background="@drawable/btn_selector_color"
                     android:text="스쿼트"
                     android:textColor="@color/white"
-                    android:background="@drawable/button_radius_color"
-                    android:textStyle="bold"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/btnSetPlankChart"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_columnSpan="2"
+                <RadioButton
+                    android:id="@+id/btnSetPlankChart_"
+                    android:layout_height="40dp"
                     android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_selector_color"
                     android:text="플랭크"
                     android:textColor="@color/white"
-                    android:background="@drawable/button_radius_color"
-                    android:textStyle="bold"
-                    android:textSize="15sp" />
-                <Button
-                    android:id="@+id/btnSetSideLateralRaiseChart"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <RadioButton
+                    android:id="@+id/btnSetSideLateralRaiseChart_"
+                    android:layout_height="40dp"
                     android:layout_margin="5dp"
                     android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_selector_color"
                     android:text="사이드 래터럴"
                     android:textColor="@color/white"
-                    android:background="@drawable/button_radius_color"
-                    android:textStyle="bold"
-                    android:textSize="15sp" />
-            </GridLayout>
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/selectedDataArea"
-                android:layout_width="184dp"
-                android:layout_height="wrap_content"
-                android:layout_row="3"
-                android:layout_columnSpan="2"
-                android:text="원하는 데이터"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:textSize="30sp" />
+        </RadioGroup>
 
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/selectedDataArea_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:text="원하는 데이터"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/radioGp_2"
                 android:orientation="horizontal"
-                android:weightSum="0.9">
-
-                <Button
-                    android:id="@+id/btnShowExCalorieChart"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_columnWeight="1"
-                    android:layout_weight="0.3"
-                    android:layout_margin="5dp"
-                    android:text="칼로리 소모량"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_radius_color"
-                    android:textStyle="bold"
-                    android:textSize="15sp" />
-
-                <Button
-                    android:id="@+id/btnShowExCountChart"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_columnWeight="1"
-                    android:layout_weight="0.3"
-                    android:layout_margin="5dp"
-                    android:text="운동 횟수"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_radius_color"
-                    android:textStyle="bold"
-                    android:textSize="15sp" />
-
-                <Button
-                    android:id="@+id/btnShowExTimeChart"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_columnWeight="1"
-                    android:layout_weight="0.3"
-                    android:layout_margin="5dp"
-                    android:text="운동 시간"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_radius_color"
-                    android:textStyle="bold"
-                    android:textSize="15sp" />
-
-            </GridLayout>
-
-
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/barChart"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                 />
-            <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 >
 
-
-                <Button
-                    android:id="@+id/btnShowThisWeek"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_row="0"
-                    android:layout_column="0"
-                    android:layout_columnSpan="2"
-                    android:layout_marginHorizontal="5dp"
-                    android:background="@drawable/button_radius_color_3"
-                    android:text="이번 주 차트 보기 "
+                <RadioButton
+                    android:id="@+id/btnShowExCalorieChart_"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_selector_color"
+                    android:text="칼로리 소모량"
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/btnShowPreviousWeek"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_row="2"
-                    android:layout_column="0"
-                    android:layout_columnWeight="1"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/button_radius_color"
-                    android:text="지난 주 차트 보기"
+                <RadioButton
+                    android:id="@+id/btnShowExCountChart_"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_selector_color"
+                    android:text="운동 횟수"
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/btnShowNextWeek"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_row="2"
-                    android:layout_column="1"
-                    android:layout_columnWeight="1"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginTop="5dp"
-                    android:text="다음 주 차트 보기"
+                <RadioButton
+                    android:id="@+id/btnShowExTimeChart_"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_selector_color"
+                    android:text="운동 시간"
                     android:textColor="@color/white"
-                    android:background="@drawable/button_radius_color"
-                    android:textStyle="bold"
-                    android:textSize="15sp" />
-            </GridLayout>
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </RadioGroup>
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/yAxisTitleArea_"
+            android:textAlignment="center"
+            android:layout_width="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_height="20dp" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChart"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="20dp"
+            android:layout_height="300dp" />
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+
+
+            <Button
+                android:id="@+id/btnShowPreviousWeek_"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_columnWeight="1"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/button_radius_color"
+                android:text="지난 주"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+            <Button
+                android:id="@+id/btnShowThisWeek_"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_columnWeight="1"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/button_radius_color_3"
+                android:text="이번 주 차트"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+            <Button
+                android:id="@+id/btnShowNextWeek_"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_columnWeight="1"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/button_radius_color"
+                android:text="다음 주"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </GridLayout>
+
+    </LinearLayout>
 
 </ScrollView>

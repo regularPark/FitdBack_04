@@ -1,18 +1,19 @@
 package com.fitdback.userinterface.fragment
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.R
+import com.fitdback.test.barChartTest.BarChartTestActivity
 import com.fitdback.test.barChartTest.BarChartVariables
 import com.fitdback.test.barChartTest.MyBarChartGenerator
 import com.github.mikephil.charting.charts.BarChart
@@ -39,8 +40,6 @@ class StatisticFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
         }
     }
 
@@ -49,54 +48,71 @@ class StatisticFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+
         val view = inflater.inflate(R.layout.fragment_statistic, container, false)
 
 
         // Bar chart Layout
         val barChart: BarChart = view.findViewById(R.id.barChart)
 
-        val selectedExTypeArea = view.findViewById<TextView>(R.id.selectedExTypeArea)
-        val selectedDataArea = view.findViewById<TextView>(R.id.selectedDataArea)
-        val yAxisTitleArea = view.findViewById<TextView>(R.id.yAxisTitleArea)
+        val selectedExTypeArea = view.findViewById<TextView>(R.id.selectedExTypeArea_)
+        val selectedDataArea = view.findViewById<TextView>(R.id.selectedDataArea_)
+        val yAxisTitleArea = view.findViewById<TextView>(R.id.yAxisTitleArea_)
 
-        val btnSetSquatChart = view.findViewById<Button>(R.id.btnSetSquatChart)
-        val btnSetPlankChart = view.findViewById<Button>(R.id.btnSetPlankChart)
-        val btnSetSideLateralRaiseChart = view.findViewById<Button>(R.id.btnSetSideLateralRaiseChart)
+        val btnSetSquatChart = view.findViewById<RadioButton>(R.id.btnSetSquatChart_)
+        val btnSetPlankChart = view.findViewById<RadioButton>(R.id.btnSetPlankChart_)
+        val btnSetSideLateralRaiseChart = view.findViewById<RadioButton>(R.id.btnSetSideLateralRaiseChart_)
 
-        val btnSetExCalorieChart = view.findViewById<Button>(R.id.btnShowExCalorieChart)
-        val btnSetExCountChart = view.findViewById<Button>(R.id.btnShowExCountChart)
-        val btnSetExTimeChart = view.findViewById<Button>(R.id.btnShowExTimeChart)
+        val btnSetExCalorieChart = view.findViewById<Button>(R.id.btnShowExCalorieChart_)
+        val btnSetExCountChart = view.findViewById<Button>(R.id.btnShowExCountChart_)
+        val btnSetExTimeChart = view.findViewById<Button>(R.id.btnShowExTimeChart_)
 
-        val btnShowThisWeek = view.findViewById<Button>(R.id.btnShowThisWeek)
-        val btnShowPreviousWeek = view.findViewById<Button>(R.id.btnShowPreviousWeek)
-        val btnShowNextWeek = view.findViewById<Button>(R.id.btnShowNextWeek)
+        val btnShowThisWeek = view.findViewById<Button>(R.id.btnShowThisWeek_)
+        val btnShowPreviousWeek = view.findViewById<Button>(R.id.btnShowPreviousWeek_)
+        val btnShowNextWeek = view.findViewById<Button>(R.id.btnShowNextWeek_)
 
         /*
             운동 종류, 데이터 종류 선택
          */
-        btnSetSquatChart.setOnClickListener {
-            setFirstTargetData("squat", selectedExTypeArea)
+        val radioGroup_1 = view.findViewById<RadioGroup>(R.id.radioGp_1)
+        val radioGroup_2 = view.findViewById<RadioGroup>(R.id.radioGp_2)
+
+        radioGroup_1.setOnCheckedChangeListener { group, checkedId ->
+            when(checkedId){
+                R.id.btnSetSquatChart_ -> btnSetSquatChart.setOnClickListener {
+                    setFirstTargetData("squat")
+                    selectedExTypeArea.text = "스쿼트"
+                }
+                R.id.btnSetPlankChart_ -> btnSetPlankChart.setOnClickListener {
+                    setFirstTargetData("plank")
+                    selectedExTypeArea.text = "플랭크"
+                }
+                R.id.btnSetSideLateralRaiseChart_ -> btnSetSideLateralRaiseChart.setOnClickListener {
+                    setFirstTargetData("sideLateralRaise")
+                    selectedExTypeArea.text = "사이드 래터럴 레이즈"
+                }
+
+            }
         }
 
-        btnSetPlankChart.setOnClickListener {
-            setFirstTargetData("plank", selectedExTypeArea)
+        radioGroup_2.setOnCheckedChangeListener { group, checkedId ->
+            when(checkedId){
+                R.id.btnShowExCalorieChart_ ->  btnSetExCalorieChart.setOnClickListener {
+                    setSecondTargetData("ex_calorie")
+                    selectedDataArea.text = "칼로리 소모량"
+                }
+                R.id.btnShowExCountChart_ -> btnSetExCountChart.setOnClickListener {
+                    setSecondTargetData("ex_count")
+                    selectedDataArea.text = "운동 횟수"
+                }
+
+                R.id.btnShowExTimeChart_ ->btnSetExTimeChart.setOnClickListener {
+                    setSecondTargetData("ex_time")
+                    selectedDataArea.text = "운동 시간"
+                }
+            }
         }
 
-        btnSetSideLateralRaiseChart.setOnClickListener {
-            setFirstTargetData("sideLateralRaise", selectedExTypeArea)
-        }
-
-        btnSetExCalorieChart.setOnClickListener {
-            setSecondTargetData("ex_calorie", selectedDataArea)
-        }
-
-        btnSetExCountChart.setOnClickListener {
-            setSecondTargetData("ex_count", selectedDataArea)
-        }
-
-        btnSetExTimeChart.setOnClickListener {
-            setSecondTargetData("ex_time", selectedDataArea)
-        }
 
         /*
             차트 보기
@@ -266,10 +282,9 @@ class StatisticFragment : Fragment() {
             }
 
         }
-
-
         return view
     }
+
 
 
     private fun setYAxisTitle(yAxisTitleArea: TextView) {
@@ -281,46 +296,13 @@ class StatisticFragment : Fragment() {
         }
     }
 
-    private fun setFirstTargetData(firstTargetData: String, selectedExTypeArea: TextView) {
+    private fun setFirstTargetData(firstTargetData: String) {
         BarChartVariables.firstTargetData = firstTargetData
-        selectedExTypeArea.text = BarChartVariables.firstTargetData
+
     }
 
-    private fun setSecondTargetData(secondTargetData: String, selectedDataArea: TextView) {
+    private fun setSecondTargetData(secondTargetData: String) {
         BarChartVariables.secondTargetData = secondTargetData
-        selectedDataArea.text = BarChartVariables.secondTargetData
-    }
-
-    @SuppressLint("LogNotTimber")
-    private fun showEachChart(barChart: BarChart, secondTargetData: String) {
-
-        /*
-            기능 : 칼로리 소모량, 운동 횟수, 운동 시간 별로 차트 보기
-            secondTargetData: "ex_count" or "ex_calorie" or "ex_time"
-         */
-
-        clearBarChart(barChart)
-
-        val dailyExCountSumBarEntry =
-            getDailySumBarEntry(BarChartVariables.dateListOfWeek, "squat", secondTargetData)
-
-        val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList").apply {
-
-            valueTextColor = Color.BLACK
-            valueTextSize = 10f
-            setColors(*ColorTemplate.COLORFUL_COLORS)
-
-        }
-
-        val data = BarData(barDataSet)
-        barChart.data = data
-        Log.d(
-            "BarChart",
-            "BarChartVariables.lastDateOfXIndex: ${BarChartVariables.lastDateOfXIndex}"
-        )
-
-        MyBarChartGenerator().runBarChart(barChart, barDataSet.yMax + 1.0f)
-
     }
 
     private fun getYearMonthDateOfLastDate(lastDateOfXIndex: String): Triple<Int, Int, Int> {
