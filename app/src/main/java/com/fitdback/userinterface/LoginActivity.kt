@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.CameraActivity
 import com.fitdback.posedetection.R
 import com.fitdback.test.barChartTest.BarChartTestActivity
@@ -129,6 +130,10 @@ class LoginActivity : AppCompatActivity() {
 
     } // end of onCreate()
 
+    private fun getDB() {
+        val dbPath = DataBasket.getDBPath("users", "ex_data", true)
+        DataBasket.getDataFromFB(dbPath!!, "individualExData")
+    }
 
     /*
         Login Function
@@ -171,6 +176,7 @@ class LoginActivity : AppCompatActivity() {
 
                     Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_SHORT).show()
                     startActivity(intent)
+                    getDB()
                     finish() // 액티비티가 두개 존재하는 오류 수정!
 
 
