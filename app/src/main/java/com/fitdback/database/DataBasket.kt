@@ -242,14 +242,14 @@ class DataBasket {
             }
 
         }
-        
+
         /*
             로그인 처리 관련
          */
         fun addUserInfoDataModel(dataModel: UserInfoDataModel): Boolean {
 
             val dbPath = getDBPath("users", "user_info", true)
-            var isJoinSuccessful:Boolean = true
+            var isJoinSuccessful: Boolean = true
 
             dbPath!!.setValue(dataModel)
                 .addOnSuccessListener {

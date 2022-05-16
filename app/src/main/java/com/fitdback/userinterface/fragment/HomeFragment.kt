@@ -102,7 +102,6 @@ class HomeFragment : Fragment() {
             override fun onClick(v: View?) {
                 val toLoginActivity = Intent(context, LoginTestActivity::class.java)
                 signOut(toLoginActivity)
-
             }
 
         })
