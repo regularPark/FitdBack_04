@@ -355,9 +355,10 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             activity?.runOnUiThread {
                 countTimer!!.text = "운동 시작!"
                 prgBar!!.visibility = View.INVISIBLE
-                drawView!!.visibility = View.VISIBLE
+               drawView!!.visibility = View.VISIBLE
                 Handler().postDelayed(
-                        { countTimer!!.visibility = View.INVISIBLE },
+                        { countTimer!!.visibility = View.INVISIBLE
+                        },
                         1000
                 )
             }
