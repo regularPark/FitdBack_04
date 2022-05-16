@@ -1,6 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/fb_exTypeArea"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Exercise name"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/fb_exResultArea"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="ex result area"
+            android:textSize="30sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/fb_achivementRate"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_weight="0.5"
+            android:text="달성률 표기"
+            android:textSize="30sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_weight="0.5"
+            android:text="text"
+            android:textSize="30sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/fb_feedbackArea"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="feedback area"
+            android:textSize="30sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="360dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/feedbackYAxisTitleArea"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:textAlignment="center" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/feedbackBarChart"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:weightSum="0.9">
+
+        <Button
+            android:id="@+id/fb_btnShowExCalorieChart"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.3"
+            android:text="칼로리 소모량"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/fb_btnShowExCountChart"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.3"
+            android:text="운동 횟수"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/fb_btnShowExTimeChart"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.3"
+            android:text="운동 시간"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

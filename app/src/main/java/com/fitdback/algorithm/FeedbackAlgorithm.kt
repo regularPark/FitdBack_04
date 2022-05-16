@@ -66,6 +66,8 @@ class FeedbackAlgorithm {
 
         val squat_cal: Double = 0.50 // 스쿼트 1회당 칼로리
 
+        val target_cnt: Int = 1
+
         var isExrFinished: Boolean = false
         //val soundPool = SoundPool.Builder().build()
 
@@ -179,9 +181,9 @@ class FeedbackAlgorithm {
                     Log.d("exr_cnt", "S = " + exr_cnt_s + " F = " + exr_cnt_f + " T = " + exr_cnt)
                     exr_cal = ceil((exr_cnt.toDouble() * squat_cal))
 
-                    if (exr_cnt == 10) {
+                    if (exr_cnt == target_cnt) { // 시간체크
                         total_exr_time = System.currentTimeMillis() - start_time
-                        exr_time_result = (ceil((total_exr_time / 1000.toDouble()))).toInt()
+                        exr_time_result = (ceil((total_exr_time / 1000.toDouble()))).toInt() + 1
                     }
                     //--------------------------------------------------------------------------------------------------------
                     //exr_cnt_s(int) = 운동 성공 횟수, exr_cnt_f(int) = 운동 실패 횟수, exr_cnt(int) = 총 운동 횟수

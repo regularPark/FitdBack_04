@@ -83,7 +83,7 @@
             android:name="com.fitdback.test.HealthMemoTestActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name="com.fitdback.test.FeedbackTestActivity"
+            android:name="com.fitdback.test.feedbackTest.FeedbackTestActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name="com.fitdback.userinterface.FeedbackActivity"
