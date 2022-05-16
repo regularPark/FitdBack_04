@@ -14,7 +14,7 @@ import com.google.android.youtube.player.YouTubePlayerView
 class TutorialActivity : YouTubeBaseActivity() {
 
     val api_key = "AIzaSyD-RJXgEjAgWZsO1LAO5sIgrpFob8k2qEk"
-    val videoId = "5_SIHTd6Pqo"
+
     companion object{
         var cameramode : String = "back"
     }
