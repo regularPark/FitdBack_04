@@ -13,7 +13,7 @@ import com.fitdback.database.DataBasket
 import com.fitdback.database.datamodel.UserInfoDataModel
 import com.fitdback.posedetection.R
 import com.fitdback.test.CustomDialog
-import com.fitdback.userinterface.MainTestActivity
+import com.fitdback.userinterface.MainActivity
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -46,7 +46,7 @@ class LoginTestActivity : AppCompatActivity() {
         val joinTextView = findViewById<TextView>(R.id.joinTextView)
 
         // 인텐트
-        val toMainActivity = Intent(this, MainTestActivity::class.java)
+        val toMainActivity = Intent(this, MainActivity::class.java)
 
         // 클릭 이벤트
         btnRunEmailLogin.setOnClickListener {
@@ -218,7 +218,7 @@ class LoginTestActivity : AppCompatActivity() {
                     // 로그인 성공 시
                     DataBasket.googleSignInClient = googleSignInClient
                     Toast.makeText(this, "구글 로그인 성공", Toast.LENGTH_LONG).show()
-                    startActivity(Intent(this, MainTestActivity::class.java))
+                    startActivity(Intent(this, MainActivity::class.java))
                 } else {
                     // 로그인 실패 시
                     Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
@@ -294,6 +294,10 @@ class LoginTestActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
 
                     Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_SHORT).show()
+
+                    val dbPath = DataBasket.getDBPath("users", "ex_data", true)
+                    DataBasket.getDataFromFB(dbPath!!, "individualExData")
+
                     startActivity(intent)
                     finish() // 액티비티가 두개 존재하는 오류 수정!
 

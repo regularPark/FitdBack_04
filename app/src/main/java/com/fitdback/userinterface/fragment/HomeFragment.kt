@@ -2,6 +2,7 @@ package com.fitdback.userinterface.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -40,8 +41,6 @@ class HomeFragment : Fragment() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
         }
     }
 
@@ -121,6 +120,14 @@ class HomeFragment : Fragment() {
         return view
     }
 
+    private fun getDB(){
+        Log.d("DB","진입")
+        val dbPath = DataBasket.getDBPath("users", "ex_data", true)
+        DataBasket.getDataFromFB(dbPath!!, "individualExData")
+
+
+        Log.d("DB", "완료")
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of
