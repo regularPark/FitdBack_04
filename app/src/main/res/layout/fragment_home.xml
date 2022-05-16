@@ -26,28 +26,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-            <Button
-                android:id="@+id/squatBtn"
-                android:layout_width="match_parent"
-                android:layout_height="100sp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:paddingLeft="20dp"
-                android:gravity="fill"
-                android:background="@drawable/button_radius_color"
-                android:drawableLeft="@drawable/ic_squat_2"
-                android:text="squat"
-                android:textColor="@color/white"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                 />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text=" SQUAT"
+                    android:drawableLeft="@drawable/ic_squat_2"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    />
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="20dp"
                     android:orientation="vertical">
                     <ImageView
                         android:id="@+id/im_squat"
@@ -57,31 +49,32 @@
                         app:layout_constraintGuide_begin = "0dp"
                         />
                 </LinearLayout>
+                <Button
+                    android:id="@+id/squatBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:background="@drawable/button_radius_color"
+                    android:text="스쿼트 시작"
+                    android:textColor="@color/white"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                     />
 
-
-            <Button
-
-                android:id="@+id/plkBtn"
-                android:layout_width="match_parent"
-                android:layout_height="100sp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/button_radius_color"
-                android:drawableLeft="@drawable/ic_plank_2"
-                android:gravity="fill"
-                android:paddingLeft="15dp"
-                android:text="plank"
-                android:textColor="@color/white"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                tools:layout_editor_absoluteX="-30dp"
-                tools:layout_editor_absoluteY="265dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="30dp"
+                    android:text=" PLANK"
+                    android:drawableLeft="@drawable/ic_plank_2"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    />
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="20dp"
                     android:layout_gravity="center">
                     <ImageView
                         android:id="@+id/im_plank"
@@ -91,29 +84,33 @@
                         app:layout_constraintGuide_begin = "0dp"
                         />
                 </LinearLayout>
-            <Button
-                android:id="@+id/puBtn"
-                android:layout_width="match_parent"
-                android:layout_height="100sp"
-                android:layout_columnWeight="1"
+                <Button
+                    android:id="@+id/plkBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/button_radius_color"
+                    android:gravity="center"
+                    android:text="플랭크 시작"
+                    android:textColor="@color/white"
+                    android:textSize="40dp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="-30dp"
+                    tools:layout_editor_absoluteY="265dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/button_radius_color"
-                android:drawableLeft="@drawable/ic_slr_2"
-                android:paddingLeft="20dp"
-                android:gravity="fill"
-                android:text="Side lateral raise"
-                android:textColor="@color/white"
-                android:textSize="30sp"
+                android:layout_marginTop="30dp"
+                android:text="SIDE LATERAL RAISE"
+                android:textSize="30dp"
                 android:textStyle="bold"
-                tools:layout_editor_absoluteX="-30dp"
-                tools:layout_editor_absoluteY="265dp" />
+                android:drawableLeft="@drawable/ic_slr_2"/>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="20dp"
                     android:layout_gravity="center">
                     <ImageView
                         android:id="@+id/im_slr"
@@ -123,6 +120,24 @@
                         app:layout_constraintGuide_begin = "0dp"
                         />
                 </LinearLayout>
+
+                <Button
+                    android:id="@+id/puBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_columnWeight="1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/button_radius_color"
+                    android:gravity="center"
+                    android:text="사이드래터럴레이즈 시작"
+                    android:textColor="@color/white"
+                    android:textSize="28dp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="-30dp"
+                    tools:layout_editor_absoluteY="265dp" />
+
 
             <!--  비 운동 관련   -->
 
