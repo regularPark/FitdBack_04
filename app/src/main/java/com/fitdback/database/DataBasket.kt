@@ -25,7 +25,7 @@ class DataBasket {
         var tempExrModel = ExerciseDataModel()
         var dataSample: DataSnapshot? = null
         var individualExData: DataSnapshot? = null
-
+        
         /*
             날짜 관련
         */

@@ -20,6 +20,7 @@ class BarChartVariables {
             null // firstTargetData: "squat" or "plank" or "sideLateralRaise"
         var secondTargetData: String? =
             null // secondTargetData: "ex_count" or "ex_calorie" or "ex_time"
+        var isFirstBarChart = true
 
         val expressedDataFormatter: ValueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
@@ -33,7 +34,6 @@ class BarChartVariables {
                     } else {
                         "${minute}분 ${sec}초"
                     }
-
                 } else {
                     return if (value.toInt() == 0) {
                         ""
@@ -95,14 +95,14 @@ class BarChartVariables {
             }
         }
 
-        fun setFirstTargetData(firstTargetData: String, selectedExTypeArea: TextView) {
+        fun setFirstTargetData(firstTargetData: String, selectedExTypeArea: TextView?) {
             BarChartVariables.firstTargetData = firstTargetData
-            selectedExTypeArea.text = BarChartVariables.firstTargetData
+            selectedExTypeArea?.text = BarChartVariables.firstTargetData
         }
 
-        fun setSecondTargetData(secondTargetData: String, selectedDataArea: TextView) {
+        fun setSecondTargetData(secondTargetData: String, selectedDataArea: TextView?) {
             BarChartVariables.secondTargetData = secondTargetData
-            selectedDataArea.text = BarChartVariables.secondTargetData
+            selectedDataArea?.text = BarChartVariables.secondTargetData
         }
 
         fun updateBarChartData(dateListOfTargetWeek: MutableList<String>) {
