@@ -67,7 +67,6 @@ class MyPageFragment : Fragment() {
         })
 
 
-
         // Inflate the layout for this fragment
         return view
     }

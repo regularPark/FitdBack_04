@@ -91,17 +91,17 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private val surfaceTextureListener = object : TextureView.SurfaceTextureListener {
 
         override fun onSurfaceTextureAvailable(
-                texture: SurfaceTexture,
-                width: Int,
-                height: Int
+            texture: SurfaceTexture,
+            width: Int,
+            height: Int
         ) {
             openCamera(width, height)
         }
 
         override fun onSurfaceTextureSizeChanged(
-                texture: SurfaceTexture,
-                width: Int,
-                height: Int
+            texture: SurfaceTexture,
+            width: Int,
+            height: Int
         ) {
             configureTransform(width, height)
         }
@@ -152,8 +152,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         }
 
         override fun onError(
-                currentCameraDevice: CameraDevice,
-                error: Int
+            currentCameraDevice: CameraDevice,
+            error: Int
         ) {
             cameraOpenCloseLock.release()
             currentCameraDevice.close()
@@ -199,16 +199,16 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private val captureCallback = object : CameraCaptureSession.CaptureCallback() {
 
         override fun onCaptureProgressed(
-                session: CameraCaptureSession,
-                request: CaptureRequest,
-                partialResult: CaptureResult
+            session: CameraCaptureSession,
+            request: CaptureRequest,
+            partialResult: CaptureResult
         ) {
         }
 
         override fun onCaptureCompleted(
-                session: CameraCaptureSession,
-                request: CaptureRequest,
-                result: TotalCaptureResult
+            session: CameraCaptureSession,
+            request: CaptureRequest,
+            result: TotalCaptureResult
         ) {
         }
     }
@@ -219,8 +219,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             val activity = activity
             return try {
                 val info = activity
-                        .packageManager
-                        .getPackageInfo(activity.packageName, PackageManager.GET_PERMISSIONS)
+                    .packageManager
+                    .getPackageInfo(activity.packageName, PackageManager.GET_PERMISSIONS)
                 val ps = info.requestedPermissions
                 if (ps != null && ps.isNotEmpty()) {
                     ps
@@ -250,28 +250,28 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
 
             if (FeedbackAlgorithm.exr_mode == "squat") {
 
-                if (FeedbackAlgorithm.exr_cnt == 10 && !FeedbackAlgorithm.isExrFinished) {
+                if (FeedbackAlgorithm.exr_cnt == FeedbackAlgorithm.target_cnt && !FeedbackAlgorithm.isExrFinished) {
 
                     FeedbackAlgorithm.isExrFinished = true
                     Handler().postDelayed(
-                            {
+                        {
 
-                                // 데이터 모델 생성
-                                val exerciseDataModel = ExerciseDataModel(
-                                        DataBasket.getDateOfDay(0), // 오늘 날짜
-                                        FeedbackAlgorithm.exr_mode,
-                                        FeedbackAlgorithm.exr_time_result,
-                                        FeedbackAlgorithm.exr_cnt,
-                                        FeedbackAlgorithm.exr_cnt_s,
-                                        FeedbackAlgorithm.exr_cal.toInt()
-                                )
+                            // 데이터 모델 생성
+                            val exerciseDataModel = ExerciseDataModel(
+                                DataBasket.getDateOfDay(0), // 오늘 날짜
+                                FeedbackAlgorithm.exr_mode,
+                                FeedbackAlgorithm.exr_time_result,
+                                FeedbackAlgorithm.exr_cnt,
+                                FeedbackAlgorithm.exr_cnt_s,
+                                FeedbackAlgorithm.exr_cal.toInt()
+                            )
 
-                                DataBasket.tempExrModel = exerciseDataModel
+                            DataBasket.tempExrModel = exerciseDataModel
 
-                                startActivity(intent)
-                                activity.finish()
+                            startActivity(intent)
+                            activity.finish()
 
-                            }, 3000
+                        }, 3000
                     ) //카메라 종료 3초 지연
                 }
             } else if (FeedbackAlgorithm.exr_mode == "plank") {
@@ -279,48 +279,48 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                 if (FeedbackAlgorithm.exr_cnt == 10 && !FeedbackAlgorithm.isExrFinished) {
                     FeedbackAlgorithm.isExrFinished = true
                     Handler().postDelayed(
-                            {
+                        {
 
-                                // 데이터 모델 생성
-                                val exerciseDataModel = ExerciseDataModel(
-                                        DataBasket.getDateOfDay(0),
-                                        FeedbackAlgorithm.exr_mode,
-                                        FeedbackAlgorithm.exr_time_result,
-                                        FeedbackAlgorithm.exr_cnt,
-                                        FeedbackAlgorithm.exr_cnt_s,
-                                        FeedbackAlgorithm.exr_cal.toInt()
-                                )
+                            // 데이터 모델 생성
+                            val exerciseDataModel = ExerciseDataModel(
+                                DataBasket.getDateOfDay(0),
+                                FeedbackAlgorithm.exr_mode,
+                                FeedbackAlgorithm.exr_time_result,
+                                FeedbackAlgorithm.exr_cnt,
+                                FeedbackAlgorithm.exr_cnt_s,
+                                FeedbackAlgorithm.exr_cal.toInt()
+                            )
 
-                                DataBasket.tempExrModel = exerciseDataModel
+                            DataBasket.tempExrModel = exerciseDataModel
 
-                                startActivity(intent)
-                                activity.finish()
+                            startActivity(intent)
+                            activity.finish()
 
-                            }, 3000
+                        }, 3000
                     ) //카메라 종료 3초 지연
                 }
             } else if (FeedbackAlgorithm.exr_mode == "pushup") {
                 if (FeedbackAlgorithm.exr_cnt == 10 && !FeedbackAlgorithm.isExrFinished) {
                     FeedbackAlgorithm.isExrFinished = true
                     Handler().postDelayed(
-                            {
+                        {
 
-                                // 데이터 모델 생성
-                                val exerciseDataModel = ExerciseDataModel(
-                                        DataBasket.getDateOfDay(0),
-                                        FeedbackAlgorithm.exr_mode,
-                                        FeedbackAlgorithm.exr_time_result,
-                                        FeedbackAlgorithm.exr_cnt,
-                                        FeedbackAlgorithm.exr_cnt_s,
-                                        FeedbackAlgorithm.exr_cal.toInt()
-                                )
+                            // 데이터 모델 생성
+                            val exerciseDataModel = ExerciseDataModel(
+                                DataBasket.getDateOfDay(0),
+                                FeedbackAlgorithm.exr_mode,
+                                FeedbackAlgorithm.exr_time_result,
+                                FeedbackAlgorithm.exr_cnt,
+                                FeedbackAlgorithm.exr_cnt_s,
+                                FeedbackAlgorithm.exr_cal.toInt()
+                            )
 
-                                DataBasket.tempExrModel = exerciseDataModel
+                            DataBasket.tempExrModel = exerciseDataModel
 
-                                startActivity(intent)
-                                activity.finish()
+                            startActivity(intent)
+                            activity.finish()
 
-                            }, 3000
+                        }, 3000
                     ) //카메라 종료 3초 지연
                 }
             }
@@ -355,11 +355,12 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             activity?.runOnUiThread {
                 countTimer!!.text = "운동 시작!"
                 prgBar!!.visibility = View.INVISIBLE
-               drawView!!.visibility = View.VISIBLE
+                drawView!!.visibility = View.VISIBLE
                 Handler().postDelayed(
-                        { countTimer!!.visibility = View.INVISIBLE
-                        },
-                        1000
+                    {
+                        countTimer!!.visibility = View.INVISIBLE
+                    },
+                    1000
                 )
             }
         } else {
@@ -375,9 +376,9 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
      * Layout the preview and buttons.
      */
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
 
         return inflater.inflate(R.layout.fragment_camera2_basic, container, false)
@@ -388,8 +389,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
      * Connect the buttons to their event handler.
      */
     override fun onViewCreated(
-            view: View,
-            savedInstanceState: Bundle?
+        view: View,
+        savedInstanceState: Bundle?
     ) {
         textureView = view.findViewById(R.id.texture)
         textView = view.findViewById(R.id.text)
@@ -480,8 +481,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
 
 
     private fun setUpCameraOutputs(
-            width: Int,
-            height: Int
+        width: Int,
+        height: Int
     ) {
         val activity = activity
         val manager = activity.getSystemService(Context.CAMERA_SERVICE) as CameraManager
@@ -498,15 +499,15 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                     continue
                 }
                 val map =
-                        characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
-                                ?: continue
+                    characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
+                        ?: continue
 
                 // // For still image captures, we use the largest available size.
                 val largest = Collections.max(
-                        Arrays.asList(*map.getOutputSizes(ImageFormat.JPEG)), CompareSizesByArea()
+                    Arrays.asList(*map.getOutputSizes(ImageFormat.JPEG)), CompareSizesByArea()
                 )
                 imageReader = ImageReader.newInstance(
-                        largest.width, largest.height, ImageFormat.JPEG, /*maxImages*/ 2
+                    largest.width, largest.height, ImageFormat.JPEG, /*maxImages*/ 2
                 )
 
                 // Find out if we need to swap dimension to get the preview size relative to sensor
@@ -515,7 +516,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
 
                 /* Orientation of the camera sensor */
                 val sensorOrientation =
-                        characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION)!!
+                    characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION)!!
                 var swappedDimensions = false
                 when (displayRotation) {
                     Surface.ROTATION_0, Surface.ROTATION_180 -> if (sensorOrientation == 90 || sensorOrientation == 270) {
@@ -550,12 +551,12 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                 }
 
                 previewSize = chooseOptimalSize(
-                        map.getOutputSizes(SurfaceTexture::class.java),
-                        rotatedPreviewWidth,
-                        rotatedPreviewHeight,
-                        maxPreviewWidth,
-                        maxPreviewHeight,
-                        largest
+                    map.getOutputSizes(SurfaceTexture::class.java),
+                    rotatedPreviewWidth,
+                    rotatedPreviewHeight,
+                    maxPreviewWidth,
+                    maxPreviewHeight,
+                    largest
                 )
 
                 // We fit the aspect ratio of TextureView to the size of preview we picked.
@@ -579,7 +580,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             // Currently an NPE is thrown when the Camera2API is used but not supported on the
             // device this code runs.
             ErrorDialog.newInstance(getString(R.string.camera_error))
-                    .show(childFragmentManager, FRAGMENT_DIALOG)
+                .show(childFragmentManager, FRAGMENT_DIALOG)
         }
 
     }
@@ -589,8 +590,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
      */
     @SuppressLint("MissingPermission")
     private fun openCamera(
-            width: Int,
-            height: Int
+        width: Int,
+        height: Int
     ) {
         if (!checkedPermissions && !allPermissionsGranted()) {
             FragmentCompat.requestPermissions(this, requiredPermissions, PERMISSIONS_REQUEST_CODE)
@@ -618,8 +619,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private fun allPermissionsGranted(): Boolean {
         for (permission in requiredPermissions) {
             if (ContextCompat.checkSelfPermission(
-                            activity, permission
-                    ) != PackageManager.PERMISSION_GRANTED
+                    activity, permission
+                ) != PackageManager.PERMISSION_GRANTED
             ) {
                 return false
             }
@@ -628,9 +629,9 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     }
 
     override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<String>,
-            grantResults: IntArray
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
@@ -703,44 +704,44 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
 
             // We set up a CaptureRequest.Builder with the output Surface.
             previewRequestBuilder =
-                    cameraDevice!!.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)
+                cameraDevice!!.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)
             previewRequestBuilder!!.addTarget(surface)
 
             // Here, we create a CameraCaptureSession for camera preview.
             cameraDevice!!.createCaptureSession(
-                    Arrays.asList(surface),
-                    object : CameraCaptureSession.StateCallback() {
+                Arrays.asList(surface),
+                object : CameraCaptureSession.StateCallback() {
 
-                        override fun onConfigured(cameraCaptureSession: CameraCaptureSession) {
-                            // The camera is already closed
-                            if (null == cameraDevice) {
-                                return
-                            }
-
-                            // When the session is ready, we start displaying the preview.
-                            captureSession = cameraCaptureSession
-                            try {
-                                // Auto focus should be continuous for camera preview.
-                                previewRequestBuilder!!.set(
-                                        CaptureRequest.CONTROL_AF_MODE,
-                                        CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE
-                                )
-
-                                // Finally, we start displaying the camera preview.
-                                previewRequest = previewRequestBuilder!!.build()
-                                captureSession!!.setRepeatingRequest(
-                                        previewRequest!!, captureCallback, backgroundHandler
-                                )
-                            } catch (e: CameraAccessException) {
-                                Log.e(TAG, "Failed to set up config to capture Camera", e)
-                            }
-
+                    override fun onConfigured(cameraCaptureSession: CameraCaptureSession) {
+                        // The camera is already closed
+                        if (null == cameraDevice) {
+                            return
                         }
 
-                        override fun onConfigureFailed(cameraCaptureSession: CameraCaptureSession) {
-                            showToast("Failed")
+                        // When the session is ready, we start displaying the preview.
+                        captureSession = cameraCaptureSession
+                        try {
+                            // Auto focus should be continuous for camera preview.
+                            previewRequestBuilder!!.set(
+                                CaptureRequest.CONTROL_AF_MODE,
+                                CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE
+                            )
+
+                            // Finally, we start displaying the camera preview.
+                            previewRequest = previewRequestBuilder!!.build()
+                            captureSession!!.setRepeatingRequest(
+                                previewRequest!!, captureCallback, backgroundHandler
+                            )
+                        } catch (e: CameraAccessException) {
+                            Log.e(TAG, "Failed to set up config to capture Camera", e)
                         }
-                    }, null
+
+                    }
+
+                    override fun onConfigureFailed(cameraCaptureSession: CameraCaptureSession) {
+                        showToast("Failed")
+                    }
+                }, null
             )
         } catch (e: CameraAccessException) {
             Log.e(TAG, "Failed to preview Camera", e)
@@ -757,8 +758,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
      * @param viewHeight The height of `textureView`
      */
     private fun configureTransform(
-            viewWidth: Int,
-            viewHeight: Int
+        viewWidth: Int,
+        viewHeight: Int
     ) {
         val activity = activity
         if (null == textureView || null == previewSize || null == activity) {
@@ -768,15 +769,15 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         val matrix = Matrix()
         val viewRect = RectF(0f, 0f, viewWidth.toFloat(), viewHeight.toFloat())
         val bufferRect =
-                RectF(0f, 0f, previewSize!!.height.toFloat(), previewSize!!.width.toFloat())
+            RectF(0f, 0f, previewSize!!.height.toFloat(), previewSize!!.width.toFloat())
         val centerX = viewRect.centerX()
         val centerY = viewRect.centerY()
         if (Surface.ROTATION_90 == rotation || Surface.ROTATION_270 == rotation) {
             bufferRect.offset(centerX - bufferRect.centerX(), centerY - bufferRect.centerY())
             matrix.setRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.FILL)
             val scale = Math.max(
-                    viewHeight.toFloat() / previewSize!!.height,
-                    viewWidth.toFloat() / previewSize!!.width
+                viewHeight.toFloat() / previewSize!!.height,
+                viewWidth.toFloat() / previewSize!!.width
             )
             matrix.postScale(scale, scale, centerX, centerY)
             matrix.postRotate((90 * (rotation - 2)).toFloat(), centerX, centerY)
@@ -822,12 +823,12 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private class CompareSizesByArea : Comparator<Size> {
 
         override fun compare(
-                lhs: Size,
-                rhs: Size
+            lhs: Size,
+            rhs: Size
         ): Int {
             // We cast here to ensure the multiplications won't overflow
             return Long.signum(
-                    lhs.width.toLong() * lhs.height - rhs.width.toLong() * rhs.height
+                lhs.width.toLong() * lhs.height - rhs.width.toLong() * rhs.height
             )
         }
     }
@@ -840,11 +841,11 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         override fun onCreateDialog(savedInstanceState: Bundle): Dialog {
             val activity = activity
             return AlertDialog.Builder(activity)
-                    .setMessage(arguments.getString(ARG_MESSAGE))
-                    .setPositiveButton(
-                            android.R.string.ok
-                    ) { dialogInterface, i -> activity.finish() }
-                    .create()
+                .setMessage(arguments.getString(ARG_MESSAGE))
+                .setPositiveButton(
+                    android.R.string.ok
+                ) { dialogInterface, i -> activity.finish() }
+                .create()
         }
 
         companion object {
@@ -908,12 +909,12 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
          * @return The optimal `Size`, or an arbitrary one if none were big enough
          */
         private fun chooseOptimalSize(
-                choices: Array<Size>,
-                textureViewWidth: Int,
-                textureViewHeight: Int,
-                maxWidth: Int,
-                maxHeight: Int,
-                aspectRatio: Size
+            choices: Array<Size>,
+            textureViewWidth: Int,
+            textureViewHeight: Int,
+            maxWidth: Int,
+            maxHeight: Int,
+            aspectRatio: Size
         ): Size {
 
             // Collect the supported resolutions that are at least as big as the preview Surface
@@ -924,8 +925,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             val h = aspectRatio.height
             for (option in choices) {
                 if (option.width <= maxWidth
-                        && option.height <= maxHeight
-                        && option.height == option.width * h / w
+                    && option.height <= maxHeight
+                    && option.height == option.width * h / w
                 ) {
                     if (option.width >= textureViewWidth && option.height >= textureViewHeight) {
                         bigEnough.add(option)

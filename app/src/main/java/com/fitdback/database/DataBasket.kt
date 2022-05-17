@@ -2,7 +2,10 @@ package com.fitdback.database
 
 import android.annotation.SuppressLint
 import android.util.Log
+import android.widget.Toast
 import com.fitdback.database.datamodel.ExerciseDataModel
+import com.fitdback.database.datamodel.UserInfoDataModel
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -16,12 +19,13 @@ class DataBasket {
     companion object {
 
         private lateinit var firebaseAuth: FirebaseAuth
+        lateinit var googleSignInClient: GoogleSignInClient
         val database = Firebase.database
 
         var tempExrModel = ExerciseDataModel()
         var dataSample: DataSnapshot? = null
         var individualExData: DataSnapshot? = null
-
+        
         /*
             날짜 관련
         */
@@ -237,6 +241,25 @@ class DataBasket {
                 targetMap[key] = targetMap[key]!! + value // update
             }
 
+        }
+
+        /*
+            로그인 처리 관련
+         */
+        fun addUserInfoDataModel(dataModel: UserInfoDataModel): Boolean {
+
+            val dbPath = getDBPath("users", "user_info", true)
+            var isJoinSuccessful: Boolean = true
+
+            dbPath!!.setValue(dataModel)
+                .addOnSuccessListener {
+                    isJoinSuccessful = true
+                }
+                .addOnFailureListener {
+                    isJoinSuccessful = false
+                }
+
+            return isJoinSuccessful
         }
 
     } // end of companion object

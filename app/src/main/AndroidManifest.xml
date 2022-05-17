@@ -13,26 +13,45 @@
         android:icon="@mipmap/ic_fitdback"
         android:label="@string/app_name"
         android:theme="@style/MaterialTheme">
-        <activity android:name="com.fitdback.userinterface.LoadingActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
+
         <activity
-            android:name="com.fitdback.userinterface.MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <!-- 앱 중단 에러 방지 -->
-            >
-        </activity>
-        <activity
-            android:name="com.fitdback.test.barChartTest.BarChartTestActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-        <activity
-            android:name="com.fitdback.userinterface.LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <!-- 앱 중단 에러 방지 -->
+            android:name="com.fitdback.test.loginTest.LoginTestActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+        <activity android:name="com.fitdback.userinterface.MainTestActivity">
+
+        </activity>
+        <activity
+            android:name="com.fitdback.userinterface.LoadingActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+
+        </activity>
+        <activity
+            android:name="com.fitdback.userinterface.MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <!-- 앱 중단 에러 방지 -->
+        </activity>
+        <activity
+            android:name="com.fitdback.test.barChartTest.BarChartTestActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        </activity>
+
+        <activity
+            android:name="com.fitdback.userinterface.LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <!-- 앱 중단 에러 방지 -->
+
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
+
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
         </activity>
         <activity
             android:name="com.fitdback.userinterface.LoginSuccessActivity"
@@ -64,7 +83,7 @@
             android:name="com.fitdback.test.HealthMemoTestActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name="com.fitdback.test.FeedbackTestActivity"
+            android:name="com.fitdback.test.feedbackTest.FeedbackTestActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name="com.fitdback.userinterface.FeedbackActivity"

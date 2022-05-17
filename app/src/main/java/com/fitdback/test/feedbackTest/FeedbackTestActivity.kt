@@ -1,4 +1,4 @@
-package com.fitdback.test
+package com.fitdback.test.feedbackTest
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
