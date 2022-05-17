@@ -13,8 +13,11 @@ import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.CameraActivity
 import com.fitdback.posedetection.R
 import com.fitdback.test.DevModeActivity
+import com.fitdback.test.loginTest.LoginTestActivity
 import com.fitdback.userinterface.LoginActivity
 import com.fitdback.userinterface.TutorialActivity
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 
 // TODO: Rename parameter arguments, choose names that match
@@ -44,7 +47,7 @@ class HomeFragment : Fragment() {
     private fun signOut(intent: Intent) {
 
         firebaseAuth.signOut() // 로그아웃 처리
-        //Toast.makeText(this, "로그아웃 완료", Toast.LENGTH_SHORT).show()
+        DataBasket.googleSignInClient?.signOut()
 
         startActivity(intent)
         activity?.finish()
@@ -54,67 +57,63 @@ class HomeFragment : Fragment() {
     // TODO:버튼 관련 함수 여기에
     override fun onCreateView(
 
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
 
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         // 스쿼트 버튼
-        val squatBtn : Button = view.findViewById(R.id.squatBtn)
-        squatBtn.setOnClickListener(object :View.OnClickListener {
-            override fun onClick(v: View?){
+        val squatBtn: Button = view.findViewById(R.id.squatBtn)
+        squatBtn.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
                 val toTutorialActivity = Intent(context, TutorialActivity::class.java)
-                toTutorialActivity.putExtra("exr_mod","squat") // 모드 설정
+                toTutorialActivity.putExtra("exr_mod", "squat") // 모드 설정
                 startActivity(toTutorialActivity)
             }
         })
 
         // 플랭크 버튼
-        val plankBtn : Button = view.findViewById(R.id.plkBtn)
-        plankBtn.setOnClickListener(object :View.OnClickListener {
-            override fun onClick(v: View?){
+        val plankBtn: Button = view.findViewById(R.id.plkBtn)
+        plankBtn.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
                 val toTutorialActivity = Intent(context, TutorialActivity::class.java)
-                toTutorialActivity.putExtra("exr_mod","plank") // 모드 설정
+                toTutorialActivity.putExtra("exr_mod", "plank") // 모드 설정
                 startActivity(toTutorialActivity)
             }
         })
 
         // 푸시업 버튼
-        val puBtn : Button = view.findViewById(R.id.puBtn)
+        val puBtn: Button = view.findViewById(R.id.puBtn)
         puBtn.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?){
+            override fun onClick(v: View?) {
                 val toTutorialActivity = Intent(context, TutorialActivity::class.java)
-                toTutorialActivity.putExtra("exr_mod", "pushup")
+                toTutorialActivity.putExtra("exr_mod", "sideLateralRaise")
                 startActivity(toTutorialActivity)
             }
         })
 
 
         // 로그아웃
-        val btnSignOut : Button = view.findViewById(R.id.btnSignOut)
+        val btnSignOut: Button = view.findViewById(R.id.btnSignOut)
         btnSignOut.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                val toLoginActivity = Intent(context, LoginActivity::class.java)
+                val toLoginActivity = Intent(context, LoginTestActivity::class.java)
                 signOut(toLoginActivity)
-
             }
 
         })
 
         // 개발자 모드
-        val btnDevMode : Button = view.findViewById(R.id.btnDevMode)
+        val btnDevMode: Button = view.findViewById(R.id.btnDevMode)
         btnDevMode.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v:View?){
+            override fun onClick(v: View?) {
                 activity?.finish()
                 val toDevActivity = Intent(context, DevModeActivity::class.java)
                 startActivity(toDevActivity)
             }
         })
-
-
-
 
 
         // Inflate the layout for this fragment
@@ -142,12 +141,12 @@ class HomeFragment : Fragment() {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
 
-                HomeFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
+            HomeFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
                 }
+            }
 
     }
 }

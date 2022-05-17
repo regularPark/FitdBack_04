@@ -25,6 +25,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import com.fitdback.algorithm.FeedbackAlgorithm
+import java.lang.Exception
 import java.util.ArrayList
 
 class DrawView : View {
@@ -73,19 +74,19 @@ class DrawView : View {
     constructor(context: Context) : super(context)
 
     constructor(
-            context: Context,
-            attrs: AttributeSet?
+        context: Context,
+        attrs: AttributeSet?
     ) : super(context, attrs)
 
     constructor(
-            context: Context,
-            attrs: AttributeSet?,
-            defStyleAttr: Int
+        context: Context,
+        attrs: AttributeSet?,
+        defStyleAttr: Int
     ) : super(context, attrs, defStyleAttr)
 
     fun setImgSize(
-            width: Int,
-            height: Int
+        width: Int,
+        height: Int
     ) {
         mImgWidth = width
         mImgHeight = height
@@ -97,8 +98,8 @@ class DrawView : View {
      * @param point 2*14
      */
     fun setDrawPoint(
-            point: Array<FloatArray>,
-            ratio: Float
+        point: Array<FloatArray>,
+        ratio: Float
     ) {
         mDrawPoint.clear()
 
@@ -120,8 +121,8 @@ class DrawView : View {
      * @param height Relative vertical size
      */
     fun setAspectRatio(
-            width: Int,
-            height: Int
+        width: Int,
+        height: Int
     ) {
         if (width < 0 || height < 0) {
             throw IllegalArgumentException("Size cannot be negative.")
@@ -137,10 +138,14 @@ class DrawView : View {
         var prePointF: PointF? = null
         mPaint.color = 0xfffaff0d.toInt() //  목윗부분 color
         val p1 = mDrawPoint[1]
+
+        // TODO: 143번 줄 에러 Fix : 카메라 실행 중 꺼지는 원인임
         for ((index, pointF) in mDrawPoint.withIndex()) {
+
             // 관절 튈 때 그리지 않는 방법
             if (mDrawPoint[13].y > mDrawPoint[2].y && mDrawPoint[13].y > mDrawPoint[5].y &&
-                mDrawPoint[10].y > mDrawPoint[5].y && mDrawPoint[10].y > mDrawPoint[2].y) {
+                mDrawPoint[10].y > mDrawPoint[5].y && mDrawPoint[10].y > mDrawPoint[2].y
+            ) {
                 if (index == 1) continue
                 when (index) {
                     //0-1
@@ -163,55 +168,68 @@ class DrawView : View {
                     9, 10 -> {
                         if (prePointF != null) {
                             mPaint.color = 0xffff0000.toInt() // skeleton 색상 지정
-                            canvas.drawLine(prePointF.x, prePointF.y, pointF.x, pointF.y, mPaint)
+                            canvas.drawLine(
+                                prePointF.x,
+                                prePointF.y,
+                                pointF.x,
+                                pointF.y,
+                                mPaint
+                            )
                         }
                     }
                     else -> {
                         if (prePointF != null) {
                             mPaint.color = 0xfffaff0d.toInt() // skeleton 색상 지정
-                            canvas.drawLine(prePointF.x, prePointF.y, pointF.x, pointF.y, mPaint)
+                            canvas.drawLine(
+                                prePointF.x,
+                                prePointF.y,
+                                pointF.x,
+                                pointF.y,
+                                mPaint
+                            )
                         }
                     }
                 }
                 prePointF = pointF
             }
+
+
         }
 
         // 점 그리기
 
         for ((index, pointF) in mDrawPoint.withIndex()) {
             if (mDrawPoint[13].y > mDrawPoint[2].y && mDrawPoint[13].y > mDrawPoint[5].y &&
-                mDrawPoint[10].y > mDrawPoint[5].y && mDrawPoint[10].y > mDrawPoint[2].y) {
+                mDrawPoint[10].y > mDrawPoint[5].y && mDrawPoint[10].y > mDrawPoint[2].y
+            ) {
                 mPaint.color = mColorArray[index]
                 canvas.drawCircle(pointF.x, pointF.y, circleRadius, mPaint)
             }
         }
 
 
-
-
         // FeedBack 알고리즘
         if (FeedbackAlgorithm.isPlaying) {
             when (FeedbackAlgorithm.exr_mode) {
                 "squat" -> Handler().postDelayed(
-                        { FeedbackAlgorithm.squat(context, mDrawPoint) },
-                        5000
+                    { FeedbackAlgorithm.squat(context, mDrawPoint) },
+                    5000
                 ) // 5초동안 스쿼트 알고리즘 비활성화
                 "plank" -> Handler().postDelayed(
-                        { FeedbackAlgorithm.plank(context, mDrawPoint) },
-                        5000
+                    { FeedbackAlgorithm.plank(context, mDrawPoint) },
+                    5000
                 ) // 5초동안 플랭크 알고리즘 비활성화
                 "pushup" -> Handler().postDelayed(
-                        { FeedbackAlgorithm.pushup(context, mDrawPoint) },
-                        5000
+                    { FeedbackAlgorithm.pushup(context, mDrawPoint) },
+                    5000
                 ) // 5초동안 플랭크 알고리즘 비활성화
             }
         }
     }
 
     override fun onMeasure(
-            widthMeasureSpec: Int,
-            heightMeasureSpec: Int
+        widthMeasureSpec: Int,
+        heightMeasureSpec: Int
     ) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
