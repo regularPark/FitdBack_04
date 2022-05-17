@@ -66,7 +66,7 @@ class DrawView : View {
     private val mPaint: Paint by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG).apply {
             style = FILL
-            strokeWidth = dip(2).toFloat()
+            strokeWidth = dip(10).toFloat()
             textSize = sp(13).toFloat()
         }
     }

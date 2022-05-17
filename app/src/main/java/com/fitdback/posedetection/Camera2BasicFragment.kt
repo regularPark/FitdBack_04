@@ -83,6 +83,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private var countView: TextView? = null
     private var countTimer: TextView? = null
     private var prgBar: ProgressBar? = null
+    private var guideMsg: TextView? = null
 
 
     /**
@@ -355,6 +356,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             activity?.runOnUiThread {
                 countTimer!!.text = "운동 시작!"
                 prgBar!!.visibility = View.INVISIBLE
+                guideMsg!!.visibility = View.INVISIBLE
                 drawView!!.visibility = View.VISIBLE
                 Handler().postDelayed(
                     {
@@ -365,7 +367,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             }
         } else {
             activity?.runOnUiThread {
-                countTimer!!.text = "정확한 측정을 위해\n전신이 보이도록 뒤로 물러나 주세요\n\n\n" + text.toString()
+                countTimer!!.text = text.toString()
+                guideMsg!!.text = "정확한 측정을 위해\n전신이 보이도록 뒤로 물러나 주세요"
                 drawView!!.visibility = View.INVISIBLE
             }
         }
@@ -400,6 +403,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         layoutBottom = view.findViewById(R.id.layout_bottom)
         countTimer = view.findViewById(R.id.cntDown)
         prgBar = view.findViewById(R.id.progressbar)
+        guideMsg = view.findViewById(R.id.guide)
 
 
         // 렌더링 옵션 : CPU or GPU
@@ -813,7 +817,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             showCount(countToShow)
         }
         showCountDown(TimerClass.second)
-        prgBar!!.progress = 5 - TimerClass.second
+        prgBar?.progress = 5 - TimerClass.second
 
     }
 
