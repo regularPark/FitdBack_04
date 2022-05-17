@@ -8,16 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
 import com.fitdback.database.DataBasket
-import com.fitdback.posedetection.CameraActivity
 import com.fitdback.posedetection.R
 import com.fitdback.test.DevModeActivity
-import com.fitdback.test.loginTest.LoginTestActivity
-import com.fitdback.userinterface.LoginActivity
+import com.fitdback.userinterface.LoginActivity_new
 import com.fitdback.userinterface.TutorialActivity
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 
 // TODO: Rename parameter arguments, choose names that match
@@ -99,7 +94,7 @@ class HomeFragment : Fragment() {
         val btnSignOut: Button = view.findViewById(R.id.btnSignOut)
         btnSignOut.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                val toLoginActivity = Intent(context, LoginTestActivity::class.java)
+                val toLoginActivity = Intent(context, LoginActivity_new::class.java)
                 signOut(toLoginActivity)
             }
 

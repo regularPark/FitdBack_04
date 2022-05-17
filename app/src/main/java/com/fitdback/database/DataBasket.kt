@@ -19,13 +19,13 @@ class DataBasket {
     companion object {
 
         private lateinit var firebaseAuth: FirebaseAuth
-        lateinit var googleSignInClient: GoogleSignInClient
+        var googleSignInClient: GoogleSignInClient? = null
         val database = Firebase.database
 
         var tempExrModel = ExerciseDataModel()
-        var dataSample: DataSnapshot? = null
         var individualExData: DataSnapshot? = null
-        
+        var individualUserInfo: DataSnapshot? = null
+
         /*
             날짜 관련
         */
@@ -129,13 +129,13 @@ class DataBasket {
 
             dbPath.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    dataSample = dataSnapshot
 
-                    when (dataDescription) {
-                        "individualExData" -> individualExData = dataSnapshot
+                    when (dataSnapshot.key.toString()) {
+                        "ex_data" -> individualExData = dataSnapshot
+                        "user_info" -> individualUserInfo = dataSnapshot
                     }
 
-                    Log.d("Data - getDataFromDB", dataSample.toString())
+                    Log.d("db_getDataFromDB", dataSnapshot.toString())
                 }
 
                 override fun onCancelled(error: DatabaseError) {

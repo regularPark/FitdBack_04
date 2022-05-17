@@ -15,7 +15,7 @@
         android:theme="@style/MaterialTheme">
 
         <activity
-            android:name="com.fitdback.test.loginTest.LoginTestActivity"
+            android:name="com.fitdback.userinterface.LoginActivity_new"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
             <intent-filter>
@@ -44,7 +44,7 @@
         </activity>
 
         <activity
-            android:name="com.fitdback.userinterface.LoginActivity"
+            android:name="com.fitdback.userinterface.LoginActivity_old"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <!-- 앱 중단 에러 방지 -->
 
             <!--            <intent-filter>-->
