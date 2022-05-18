@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.fitdback.posedetection.R
+import com.fitdback.test.loginTest.LoginTestActivity
 import com.fitdback.userinterface.fragment.HomeFragment
 import com.fitdback.userinterface.fragment.MyPageFragment
 import com.fitdback.userinterface.fragment.MyTownFragment
@@ -68,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onBackPressed() {
-        startActivity(Intent(this,LoginActivity::class.java))
+        startActivity(Intent(this,LoginTestActivity::class.java))
         finish()
     }
 

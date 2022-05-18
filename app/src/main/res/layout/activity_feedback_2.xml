@@ -63,63 +63,59 @@
             android:textSize="30sp" />
 
     </LinearLayout>
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="360dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/feedbackYAxisTitleArea"
-            android:layout_width="50dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:textAlignment="center" />
-
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/feedbackBarChart"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp" />
+            android:layout_height="360dp"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/feedbackYAxisTitleArea"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:textAlignment="center" />
 
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/feedbackBarChart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/fb_btnShowExCalorieChart"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="0.3"
+                android:text="칼로리 소모량"
+                android:textSize="15sp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:weightSum="0.9">
+            <Button
+                android:id="@+id/fb_btnShowExCountChart"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="0.3"
+                android:text="운동 횟수"
+                android:textSize="15sp" />
 
-        <Button
-            android:id="@+id/fb_btnShowExCalorieChart"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="0.3"
-            android:text="칼로리 소모량"
-            android:textSize="15sp" />
+            <Button
+                android:id="@+id/fb_btnShowExTimeChart"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="0.3"
+                android:text="운동 시간"
+                android:textSize="15sp" />
+            </LinearLayout>
 
-        <Button
-            android:id="@+id/fb_btnShowExCountChart"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="0.3"
-            android:text="운동 횟수"
-            android:textSize="15sp" />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/fb_btnShowExTimeChart"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="0.3"
-            android:text="운동 시간"
-            android:textSize="15sp" />
-
-    </LinearLayout>
-
-
+    </ScrollView>
 </LinearLayout>
