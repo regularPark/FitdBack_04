@@ -219,7 +219,6 @@ class StatisticFragment : Fragment() {
                 showChart()
             }
 
-
         }
 
         btnShowNextWeek.setOnClickListener {

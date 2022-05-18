@@ -55,4 +55,12 @@
         android:text="Create Dummy Data"
         android:textSize="20sp" />
 
+    <Button
+        android:id="@+id/btnRunFriendMode"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:text="친구랑 운동하기"
+        android:textSize="20sp" />
+
 </LinearLayout>

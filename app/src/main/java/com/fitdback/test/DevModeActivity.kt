@@ -48,6 +48,7 @@ class DevModeActivity : AppCompatActivity() {
         val btnDataReadTest = findViewById<Button>(R.id.btnDataReadTest)
         val btnBarChartTest = findViewById<Button>(R.id.btnBarChartTest)
         val btnCreateDummyData = findViewById<Button>(R.id.btnCreateDummyData)
+        val btnRunFriendMode = findViewById<Button>(R.id.btnRunFriendMode)
 
         // Intent
         val toHealthMemoTestActivity = Intent(this, HealthMemoTestActivity::class.java)
@@ -156,7 +157,8 @@ class DevModeActivity : AppCompatActivity() {
             val btnDBDummyDataWrite = mAlertDialog.findViewById<Button>(R.id.btnDBDummyDataWrite)
             val btnSetExTypeToSquat = mAlertDialog.findViewById<Button>(R.id.btnSetExTypeToSquat)
             val btnSetExTypeToPlank = mAlertDialog.findViewById<Button>(R.id.btnSetExTypeToPlank)
-            val btnSetExTypeToSideLateralRaise = mAlertDialog.findViewById<Button>(R.id.btnSetExTypeToSideLateralRaise)
+            val btnSetExTypeToSideLateralRaise =
+                mAlertDialog.findViewById<Button>(R.id.btnSetExTypeToSideLateralRaise)
 //            var dateText: String = ""
 
             var selectedExType: String? = null
@@ -185,21 +187,21 @@ class DevModeActivity : AppCompatActivity() {
 
             }
 
-            btnSetExTypeToSquat?.setOnClickListener{
+            btnSetExTypeToSquat?.setOnClickListener {
 
                 selectedExType = "squat"
                 btnDBDummyDataWrite!!.setText("일주일 전부터 위 날짜까지 $selectedExType 데이터 생성")
 
             }
 
-            btnSetExTypeToPlank?.setOnClickListener{
+            btnSetExTypeToPlank?.setOnClickListener {
 
                 selectedExType = "plank"
                 btnDBDummyDataWrite?.text = "일주일 전부터 위 날짜까지 $selectedExType 데이터 생성"
 
             }
 
-            btnSetExTypeToSideLateralRaise?.setOnClickListener{
+            btnSetExTypeToSideLateralRaise?.setOnClickListener {
 
                 selectedExType = "sideLateralRaise"
                 btnDBDummyDataWrite?.text = "6일전부터 위 날짜까지 $selectedExType 데이터 생성"
@@ -226,7 +228,11 @@ class DevModeActivity : AppCompatActivity() {
                 for (dataModel in exerciseDataModelList) {
                     dbPath!!.push().setValue(dataModel)
                         .addOnSuccessListener {
-                            Toast.makeText(this, "${dataModel.ex_date} 데이터 저장완료.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this,
+                                "${dataModel.ex_date} 데이터 저장완료.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                             mAlertDialog.dismiss()
                         }
                         .addOnFailureListener {
@@ -234,6 +240,48 @@ class DevModeActivity : AppCompatActivity() {
                         }
                 }
 
+
+            } // btnDBDummyDataWrite
+
+        } // btnCreateDummyData
+
+        btnRunFriendMode.setOnClickListener {
+
+            val friendModeDialog = CustomDialog(this, R.layout.dialog_friend_mode, "testing")
+            val friendModeAlertDialog = friendModeDialog.showDialog()
+            val btnShowFriendList =
+                friendModeAlertDialog!!.findViewById<Button>(R.id.btnShowFriendList)
+            val btnRegisterFriend =
+                friendModeAlertDialog.findViewById<Button>(R.id.btnRegisterFriend)
+            val btnCheckMyCode = friendModeAlertDialog.findViewById<Button>(R.id.btnCheckMyCode)
+            val btnFriendModeConfirm =
+                friendModeAlertDialog.findViewById<Button>(R.id.btnFriendModeConfirm)
+            friendModeAlertDialog.setCancelable(false)
+
+            // 친구 목록 보기
+            btnShowFriendList?.setOnClickListener {
+                // TODO : 친구 목록 만들기
+            }
+
+            // 친구 등록
+            btnRegisterFriend?.setOnClickListener {
+                // TODO : 친구 등록
+            }
+
+            // 내 친구 코드 확인
+            btnCheckMyCode?.setOnClickListener {
+
+                val myCodeDialog = CustomDialog(this, R.layout.dialog_friend_my_code, "")
+                val myCodeAlertDialog = myCodeDialog.showDialog()
+                val myCodeArea = myCodeAlertDialog?.findViewById<TextView>(R.id.myCodeArea)
+                val btnMyCodeConfirm = myCodeAlertDialog?.findViewById<Button>(R.id.btnMyCodeConfirm)
+                myCodeAlertDialog?.setCancelable(false)
+
+                myCodeArea?.text = firebaseAuth.currentUser?.uid
+
+                btnMyCodeConfirm?.setOnClickListener {
+                    myCodeAlertDialog.dismiss()
+                }
 
             }
 
@@ -317,6 +365,7 @@ class DevModeActivity : AppCompatActivity() {
         return mutableList
 
     }
+
     override fun onBackPressed() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
