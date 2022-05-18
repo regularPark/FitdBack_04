@@ -57,7 +57,7 @@ class StatisticFragment : Fragment() {
 
         val selectedExTypeArea = view.findViewById<TextView>(R.id.selectedExTypeArea_)
         val selectedDataArea = view.findViewById<TextView>(R.id.selectedDataArea_)
-        val yAxisTitleArea = view.findViewById<TextView>(R.id.yAxisTitleArea)
+        val yAxisTitleArea = view.findViewById<TextView>(R.id.yAxisTitleArea_)
 
         val btnSetSquatChart = view.findViewById<Button>(R.id.btnSetSquatChart_)
         val btnSetPlankChart = view.findViewById<Button>(R.id.btnSetPlankChart_)
@@ -306,7 +306,7 @@ class StatisticFragment : Fragment() {
 
         val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList").apply {
 
-            valueTextColor = Color.BLACK
+            valueTextColor = Color.WHITE
             valueTextSize = 10f
             setColors(*ColorTemplate.COLORFUL_COLORS)
 
@@ -381,7 +381,7 @@ class StatisticFragment : Fragment() {
 
         barDataSet.apply {
 
-            valueTextColor = Color.BLACK
+            valueTextColor = Color.WHITE
             valueTextSize = 10f
             setColors(*ColorTemplate.COLORFUL_COLORS)
             valueFormatter = BarChartVariables.expressedDataFormatter // 데이터 소수점 표기 -> 정수 표기

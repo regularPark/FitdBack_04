@@ -943,4 +943,5 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             return Camera2BasicFragment()
         }
     }
+
 }
