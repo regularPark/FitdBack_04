@@ -70,7 +70,7 @@ class StatisticFragment : Fragment() {
         fun showChart() {
             if (BarChartVariables.firstTargetData == null || BarChartVariables.secondTargetData == null) {
 
-                Toast.makeText(context, "Select both ExType & Data First!!!", Toast.LENGTH_SHORT)
+                Toast.makeText(context, "운동 종류와 데이터를 선택해주세요.", Toast.LENGTH_SHORT)
                     .show()
 
             } else {
@@ -127,7 +127,7 @@ class StatisticFragment : Fragment() {
                     BarChartVariables.setFirstTargetData("squat", null)
                     selectedExTypeArea.text = "스쿼트"
 
-                    if (BarChartVariables.secondTargetData != null){
+                    if (BarChartVariables.secondTargetData != null) {
                         showChart()
                     }
                 }
@@ -135,7 +135,7 @@ class StatisticFragment : Fragment() {
                     BarChartVariables.setFirstTargetData("plank", null)
                     selectedExTypeArea.text = "플랭크"
 
-                    if (BarChartVariables.secondTargetData != null){
+                    if (BarChartVariables.secondTargetData != null) {
                         showChart()
                     }
                 }
@@ -143,7 +143,7 @@ class StatisticFragment : Fragment() {
                     BarChartVariables.setFirstTargetData("sideLateralRaise", null)
                     selectedExTypeArea.text = "사이드 래터럴 레이즈"
 
-                    if (BarChartVariables.secondTargetData != null){
+                    if (BarChartVariables.secondTargetData != null) {
                         showChart()
                     }
                 }
@@ -194,50 +194,61 @@ class StatisticFragment : Fragment() {
         btnShowPreviousWeek.setOnClickListener {
 
             // 마지막에 저장된 X Index를 이용하여 일주일 전의 dateListOfTargetWeek을 생성
-            val lastDateOfXIndex = BarChartVariables.lastDateOfXIndex
-            var (year: Int, month: Int, date: Int) = BarChartVariables.getYearMonthDateOfLastDate(
-                lastDateOfXIndex
-            )
+            if (BarChartVariables.lastDateOfXIndex == null) {
+                Toast.makeText(context, "운동 종류와 데이터를 선택해주세요.", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                val lastDateOfXIndex = BarChartVariables.lastDateOfXIndex
+                var (year: Int, month: Int, date: Int) = BarChartVariables.getYearMonthDateOfLastDate(
+                    lastDateOfXIndex!!
+                )
 
-            val dateOneWeekBefore =
-                DataBasket.getDateOfOneWeekBeforeOrTomorrow(year, month, date, "Before")
+                val dateOneWeekBefore =
+                    DataBasket.getDateOfOneWeekBeforeOrTomorrow(year, month, date, "Before")
 
-            val triple = BarChartVariables.getYearMonthDateOfLastDate(dateOneWeekBefore)
-            year = triple.first
-            month = triple.second
-            date = triple.third
+                val triple = BarChartVariables.getYearMonthDateOfLastDate(dateOneWeekBefore)
+                year = triple.first
+                month = triple.second
+                date = triple.third
 
-            val dateListOfTargetWeek =
-                DataBasket.getOneWeekListFromDate(year, month, date, "Before")
+                val dateListOfTargetWeek =
+                    DataBasket.getOneWeekListFromDate(year, month, date, "Before")
 
-            BarChartVariables.updateBarChartData(dateListOfTargetWeek)
+                BarChartVariables.updateBarChartData(dateListOfTargetWeek)
 
-            showChart()
+                showChart()
+            }
+
 
         }
 
         btnShowNextWeek.setOnClickListener {
 
             // 마지막에 저장된 X Index를 이용하여 일주일 후의 dateListOfTargetWeek을 생성
-            val lastDateOfXIndex = BarChartVariables.lastDateOfXIndex
-            var (year: Int, month: Int, date: Int) = BarChartVariables.getYearMonthDateOfLastDate(
-                lastDateOfXIndex
-            )
+            if (BarChartVariables.lastDateOfXIndex == null) {
+                Toast.makeText(context, "운동 종류와 데이터를 선택해주세요.", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                val lastDateOfXIndex = BarChartVariables.lastDateOfXIndex
+                var (year: Int, month: Int, date: Int) = BarChartVariables.getYearMonthDateOfLastDate(
+                    lastDateOfXIndex!!
+                )
 
-            val dateOfTomorrow =
-                DataBasket.getDateOfOneWeekBeforeOrTomorrow(year, month, date, "Tomorrow")
+                val dateOfTomorrow =
+                    DataBasket.getDateOfOneWeekBeforeOrTomorrow(year, month, date, "Tomorrow")
 
-            val triple = BarChartVariables.getYearMonthDateOfLastDate(dateOfTomorrow)
-            year = triple.first
-            month = triple.second
-            date = triple.third
+                val triple = BarChartVariables.getYearMonthDateOfLastDate(dateOfTomorrow)
+                year = triple.first
+                month = triple.second
+                date = triple.third
 
-            val dateListOfTargetWeek =
-                DataBasket.getOneWeekListFromDate(year, month, date, "After")
+                val dateListOfTargetWeek =
+                    DataBasket.getOneWeekListFromDate(year, month, date, "After")
 
-            BarChartVariables.updateBarChartData(dateListOfTargetWeek)
+                BarChartVariables.updateBarChartData(dateListOfTargetWeek)
 
-            showChart()
+                showChart()
+            }
 
         }
         return view
