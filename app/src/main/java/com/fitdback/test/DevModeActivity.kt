@@ -2,6 +2,8 @@ package com.fitdback.test
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -10,11 +12,17 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.fitdback.database.DataBasket
 import com.fitdback.database.datamodel.ExerciseDataModel
+import com.fitdback.database.datamodel.FriendDataModel
+import com.fitdback.database.datamodel.UserInfoDataModel
 import com.fitdback.posedetection.R
 import com.fitdback.test.barChartTest.BarChartTestActivity
 import com.fitdback.test.feedbackTest.FeedbackTestActivity
 import com.fitdback.userinterface.MainActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserInfo
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.util.*
@@ -265,7 +273,64 @@ class DevModeActivity : AppCompatActivity() {
 
             // 친구 등록
             btnRegisterFriend?.setOnClickListener {
-                // TODO : 친구 등록
+                val registerDialog =
+                    CustomDialog(this, R.layout.dialog_friend_register, "Friend Register")
+                val registerAlertDialog = registerDialog.showDialog()
+                registerAlertDialog?.setCancelable(false)
+
+                val friendCodeArea =
+                    registerAlertDialog?.findViewById<EditText>(R.id.friendCodeArea)
+                val friendNicknameArea =
+                    registerAlertDialog?.findViewById<TextView>(R.id.friendNicknameArea)
+                val btnRegisterFriendToDB =
+                    registerAlertDialog?.findViewById<Button>(R.id.btnRegisterFriendToDB)
+                val btnRegisterConfirm =
+                    registerAlertDialog?.findViewById<Button>(R.id.btnRegisterConfirm)
+
+                var isFirstClick = true
+                var friendNickname: String? = null
+                var friendCode: String? = null
+
+                btnRegisterFriendToDB?.setOnClickListener {
+
+                    if (isFirstClick) { // 검색 기능 실행 -> "[닉네임]님을 찾았습니다."
+                        friendCode = friendCodeArea?.text?.toString()?.trim()
+                        val dbPath =
+                            database.getReference("users").child(friendCode!!).child("user_info")
+
+                        dbPath.addValueEventListener(object : ValueEventListener {
+                            override fun onDataChange(dataSnapshot: DataSnapshot) {
+//                                dataSnapshot.getValue(FriendDataModel::class.java)
+                                val userInfoModel =
+                                    dataSnapshot.getValue(UserInfoDataModel::class.java)
+                                friendNickname = userInfoModel?.user_nickname
+                                Log.d("db_data", dataSnapshot.toString())
+                                Log.d(
+                                    "db_data",
+                                    dataSnapshot.getValue(UserInfoDataModel::class.java).toString()
+                                )
+
+                                friendNicknameArea?.text = "${friendNickname}님을 찾았습니다."
+                                btnRegisterFriendToDB.text = "친구로 등록하기"
+                                isFirstClick = false
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                Log.d("db_data", "onCancelled")
+                            }
+                        })
+
+                    } else { // 등록 기능 실행 -> DB에 저장
+                        // TODO : FriendModel DB에 삽입
+                    }
+
+                    btnRegisterConfirm?.setOnClickListener {
+
+                        registerAlertDialog.dismiss()
+
+                    }
+                }
+
             }
 
             // 내 친구 코드 확인
@@ -274,10 +339,18 @@ class DevModeActivity : AppCompatActivity() {
                 val myCodeDialog = CustomDialog(this, R.layout.dialog_friend_my_code, "")
                 val myCodeAlertDialog = myCodeDialog.showDialog()
                 val myCodeArea = myCodeAlertDialog?.findViewById<TextView>(R.id.myCodeArea)
-                val btnMyCodeConfirm = myCodeAlertDialog?.findViewById<Button>(R.id.btnMyCodeConfirm)
+                val btnMyCodeConfirm =
+                    myCodeAlertDialog?.findViewById<Button>(R.id.btnMyCodeConfirm)
                 myCodeAlertDialog?.setCancelable(false)
 
                 myCodeArea?.text = firebaseAuth.currentUser?.uid
+
+                // 클립보드 복사하기
+                val clipboardManager: ClipboardManager =
+                    getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                val clipData: ClipData = ClipData.newPlainText("myCode", myCodeArea?.text)
+                clipboardManager.primaryClip = clipData
+                Toast.makeText(this, "회원코드 \"${myCodeArea?.text}\"이 클립보드에 저장되었습니다.", Toast.LENGTH_LONG).show()
 
                 btnMyCodeConfirm?.setOnClickListener {
                     myCodeAlertDialog.dismiss()
