@@ -640,6 +640,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
+
+
     /**
      * Closes the current [CameraDevice].
      */
@@ -836,6 +838,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             )
         }
     }
+
 
     /**
      * Shows an error message dialog.

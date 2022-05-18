@@ -16,9 +16,11 @@
 package com.fitdback.posedetection
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import com.fitdback.algorithm.FeedbackAlgorithm
+import com.fitdback.userinterface.TutorialActivity
 import org.opencv.android.BaseLoaderCallback
 import org.opencv.android.LoaderCallbackInterface
 import org.opencv.android.OpenCVLoader 
@@ -117,6 +119,10 @@ class CameraActivity : Activity() {
         } else {
             mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS)
         }
+    }
+    override fun onBackPressed(){
+        startActivity(Intent(this, TutorialActivity::class.java))
+        finish()
     }
 
     companion object {
