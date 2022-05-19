@@ -253,6 +253,7 @@ class DevModeActivity : AppCompatActivity() {
 
         } // btnCreateDummyData
 
+        // Friend Mode
         btnRunFriendMode.setOnClickListener {
 
             val friendModeDialog = CustomDialog(this, R.layout.dialog_friend_mode, "testing")
@@ -291,9 +292,10 @@ class DevModeActivity : AppCompatActivity() {
                 var friendNickname: String? = null
                 var friendCode: String? = null
 
+                // 친구를 DB에 저장
                 btnRegisterFriendToDB?.setOnClickListener {
 
-                    if (isFirstClick) { // 검색 기능 실행 -> "[닉네임]님을 찾았습니다."
+                    if (isFirstClick) {   // 검색 기능 실행 -> "[닉네임]님을 찾았습니다."
                         friendCode = friendCodeArea?.text?.toString()?.trim()
                         val dbPath =
                             database.getReference("users").child(friendCode!!).child("user_info")
@@ -320,15 +322,40 @@ class DevModeActivity : AppCompatActivity() {
                             }
                         })
 
-                    } else { // 등록 기능 실행 -> DB에 저장
-                        // TODO : FriendModel DB에 삽입
+                    } else {
+                        // 등록 기능 실행 -> DB에 저장
+                        if (friendCode != null && friendNickname != null) {
+
+                            val friendDataModel =
+                                FriendDataModel(friendCode, friendNickname)  // data model 생성
+                            val dbPath = database.getReference("users")
+                                .child(firebaseAuth.currentUser?.uid!!).child("friend_info")
+
+                            // data write
+                            dbPath.push().setValue(friendDataModel)
+                                .addOnSuccessListener {
+                                    Toast.makeText(this, "친구 등록 완료", Toast.LENGTH_SHORT).show()
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(this, "Error: 친구 등록 실패", Toast.LENGTH_SHORT)
+                                        .show()
+                                }
+
+                        } else {
+                            Toast.makeText(
+                                this,
+                                "Error: 친구 코드 또는 닉네임을 찾을 수 없습니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
 
-                    btnRegisterConfirm?.setOnClickListener {
+                }
 
-                        registerAlertDialog.dismiss()
+                btnRegisterConfirm?.setOnClickListener {
 
-                    }
+                    registerAlertDialog.dismiss()
+
                 }
 
             }
@@ -350,7 +377,11 @@ class DevModeActivity : AppCompatActivity() {
                     getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
                 val clipData: ClipData = ClipData.newPlainText("myCode", myCodeArea?.text)
                 clipboardManager.primaryClip = clipData
-                Toast.makeText(this, "회원코드 \"${myCodeArea?.text}\"이 클립보드에 저장되었습니다.", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    "회원코드 \"${myCodeArea?.text}\"이 클립보드에 저장되었습니다.",
+                    Toast.LENGTH_LONG
+                ).show()
 
                 btnMyCodeConfirm?.setOnClickListener {
                     myCodeAlertDialog.dismiss()
@@ -358,6 +389,11 @@ class DevModeActivity : AppCompatActivity() {
 
             }
 
+            btnFriendModeConfirm?.setOnClickListener {
+
+                friendModeAlertDialog.dismiss()
+
+            }
         }
 
 
