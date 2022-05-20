@@ -14,12 +14,8 @@ class LoadingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading)
 
-        val dbPath = DataBasket.getDBPath("users", "ex_data", true)
-        DataBasket.getDataFromFB(dbPath!!, "individualExData")
-        Log.d("데베", dbPath.toString())
-
         Handler().postDelayed({
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, LoginActivity_new::class.java))
             finish()
         }, SPLASH_TIME_OUT)
     }

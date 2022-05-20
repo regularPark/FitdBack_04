@@ -270,6 +270,8 @@ class DevModeActivity : AppCompatActivity() {
             // 친구 목록 보기
             btnShowFriendList?.setOnClickListener {
                 // TODO : 친구 목록 만들기
+                
+                
             }
 
             // 친구 등록

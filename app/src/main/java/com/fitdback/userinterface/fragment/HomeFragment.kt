@@ -3,11 +3,13 @@ package com.fitdback.userinterface.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.R
 import com.fitdback.test.DevModeActivity
@@ -56,8 +58,16 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
 
     ): View? {
-
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+
+        val im_squat = view.findViewById<ImageView>(R.id.im_squat)
+        val im_plank = view.findViewById<ImageView>(R.id.im_plank)
+        val im_slr = view.findViewById<ImageView>(R.id.im_slr)
+        im_squat.clipToOutline = true
+
+        Glide.with(this).load(R.raw.squat_gif).override(1000, 600).into(im_squat)
+        Glide.with(this).load(R.raw.plank).override(1000, 500).into(im_plank)
+        Glide.with(this).load(R.raw.slr_gif).override(1000, 500).into(im_slr)
 
         // 스쿼트 버튼
         val squatBtn: Button = view.findViewById(R.id.squatBtn)
@@ -115,14 +125,15 @@ class HomeFragment : Fragment() {
         return view
     }
 
-    private fun getDB(){
-        Log.d("DB","진입")
+    private fun getDB() {
+        Log.d("DB", "진입")
         val dbPath = DataBasket.getDBPath("users", "ex_data", true)
         DataBasket.getDataFromFB(dbPath!!, "individualExData")
 
 
         Log.d("DB", "완료")
     }
+
     companion object {
         /**
          * Use this factory method to create a new instance of

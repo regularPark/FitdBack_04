@@ -18,7 +18,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#67AED1">
+    android:background="@color/btn_gray">
 
     <com.fitdback.posedetection.AutoFitFrameLayout
         android:id="@+id/layout_frame"
@@ -40,20 +40,6 @@
 
 
 
-        <!--<com.mikhaellopez.circularprogressbar.CircularProgressBar
-            android:id="@+id/cntBar"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="350dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="right"
-            app:cpb_background_progressbar_color="#b6bbd8"
-            app:cpb_background_progressbar_width="5dp"
-            app:cpb_progress_direction="to_right"
-            app:cpb_progressbar_color="#3f51b5"
-            app:cpb_progressbar_width="10dp"
-            app:cpb_round_border="false" />-->
-
 
 
     </com.fitdback.posedetection.AutoFitFrameLayout>
@@ -67,94 +53,78 @@
         android:orientation="vertical"
         android:paddingStart="10dp"
         android:paddingEnd="0dp">
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:text="top"-->
-        <!--          android:textColor="@color/color_top"/>-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:text="@string/neck"-->
-        <!--          android:textColor="@color/color_neck"/>-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:text="@string/l_shoulder"-->
-        <!--          android:textColor="@color/color_l_shoulder"/>-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:text="@string/l_elbow"-->
-        <!--          android:textColor="@color/color_l_elbow"/>-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:text="@string/l_wrist"-->
-        <!--          android:textColor="@color/color_l_wrist"/>-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:text="@string/l_hip"-->
-        <!--          android:textColor="@color/color_l_hip"/>-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:text="@string/l_knee"-->
-        <!--          android:textColor="@color/color_l_knee"/>-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:text="@string/l_ankle"-->
-        <!--          android:textColor="@color/color_l_ankle"/>-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:text="@string/r_shoulder"-->
-        <!--          android:textColor="@color/color_r_shoulder"/>-->
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:text="@string/r_elbow"-->
-        <!--          android:textColor="@color/color_r_elbow"/>-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:text="@string/r_wrist"-->
-        <!--          android:textColor="@color/color_r_wrist"/>-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:text="@string/r_hip"-->
-        <!--          android:textColor="@color/color_r_hip"/>-->
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:text="@string/r_knee"-->
-        <!--          android:textColor="@color/color_r_knee"/>-->
-
-        <!--      <TextView-->
-        <!--          android:layout_width="wrap_content"-->
-        <!--          android:layout_height="wrap_content"-->
-        <!--          android:text="@string/r_ankle"-->
-        <!--          android:textColor="@color/color_r_ankle"/>-->
     </LinearLayout>
+    <com.dinuscxj.progressbar.CircleProgressBar
+        android:id="@+id/free_cnt_squat"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:progress_text_size="30dp"
+        app:progress_stroke_width="2dp"
+        app:progress_text_color="@color/btn_primary"
+        app:line_width="5dp"
+        app:line_count="30"
+        android:layout_gravity="left"
+        android:layout_margin="10dp"
+        android:background="@color/btn_gray"
+        app:progress_stroke_cap="round"
+        app:progress_start_color="@color/btn_primary"
+        app:progress_end_color="@color/btn_primary_red"
+        app:progress_shader="linear"
+        />
+
+    <com.dinuscxj.progressbar.CircleProgressBar
+        android:id="@+id/free_cnt_plank"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:progress_text_size="30dp"
+        app:progress_stroke_width="2dp"
+        app:line_width="5dp"
+        app:line_count="30"
+        android:layout_gravity="center|top"
+        android:layout_margin="10dp"
+        android:background="@color/btn_gray"
+        app:progress_stroke_cap="round"
+        app:progress_start_color="@color/btn_primary"
+        app:progress_end_color="@color/btn_primary_red"
+        app:progress_shader="linear"
+        />
+
+    <com.dinuscxj.progressbar.CircleProgressBar
+        android:id="@+id/free_cnt_slr"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:progress_text_size="30dp"
+        app:progress_stroke_width="2dp"
+        app:line_width="5dp"
+        app:line_count="30"
+        android:layout_gravity="right"
+        android:layout_margin="10dp"
+        android:background="@color/btn_gray"
+        app:progress_stroke_cap="round"
+        app:progress_start_color="@color/btn_primary"
+        app:progress_end_color="@color/btn_primary_red"
+        app:progress_shader="linear"
+        />
+
+    <!-- 운동 진행 바 -->
+    <ProgressBar
+        android:id="@+id/prgHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:background="@drawable/custom_prgbar"
+        tools:progress="80"
+        android:max="100"
+        android:layout_gravity="center|bottom"
+        android:layout_marginHorizontal="20dp"
+        android:progressDrawable="@drawable/custom_prgbar"
+        android:layout_marginBottom="60dp"/>
+
 
     <TextView
         android:id="@+id/text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="10dp"
         android:layout_marginTop="800dp"
         android:gravity="center"
         android:textColor="#67AED1"
@@ -174,18 +144,29 @@
         android:textSize="30sp"
         tools:text="Count"
         />
-
     <TextView
-        android:id="@+id/cntDown"
+        android:id="@+id/guide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
+        android:textSize="20dp"
+        android:textColor="@color/btn_primary_red"
+        android:background="@drawable/button_radius_white"
+        />
+    <TextView
+        android:id="@+id/cntDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:textAlignment="center"
-        android:textColor="#d95652"
+        android:textColor="@color/btn_primary_red"
         android:textSize="30sp"
         android:textStyle="bold"
         tools:text="countDown" />
+
     <ProgressBar
         android:id="@+id/progressbar"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
@@ -195,9 +176,10 @@
         android:layout_marginTop="90dp"
         android:indeterminate="false"
         android:max="5"
-        android:progressBackgroundTint="#FBE7C6"
+        android:progressBackgroundTint="#00000000"
         android:progressDrawable="@drawable/circle_progressbar"
-        android:progressTint="#edbf41" />
+        />
+
 
 
     <!--    CPU / GPU 활성 버튼 -->

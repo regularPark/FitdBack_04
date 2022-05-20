@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.fitdback.posedetection.R
+import com.fitdback.test.DevModeActivity
 import com.fitdback.userinterface.StatisticsPopUpActivity
 import com.fitdback.userinterface.UserInformationActivity
 
@@ -58,6 +59,8 @@ class MyPageFragment : Fragment() {
 
 
         // 마이 페이지 프래그먼트 -> 액티비티 전환
+
+        // 내 정보
         val loginInfoBtn : Button = view.findViewById(R.id.loginInfoBtn)
         loginInfoBtn.setOnClickListener(object :View.OnClickListener {
             override fun onClick(v: View?) {
@@ -65,6 +68,9 @@ class MyPageFragment : Fragment() {
                 startActivity(intent)
             }
         })
+
+
+
 
         // Inflate the layout for this fragment
         return view
