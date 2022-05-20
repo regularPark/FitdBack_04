@@ -64,6 +64,7 @@ import java.util.Collections
 import java.util.Comparator
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
+import com.dinuscxj.progressbar.CircleProgressBar
 
 /**
  * Basic fragments for the Camera.
@@ -84,6 +85,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private var countTimer: TextView? = null
     private var prgBar: ProgressBar? = null
     private var guideMsg: TextView? = null
+    private var cProBar: CircleProgressBar? = null  // 카운트바
 
 
     /**
@@ -805,6 +807,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         val textToShow = classifier!!.classifyFrame(bitmap)
         val countToShow = FeedbackAlgorithm.exr_cnt
         val cntTimeToShow = FeedbackAlgorithm.exr_time_result
+
 
         bitmap.recycle()
 
