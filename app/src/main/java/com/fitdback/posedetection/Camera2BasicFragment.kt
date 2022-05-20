@@ -276,7 +276,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                 }
             } else if (FeedbackAlgorithm.exr_mode == "plank") {
                 //if (FeedbackAlgorithm.exr_time_result == 10 && !FeedbackAlgorithm.isExrFinished) {
-                if (FeedbackAlgorithm.exr_cnt == 10 && !FeedbackAlgorithm.isExrFinished) {
+                if (FeedbackAlgorithm.exr_cnt >= 10 && !FeedbackAlgorithm.isExrFinished) {
                     FeedbackAlgorithm.isExrFinished = true
                     Handler().postDelayed(
                             {
@@ -299,7 +299,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                             }, 3000
                     ) //카메라 종료 3초 지연
                 }
-            } else if (FeedbackAlgorithm.exr_mode == "pushup") {
+            } else if (FeedbackAlgorithm.exr_mode == "sidelr") {
                 if (FeedbackAlgorithm.exr_cnt == 10 && !FeedbackAlgorithm.isExrFinished) {
                     FeedbackAlgorithm.isExrFinished = true
                     Handler().postDelayed(
@@ -318,6 +318,32 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                                 DataBasket.tempExrModel = exerciseDataModel
 
                                 startActivity(intent)
+                                FeedbackAlgorithm.sound_play(context, R.raw.finish_exr)
+                                activity.finish()
+
+                            }, 3000
+                    ) //카메라 종료 3초 지연
+                }
+            } else if (FeedbackAlgorithm.exr_mode == "pushup") {
+                if (FeedbackAlgorithm.total_cnt == 10 && !FeedbackAlgorithm.isExrFinished) {
+                    FeedbackAlgorithm.isExrFinished = true
+                    Handler().postDelayed(
+                            {
+
+                                // 데이터 모델 생성
+                                val exerciseDataModel = ExerciseDataModel(
+                                        DataBasket.getDateOfDay(0),
+                                        FeedbackAlgorithm.exr_mode,
+                                        FeedbackAlgorithm.exr_time_result,
+                                        FeedbackAlgorithm.exr_cnt,
+                                        FeedbackAlgorithm.exr_cnt_s,
+                                        FeedbackAlgorithm.exr_cal.toInt()
+                                )
+
+                                DataBasket.tempExrModel = exerciseDataModel
+
+                                startActivity(intent)
+                                FeedbackAlgorithm.sound_play(context, R.raw.finish_exr)
                                 activity.finish()
 
                             }, 3000
@@ -352,6 +378,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private fun showCountDown(text: Int) {
         val activity = activity
         if (text <= 0) {
+            FeedbackAlgorithm.start_tf = true
             activity?.runOnUiThread {
                 countTimer!!.text = "운동 시작!"
                 prgBar!!.visibility = View.INVISIBLE
@@ -365,6 +392,23 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             activity?.runOnUiThread {
                 countTimer!!.text = "정확한 측정을 위해\n전신이 보이도록 뒤로 물러나 주세요\n\n\n" + text.toString()
                 drawView!!.visibility = View.INVISIBLE
+                if (text == 5) {
+                    if (FeedbackAlgorithm.start_tf) {
+                        FeedbackAlgorithm.start_tf = false
+                        FeedbackAlgorithm.sound_play(context, R.raw.start_exr_5s)
+                    }
+                } else if (text == 4) {
+                    if (FeedbackAlgorithm.start_tf) {
+                        FeedbackAlgorithm.start_tf = false
+                        FeedbackAlgorithm.sound_play(context, R.raw.start_exr_4s)
+                    }
+                } else if (text == 3) {
+                    if (FeedbackAlgorithm.start_tf) {
+                        FeedbackAlgorithm.start_tf = false
+                        FeedbackAlgorithm.sound_play(context, R.raw.start_exr_3s)
+                    }
+                }
+
             }
         }
     }
@@ -420,7 +464,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         super.onActivityCreated(savedInstanceState)
 
         // 카운트 다운
-        TimerClass.second = 6
+        TimerClass.second = 8
         TimerClass.cdStart()
 
         try {

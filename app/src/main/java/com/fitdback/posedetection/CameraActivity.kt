@@ -16,11 +16,13 @@
 package com.fitdback.posedetection
 
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import com.fitdback.algorithm.FeedbackAlgorithm
+import com.fitdback.userinterface.TutorialActivity
 
 import org.opencv.android.BaseLoaderCallback
 import org.opencv.android.LoaderCallbackInterface
@@ -89,7 +91,24 @@ class CameraActivity : Activity() {
                     FeedbackAlgorithm.start_time = 0
                     FeedbackAlgorithm.exr_cnt = 0
                     FeedbackAlgorithm.isPlaying = true
+                    FeedbackAlgorithm.isDone = false
+                    FeedbackAlgorithm.isFirst = true
 
+                }
+
+                "sidelr" -> {
+                    FeedbackAlgorithm.exr_cnt = 0
+                    FeedbackAlgorithm.exr_cnt_s = 0
+                    FeedbackAlgorithm.exr_cnt_f = 0
+                    FeedbackAlgorithm.wrong_mode = 0
+                    FeedbackAlgorithm.isExrFinished = false
+                    Handler().postDelayed(
+                            { FeedbackAlgorithm.time_tf = true },
+                            5000
+                    ) //5초 후 운동 시작 시간 설정
+                    FeedbackAlgorithm.isPlaying = true
+                    FeedbackAlgorithm.prev_time = 0
+                    FeedbackAlgorithm.total_exr_time = 0
                 }
 
                 "pushup" -> {
@@ -103,6 +122,8 @@ class CameraActivity : Activity() {
                             5000
                     ) //5초 후 운동 시작 시간 설정
                     FeedbackAlgorithm.isPlaying = true
+                    FeedbackAlgorithm.prev_time = 0
+                    FeedbackAlgorithm.total_exr_time = 0
                 }
 
             }
@@ -112,6 +133,13 @@ class CameraActivity : Activity() {
         //val circleProgressBar = findViewById<CircleProgressBar>(R.id.cpb_circlebar)
         //circleProgressBar.progress
     }
+
+    /*override fun onBackPressed(){
+        startActivity(Intent(this, TutorialActivity::class.java))
+
+        FeedbackAlgorithm.sound_stop(this, R.raw.start_exr_5s)
+        finish()
+    }*/
 
     override fun onResume() {
         super.onResume()

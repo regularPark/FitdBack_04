@@ -41,21 +41,21 @@ class DrawView : View {
     private var mImgHeight: Int = 0
 
     private val mColorArray = intArrayOf(
-        resources.getColor(R.color.color_top, null),        // 0
-        resources.getColor(R.color.color_neck, null),       // 1
-        resources.getColor(R.color.color_l_shoulder, null), // 2
-        resources.getColor(R.color.color_l_elbow, null),    // 3
-        resources.getColor(R.color.color_l_wrist, null),    // 4
-        resources.getColor(R.color.color_r_shoulder, null), // 5
-        resources.getColor(R.color.color_r_elbow, null),    // 6
-        resources.getColor(R.color.color_r_wrist, null),    // 7
-        resources.getColor(R.color.color_l_hip, null),      // 8
-        resources.getColor(R.color.color_l_knee, null),     // 9
-        resources.getColor(R.color.color_l_ankle, null),    // 10
-        resources.getColor(R.color.color_r_hip, null),      // 11
-        resources.getColor(R.color.color_r_knee, null),     // 12
-        resources.getColor(R.color.color_r_ankle, null),    // 13
-        resources.getColor(R.color.color_background, null)
+            resources.getColor(R.color.color_top, null),        // 0
+            resources.getColor(R.color.color_neck, null),       // 1
+            resources.getColor(R.color.color_l_shoulder, null), // 2
+            resources.getColor(R.color.color_l_elbow, null),    // 3
+            resources.getColor(R.color.color_l_wrist, null),    // 4
+            resources.getColor(R.color.color_r_shoulder, null), // 5
+            resources.getColor(R.color.color_r_elbow, null),    // 6
+            resources.getColor(R.color.color_r_wrist, null),    // 7
+            resources.getColor(R.color.color_l_hip, null),      // 8
+            resources.getColor(R.color.color_l_knee, null),     // 9
+            resources.getColor(R.color.color_l_ankle, null),    // 10
+            resources.getColor(R.color.color_r_hip, null),      // 11
+            resources.getColor(R.color.color_r_knee, null),     // 12
+            resources.getColor(R.color.color_r_ankle, null),    // 13
+            resources.getColor(R.color.color_background, null)
     )
 
     private val circleRadius: Float by lazy {
@@ -137,10 +137,12 @@ class DrawView : View {
         var prePointF: PointF? = null
         mPaint.color = 0xfffaff0d.toInt() //  목윗부분 color
         val p1 = mDrawPoint[1]
+
+        //카메라 종료현상 발생
         for ((index, pointF) in mDrawPoint.withIndex()) {
             // 관절 튈 때 그리지 않는 방법
             if (mDrawPoint[13].y > mDrawPoint[2].y && mDrawPoint[13].y > mDrawPoint[5].y &&
-                mDrawPoint[10].y > mDrawPoint[5].y && mDrawPoint[10].y > mDrawPoint[2].y) {
+                    mDrawPoint[10].y > mDrawPoint[5].y && mDrawPoint[10].y > mDrawPoint[2].y) {
                 if (index == 1) continue
                 when (index) {
                     //0-1
@@ -181,22 +183,22 @@ class DrawView : View {
 
         for ((index, pointF) in mDrawPoint.withIndex()) {
             if (mDrawPoint[13].y > mDrawPoint[2].y && mDrawPoint[13].y > mDrawPoint[5].y &&
-                mDrawPoint[10].y > mDrawPoint[5].y && mDrawPoint[10].y > mDrawPoint[2].y) {
+                    mDrawPoint[10].y > mDrawPoint[5].y && mDrawPoint[10].y > mDrawPoint[2].y) {
                 mPaint.color = mColorArray[index]
                 canvas.drawCircle(pointF.x, pointF.y, circleRadius, mPaint)
             }
         }
 
 
-
-
         // FeedBack 알고리즘
         if (FeedbackAlgorithm.isPlaying) {
             when (FeedbackAlgorithm.exr_mode) {
-                "squat" -> Handler().postDelayed(
-                        { FeedbackAlgorithm.squat(context, mDrawPoint) },
-                        5000
-                ) // 5초동안 스쿼트 알고리즘 비활성화
+                "squat" -> {
+                    Handler().postDelayed(
+                            { FeedbackAlgorithm.squat(context, mDrawPoint) },
+                            5000
+                    )
+                } // 5초동안 스쿼트 알고리즘 비활성화
                 "plank" -> Handler().postDelayed(
                         { FeedbackAlgorithm.plank(context, mDrawPoint) },
                         5000
