@@ -27,6 +27,10 @@
                     android:topLeftRadius="5dp"
                     android:topRightRadius="5dp"
                     />
+                <gradient
+                    android:startColor="@color/btn_primary"
+                    android:endColor="@color/btn_primary_red"
+                    android:type="linear"/>
             </shape>
         </rotate>
     </item>

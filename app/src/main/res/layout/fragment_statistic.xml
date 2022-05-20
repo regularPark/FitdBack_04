@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -33,40 +33,55 @@
 
                 <RadioButton
                     android:id="@+id/btnSetSquatChart_"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:layout_weight="1"
+                    android:layout_weight="0.25"
                     android:layout_margin="5dp"
-                    android:background="@drawable/btn_selector_color"
                     android:text="스쿼트"
-                    android:textColor="@color/white"
+                    android:textColor="@color/btn_gray"
                     android:textSize="15sp"
                     android:textStyle="bold" />
-
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="40sp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/btn_gray"
+                    />
                 <RadioButton
                     android:id="@+id/btnSetPlankChart_"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/btn_selector_color"
+                    android:layout_weight="0.25"
                     android:text="플랭크"
-                    android:textColor="@color/white"
+                    android:textColor="@color/btn_gray"
                     android:textSize="15sp"
                     android:textStyle="bold" />
-
+            <View
+                android:layout_width="2dp"
+                android:layout_height="40sp"
+                android:layout_marginTop="5dp"
+                android:background="@color/btn_gray"
+                />
                 <RadioButton
                     android:id="@+id/btnSetSideLateralRaiseChart_"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/btn_selector_color"
+                    android:layout_weight="0.4"
                     android:text="사이드 래터럴"
-                    android:textColor="@color/white"
+                    android:textColor="#808080"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
         </RadioGroup>
-
+        <View
+            android:background="@color/btn_gray"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_margin="10dp"
+            />
         <TextView
             android:id="@+id/selectedDataArea_"
             android:layout_width="wrap_content"
@@ -86,44 +101,60 @@
 
                 <RadioButton
                     android:id="@+id/btnShowExCalorieChart_"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/btn_selector_color"
+                    android:layout_weight="0.3"
                     android:text="칼로리 소모량"
-                    android:textColor="@color/white"
+                    android:textColor="@color/btn_gray"
                     android:textSize="15sp"
                     android:textStyle="bold" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="40sp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/btn_gray"
+                    />
 
                 <RadioButton
                     android:id="@+id/btnShowExCountChart_"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/btn_selector_color"
+                    android:layout_weight="0.25"
                     android:text="운동 횟수"
-                    android:textColor="@color/white"
+                    android:textColor="@color/btn_gray"
                     android:textSize="15sp"
                     android:textStyle="bold" />
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="40sp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/btn_gray"
+                    />
 
                 <RadioButton
                     android:id="@+id/btnShowExTimeChart_"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/btn_selector_color"
+                    android:layout_weight="0.25"
                     android:text="운동 시간"
-                    android:textColor="@color/white"
+                    android:textColor="@color/btn_gray"
                     android:textSize="15sp"
                     android:textStyle="bold" />
             </RadioGroup>
-
+        <View
+            android:background="@color/btn_gray"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_margin="10dp"
+            />
         <TextView
             android:id="@+id/yAxisTitleArea_"
             android:textAlignment="center"
             android:layout_width="50dp"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
             android:layout_height="20dp" />
 
         <com.github.mikephil.charting.charts.BarChart
@@ -132,55 +163,53 @@
             android:layout_marginHorizontal="20dp"
             android:layout_height="300dp" />
 
-        <GridLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-
-
-
-            <Button
-                android:id="@+id/btnShowPreviousWeek_"
-                android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_row="0"
-                android:layout_columnWeight="1"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/button_radius_color"
-                android:text="지난 주"
-                android:textColor="@color/white"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-            <Button
-                android:id="@+id/btnShowThisWeek_"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_row="0"
-                android:layout_columnWeight="1"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/button_radius_color_3"
-                android:text="이번 주 차트"
-                android:textColor="@color/white"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-            <Button
-                android:id="@+id/btnShowNextWeek_"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_row="0"
-                android:layout_columnWeight="1"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/button_radius_color"
-                android:text="다음 주"
-                android:textColor="@color/white"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-        </GridLayout>
+                android:layout_marginTop="10dp">
+                <Button
+                    android:id="@+id/btnShowPreviousWeek_"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/button_radius_color"
+                    android:text="지난 주"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+                <Button
+                    android:id="@+id/btnShowThisWeek_"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/button_radius_color_3"
+                    android:text="이번 주 차트"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+                <Button
+                    android:id="@+id/btnShowNextWeek_"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/button_radius_color"
+                    android:text="다음 주"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </ScrollView>
 
     </LinearLayout>
 
-</ScrollView>
+</LinearLayout>

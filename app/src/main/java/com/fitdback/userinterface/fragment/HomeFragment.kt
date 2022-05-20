@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.CameraActivity
 import com.fitdback.posedetection.R
@@ -61,8 +63,16 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
 
     ): View? {
-
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+
+        val im_squat = view.findViewById<ImageView>(R.id.im_squat)
+        val im_plank = view.findViewById<ImageView>(R.id.im_plank)
+        val im_slr = view.findViewById<ImageView>(R.id.im_slr)
+        im_squat.clipToOutline=true
+
+        Glide.with(this).load(R.raw.squat_gif).override(1000,600).into(im_squat)
+        Glide.with(this).load(R.raw.plank).override(1000,500).into(im_plank)
+        Glide.with(this).load(R.raw.slr_gif).override(1000,500).into(im_slr)
 
         // 스쿼트 버튼
         val squatBtn: Button = view.findViewById(R.id.squatBtn)
