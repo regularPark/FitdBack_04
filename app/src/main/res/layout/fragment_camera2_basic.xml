@@ -108,17 +108,15 @@
 
     <!-- 운동 진행 바 -->
     <ProgressBar
-        android:id="@+id/prgHorizontal"
+        android:id="@+id/exPrgBar"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:background="@drawable/custom_prgbar"
-        tools:progress="80"
-        android:max="100"
         android:layout_gravity="center|bottom"
         android:layout_marginHorizontal="20dp"
         android:progressDrawable="@drawable/custom_prgbar"
-        android:layout_marginBottom="60dp"/>
+        android:layout_marginBottom="30dp"/>
 
 
     <TextView
@@ -141,7 +139,7 @@
         android:layout_marginRight="20dp"
         android:gravity="right"
         android:textColor="#faff0d"
-        android:textSize="30sp"
+        android:textSize="20sp"
         tools:text="Count"
         />
     <TextView

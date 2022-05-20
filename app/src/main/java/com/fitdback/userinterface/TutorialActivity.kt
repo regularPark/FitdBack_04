@@ -24,8 +24,6 @@ class TutorialActivity : YouTubeBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tutorial)
 
-        // 프래그먼트로 데이터 전송
-        var bundle : Bundle = Bundle()
         // 운동정보 넘기기
         val exr = intent.getStringExtra("exr_mod")
         // 유튜브

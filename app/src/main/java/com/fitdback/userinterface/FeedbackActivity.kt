@@ -28,7 +28,7 @@ class FeedbackActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_feedback_2)
+        setContentView(R.layout.activity_feedback)
 
         // Firebase
         firebaseAuth = FirebaseAuth.getInstance()

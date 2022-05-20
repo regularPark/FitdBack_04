@@ -85,7 +85,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private var countTimer: TextView? = null
     private var prgBar: ProgressBar? = null
     private var guideMsg: TextView? = null
-    private var cProBar: CircleProgressBar? = null  // 카운트바
+    private var exPrgBar: ProgressBar? = null  // 카운트바
 
 
     /**
@@ -344,10 +344,17 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         }
     }
 
-    private fun showCount(text: Int) {
+    private fun showCount(text_com: Int, text_tar: Int, text_f: Int, text_s: Int) {
         val activity = activity
         activity?.runOnUiThread {
-            countView!!.text = text.toString()
+            if(TimerClass.second <= 0){
+                countView!!.visibility = View.VISIBLE
+                countView!!.text = "완료 :" + text_com.toString() + " / 목표 : " + text_tar.toString() +
+                        " / 성공 : " + text_s.toString() + " / 실패 : " + text_f.toString()
+            }
+            else{
+                countView!!.visibility = View.INVISIBLE
+            }
         }
     }
 
@@ -360,6 +367,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                 prgBar!!.visibility = View.INVISIBLE
                 guideMsg!!.visibility = View.INVISIBLE
                 drawView!!.visibility = View.VISIBLE
+                exPrgBar!!.visibility = View.VISIBLE
                 Handler().postDelayed(
                     {
                         countTimer!!.visibility = View.INVISIBLE
@@ -372,6 +380,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                 countTimer!!.text = text.toString()
                 guideMsg!!.text = "정확한 측정을 위해\n전신이 보이도록 뒤로 물러나 주세요"
                 drawView!!.visibility = View.INVISIBLE
+                exPrgBar!!.visibility = View.INVISIBLE
             }
         }
     }
@@ -406,6 +415,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         countTimer = view.findViewById(R.id.cntDown)
         prgBar = view.findViewById(R.id.progressbar)
         guideMsg = view.findViewById(R.id.guide)
+        exPrgBar = view. findViewById(R.id.exPrgBar)
 
 
         // 렌더링 옵션 : CPU or GPU
@@ -806,24 +816,37 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         val bitmap = textureView!!.getBitmap(classifier!!.imageSizeX, classifier!!.imageSizeY)
         val textToShow = classifier!!.classifyFrame(bitmap)
         val countToShow = FeedbackAlgorithm.exr_cnt
+        val targetCount = FeedbackAlgorithm.target_cnt
+        val failCount = FeedbackAlgorithm.exr_cnt_f
+        val successCount = FeedbackAlgorithm.exr_cnt_s
         val cntTimeToShow = FeedbackAlgorithm.exr_time_result
 
 
-        bitmap.recycle()
 
+        bitmap.recycle()
 
         drawView!!.setDrawPoint(classifier!!.mPrintPointArray!!, 0.5f)  // 지우기
 
         showToast(textToShow)
         if (FeedbackAlgorithm.exr_mode == "plank"){
-            showCount(cntTimeToShow)
+            showCount(cntTimeToShow, targetCount, failCount, successCount)
         }
         else{
-            showCount(countToShow)
+            showCount(countToShow, targetCount, failCount, successCount)
         }
         showCountDown(TimerClass.second)
-        prgBar?.progress = 5 - TimerClass.second
 
+        var tag_cnt = FeedbackAlgorithm.target_cnt
+
+        prgBar?.progress = 5 - TimerClass.second
+        exPrgBar?.max = tag_cnt
+        exPrgBar?.progress = countToShow
+
+
+//        cPrgBar?.setProgressFormatter { progress, max ->
+//            val DEFAULT_PATTERN = "%d"
+//            String.format(DEFAULT_PATTERN, (progress.toFloat() / max.toFloat() * 100).toInt())
+//        }
     }
 
     /**

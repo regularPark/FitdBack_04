@@ -10,7 +10,7 @@ import com.fitdback.posedetection.R
 import com.fitdback.test.loginTest.LoginTestActivity
 
 class LoadingActivity : AppCompatActivity() {
-    private val SPLASH_TIME_OUT:Long = 500
+    private val SPLASH_TIME_OUT:Long = 1000
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading)
