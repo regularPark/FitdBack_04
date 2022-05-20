@@ -17,11 +17,12 @@ import com.fitdback.database.datamodel.UserInfoDataModel
 import com.fitdback.posedetection.R
 import com.fitdback.test.barChartTest.BarChartTestActivity
 import com.fitdback.test.feedbackTest.FeedbackTestActivity
+import com.fitdback.test.friendTest.FriendListAdapter
 import com.fitdback.userinterface.MainActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.UserInfo
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -59,7 +60,6 @@ class DevModeActivity : AppCompatActivity() {
         val btnRunFriendMode = findViewById<Button>(R.id.btnRunFriendMode)
 
         // Intent
-        val toHealthMemoTestActivity = Intent(this, HealthMemoTestActivity::class.java)
         val toFeedbackTestActivity = Intent(this, FeedbackTestActivity::class.java)
 
         // 로그인에 성공해서 현재 액티비티로 전환되면, user의 ID를 화면에 표시
@@ -70,12 +70,6 @@ class DevModeActivity : AppCompatActivity() {
             버튼 관련 동작
         */
 
-        // btnDBTest
-        btnDBTest.setOnClickListener {
-
-            startActivity(toHealthMemoTestActivity)
-
-        }
 
         // Data Write Test
         btnFeedbackTest.setOnClickListener {
@@ -256,8 +250,9 @@ class DevModeActivity : AppCompatActivity() {
         // Friend Mode
         btnRunFriendMode.setOnClickListener {
 
-            val friendModeDialog = CustomDialog(this, R.layout.dialog_friend_mode, "testing")
+            val friendModeDialog = CustomDialog(this, R.layout.dialog_friend_mode, "Friend Mode")
             val friendModeAlertDialog = friendModeDialog.showDialog()
+            friendModeAlertDialog?.setCancelable(false)
             val btnShowFriendList =
                 friendModeAlertDialog!!.findViewById<Button>(R.id.btnShowFriendList)
             val btnRegisterFriend =
@@ -269,9 +264,49 @@ class DevModeActivity : AppCompatActivity() {
 
             // 친구 목록 보기
             btnShowFriendList?.setOnClickListener {
-                // TODO : 친구 목록 만들기
-                
-                
+
+                val friendListDialog =
+                    CustomDialog(this, R.layout.dialog_friend_list, "Friend List")
+                val friendListAlertDialog = friendListDialog.showDialog()
+                friendListAlertDialog?.setCancelable(false)
+                val btnFriendListConfirm =
+                    friendListAlertDialog?.findViewById<Button>(R.id.btnFriendListConfirm)
+
+                val dataModelList = mutableListOf<FriendDataModel>()
+
+                // 리스트뷰 연결
+                val listView = friendListAlertDialog?.findViewById<ListView>(R.id.friendListLV)
+                val adapterList = FriendListAdapter(dataModelList)
+                listView?.adapter = adapterList
+
+                // DB읽어오기
+                val dbPath = DataBasket.getDBPath("users", "friend_info", true)
+
+                dbPath!!.addValueEventListener(object : ValueEventListener {
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+
+                        dataModelList.clear() // 리스트뷰 덧씌워짐 방지
+
+                        for (dataModel in snapshot.children) {
+                            dataModelList.add(dataModel.getValue(FriendDataModel::class.java)!!)
+                        }
+
+                        adapterList.notifyDataSetChanged() // 비동기 -> 동기식 변경
+
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+
+                })
+
+                // 확인 버튼
+                btnFriendListConfirm?.setOnClickListener {
+                    friendListAlertDialog.dismiss()
+                }
+
             }
 
             // 친구 등록
@@ -285,73 +320,93 @@ class DevModeActivity : AppCompatActivity() {
                     registerAlertDialog?.findViewById<EditText>(R.id.friendCodeArea)
                 val friendNicknameArea =
                     registerAlertDialog?.findViewById<TextView>(R.id.friendNicknameArea)
+                val btnSearchFriend =
+                    registerAlertDialog?.findViewById<Button>(R.id.btnSearchFriend)
                 val btnRegisterFriendToDB =
                     registerAlertDialog?.findViewById<Button>(R.id.btnRegisterFriendToDB)
                 val btnRegisterConfirm =
                     registerAlertDialog?.findViewById<Button>(R.id.btnRegisterConfirm)
 
-                var isFirstClick = true
-                var friendNickname: String? = null
                 var friendCode: String? = null
+                var friendNickname: String? = null
+
+                // 검색 버튼
+                btnSearchFriend?.setOnClickListener {
+                    friendCode = friendCodeArea?.text?.toString()?.trim()
+
+                    if (friendCode == firebaseAuth.currentUser?.uid) { // 자기 자신을 검색한 경우
+
+                        Toast.makeText(this, "본인은 친구로 등록할 수 없습니다.", Toast.LENGTH_SHORT).show()
+
+                    } else { // 자기 자신을 검색하지 않은 경우
+
+                        if (DataBasket.individualFriendInfo?.value != null) { // friend_info 데이터를 만든적이 있다면
+
+                            if (!checkIfFriendExists(friendCode)) { // 등록된 유저가 아니라면, 서버에서 검색
+
+                                searchUserFromDB(
+                                    database,
+                                    friendCode,
+                                    friendNickname,
+                                    friendNicknameArea
+                                )
+
+                            }
+
+                        } else { // friend_info 데이터를 만든적이 없다면, 서버에서 검색
+
+                            searchUserFromDB(
+                                database,
+                                friendCode,
+                                friendNickname,
+                                friendNicknameArea
+                            )
+
+                        }
+
+                    }
+                }
 
                 // 친구를 DB에 저장
                 btnRegisterFriendToDB?.setOnClickListener {
-
-                    if (isFirstClick) {   // 검색 기능 실행 -> "[닉네임]님을 찾았습니다."
-                        friendCode = friendCodeArea?.text?.toString()?.trim()
-                        val dbPath =
-                            database.getReference("users").child(friendCode!!).child("user_info")
-
-                        dbPath.addValueEventListener(object : ValueEventListener {
-                            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                                dataSnapshot.getValue(FriendDataModel::class.java)
-                                val userInfoModel =
-                                    dataSnapshot.getValue(UserInfoDataModel::class.java)
-                                friendNickname = userInfoModel?.user_nickname
-                                Log.d("db_data", dataSnapshot.toString())
-                                Log.d(
-                                    "db_data",
-                                    dataSnapshot.getValue(UserInfoDataModel::class.java).toString()
+                    if (friendNicknameArea?.text != null && friendNicknameArea.text != "회원 코드를 확인해주세요.") {
+                        val friendNicknameAreaText = friendNicknameArea.text.toString().trim()
+                        for (character in friendNicknameAreaText) {
+                            if (character.toString() == "님") {
+                                friendNickname = friendNicknameAreaText.slice(
+                                    IntRange(
+                                        0,
+                                        friendNicknameAreaText.indexOf(character) - 1
+                                    )
                                 )
-
-                                friendNicknameArea?.text = "${friendNickname}님을 찾았습니다."
-                                btnRegisterFriendToDB.text = "친구로 등록하기"
-                                isFirstClick = false
                             }
-
-                            override fun onCancelled(error: DatabaseError) {
-                                Log.d("db_data", "onCancelled")
-                            }
-                        })
-
-                    } else {
-                        // 등록 기능 실행 -> DB에 저장
-                        if (friendCode != null && friendNickname != null) {
-
-                            val friendDataModel =
-                                FriendDataModel(friendCode, friendNickname)  // data model 생성
-                            val dbPath = database.getReference("users")
-                                .child(firebaseAuth.currentUser?.uid!!).child("friend_info")
-
-                            // data write
-                            dbPath.push().setValue(friendDataModel)
-                                .addOnSuccessListener {
-                                    Toast.makeText(this, "친구 등록 완료", Toast.LENGTH_SHORT).show()
-                                }
-                                .addOnFailureListener {
-                                    Toast.makeText(this, "Error: 친구 등록 실패", Toast.LENGTH_SHORT)
-                                        .show()
-                                }
-
-                        } else {
-                            Toast.makeText(
-                                this,
-                                "Error: 친구 코드 또는 닉네임을 찾을 수 없습니다.",
-                                Toast.LENGTH_SHORT
-                            ).show()
                         }
                     }
 
+                    if (friendCode != null && friendNickname != null) {
+
+                        val friendDataModel =
+                            FriendDataModel(friendCode, friendNickname)  // data model 생성
+                        val dbPath = database.getReference("users")
+                            .child(firebaseAuth.currentUser?.uid!!).child("friend_info")
+
+                        // data write
+                        dbPath.push().setValue(friendDataModel)
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "친구 등록 완료", Toast.LENGTH_SHORT).show()
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(this, "Error: 친구 등록 실패", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+
+                    } else {
+                        Toast.makeText(
+                            this,
+                            "검색을 먼저  해주세요.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
 
                 btnRegisterConfirm?.setOnClickListener {
@@ -401,6 +456,64 @@ class DevModeActivity : AppCompatActivity() {
 
     }
 
+    private fun searchUserFromDB(
+        database: FirebaseDatabase,
+        friendCode: String?,
+        friendNickname: String?,
+        friendNicknameArea: TextView?
+    ) {
+        val dbPath =
+            database.getReference("users").child(friendCode!!)
+                .child("user_info")
+
+        dbPath.addValueEventListener(object : ValueEventListener {
+            @SuppressLint("SetTextI18n")
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val userInfoModel =
+                    dataSnapshot.getValue(UserInfoDataModel::class.java)
+
+                if (userInfoModel != null) {
+                    friendNicknameArea?.text = "${userInfoModel.user_nickname}님을 찾았습니다."
+                } else {
+                    friendNicknameArea?.text = "회원 코드를 확인해주세요."
+                }
+
+                Log.d("db_data", dataSnapshot.toString())
+                Log.d(
+                    "db_data",
+                    dataSnapshot.getValue(UserInfoDataModel::class.java)
+                        .toString()
+                )
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("db_data", "onCancelled")
+            }
+        })
+    }
+
+    private fun checkIfFriendExists(friendCode: String?): Boolean {
+
+        for (dataModel in DataBasket.individualFriendInfo!!.children) {
+            val friendInfoDataModel =
+                dataModel.getValue(FriendDataModel::class.java)
+
+            if (friendInfoDataModel?.friend_uid == friendCode) {
+                Toast.makeText(
+                    this,
+                    "${friendInfoDataModel!!.friend_nickname} 님은 이미 친구로 등록된 유저입니다",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                return true
+            }
+
+        }
+
+        return false
+    }
+
 //    @SuppressLint("SimpleDateFormat")
 //    private fun getOneWeekFromDate(year: Int, month: Int, date: Int): MutableList<String> {
 //
@@ -421,13 +534,13 @@ class DevModeActivity : AppCompatActivity() {
 //    }
 
     // 운동 데이터 모델을 firebase에 write
-    /*
-        squat 개수를 랜덤으로 생성 (10 ~ 50개)
-            운동시간은 개수의 2배
-            성공 개수는 개수의 1/2배
-            운동시간은 개수의 2.0배 ~ 3.0배
-        Firebase에 저장 
-     */
+/*
+    squat 개수를 랜덤으로 생성 (10 ~ 50개)
+        운동시간은 개수의 2배
+        성공 개수는 개수의 1/2배
+        운동시간은 개수의 2.0배 ~ 3.0배
+    Firebase에 저장
+ */
     private fun createDummyData(
         dateList: MutableList<String>,
         exType: String

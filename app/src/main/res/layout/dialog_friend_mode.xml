@@ -4,14 +4,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="5dp"
-        android:text="Friend Mode"
-        android:textAlignment="center"
-        android:textSize="30sp" />
-
     <Button
         android:id="@+id/btnShowFriendList"
         android:layout_width="match_parent"

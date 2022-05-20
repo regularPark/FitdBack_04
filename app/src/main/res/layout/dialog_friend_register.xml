@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="350dp"
     android:orientation="vertical">
 
     <EditText
@@ -15,16 +15,23 @@
         android:id="@+id/friendNicknameArea"
         android:layout_width="match_parent"
         android:textSize="20sp"
-        android:text="friendNicknameArea"
         android:layout_height="50dp" />
 
+    <Button
+        android:id="@+id/btnSearchFriend"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="20dp"
+        android:text="검색"
+        android:textAllCaps="false"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btnRegisterFriendToDB"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="20dp"
-        android:text="검색"
+        android:text="친구 추가"
         android:textAllCaps="false"
         android:textSize="20sp" />
 

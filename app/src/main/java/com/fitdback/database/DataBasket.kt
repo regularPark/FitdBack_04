@@ -25,6 +25,7 @@ class DataBasket {
         var tempExrModel = ExerciseDataModel()
         var individualExData: DataSnapshot? = null
         var individualUserInfo: DataSnapshot? = null
+        var individualFriendInfo: DataSnapshot? = null
 
         /*
             날짜 관련
@@ -134,6 +135,7 @@ class DataBasket {
                     when (dataSnapshot.key.toString()) {
                         "ex_data" -> individualExData = dataSnapshot
                         "user_info" -> individualUserInfo = dataSnapshot
+                        "friend_info" -> individualFriendInfo = dataSnapshot
                     }
 
                     Log.d("db_getDataFromDB", dataSnapshot.toString())

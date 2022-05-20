@@ -296,8 +296,10 @@ class LoginActivity_new : AppCompatActivity() {
 
                     val exDataDBPath = DataBasket.getDBPath("users", "ex_data", true)
                     val userInfoDBPath = DataBasket.getDBPath("users", "user_info", true)
+                    val friendInfoDBPath = DataBasket.getDBPath("users", "friend_info", true)
                     DataBasket.getDataFromFB(exDataDBPath!!, "no more use")
                     DataBasket.getDataFromFB(userInfoDBPath!!, "no more use")
+                    DataBasket.getDataFromFB(friendInfoDBPath!!, "no more use")
 
                     startActivity(intent)
                     finish() // 액티비티가 두개 존재하는 오류 수정!
