@@ -2,13 +2,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.fitdback.userinterface.fragment.MyTownFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/town_friendList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="50sp"
+        android:layout_marginHorizontal="10dp"
+        android:background="@drawable/button_radius_color"
+        android:drawableLeft="@drawable/ic_my_info_2"
+        android:paddingHorizontal="20dp"
+        android:text="친구 목록"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
+
 
 
 </FrameLayout>

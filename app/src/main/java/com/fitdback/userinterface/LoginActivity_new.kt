@@ -50,7 +50,8 @@ class LoginActivity_new : AppCompatActivity() {
         // 클릭 이벤트
         btnRunEmailLogin.setOnClickListener {
 
-            val dialog = CustomDialog(this, R.layout.dialog_login_email_login, "Email Login")
+            val dialog =
+                CustomDialog(this, R.layout.dialog_login_email_login, "Email Login")
             val mAlertDialog = dialog.showDialog()
             val btnEmailLogin = mAlertDialog!!.findViewById<Button>(R.id.btnEmailLogin)
 
@@ -91,7 +92,8 @@ class LoginActivity_new : AppCompatActivity() {
 
 
         btnRunDevLogin.setOnClickListener {
-            val dialog = CustomDialog(this, R.layout.dialog_dev_login, "Email Login")
+            val dialog =
+                CustomDialog(this, R.layout.dialog_dev_login, "Email Login")
             val mAlertDialog = dialog.showDialog()
 
             val btnKshLogin =
@@ -115,7 +117,8 @@ class LoginActivity_new : AppCompatActivity() {
         }
 
         joinTextView.setOnClickListener {
-            val dialog = CustomDialog(this, R.layout.dialog_login_join, "Email Join")
+            val dialog =
+                CustomDialog(this, R.layout.dialog_login_join, "Email Join")
             val mAlertDialog = dialog.showDialog()
 
             val btnEmailJoin =
@@ -126,6 +129,7 @@ class LoginActivity_new : AppCompatActivity() {
             // 이메일 회원가입 다이얼로그 실행
             btnEmailJoin?.setOnClickListener {
                 val emailJoinDialog =
+
                     CustomDialog(this, R.layout.dialog_login_join_email, "Email Join")
                 val emailJoinAlertDialog = emailJoinDialog.showDialog()
 

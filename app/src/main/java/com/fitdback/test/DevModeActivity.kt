@@ -250,9 +250,12 @@ class DevModeActivity : AppCompatActivity() {
         // Friend Mode
         btnRunFriendMode.setOnClickListener {
 
+            // 다이얼로그
             val friendModeDialog = CustomDialog(this, R.layout.dialog_friend_mode, "Friend Mode")
             val friendModeAlertDialog = friendModeDialog.showDialog()
             friendModeAlertDialog?.setCancelable(false)
+
+            // 레이아웃
             val btnShowFriendList =
                 friendModeAlertDialog!!.findViewById<Button>(R.id.btnShowFriendList)
             val btnRegisterFriend =
@@ -265,13 +268,17 @@ class DevModeActivity : AppCompatActivity() {
             // 친구 목록 보기
             btnShowFriendList?.setOnClickListener {
 
+                // 다이얼로그
                 val friendListDialog =
                     CustomDialog(this, R.layout.dialog_friend_list, "Friend List")
                 val friendListAlertDialog = friendListDialog.showDialog()
                 friendListAlertDialog?.setCancelable(false)
+
+                // 레이아웃 
                 val btnFriendListConfirm =
                     friendListAlertDialog?.findViewById<Button>(R.id.btnFriendListConfirm)
 
+                // 리스트뷰에 추가할 데이터 리스트
                 val dataModelList = mutableListOf<FriendDataModel>()
 
                 // 리스트뷰 연결
@@ -279,7 +286,7 @@ class DevModeActivity : AppCompatActivity() {
                 val adapterList = FriendListAdapter(dataModelList)
                 listView?.adapter = adapterList
 
-                // DB읽어오기
+                // DB 읽어오기
                 val dbPath = DataBasket.getDBPath("users", "friend_info", true)
 
                 dbPath!!.addValueEventListener(object : ValueEventListener {
@@ -301,6 +308,52 @@ class DevModeActivity : AppCompatActivity() {
                     }
 
                 })
+
+                // 친구 통계 보기
+                listView?.onItemClickListener =
+                    AdapterView.OnItemClickListener { parent, view, position, id ->
+
+                        val selectItem = parent.getItemAtPosition(position) as FriendDataModel
+                        Toast.makeText(this, "${selectItem.friend_nickname}", Toast.LENGTH_SHORT)
+                            .show()
+
+                        // DB 불러오기
+                        var friendExData: DataSnapshot? = null
+                        val friendExDataDBPath =
+                            database.getReference("users").child(selectItem.friend_uid!!)
+                                .child("ex_data")
+
+                        friendExDataDBPath.addValueEventListener(object : ValueEventListener {
+                            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                friendExData = dataSnapshot
+                                Log.d("db_data", "friendExData: ${friendExData}")
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                Log.d("db_data", "onCancelled")
+                            }
+                        })
+
+                        // 다이얼로그
+                        val friendStatisticsDialog =
+                            CustomDialog(
+                                this,
+                                R.layout.dialog_friend_chart,
+                                "${selectItem.friend_nickname}님의 운동 통계"
+                            )
+                        val friendStatisticsAlertDialog = friendStatisticsDialog.showDialog()
+                        friendStatisticsAlertDialog?.setCancelable(false)
+
+                        // 레이아웃
+                        val btnFriendChartConfirm = friendStatisticsAlertDialog?.findViewById<Button>(R.id.btnFriendChartConfirm)
+
+                        // 차트
+
+
+
+
+                    }
+
 
                 // 확인 버튼
                 btnFriendListConfirm?.setOnClickListener {
@@ -415,7 +468,7 @@ class DevModeActivity : AppCompatActivity() {
 
                 }
 
-            }
+            } // btnRegisterFriend
 
             // 내 친구 코드 확인
             btnCheckMyCode?.setOnClickListener {

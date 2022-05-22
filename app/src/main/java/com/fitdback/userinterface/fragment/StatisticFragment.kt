@@ -26,6 +26,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [StatisticFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
 class StatisticFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -42,7 +43,6 @@ class StatisticFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
 
         val view = inflater.inflate(R.layout.fragment_statistic, container, false)
 

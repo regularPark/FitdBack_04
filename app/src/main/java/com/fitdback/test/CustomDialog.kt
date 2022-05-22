@@ -17,4 +17,3 @@ class CustomDialog(context: Context, xmlSource: Int, title: String) {
     }
 
 }
-
