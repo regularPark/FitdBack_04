@@ -23,8 +23,7 @@ class FeedbackTestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feedback_test)
 
-        // 프로그레스 바
-        val prgBar = findViewById<CircleProgressBar>(R.id.complete_PrgBar)
+
 
         // Firebase
         firebaseAuth = FirebaseAuth.getInstance()
@@ -63,12 +62,7 @@ class FeedbackTestActivity : AppCompatActivity() {
 
         }
 
-        prgBar.max = FeedbackAlgorithm.target_cnt
-        prgBar.progress = FeedbackAlgorithm.exr_cnt_f
-        prgBar.setProgressFormatter { progress, max ->
-            val DEFAULT_PATTERN = "%d%"
-            String.format(DEFAULT_PATTERN, (progress.toFloat() / max.toFloat() * 100).toInt())
-        }
+
 
     }
 

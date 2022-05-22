@@ -104,6 +104,15 @@ class HomeFragment : Fragment() {
             }
         })
 
+        val ftBtn:Button = view.findViewById(R.id.freeExBtn)
+        ftBtn.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                val toTutorialActivity = Intent(context, TutorialActivity::class.java)
+                toTutorialActivity.putExtra("exr_mod","freeTraining")
+                startActivity(toTutorialActivity)
+            }
+        })
+
 
         // 로그아웃
         val btnSignOut: Button = view.findViewById(R.id.btnSignOut)

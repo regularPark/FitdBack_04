@@ -180,8 +180,10 @@
                         -->
                 </LinearLayout>
 
+                <!--  비 운동 관련   -->
+
                 <Button
-                    android:id="@+id/autoExBtn"
+                    android:id="@+id/freeExBtn"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_columnWeight="1"
@@ -194,8 +196,6 @@
                     android:textStyle="bold"
                     tools:layout_editor_absoluteX="-30dp"
                     tools:layout_editor_absoluteY="265dp" />
-
-            <!--  비 운동 관련   -->
 
                 <Button
                     android:id="@+id/btnDevMode"

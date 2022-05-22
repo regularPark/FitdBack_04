@@ -15,6 +15,8 @@
 
 package com.fitdback.posedetection
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
@@ -49,6 +51,8 @@ import android.view.Surface
 import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import com.fitdback.algorithm.FeedbackAlgorithm
 import com.fitdback.database.DataBasket
@@ -86,6 +90,9 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private var prgBar: ProgressBar? = null
     private var guideMsg: TextView? = null
     private var exPrgBar: ProgressBar? = null  // 카운트바
+    private var free_cnt_sqt: CircleProgressBar? = null
+    private var free_cnt_plk: CircleProgressBar? = null
+    private var free_cnt_slr: CircleProgressBar? = null
 
 
     /**
@@ -395,6 +402,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         savedInstanceState: Bundle?
     ): View? {
 
+
+
         return inflater.inflate(R.layout.fragment_camera2_basic, container, false)
     }
 
@@ -415,7 +424,10 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         countTimer = view.findViewById(R.id.cntDown)
         prgBar = view.findViewById(R.id.progressbar)
         guideMsg = view.findViewById(R.id.guide)
-        exPrgBar = view. findViewById(R.id.exPrgBar)
+        exPrgBar = view.findViewById(R.id.exPrgBar)
+        free_cnt_sqt = view.findViewById(R.id.free_cnt_squat)
+        free_cnt_plk = view.findViewById(R.id.free_cnt_plank)
+        free_cnt_slr = view.findViewById(R.id.free_cnt_slr)
 
 
         // 렌더링 옵션 : CPU or GPU
@@ -828,26 +840,29 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         drawView!!.setDrawPoint(classifier!!.mPrintPointArray!!, 0.5f)  // 지우기
 
         showToast(textToShow)
-        if (FeedbackAlgorithm.exr_mode == "plank"){
+        if (FeedbackAlgorithm.exr_mode == "plank") {
             showCount(cntTimeToShow, targetCount, failCount, successCount)
-        }
-        else{
+        } else {
             showCount(countToShow, targetCount, failCount, successCount)
         }
         showCountDown(TimerClass.second)
 
         var tag_cnt = FeedbackAlgorithm.target_cnt
 
+
+//        // 자율운동일 때
+//        if (FeedbackAlgorithm.exr_mode == "freeTraining"){
+//            free_cnt_sqt?.progress =
+//        }
+
         prgBar?.progress = 5 - TimerClass.second
+
         exPrgBar?.max = tag_cnt
         exPrgBar?.progress = countToShow
 
-
-//        cPrgBar?.setProgressFormatter { progress, max ->
-//            val DEFAULT_PATTERN = "%d"
-//            String.format(DEFAULT_PATTERN, (progress.toFloat() / max.toFloat() * 100).toInt())
-//        }
     }
+
+
 
     /**
      * Compares two `Size`s based on their areas.

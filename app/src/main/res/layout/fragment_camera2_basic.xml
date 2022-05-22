@@ -172,8 +172,8 @@
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:layout_marginTop="90dp"
-        android:indeterminate="false"
         android:max="5"
+        tools:progress="3"
         android:progressBackgroundTint="#00000000"
         android:progressDrawable="@drawable/circle_progressbar"
         />
