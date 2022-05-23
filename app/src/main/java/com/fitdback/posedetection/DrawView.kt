@@ -25,14 +25,14 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import com.fitdback.algorithm.FeedbackAlgorithm
-import java.util.ArrayList
+import java.util.concurrent.CopyOnWriteArrayList
 
 class DrawView : View {
 
     private var mRatioWidth = 0
     private var mRatioHeight = 0
 
-    private val mDrawPoint = ArrayList<PointF>()
+    private val mDrawPoint = CopyOnWriteArrayList<PointF>()
     private var mWidth: Int = 0
     private var mHeight: Int = 0
     private var mRatioX: Float = 0.toFloat()
@@ -65,7 +65,7 @@ class DrawView : View {
     private val mPaint: Paint by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG).apply {
             style = FILL
-            strokeWidth = dip(2).toFloat()
+            strokeWidth = dip(10).toFloat()
             textSize = sp(13).toFloat()
         }
     }
@@ -138,11 +138,16 @@ class DrawView : View {
         mPaint.color = 0xfffaff0d.toInt() //  목윗부분 color
         val p1 = mDrawPoint[1]
 
-        //카메라 종료현상 발생
+
+        // TODO: 143번 줄 에러 Fix : 카메라 실행 중 꺼지는 원인임
+
         for ((index, pointF) in mDrawPoint.withIndex()) {
+
             // 관절 튈 때 그리지 않는 방법
             if (mDrawPoint[13].y > mDrawPoint[2].y && mDrawPoint[13].y > mDrawPoint[5].y &&
-                    mDrawPoint[10].y > mDrawPoint[5].y && mDrawPoint[10].y > mDrawPoint[2].y) {
+
+                    mDrawPoint[10].y > mDrawPoint[5].y && mDrawPoint[10].y > mDrawPoint[2].y
+            ) {
                 if (index == 1) continue
                 when (index) {
                     //0-1
@@ -165,25 +170,41 @@ class DrawView : View {
                     9, 10 -> {
                         if (prePointF != null) {
                             mPaint.color = 0xffff0000.toInt() // skeleton 색상 지정
-                            canvas.drawLine(prePointF.x, prePointF.y, pointF.x, pointF.y, mPaint)
+                            canvas.drawLine(
+                                    prePointF.x,
+                                    prePointF.y,
+                                    pointF.x,
+                                    pointF.y,
+                                    mPaint
+                            )
                         }
                     }
                     else -> {
                         if (prePointF != null) {
                             mPaint.color = 0xfffaff0d.toInt() // skeleton 색상 지정
-                            canvas.drawLine(prePointF.x, prePointF.y, pointF.x, pointF.y, mPaint)
+                            canvas.drawLine(
+                                    prePointF.x,
+                                    prePointF.y,
+                                    pointF.x,
+                                    pointF.y,
+                                    mPaint
+                            )
                         }
                     }
                 }
                 prePointF = pointF
             }
+
+
         }
 
         // 점 그리기
 
         for ((index, pointF) in mDrawPoint.withIndex()) {
             if (mDrawPoint[13].y > mDrawPoint[2].y && mDrawPoint[13].y > mDrawPoint[5].y &&
-                    mDrawPoint[10].y > mDrawPoint[5].y && mDrawPoint[10].y > mDrawPoint[2].y) {
+
+                    mDrawPoint[10].y > mDrawPoint[5].y && mDrawPoint[10].y > mDrawPoint[2].y
+            ) {
                 mPaint.color = mColorArray[index]
                 canvas.drawCircle(pointF.x, pointF.y, circleRadius, mPaint)
             }
@@ -193,12 +214,10 @@ class DrawView : View {
         // FeedBack 알고리즘
         if (FeedbackAlgorithm.isPlaying) {
             when (FeedbackAlgorithm.exr_mode) {
-                "squat" -> {
-                    Handler().postDelayed(
-                            { FeedbackAlgorithm.squat(context, mDrawPoint) },
-                            5000
-                    )
-                } // 5초동안 스쿼트 알고리즘 비활성화
+                "squat" -> Handler().postDelayed(
+                        { FeedbackAlgorithm.squat(context, mDrawPoint) },
+                        5000
+                ) // 5초동안 스쿼트 알고리즘 비활성화
                 "plank" -> Handler().postDelayed(
                         { FeedbackAlgorithm.plank(context, mDrawPoint) },
                         5000

@@ -2,6 +2,7 @@ package com.fitdback.userinterface
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
@@ -9,6 +10,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.CameraActivity
 import com.fitdback.posedetection.R
 import com.fitdback.test.barChartTest.BarChartTestActivity
@@ -20,7 +22,7 @@ import java.lang.Exception
 //import com.google.firebase.auth.ktx.auth
 
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity_old : AppCompatActivity() {
 
     //    private lateinit var auth: FirebaseAuth
     lateinit var firebaseAuth: FirebaseAuth
@@ -45,7 +47,8 @@ class LoginActivity : AppCompatActivity() {
         // Intent
         val toCameraAcitivityIntent = Intent(this, CameraActivity::class.java)
         val toLoginSuccessActivityIntent = Intent(this, LoginSuccessActivity::class.java)
-        val toMainActivityIntent = Intent(this, MainTestActivity::class.java)
+        val toMainActivityIntent = Intent(this, MainActivity::class.java)
+        val toLoadingActivity = Intent(this, LoadingActivity::class.java)
 
         // 로그인 버튼 클릭 시 동작
         btnLogin.setOnClickListener {
@@ -107,27 +110,33 @@ class LoginActivity : AppCompatActivity() {
                 mAlertDialog.findViewById<Button>(R.id.btnPjkLogin)
 
             btnKshLogin?.setOnClickListener {
-                emailLoginAuth("ksh@gmail.com", "123456", toMainActivityIntent)
+                Handler().postDelayed({
+                    emailLoginAuth("ksh@gmail.com", "123456", toMainActivityIntent)
+                    getDB()
+                }, 500)
             }
 
             btnOmsLogin?.setOnClickListener {
-                emailLoginAuth("oms@gmail.com", "123456", toMainActivityIntent)
+                Handler().postDelayed({
+                    emailLoginAuth("oms@gmail.com", "123456", toMainActivityIntent)
+                    getDB()
+                }, 500)
             }
 
             btnPjkLogin?.setOnClickListener {
                 emailLoginAuth("pjk@gmail.com", "123456", toMainActivityIntent)
             }
-
         }
 
         btnRunBarChart.setOnClickListener {
-
             startActivity(Intent(this, BarChartTestActivity::class.java))
-
         }
-
-
     } // end of onCreate()
+
+    private fun getDB(){
+        val dbPath = DataBasket.getDBPath("users", "ex_data", true)
+        DataBasket.getDataFromFB(dbPath!!, "individualExData")
+    }
 
 
     /*
@@ -170,6 +179,7 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
 
                     Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_SHORT).show()
+                    getDB()
                     startActivity(intent)
                     finish() // 액티비티가 두개 존재하는 오류 수정!
 
@@ -234,4 +244,4 @@ class LoginActivity : AppCompatActivity() {
             }
 
     }
-} // end of LoginActivity
+} // end of LoginActivity_old

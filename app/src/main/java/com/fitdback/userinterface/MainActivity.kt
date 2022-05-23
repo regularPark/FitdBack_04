@@ -1,92 +1,73 @@
 package com.fitdback.userinterface
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.fitdback.posedetection.R
-import com.fitdback.test.DevModeActivity
-import com.google.firebase.auth.FirebaseAuth
+import com.fitdback.userinterface.fragment.HomeFragment
+import com.fitdback.userinterface.fragment.MyPageFragment
+import com.fitdback.userinterface.fragment.MyTownFragment
+import com.fitdback.userinterface.fragment.StatisticFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var firebaseAuth: FirebaseAuth
+    private val vp: ViewPager2 by lazy { findViewById(R.id.vp_) }   // TODO:빨간줄 무시할 것!!! 고치면 실행 안됨
+
+    private val bn: BottomNavigationView by lazy { findViewById(R.id.bn_) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        firebaseAuth = FirebaseAuth.getInstance()
-
-        // 레이아웃
-        val squatBtn = findViewById<Button>(R.id.squatBtn)
-        val puBtn = findViewById<Button>(R.id.puBtn)
-        val plkBtn = findViewById<Button>(R.id.plkBtn)
-        val myPageBtn = findViewById<Button>(R.id.mypageBtn)
-        val btnSignOut = findViewById<Button>(R.id.btnSignOut)
-        val btnDevMode = findViewById<Button>(R.id.btnDevMode)
-        val testBtn = findViewById<Button>(R.id.mainTest)
-
-        // 인텐트
-        val toTutorialActivity = Intent(this, TutorialActivity::class.java)
-        val toLoginActivity = Intent(this, LoginActivity::class.java)
-        val toMyPageActivity = Intent(this, MyPageActivity::class.java)
-        val toDevActivity = Intent(this, DevModeActivity::class.java)
-        val toMainTestActivity = Intent(this, MainTestActivity::class.java)
-
-        // 버튼 클릭 동작
-        squatBtn.setOnClickListener {
-            toTutorialActivity.putExtra("exr_mod","squat") // 모드 설정
-            startActivity(toTutorialActivity)
+        vp.apply {
+            adapter = ViewPagerAdapter(this@MainActivity)
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    bn.selectedItemId = when (position) {
+                        0 -> R.id.menu_home
+                        1 -> R.id.menu_mytown
+                        2 -> R.id.menu_stat
+                        else -> R.id.menu_mypage
+                    }
+                }
+            })
         }
 
-        puBtn.setOnClickListener {
-            toTutorialActivity.putExtra("exr_mod","pushup")
-            startActivity(toTutorialActivity)
+        bn.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.menu_home -> vp.currentItem = 0
+                R.id.menu_mytown -> vp.currentItem = 1
+                R.id.menu_stat -> vp.currentItem = 2
+                else -> vp.currentItem = 3
+            }
+            true
         }
-
-        plkBtn.setOnClickListener {
-            toTutorialActivity.putExtra("exr_mod","plank")
-            startActivity(toTutorialActivity)
-        }
-
-        myPageBtn.setOnClickListener {
-            startActivity(toMyPageActivity)
-        }
-
-        // Main Test
-        testBtn.setOnClickListener {
-            startActivity(toMainTestActivity)
-        }
-
-
-        // Dev Mode
-        btnDevMode.setOnClickListener {
-            startActivity(toDevActivity)
-        }
-
-        // Sign Out
-        btnSignOut.setOnClickListener {
-            signOut(toLoginActivity)
-        }
-
-    } // end of MainActivity
-
-    private fun signOut(intent: Intent) {
-
-        firebaseAuth.signOut() // 로그아웃 처리
-        Toast.makeText(this, "로그아웃 완료", Toast.LENGTH_SHORT).show()
-
-        startActivity(intent)
-        finish()
-
     }
+
+    inner class ViewPagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+        override fun getItemCount() = 4
+
+        override fun createFragment(position: Int): Fragment {
+            return when (position) {
+                0 -> HomeFragment()
+                1 -> MyTownFragment()
+                2 -> StatisticFragment()
+                else -> MyPageFragment()
+            }
+        }
+    }
+
 
     override fun onBackPressed() {
-        startActivity(Intent(this,LoginActivity::class.java))
+        startActivity(Intent(this, LoginActivity_old::class.java))
         finish()
     }
+
 
 }

@@ -3,18 +3,14 @@ package com.fitdback.algorithm
 import android.content.Context
 import android.graphics.PointF
 import android.media.MediaPlayer
-import android.media.SoundPool
-import android.net.Uri
 import android.os.Handler
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
-
 import com.fitdback.posedetection.R
-import com.google.firebase.database.Transaction
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.math.*
+import java.util.concurrent.CopyOnWriteArrayList
+import kotlin.math.acos
+import kotlin.math.ceil
+import kotlin.math.sqrt
 
 class FeedbackAlgorithm {
 
@@ -157,6 +153,8 @@ class FeedbackAlgorithm {
         val plank_cal: Double = 0.30
         val sidelr_cal: Double = 0.20
 
+        val target_cnt: Int = 10
+
         var isExrFinished: Boolean = false
         //val soundPool = SoundPool.Builder().build()
 
@@ -195,7 +193,7 @@ class FeedbackAlgorithm {
         }
 
         //DrawView 164줄에서 squat 함수 호출
-        fun squat(context: Context, mDrawPoint: ArrayList<PointF>) {
+        fun squat(context: Context, mDrawPoint: CopyOnWriteArrayList<PointF>) {
             no_exr = false
             sidelr_start = 0
             plank_start = 0
@@ -261,7 +259,8 @@ class FeedbackAlgorithm {
 
                             if (wrong_mode == 2) {
                                 sound_play(context, R.raw.squat_ld_fb) // "다리 더 굽히세요"
-                                Toast.makeText(context, "------FAIL2------", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "------FAIL2------", Toast.LENGTH_SHORT)
+                                        .show()
                             } // 2 -> 다리가 덜 굽혀져 실패
 
                             /*else if(wrong_mode==1) {
@@ -270,7 +269,8 @@ class FeedbackAlgorithm {
                             } // 1 -> 허리 굽혀져 실패*/
                             else if (wrong_mode == 5) {
                                 sound_play(context, R.raw.squat_lu_fb) // "다리 너무 굽혔어요"
-                                Toast.makeText(context, "------FAIL5------", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "------FAIL5------", Toast.LENGTH_SHORT)
+                                        .show()
                                 cnt_s_tf = false
                                 isSquat = false
                             } // 5 -> 다리가 너무 굽혀져 실패
@@ -297,7 +297,7 @@ class FeedbackAlgorithm {
                     }
                     squat_start = System.currentTimeMillis()
 
-                    if (exr_cnt == 20) {
+                    if (exr_cnt == target_cnt) {
                         total_exr_time = System.currentTimeMillis() - start_time
                         exr_time_result = (ceil((total_exr_time / 1000.toDouble()))).toInt()
                         Log.d("squat_time", "시간1 = " + total_exr_time)
@@ -319,57 +319,57 @@ class FeedbackAlgorithm {
                         } else if (squat_most_ind == 5) {
                             squat_string = "실패한 운동의 %d %%가 다리를 너무 많이 굽혀서였습니다.".format(squat_f_per)
                         }
+                        Log.d("exr_F_string", squat_string)
+                        //--------------------------------------------------------------------------------------------------------
+                        //exr_cnt_s(int) = 운동 성공 횟수, exr_cnt_f(int) = 운동 실패 횟수, exr_cnt(int) = 총 운동 횟수
+                        //exr_cal(double) = 칼로리 소모량, exr_time_result(int) = 운동 시간(초), exr_mode(string) = 운동 종류(스쿼트)
+                        //--------------------------------------------------------------------------------------------------------
+
                     }
-                    Log.d("exr_F_string", squat_string)
-                    //--------------------------------------------------------------------------------------------------------
-                    //exr_cnt_s(int) = 운동 성공 횟수, exr_cnt_f(int) = 운동 실패 횟수, exr_cnt(int) = 총 운동 횟수
-                    //exr_cal(double) = 칼로리 소모량, exr_time_result(int) = 운동 시간(초), exr_mode(string) = 운동 종류(스쿼트)
-                    //--------------------------------------------------------------------------------------------------------
+                } else if (140.toDouble() >= hka_l_angle && !no_exr) {
+                    //스쿼트 자세로 판단되면 Stand가 아님
+                    isStand = false
 
-                }
-            } else if (140.toDouble() >= hka_l_angle && !no_exr) {
-                //스쿼트 자세로 판단되면 Stand가 아님
-                isStand = false
+                    //스쿼트 성공
+                    if (105.toDouble() >= hka_l_angle && 60.toDouble() <= hka_l_angle && 80.toDouble() <= nhk_l_angle && wrong_mode != 5) {
+                        cnt_s_tf = true
+                        isSquat = true
+                        Log.d("exr_S", "Success 각도 = 무릎 " + hka_l_angle)
+                    }
 
-                //스쿼트 성공
-                if (105.toDouble() >= hka_l_angle && 60.toDouble() <= hka_l_angle && 80.toDouble() <= nhk_l_angle && wrong_mode != 5) {
-                    cnt_s_tf = true
-                    isSquat = true
-                    Log.d("exr_S", "Success 각도 = 무릎 " + hka_l_angle)
-                }
+                    //다리가 70도 이하로 내려가면 너무 굽혀져 실패
+                    else if (60.toDouble() > hka_l_angle) {
+                        cnt_f_tf = true
+                        wrong_mode = 5
+                        isWrong = true
+                        Log.d("exr_F5", "F5 각도 = 무릎 " + hka_l_angle)
+                    } else if (!isSquat) {
+                        cnt_f_tf = true
+                        if (wrong_mode < 5 && !isWrong) {
 
-                //다리가 70도 이하로 내려가면 너무 굽혀져 실패
-                else if (60.toDouble() > hka_l_angle) {
-                    cnt_f_tf = true
-                    wrong_mode = 5
-                    isWrong = true
-                    Log.d("exr_F5", "F5 각도 = 무릎 " + hka_l_angle)
-                } else if (!isSquat) {
-                    cnt_f_tf = true
-                    if (wrong_mode < 5 && !isWrong) {
+                            wrong_mode = 0
 
-                        wrong_mode = 0
+                            //다리가 105도 이하로 굽혀지지 않아 실패
+                            if (hka_l_angle > 105.toDouble() || nhk_l_angle < 80.toDouble()) {
+                                Log.d("squat_err3", "허리 = " + nhk_l_angle + " 다리 = " + hka_l_angle)
+                                /*if(nhk_l_angle<80.toDouble()){
+                                    wrong_mode += 1
+                                    isWrong = true
+                                }*/
+                                if (hka_l_angle > 105.toDouble()) {
+                                    wrong_mode += 2
+                                    isWrong = true
+                                }
 
-                        //다리가 105도 이하로 굽혀지지 않아 실패
-                        if (hka_l_angle > 105.toDouble() || nhk_l_angle < 80.toDouble()) {
-                            Log.d("squat_err3", "허리 = " + nhk_l_angle + " 다리 = " + hka_l_angle)
-                            /*if(nhk_l_angle<80.toDouble()){
-                                wrong_mode += 1
-                                isWrong = true
-                            }*/
-                            if (hka_l_angle > 105.toDouble()) {
-                                wrong_mode += 2
-                                isWrong = true
                             }
-
+                            Log.d("squat_err", "mode = " + wrong_mode)
                         }
-                        Log.d("squat_err", "mode = " + wrong_mode)
                     }
                 }
             }
         }
 
-        fun plank(context: Context, mDrawPoint: ArrayList<PointF>) {
+        fun plank(context: Context, mDrawPoint: CopyOnWriteArrayList<PointF>) {
             no_exr = false
             isPlank = false
             squat_start = 0
@@ -479,41 +479,9 @@ class FeedbackAlgorithm {
             }
         }
 
-        //자율운동
-        fun pushup(context: Context, mDrawPoint: ArrayList<PointF>) {
-            if (free_tf) {
-                free_tf = false
-                free_start = System.currentTimeMillis()
-            }
-            ha_grad = cal_grad(mDrawPoint[0], mDrawPoint[10])
-            ank_dist = cal_dist(mDrawPoint[10], mDrawPoint[13])
-
-            if (ha_grad in -1.0..1.0) {
-                plank(context, mDrawPoint)
-            } else {
-                if (ank_dist < 150.0) {
-                    squat(context, mDrawPoint)
-                } else {
-                    sidelr(context, mDrawPoint)
-                }
-            }
-
-            total_cnt = squat_s + squat_f + plank_time_result + sidelr_s + sidelr_f
-            exr_cal = (squat_cal * (squat_s + squat_f)) + (plank_cal * plank_time_result) + (sidelr_cal * (sidelr_s + sidelr_f))
-            if (total_cnt < 20) {
-                free_time = System.currentTimeMillis() - free_start
-                free_time_result = (ceil((total_exr_time / 1000.toDouble()))).toInt()
-            }
-
-
-            Log.d("pushup", "운동 시간. 스쿼트 = " + squat_time + " 플랭크 = " + plank_time_result + " 사래레 = " + sidelr_time + " 총 = " + free_time)
-            Log.d("pushup", "squat_s = " + squat_s + " squat_f = " + squat_f_mode[2] + " " + squat_f_mode[5])
-            Log.d("pushup", "plank_s = " + plank_time_result + " plank_f = " + plank_f_mode[1] + " " + plank_f_mode[2])
-            Log.d("pushup", "sidelr_s = " + sidelr_s + " sidelr_f = " + sidelr_f_mode[1] + " " + sidelr_f_mode[2] + " " + sidelr_f_mode[3] + " " + sidelr_f_mode[5] + " " + sidelr_f_mode[8] + " " + sidelr_f_mode[13])
-        }
 
         //sidelr로 바꾸기
-        fun sidelr(context: Context, mDrawPoint: ArrayList<PointF>) {
+        fun sidelr(context: Context, mDrawPoint: CopyOnWriteArrayList<PointF>) {
             no_exr = false
             squat_start = 0
             plank_start = 0
@@ -552,7 +520,10 @@ class FeedbackAlgorithm {
             //------------------------------
 
             Log.d("sidelr_start", no_exr.toString())
-            Log.d("sidelr_angle", "왼팔 = " + nse_l_angle + " 오른팔 = " + nse_r_angle + " 오른다리 = " + nhk_l_angle)
+            Log.d(
+                    "sidelr_angle",
+                    "왼팔 = " + nse_l_angle + " 오른팔 = " + nse_r_angle + " 오른다리 = " + nhk_l_angle
+            )
             //사이드 래터럴 레이즈 판별 시작
             if (elbow_l_y > neck_y && elbow_r_y > neck_y && nse_l_angle < 140.0 && nse_r_angle < 140.0 && !no_exr) {
                 isStand = true
@@ -578,26 +549,32 @@ class FeedbackAlgorithm {
 
                             if (wrong_mode == 1) {
                                 sound_play(context, R.raw.sidelr_ru_fb) // "오른팔 더 올리세요"
-                                Toast.makeText(context, "------FAIL1------", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "------FAIL1------", Toast.LENGTH_SHORT)
+                                        .show()
                             } else if (wrong_mode == 2) {
                                 sound_play(context, R.raw.sidelr_lu_fb) // "왼팔 더 올리세요"
-                                Toast.makeText(context, "------FAIL2------", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "------FAIL2------", Toast.LENGTH_SHORT)
+                                        .show()
                             } else if (wrong_mode == 3) {
                                 sound_play(context, R.raw.sidelr_bu_fb) // "두 팔 다 더 올리세요"
-                                Toast.makeText(context, "------FAIL3------", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "------FAIL3------", Toast.LENGTH_SHORT)
+                                        .show()
                             } else if (wrong_mode == 5) {
                                 sound_play(context, R.raw.sidelr_ld_fb) // "왼팔 조금 내리세요"
-                                Toast.makeText(context, "------FAIL5------", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "------FAIL5------", Toast.LENGTH_SHORT)
+                                        .show()
                                 cnt_s_tf = false
                                 isSidelr = false
                             } else if (wrong_mode == 8) {
                                 sound_play(context, R.raw.sidelr_rd_fb) // "오른팔 조금 내리세요"
-                                Toast.makeText(context, "------FAIL8------", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "------FAIL8------", Toast.LENGTH_SHORT)
+                                        .show()
                                 cnt_s_tf = false
                                 isSidelr = false
                             } else if (wrong_mode == 13) {
                                 sound_play(context, R.raw.sidelr_bd_fb) // "두 팔 다 더 내리세요"
-                                Toast.makeText(context, "------FAIL13------", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "------FAIL13------", Toast.LENGTH_SHORT)
+                                        .show()
                                 cnt_s_tf = false
                                 isSidelr = false
                             }
@@ -722,8 +699,45 @@ class FeedbackAlgorithm {
                     wrong_mode += 8
                     isWrong = true
                 }
-                Log.d("sidelr_y", "왼팔꿈치 = " + elbow_l_y + " 오른팔꿈치 = " + elbow_r_y + " 목 = " + neck_y + " mode = " + wrong_mode)
+                Log.d(
+                        "sidelr_y",
+                        "왼팔꿈치 = " + elbow_l_y + " 오른팔꿈치 = " + elbow_r_y + " 목 = " + neck_y + " mode = " + wrong_mode
+                )
             }
+        }//자율운동
+
+        fun pushup(context: Context, mDrawPoint: CopyOnWriteArrayList<PointF>) {
+            if (free_tf) {
+                free_tf = false
+                free_start = System.currentTimeMillis()
+            }
+            ha_grad = cal_grad(mDrawPoint[0], mDrawPoint[10])
+            ank_dist = cal_dist(mDrawPoint[10], mDrawPoint[13])
+
+            if (ha_grad in -1.0..1.0) {
+                plank(context, mDrawPoint)
+            } else {
+                if (ank_dist < 150.0) {
+                    squat(context, mDrawPoint)
+                } else {
+                    sidelr(context, mDrawPoint)
+                }
+            }
+
+            total_cnt = squat_s + squat_f + plank_time_result + sidelr_s + sidelr_f
+            exr_cal = (squat_cal * (squat_s + squat_f)) + (plank_cal * plank_time_result) + (sidelr_cal * (sidelr_s + sidelr_f))
+            if (total_cnt < 20) {
+                free_time = System.currentTimeMillis() - free_start
+                free_time_result = (ceil((total_exr_time / 1000.toDouble()))).toInt()
+            }
+
+
+            Log.d("pushup", "운동 시간. 스쿼트 = " + squat_time + " 플랭크 = " + plank_time_result + " 사래레 = " + sidelr_time + " 총 = " + free_time)
+            Log.d("pushup", "squat_s = " + squat_s + " squat_f = " + squat_f_mode[2] + " " + squat_f_mode[5])
+            Log.d("pushup", "plank_s = " + plank_time_result + " plank_f = " + plank_f_mode[1] + " " + plank_f_mode[2])
+            Log.d("pushup", "sidelr_s = " + sidelr_s + " sidelr_f = " + sidelr_f_mode[1] + " " + sidelr_f_mode[2] + " " + sidelr_f_mode[3] + " " + sidelr_f_mode[5] + " " + sidelr_f_mode[8] + " " + sidelr_f_mode[13])
         }
+
+
     }
 }

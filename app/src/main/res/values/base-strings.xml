@@ -21,9 +21,12 @@
         <![CDATA[
 
 
-            PoseEstimation For Mobile
+            Fitd Back
 
 
         ]]>
     </string>
+
+    <!-- Auth method picker -->
+    <string name="fui_sign_in_with_google" translation_description="Sign in button text">Sign in with Google</string>
 </resources>

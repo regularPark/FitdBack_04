@@ -2,7 +2,10 @@ package com.fitdback.database
 
 import android.annotation.SuppressLint
 import android.util.Log
+import android.widget.Toast
 import com.fitdback.database.datamodel.ExerciseDataModel
+import com.fitdback.database.datamodel.UserInfoDataModel
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -16,11 +19,13 @@ class DataBasket {
     companion object {
 
         private lateinit var firebaseAuth: FirebaseAuth
+        var googleSignInClient: GoogleSignInClient? = null
         val database = Firebase.database
 
         var tempExrModel = ExerciseDataModel()
-        var dataSample: DataSnapshot? = null
         var individualExData: DataSnapshot? = null
+        var individualUserInfo: DataSnapshot? = null
+        var individualFriendInfo: DataSnapshot? = null
 
         /*
             날짜 관련
@@ -110,9 +115,10 @@ class DataBasket {
             if (isUsingUserId) { // 개인별 데이터
                 databaseRef =
                     database.getReference(node1).child(firebaseAuth.currentUser!!.uid).child(node2)
-            } else {
-                // TODO : 전체 회원의 child 데이터 경로
             }
+//            } else {
+////                databaseRef = database.getReference(node1)
+//            }
 
             return databaseRef
 
@@ -125,13 +131,14 @@ class DataBasket {
 
             dbPath.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    dataSample = dataSnapshot
 
-                    when (dataDescription) {
-                        "individualExData" -> individualExData = dataSnapshot
+                    when (dataSnapshot.key.toString()) {
+                        "ex_data" -> individualExData = dataSnapshot
+                        "user_info" -> individualUserInfo = dataSnapshot
+                        "friend_info" -> individualFriendInfo = dataSnapshot
                     }
 
-                    Log.d("Data - getDataFromDB", dataSample.toString())
+                    Log.d("db_getDataFromDB", dataSnapshot.toString())
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -237,6 +244,25 @@ class DataBasket {
                 targetMap[key] = targetMap[key]!! + value // update
             }
 
+        }
+
+        /*
+            로그인 처리 관련
+         */
+        fun addUserInfoDataModel(dataModel: UserInfoDataModel): Boolean {
+
+            val dbPath = getDBPath("users", "user_info", true)
+            var isJoinSuccessful: Boolean = true
+
+            dbPath!!.setValue(dataModel)
+                .addOnSuccessListener {
+                    isJoinSuccessful = true
+                }
+                .addOnFailureListener {
+                    isJoinSuccessful = false
+                }
+
+            return isJoinSuccessful
         }
 
     } // end of companion object

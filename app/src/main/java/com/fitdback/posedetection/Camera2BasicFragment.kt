@@ -64,6 +64,7 @@ import java.util.Collections
 import java.util.Comparator
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
+import com.dinuscxj.progressbar.CircleProgressBar
 
 /**
  * Basic fragments for the Camera.
@@ -83,6 +84,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private var countView: TextView? = null
     private var countTimer: TextView? = null
     private var prgBar: ProgressBar? = null
+    private var guideMsg: TextView? = null
+    private var cProBar: CircleProgressBar? = null  // 카운트바
 
 
     /**
@@ -250,7 +253,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
 
             if (FeedbackAlgorithm.exr_mode == "squat") {
 
-                if (FeedbackAlgorithm.exr_cnt == 10 && !FeedbackAlgorithm.isExrFinished) {
+                if (FeedbackAlgorithm.exr_cnt == FeedbackAlgorithm.target_cnt && !FeedbackAlgorithm.isExrFinished) {
 
                     FeedbackAlgorithm.isExrFinished = true
                     Handler().postDelayed(
@@ -346,6 +349,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                                 FeedbackAlgorithm.sound_play(context, R.raw.finish_exr)
                                 activity.finish()
 
+
                             }, 3000
                     ) //카메라 종료 3초 지연
                 }
@@ -382,15 +386,19 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             activity?.runOnUiThread {
                 countTimer!!.text = "운동 시작!"
                 prgBar!!.visibility = View.INVISIBLE
+                guideMsg!!.visibility = View.INVISIBLE
                 drawView!!.visibility = View.VISIBLE
                 Handler().postDelayed(
-                        { countTimer!!.visibility = View.INVISIBLE },
+                        {
+                            countTimer!!.visibility = View.INVISIBLE
+                        },
                         1000
                 )
             }
         } else {
             activity?.runOnUiThread {
-                countTimer!!.text = "정확한 측정을 위해\n전신이 보이도록 뒤로 물러나 주세요\n\n\n" + text.toString()
+                countTimer!!.text = text.toString()
+                guideMsg!!.text = "정확한 측정을 위해\n전신이 보이도록 뒤로 물러나 주세요"
                 drawView!!.visibility = View.INVISIBLE
                 if (text == 5) {
                     if (FeedbackAlgorithm.start_tf) {
@@ -442,6 +450,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         layoutBottom = view.findViewById(R.id.layout_bottom)
         countTimer = view.findViewById(R.id.cntDown)
         prgBar = view.findViewById(R.id.progressbar)
+        guideMsg = view.findViewById(R.id.guide)
 
 
         // 렌더링 옵션 : CPU or GPU
@@ -678,6 +687,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
+
     /**
      * Closes the current [CameraDevice].
      */
@@ -840,15 +850,22 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         val bitmap = textureView!!.getBitmap(classifier!!.imageSizeX, classifier!!.imageSizeY)
         val textToShow = classifier!!.classifyFrame(bitmap)
         val countToShow = FeedbackAlgorithm.exr_cnt
+        val cntTimeToShow = FeedbackAlgorithm.exr_time_result
+
+
         bitmap.recycle()
 
 
         drawView!!.setDrawPoint(classifier!!.mPrintPointArray!!, 0.5f)  // 지우기
 
         showToast(textToShow)
-        showCount(countToShow)
+        if (FeedbackAlgorithm.exr_mode == "plank") {
+            showCount(cntTimeToShow)
+        } else {
+            showCount(countToShow)
+        }
         showCountDown(TimerClass.second)
-        prgBar!!.progress = 5 - TimerClass.second
+        prgBar?.progress = 5 - TimerClass.second
 
     }
 
@@ -867,6 +884,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             )
         }
     }
+
 
     /**
      * Shows an error message dialog.

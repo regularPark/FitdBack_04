@@ -2,6 +2,8 @@ package com.fitdback.test
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -10,9 +12,18 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.fitdback.database.DataBasket
 import com.fitdback.database.datamodel.ExerciseDataModel
+import com.fitdback.database.datamodel.FriendDataModel
+import com.fitdback.database.datamodel.UserInfoDataModel
 import com.fitdback.posedetection.R
 import com.fitdback.test.barChartTest.BarChartTestActivity
+import com.fitdback.test.feedbackTest.FeedbackTestActivity
+import com.fitdback.test.friendTest.FriendListAdapter
+import com.fitdback.userinterface.MainActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.util.*
@@ -46,9 +57,9 @@ class DevModeActivity : AppCompatActivity() {
         val btnDataReadTest = findViewById<Button>(R.id.btnDataReadTest)
         val btnBarChartTest = findViewById<Button>(R.id.btnBarChartTest)
         val btnCreateDummyData = findViewById<Button>(R.id.btnCreateDummyData)
+        val btnRunFriendMode = findViewById<Button>(R.id.btnRunFriendMode)
 
         // Intent
-        val toHealthMemoTestActivity = Intent(this, HealthMemoTestActivity::class.java)
         val toFeedbackTestActivity = Intent(this, FeedbackTestActivity::class.java)
 
         // 로그인에 성공해서 현재 액티비티로 전환되면, user의 ID를 화면에 표시
@@ -59,12 +70,6 @@ class DevModeActivity : AppCompatActivity() {
             버튼 관련 동작
         */
 
-        // btnDBTest
-        btnDBTest.setOnClickListener {
-
-            startActivity(toHealthMemoTestActivity)
-
-        }
 
         // Data Write Test
         btnFeedbackTest.setOnClickListener {
@@ -154,7 +159,8 @@ class DevModeActivity : AppCompatActivity() {
             val btnDBDummyDataWrite = mAlertDialog.findViewById<Button>(R.id.btnDBDummyDataWrite)
             val btnSetExTypeToSquat = mAlertDialog.findViewById<Button>(R.id.btnSetExTypeToSquat)
             val btnSetExTypeToPlank = mAlertDialog.findViewById<Button>(R.id.btnSetExTypeToPlank)
-            val btnSetExTypeToSideLateralRaise = mAlertDialog.findViewById<Button>(R.id.btnSetExTypeToSideLateralRaise)
+            val btnSetExTypeToSideLateralRaise =
+                mAlertDialog.findViewById<Button>(R.id.btnSetExTypeToSideLateralRaise)
 //            var dateText: String = ""
 
             var selectedExType: String? = null
@@ -183,21 +189,21 @@ class DevModeActivity : AppCompatActivity() {
 
             }
 
-            btnSetExTypeToSquat?.setOnClickListener{
+            btnSetExTypeToSquat?.setOnClickListener {
 
                 selectedExType = "squat"
                 btnDBDummyDataWrite!!.setText("일주일 전부터 위 날짜까지 $selectedExType 데이터 생성")
 
             }
 
-            btnSetExTypeToPlank?.setOnClickListener{
+            btnSetExTypeToPlank?.setOnClickListener {
 
                 selectedExType = "plank"
                 btnDBDummyDataWrite?.text = "일주일 전부터 위 날짜까지 $selectedExType 데이터 생성"
 
             }
 
-            btnSetExTypeToSideLateralRaise?.setOnClickListener{
+            btnSetExTypeToSideLateralRaise?.setOnClickListener {
 
                 selectedExType = "sideLateralRaise"
                 btnDBDummyDataWrite?.text = "6일전부터 위 날짜까지 $selectedExType 데이터 생성"
@@ -224,7 +230,11 @@ class DevModeActivity : AppCompatActivity() {
                 for (dataModel in exerciseDataModelList) {
                     dbPath!!.push().setValue(dataModel)
                         .addOnSuccessListener {
-                            Toast.makeText(this, "${dataModel.ex_date} 데이터 저장완료.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this,
+                                "${dataModel.ex_date} 데이터 저장완료.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                             mAlertDialog.dismiss()
                         }
                         .addOnFailureListener {
@@ -233,11 +243,328 @@ class DevModeActivity : AppCompatActivity() {
                 }
 
 
+            } // btnDBDummyDataWrite
+
+        } // btnCreateDummyData
+
+        // Friend Mode
+        btnRunFriendMode.setOnClickListener {
+
+            // 다이얼로그
+            val friendModeDialog = CustomDialog(this, R.layout.dialog_friend_mode, "Friend Mode")
+            val friendModeAlertDialog = friendModeDialog.showDialog()
+            friendModeAlertDialog?.setCancelable(false)
+
+            // 레이아웃
+            val btnShowFriendList =
+                friendModeAlertDialog!!.findViewById<Button>(R.id.btnShowFriendList)
+            val btnRegisterFriend =
+                friendModeAlertDialog.findViewById<Button>(R.id.btnRegisterFriend)
+            val btnCheckMyCode = friendModeAlertDialog.findViewById<Button>(R.id.btnCheckMyCode)
+            val btnFriendModeConfirm =
+                friendModeAlertDialog.findViewById<Button>(R.id.btnFriendModeConfirm)
+            friendModeAlertDialog.setCancelable(false)
+
+            // 친구 목록 보기
+            btnShowFriendList?.setOnClickListener {
+
+                // 다이얼로그
+                val friendListDialog =
+                    CustomDialog(this, R.layout.dialog_friend_list, "Friend List")
+                val friendListAlertDialog = friendListDialog.showDialog()
+                friendListAlertDialog?.setCancelable(false)
+
+                // 레이아웃 
+                val btnFriendListConfirm =
+                    friendListAlertDialog?.findViewById<Button>(R.id.btnFriendListConfirm)
+
+                // 리스트뷰에 추가할 데이터 리스트
+                val dataModelList = mutableListOf<FriendDataModel>()
+
+                // 리스트뷰 연결
+                val listView = friendListAlertDialog?.findViewById<ListView>(R.id.friendListLV)
+                val adapterList = FriendListAdapter(dataModelList)
+                listView?.adapter = adapterList
+
+                // DB 읽어오기
+                val dbPath = DataBasket.getDBPath("users", "friend_info", true)
+
+                dbPath!!.addValueEventListener(object : ValueEventListener {
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+
+                        dataModelList.clear() // 리스트뷰 덧씌워짐 방지
+
+                        for (dataModel in snapshot.children) {
+                            dataModelList.add(dataModel.getValue(FriendDataModel::class.java)!!)
+                        }
+
+                        adapterList.notifyDataSetChanged() // 비동기 -> 동기식 변경
+
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+
+                })
+
+                // 친구 통계 보기
+                listView?.onItemClickListener =
+                    AdapterView.OnItemClickListener { parent, view, position, id ->
+
+                        val selectItem = parent.getItemAtPosition(position) as FriendDataModel
+                        Toast.makeText(this, "${selectItem.friend_nickname}", Toast.LENGTH_SHORT)
+                            .show()
+
+                        // DB 불러오기
+                        var friendExData: DataSnapshot? = null
+                        val friendExDataDBPath =
+                            database.getReference("users").child(selectItem.friend_uid!!)
+                                .child("ex_data")
+
+                        friendExDataDBPath.addValueEventListener(object : ValueEventListener {
+                            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                friendExData = dataSnapshot
+                                Log.d("db_data", "friendExData: ${friendExData}")
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                Log.d("db_data", "onCancelled")
+                            }
+                        })
+
+                        // 다이얼로그
+                        val friendStatisticsDialog =
+                            CustomDialog(
+                                this,
+                                R.layout.dialog_friend_chart,
+                                "${selectItem.friend_nickname}님의 운동 통계"
+                            )
+                        val friendStatisticsAlertDialog = friendStatisticsDialog.showDialog()
+                        friendStatisticsAlertDialog?.setCancelable(false)
+
+                        // 레이아웃
+                        val btnFriendChartConfirm = friendStatisticsAlertDialog?.findViewById<Button>(R.id.btnFriendChartConfirm)
+
+                        // 차트
+
+
+
+
+                    }
+
+
+                // 확인 버튼
+                btnFriendListConfirm?.setOnClickListener {
+                    friendListAlertDialog.dismiss()
+                }
+
+            }
+
+            // 친구 등록
+            btnRegisterFriend?.setOnClickListener {
+                val registerDialog =
+                    CustomDialog(this, R.layout.dialog_friend_register, "Friend Register")
+                val registerAlertDialog = registerDialog.showDialog()
+                registerAlertDialog?.setCancelable(false)
+
+                val friendCodeArea =
+                    registerAlertDialog?.findViewById<EditText>(R.id.friendCodeArea)
+                val friendNicknameArea =
+                    registerAlertDialog?.findViewById<TextView>(R.id.friendNicknameArea)
+                val btnSearchFriend =
+                    registerAlertDialog?.findViewById<Button>(R.id.btnSearchFriend)
+                val btnRegisterFriendToDB =
+                    registerAlertDialog?.findViewById<Button>(R.id.btnRegisterFriendToDB)
+                val btnRegisterConfirm =
+                    registerAlertDialog?.findViewById<Button>(R.id.btnRegisterConfirm)
+
+                var friendCode: String? = null
+                var friendNickname: String? = null
+
+                // 검색 버튼
+                btnSearchFriend?.setOnClickListener {
+                    friendCode = friendCodeArea?.text?.toString()?.trim()
+
+                    if (friendCode == firebaseAuth.currentUser?.uid) { // 자기 자신을 검색한 경우
+
+                        Toast.makeText(this, "본인은 친구로 등록할 수 없습니다.", Toast.LENGTH_SHORT).show()
+
+                    } else { // 자기 자신을 검색하지 않은 경우
+
+                        if (DataBasket.individualFriendInfo?.value != null) { // friend_info 데이터를 만든적이 있다면
+
+                            if (!checkIfFriendExists(friendCode)) { // 등록된 유저가 아니라면, 서버에서 검색
+
+                                searchUserFromDB(
+                                    database,
+                                    friendCode,
+                                    friendNickname,
+                                    friendNicknameArea
+                                )
+
+                            }
+
+                        } else { // friend_info 데이터를 만든적이 없다면, 서버에서 검색
+
+                            searchUserFromDB(
+                                database,
+                                friendCode,
+                                friendNickname,
+                                friendNicknameArea
+                            )
+
+                        }
+
+                    }
+                }
+
+                // 친구를 DB에 저장
+                btnRegisterFriendToDB?.setOnClickListener {
+                    if (friendNicknameArea?.text != null && friendNicknameArea.text != "회원 코드를 확인해주세요.") {
+                        val friendNicknameAreaText = friendNicknameArea.text.toString().trim()
+                        for (character in friendNicknameAreaText) {
+                            if (character.toString() == "님") {
+                                friendNickname = friendNicknameAreaText.slice(
+                                    IntRange(
+                                        0,
+                                        friendNicknameAreaText.indexOf(character) - 1
+                                    )
+                                )
+                            }
+                        }
+                    }
+
+                    if (friendCode != null && friendNickname != null) {
+
+                        val friendDataModel =
+                            FriendDataModel(friendCode, friendNickname)  // data model 생성
+                        val dbPath = database.getReference("users")
+                            .child(firebaseAuth.currentUser?.uid!!).child("friend_info")
+
+                        // data write
+                        dbPath.push().setValue(friendDataModel)
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "친구 등록 완료", Toast.LENGTH_SHORT).show()
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(this, "Error: 친구 등록 실패", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+
+                    } else {
+                        Toast.makeText(
+                            this,
+                            "검색을 먼저  해주세요.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+                btnRegisterConfirm?.setOnClickListener {
+
+                    registerAlertDialog.dismiss()
+
+                }
+
+            } // btnRegisterFriend
+
+            // 내 친구 코드 확인
+            btnCheckMyCode?.setOnClickListener {
+
+                val myCodeDialog = CustomDialog(this, R.layout.dialog_friend_my_code, "")
+                val myCodeAlertDialog = myCodeDialog.showDialog()
+                val myCodeArea = myCodeAlertDialog?.findViewById<TextView>(R.id.myCodeArea)
+                val btnMyCodeConfirm =
+                    myCodeAlertDialog?.findViewById<Button>(R.id.btnMyCodeConfirm)
+                myCodeAlertDialog?.setCancelable(false)
+
+                myCodeArea?.text = firebaseAuth.currentUser?.uid
+
+                // 클립보드 복사하기
+                val clipboardManager: ClipboardManager =
+                    getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                val clipData: ClipData = ClipData.newPlainText("myCode", myCodeArea?.text)
+                clipboardManager.primaryClip = clipData
+                Toast.makeText(
+                    this,
+                    "회원코드 \"${myCodeArea?.text}\"이 클립보드에 저장되었습니다.",
+                    Toast.LENGTH_LONG
+                ).show()
+
+                btnMyCodeConfirm?.setOnClickListener {
+                    myCodeAlertDialog.dismiss()
+                }
+
+            }
+
+            btnFriendModeConfirm?.setOnClickListener {
+
+                friendModeAlertDialog.dismiss()
+
+            }
+        }
+
+
+    }
+
+    private fun searchUserFromDB(
+        database: FirebaseDatabase,
+        friendCode: String?,
+        friendNickname: String?,
+        friendNicknameArea: TextView?
+    ) {
+        val dbPath =
+            database.getReference("users").child(friendCode!!)
+                .child("user_info")
+
+        dbPath.addValueEventListener(object : ValueEventListener {
+            @SuppressLint("SetTextI18n")
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val userInfoModel =
+                    dataSnapshot.getValue(UserInfoDataModel::class.java)
+
+                if (userInfoModel != null) {
+                    friendNicknameArea?.text = "${userInfoModel.user_nickname}님을 찾았습니다."
+                } else {
+                    friendNicknameArea?.text = "회원 코드를 확인해주세요."
+                }
+
+                Log.d("db_data", dataSnapshot.toString())
+                Log.d(
+                    "db_data",
+                    dataSnapshot.getValue(UserInfoDataModel::class.java)
+                        .toString()
+                )
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("db_data", "onCancelled")
+            }
+        })
+    }
+
+    private fun checkIfFriendExists(friendCode: String?): Boolean {
+
+        for (dataModel in DataBasket.individualFriendInfo!!.children) {
+            val friendInfoDataModel =
+                dataModel.getValue(FriendDataModel::class.java)
+
+            if (friendInfoDataModel?.friend_uid == friendCode) {
+                Toast.makeText(
+                    this,
+                    "${friendInfoDataModel!!.friend_nickname} 님은 이미 친구로 등록된 유저입니다",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                return true
             }
 
         }
 
-
+        return false
     }
 
 //    @SuppressLint("SimpleDateFormat")
@@ -260,13 +587,13 @@ class DevModeActivity : AppCompatActivity() {
 //    }
 
     // 운동 데이터 모델을 firebase에 write
-    /*
-        squat 개수를 랜덤으로 생성 (10 ~ 50개)
-            운동시간은 개수의 2배
-            성공 개수는 개수의 1/2배
-            운동시간은 개수의 2.0배 ~ 3.0배
-        Firebase에 저장 
-     */
+/*
+    squat 개수를 랜덤으로 생성 (10 ~ 50개)
+        운동시간은 개수의 2배
+        성공 개수는 개수의 1/2배
+        운동시간은 개수의 2.0배 ~ 3.0배
+    Firebase에 저장
+ */
     private fun createDummyData(
         dateList: MutableList<String>,
         exType: String
@@ -276,7 +603,7 @@ class DevModeActivity : AppCompatActivity() {
 
         for (i in 0..6) {
             val exDate = dateList[i]
-            val exCount = rand(10, 50, "int")[0].toInt()
+            val exCount = rand(1, 50, "int")[0].toInt()
             val exTime = (exCount.toFloat() * rand(4, 0, "float")[0].toFloat()).toInt()
             val exSuccessCount = (exCount * 0.5).toInt()
             val exCalorie = (exCount * 0.5).toInt()
@@ -314,6 +641,11 @@ class DevModeActivity : AppCompatActivity() {
 
         return mutableList
 
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 
 }
