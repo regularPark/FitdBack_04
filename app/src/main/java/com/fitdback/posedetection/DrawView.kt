@@ -219,8 +219,8 @@ class DrawView : View {
                     { FeedbackAlgorithm.plank(context, mDrawPoint) },
                     5000
                 ) // 5초동안 플랭크 알고리즘 비활성화
-                "pushup" -> Handler().postDelayed(
-                    { FeedbackAlgorithm.pushup(context, mDrawPoint) },
+                "sidelr" -> Handler().postDelayed(
+                    { FeedbackAlgorithm.sidelr(context, mDrawPoint) },
                     5000
                 ) // 5초동안 플랭크 알고리즘 비활성화
             }

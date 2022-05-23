@@ -91,7 +91,7 @@ class CameraActivity : Activity() {
 
                 }
 
-                "pushup" -> {
+                "sidelr" -> {
                     FeedbackAlgorithm.exr_cnt = 0
                     FeedbackAlgorithm.exr_cnt_s = 0
                     FeedbackAlgorithm.exr_cnt_f = 0

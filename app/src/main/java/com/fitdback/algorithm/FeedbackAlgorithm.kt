@@ -66,7 +66,7 @@ class FeedbackAlgorithm {
 
         val squat_cal: Double = 0.50 // 스쿼트 1회당 칼로리
 
-        val target_cnt: Int = 1
+        val target_cnt: Int = 10
 
         var isExrFinished: Boolean = false
         //val soundPool = SoundPool.Builder().build()
@@ -296,7 +296,7 @@ class FeedbackAlgorithm {
         }
 
         //sidelr로 바꾸기
-        fun pushup(context: Context, mDrawPoint: ArrayList<PointF>) {
+        fun sidelr(context: Context, mDrawPoint: ArrayList<PointF>) {
             no_exr = false
 
             if (exr_cnt == 0 && time_tf) {

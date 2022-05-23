@@ -99,7 +99,7 @@ class HomeFragment : Fragment() {
         puBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 val toTutorialActivity = Intent(context, TutorialActivity::class.java)
-                toTutorialActivity.putExtra("exr_mod", "sideLateralRaise")
+                toTutorialActivity.putExtra("exr_mod", "sidelr")
                 startActivity(toTutorialActivity)
             }
         })

@@ -309,7 +309,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                         }, 3000
                     ) //카메라 종료 3초 지연
                 }
-            } else if (FeedbackAlgorithm.exr_mode == "pushup") {
+            } else if (FeedbackAlgorithm.exr_mode == "sidelr") {
                 if (FeedbackAlgorithm.exr_cnt == 10 && !FeedbackAlgorithm.isExrFinished) {
                     FeedbackAlgorithm.isExrFinished = true
                     Handler().postDelayed(
