@@ -63,12 +63,14 @@ android {
 }
 
 repositories {
+
     maven {
         url 'https://jitpack.io'
     }
     maven {
         url 'https://google.bintray.com/tensorflow'
     }
+
     flatDir {
         dirs 'libs'
     }

@@ -120,8 +120,13 @@ class CameraActivity : Activity() {
             mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS)
         }
     }
+
     override fun onBackPressed(){
-        startActivity(Intent(this, TutorialActivity::class.java))
+        val exr = intent.getStringExtra("exr_mod")
+        val intent = Intent(this, TutorialActivity::class.java)
+        intent.putExtra("exr_mod", exr)
+
+        startActivity(intent)
         finish()
     }
 

@@ -15,6 +15,8 @@
 
 package com.fitdback.posedetection
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
@@ -49,6 +51,8 @@ import android.view.Surface
 import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import com.fitdback.algorithm.FeedbackAlgorithm
 import com.fitdback.database.DataBasket
@@ -64,6 +68,7 @@ import java.util.Collections
 import java.util.Comparator
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
+import com.dinuscxj.progressbar.CircleProgressBar
 
 /**
  * Basic fragments for the Camera.
@@ -84,6 +89,10 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private var countTimer: TextView? = null
     private var prgBar: ProgressBar? = null
     private var guideMsg: TextView? = null
+    private var exPrgBar: ProgressBar? = null  // 카운트바
+    private var free_cnt_sqt: CircleProgressBar? = null
+    private var free_cnt_plk: CircleProgressBar? = null
+    private var free_cnt_slr: CircleProgressBar? = null
 
 
     /**
@@ -342,10 +351,17 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         }
     }
 
-    private fun showCount(text: Int) {
+    private fun showCount(text_com: Int, text_tar: Int, text_f: Int, text_s: Int) {
         val activity = activity
         activity?.runOnUiThread {
-            countView!!.text = text.toString()
+            if(TimerClass.second <= 0){
+                countView!!.visibility = View.VISIBLE
+                countView!!.text = "완료 :" + text_com.toString() + " / 목표 : " + text_tar.toString() +
+                        " / 성공 : " + text_s.toString() + " / 실패 : " + text_f.toString()
+            }
+            else{
+                countView!!.visibility = View.INVISIBLE
+            }
         }
     }
 
@@ -358,6 +374,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                 prgBar!!.visibility = View.INVISIBLE
                 guideMsg!!.visibility = View.INVISIBLE
                 drawView!!.visibility = View.VISIBLE
+                exPrgBar!!.visibility = View.VISIBLE
                 Handler().postDelayed(
                     {
                         countTimer!!.visibility = View.INVISIBLE
@@ -370,6 +387,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                 countTimer!!.text = text.toString()
                 guideMsg!!.text = "정확한 측정을 위해\n전신이 보이도록 뒤로 물러나 주세요"
                 drawView!!.visibility = View.INVISIBLE
+                exPrgBar!!.visibility = View.INVISIBLE
             }
         }
     }
@@ -383,6 +401,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
 
         return inflater.inflate(R.layout.fragment_camera2_basic, container, false)
     }
@@ -404,6 +424,10 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         countTimer = view.findViewById(R.id.cntDown)
         prgBar = view.findViewById(R.id.progressbar)
         guideMsg = view.findViewById(R.id.guide)
+        exPrgBar = view.findViewById(R.id.exPrgBar)
+        free_cnt_sqt = view.findViewById(R.id.free_cnt_squat)
+        free_cnt_plk = view.findViewById(R.id.free_cnt_plank)
+        free_cnt_slr = view.findViewById(R.id.free_cnt_slr)
 
 
         // 렌더링 옵션 : CPU or GPU
@@ -804,24 +828,41 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         val bitmap = textureView!!.getBitmap(classifier!!.imageSizeX, classifier!!.imageSizeY)
         val textToShow = classifier!!.classifyFrame(bitmap)
         val countToShow = FeedbackAlgorithm.exr_cnt
+        val targetCount = FeedbackAlgorithm.target_cnt
+        val failCount = FeedbackAlgorithm.exr_cnt_f
+        val successCount = FeedbackAlgorithm.exr_cnt_s
         val cntTimeToShow = FeedbackAlgorithm.exr_time_result
 
-        bitmap.recycle()
 
+
+        bitmap.recycle()
 
         drawView!!.setDrawPoint(classifier!!.mPrintPointArray!!, 0.5f)  // 지우기
 
         showToast(textToShow)
-        if (FeedbackAlgorithm.exr_mode == "plank"){
-            showCount(cntTimeToShow)
-        }
-        else{
-            showCount(countToShow)
+        if (FeedbackAlgorithm.exr_mode == "plank") {
+            showCount(cntTimeToShow, targetCount, failCount, successCount)
+        } else {
+            showCount(countToShow, targetCount, failCount, successCount)
         }
         showCountDown(TimerClass.second)
+
+        var tag_cnt = FeedbackAlgorithm.target_cnt
+
+
+//        // 자율운동일 때
+//        if (FeedbackAlgorithm.exr_mode == "freeTraining"){
+//            free_cnt_sqt?.progress =
+//        }
+
         prgBar?.progress = 5 - TimerClass.second
 
+        exPrgBar?.max = tag_cnt
+        exPrgBar?.progress = countToShow
+
     }
+
+
 
     /**
      * Compares two `Size`s based on their areas.

@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.dinuscxj.progressbar.CircleProgressBar
+import com.fitdback.algorithm.FeedbackAlgorithm
 import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.R
 import com.google.firebase.auth.FirebaseAuth
@@ -20,6 +22,8 @@ class FeedbackTestActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feedback_test)
+
+
 
         // Firebase
         firebaseAuth = FirebaseAuth.getInstance()
@@ -57,6 +61,9 @@ class FeedbackTestActivity : AppCompatActivity() {
                 }
 
         }
+
+
+
     }
 
 }
