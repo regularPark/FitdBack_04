@@ -3,20 +3,14 @@ package com.fitdback.algorithm
 import android.content.Context
 import android.graphics.PointF
 import android.media.MediaPlayer
-import android.media.SoundPool
-import android.net.Uri
 import android.os.Handler
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 
 import com.fitdback.posedetection.R
-import com.google.firebase.database.Transaction
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.math.acos
 import kotlin.math.ceil
-import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 class FeedbackAlgorithm {
@@ -66,7 +60,7 @@ class FeedbackAlgorithm {
 
         val squat_cal: Double = 0.50 // 스쿼트 1회당 칼로리
 
-        val target_cnt: Int = 1
+        val target_cnt: Int = 10
 
         var isExrFinished: Boolean = false
         //val soundPool = SoundPool.Builder().build()
@@ -101,7 +95,7 @@ class FeedbackAlgorithm {
         }
 
         //DrawView 164줄에서 squat 함수 호출
-        fun squat(context: Context, mDrawPoint: ArrayList<PointF>) {
+        fun squat(context: Context, mDrawPoint: CopyOnWriteArrayList<PointF>) {
             no_exr = false
 
             if (exr_cnt == 0 && time_tf) {
@@ -155,7 +149,8 @@ class FeedbackAlgorithm {
 
                             if (wrong_mode == 2) {
                                 sound_play(context, R.raw.squat_ld_fb) // "다리 더 굽히세요"
-                                Toast.makeText(context, "------FAIL2------", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "------FAIL2------", Toast.LENGTH_SHORT)
+                                    .show()
                             } // 2 -> 다리가 덜 굽혀져 실패
 
                             /*else if(wrong_mode==1) {
@@ -164,7 +159,8 @@ class FeedbackAlgorithm {
                             } // 1 -> 허리 굽혀져 실패*/
                             else if (wrong_mode == 5) {
                                 sound_play(context, R.raw.squat_lu_fb) // "다리 너무 굽혔어요"
-                                Toast.makeText(context, "------FAIL5------", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "------FAIL5------", Toast.LENGTH_SHORT)
+                                    .show()
                                 cnt_s_tf = false
                                 isSquat = false
                             } // 5 -> 다리가 너무 굽혀져 실패
@@ -229,7 +225,7 @@ class FeedbackAlgorithm {
             }
         }
 
-        fun plank(context: Context, mDrawPoint: ArrayList<PointF>) {
+        fun plank(context: Context, mDrawPoint: CopyOnWriteArrayList<PointF>) {
             no_exr = false
 
             sew_l_angle = cal_angle(mDrawPoint[2], mDrawPoint[3], mDrawPoint[4])
@@ -296,7 +292,7 @@ class FeedbackAlgorithm {
         }
 
         //sidelr로 바꾸기
-        fun pushup(context: Context, mDrawPoint: ArrayList<PointF>) {
+        fun pushup(context: Context, mDrawPoint: CopyOnWriteArrayList<PointF>) {
             no_exr = false
 
             if (exr_cnt == 0 && time_tf) {
@@ -333,7 +329,10 @@ class FeedbackAlgorithm {
             //------------------------------
 
             Log.d("sidelr_start", no_exr.toString())
-            Log.d("sidelr_angle", "왼팔 = " + nse_l_angle + " 오른팔 = " + nse_r_angle + " 오른다리 = " + nhk_l_angle)
+            Log.d(
+                "sidelr_angle",
+                "왼팔 = " + nse_l_angle + " 오른팔 = " + nse_r_angle + " 오른다리 = " + nhk_l_angle
+            )
             //사이드 래터럴 레이즈 판별 시작
             if (elbow_l_y > neck_y && elbow_r_y > neck_y && nse_l_angle < 140.0 && nse_r_angle < 140.0 && !no_exr) {
                 isStand = true
@@ -356,26 +355,32 @@ class FeedbackAlgorithm {
 
                             if (wrong_mode == 1) {
                                 sound_play(context, R.raw.sidelr_ru_fb) // "오른팔 더 올리세요"
-                                Toast.makeText(context, "------FAIL1------", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "------FAIL1------", Toast.LENGTH_SHORT)
+                                    .show()
                             } else if (wrong_mode == 2) {
                                 sound_play(context, R.raw.sidelr_lu_fb) // "왼팔 더 올리세요"
-                                Toast.makeText(context, "------FAIL2------", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "------FAIL2------", Toast.LENGTH_SHORT)
+                                    .show()
                             } else if (wrong_mode == 3) {
                                 sound_play(context, R.raw.sidelr_bu_fb) // "두 팔 다 더 올리세요"
-                                Toast.makeText(context, "------FAIL3------", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "------FAIL3------", Toast.LENGTH_SHORT)
+                                    .show()
                             } else if (wrong_mode == 5) {
                                 sound_play(context, R.raw.sidelr_ld_fb) // "왼팔 조금 내리세요"
-                                Toast.makeText(context, "------FAIL5------", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "------FAIL5------", Toast.LENGTH_SHORT)
+                                    .show()
                                 cnt_s_tf = false
                                 isSidelr = false
                             } else if (wrong_mode == 8) {
                                 sound_play(context, R.raw.sidelr_rd_fb) // "오른팔 조금 내리세요"
-                                Toast.makeText(context, "------FAIL8------", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "------FAIL8------", Toast.LENGTH_SHORT)
+                                    .show()
                                 cnt_s_tf = false
                                 isSidelr = false
                             } else if (wrong_mode == 13) {
                                 sound_play(context, R.raw.sidelr_bd_fb) // "두 팔 다 더 내리세요"
-                                Toast.makeText(context, "------FAIL13------", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "------FAIL13------", Toast.LENGTH_SHORT)
+                                    .show()
                                 cnt_s_tf = false
                                 isSidelr = false
                             }
@@ -473,7 +478,10 @@ class FeedbackAlgorithm {
                     wrong_mode += 8
                     isWrong = true
                 }
-                Log.d("sidelr_y", "왼팔꿈치 = " + elbow_l_y + " 오른팔꿈치 = " + elbow_r_y + " 목 = " + neck_y + " mode = " + wrong_mode)
+                Log.d(
+                    "sidelr_y",
+                    "왼팔꿈치 = " + elbow_l_y + " 오른팔꿈치 = " + elbow_r_y + " 목 = " + neck_y + " mode = " + wrong_mode
+                )
             }
         }
     }
