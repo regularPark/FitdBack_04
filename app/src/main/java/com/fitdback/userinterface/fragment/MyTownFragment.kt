@@ -11,8 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.fitdback.database.DataBasket
 import com.fitdback.database.datamodel.FriendDataModel
@@ -169,11 +167,43 @@ class MyTownFragment : Fragment() {
                         friendStatisticsAlertDialog?.setCancelable(false)
 
                         // 레이아웃
+                        val firstRadioGroup =
+                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_radioGp_1)
+                        val btnSetSquatChart =
+                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnSetSquatChart)
+                        val btnSetPlankChart =
+                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnSetPlankChart)
+                        val btnSetSideLateralRaiseChart =
+                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnSetSideLateralRaiseChart)
+
+                        val selectedDataArea =
+                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_selectedDataArea)
+                        val secondRadioGroup =
+                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_radioGp_2)
+                        val btnShowExCalorieChart =
+                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnShowExCalorieChart)
+                        val btnShowExCountChart =
+                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnShowExCountChart)
+                        val btnShowExTimeChart =
+                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnShowExTimeChart)
+
+                        val yAxisTitleArea =
+                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_yAxisTitleArea)
+                        val barChart =
+                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_barChart)
+                        val btnShowPreviousWeek =
+                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnShowPreviousWeek)
+                        val btnShowThisWeek =
+                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnShowThisWeek)
+                        val btnShowNextWeek =
+                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnShowNextWeek)
+
                         val btnFriendChartConfirm =
                             friendStatisticsAlertDialog?.findViewById<Button>(R.id.btnFriendChartConfirm)
 
                         // 차트
                         // TODO : 차트 불러오기
+
 
                         // 확인버튼
                         btnFriendChartConfirm?.setOnClickListener {
