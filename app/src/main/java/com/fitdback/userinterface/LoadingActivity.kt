@@ -7,7 +7,6 @@ import android.os.Handler
 import android.util.Log
 import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.R
-import com.fitdback.test.loginTest.LoginTestActivity
 
 class LoadingActivity : AppCompatActivity() {
     private val SPLASH_TIME_OUT:Long = 500
@@ -15,9 +14,8 @@ class LoadingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading)
 
-
         Handler().postDelayed({
-            startActivity(Intent(this, LoginTestActivity::class.java))
+            startActivity(Intent(this, LoginActivity_new::class.java))
             finish()
         }, SPLASH_TIME_OUT)
     }

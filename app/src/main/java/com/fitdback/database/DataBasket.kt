@@ -19,13 +19,14 @@ class DataBasket {
     companion object {
 
         private lateinit var firebaseAuth: FirebaseAuth
-        lateinit var googleSignInClient: GoogleSignInClient
+        var googleSignInClient: GoogleSignInClient? = null
         val database = Firebase.database
 
         var tempExrModel = ExerciseDataModel()
-        var dataSample: DataSnapshot? = null
         var individualExData: DataSnapshot? = null
-        
+        var individualUserInfo: DataSnapshot? = null
+        var individualFriendInfo: DataSnapshot? = null
+
         /*
             날짜 관련
         */
@@ -114,9 +115,10 @@ class DataBasket {
             if (isUsingUserId) { // 개인별 데이터
                 databaseRef =
                     database.getReference(node1).child(firebaseAuth.currentUser!!.uid).child(node2)
-            } else {
-                // TODO : 전체 회원의 child 데이터 경로
             }
+//            } else {
+////                databaseRef = database.getReference(node1)
+//            }
 
             return databaseRef
 
@@ -129,13 +131,14 @@ class DataBasket {
 
             dbPath.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    dataSample = dataSnapshot
 
-                    when (dataDescription) {
-                        "individualExData" -> individualExData = dataSnapshot
+                    when (dataSnapshot.key.toString()) {
+                        "ex_data" -> individualExData = dataSnapshot
+                        "user_info" -> individualUserInfo = dataSnapshot
+                        "friend_info" -> individualFriendInfo = dataSnapshot
                     }
 
-                    Log.d("Data - getDataFromDB", dataSample.toString())
+                    Log.d("db_getDataFromDB", dataSnapshot.toString())
                 }
 
                 override fun onCancelled(error: DatabaseError) {
