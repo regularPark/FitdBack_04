@@ -47,7 +47,8 @@ class LoginActivity : AppCompatActivity() {
         // Intent
         val toCameraAcitivityIntent = Intent(this, CameraActivity::class.java)
         val toLoginSuccessActivityIntent = Intent(this, LoginSuccessActivity::class.java)
-        val toMainActivityIntent = Intent(this, MainTestActivity::class.java)
+        val toMainActivityIntent = Intent(this, MainActivity::class.java)
+        val toLoadingActivity = Intent(this, LoadingActivity::class.java)
 
         // 로그인 버튼 클릭 시 동작
         btnLogin.setOnClickListener {
@@ -109,11 +110,17 @@ class LoginActivity : AppCompatActivity() {
                 mAlertDialog.findViewById<Button>(R.id.btnPjkLogin)
 
             btnKshLogin?.setOnClickListener {
-                emailLoginAuth("ksh@gmail.com", "123456", toMainActivityIntent)
+                Handler().postDelayed({
+                    emailLoginAuth("ksh@gmail.com", "123456", toMainActivityIntent)
+                    getDB()
+                }, 500)
             }
 
             btnOmsLogin?.setOnClickListener {
-                emailLoginAuth("oms@gmail.com", "123456", toMainActivityIntent)
+                Handler().postDelayed({
+                    emailLoginAuth("oms@gmail.com", "123456", toMainActivityIntent)
+                    getDB()
+                }, 500)
             }
 
             btnPjkLogin?.setOnClickListener {
@@ -122,22 +129,25 @@ class LoginActivity : AppCompatActivity() {
 
                 }, 500)
             }
-
         }
 
         btnRunBarChart.setOnClickListener {
-
             startActivity(Intent(this, BarChartTestActivity::class.java))
-
         }
-
-
     } // end of onCreate()
 
+<<<<<<< HEAD
     private fun getDB() {
         val dbPath = DataBasket.getDBPath("users", "ex_data", true)
         DataBasket.getDataFromFB(dbPath!!, "individualExData")
     }
+=======
+    private fun getDB(){
+        val dbPath = DataBasket.getDBPath("users", "ex_data", true)
+        DataBasket.getDataFromFB(dbPath!!, "individualExData")
+    }
+
+>>>>>>> 41954ee9ad1ce6bac589d1bfaeda8be1978eccc6
 
     /*
         Login Function

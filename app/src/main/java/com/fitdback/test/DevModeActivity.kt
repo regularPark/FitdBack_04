@@ -12,6 +12,8 @@ import com.fitdback.database.DataBasket
 import com.fitdback.database.datamodel.ExerciseDataModel
 import com.fitdback.posedetection.R
 import com.fitdback.test.barChartTest.BarChartTestActivity
+import com.fitdback.test.feedbackTest.FeedbackTestActivity
+import com.fitdback.userinterface.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -276,7 +278,7 @@ class DevModeActivity : AppCompatActivity() {
 
         for (i in 0..6) {
             val exDate = dateList[i]
-            val exCount = rand(10, 50, "int")[0].toInt()
+            val exCount = rand(1, 50, "int")[0].toInt()
             val exTime = (exCount.toFloat() * rand(4, 0, "float")[0].toFloat()).toInt()
             val exSuccessCount = (exCount * 0.5).toInt()
             val exCalorie = (exCount * 0.5).toInt()
@@ -314,6 +316,10 @@ class DevModeActivity : AppCompatActivity() {
 
         return mutableList
 
+    }
+    override fun onBackPressed() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 
 }

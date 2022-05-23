@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="550dp"
+    android:layout_margin="15dp"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/joinEmailArea"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:hint="이메일" />
+
+    <EditText
+        android:id="@+id/joinPasswordArea"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:hint="비밀번호"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/joinPasswordCheckArea"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:hint="비밀번호 확인"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/joinNicknameArea"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:hint="사용하실 닉네임" />
+
+    <EditText
+        android:id="@+id/joinHeightArea"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:hint="회원님의 키" />
+
+    <EditText
+        android:id="@+id/joinWeightArea"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:hint="회원님의 몸무게" />
+
+    <Button
+        android:id="@+id/btnRunFirebaseEmailJoin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_radius_color"
+        android:text="회원 가입"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
+
+</LinearLayout>

@@ -1,21 +1,23 @@
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.fitdback.userinterface.fragment.HomeFragment"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:columnCount="3"
-    android:rowCount="6"
-    >
+    android:rowCount="6">
 
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="Choose Training"
+        android:text="안녕하세요"
         android:textSize="30sp"
-        android:layout_columnSpan="3"
         android:textStyle="bold"
+<<<<<<< HEAD
         />TextView>
     <Button
         android:id="@+id/squatBtn"
@@ -103,4 +105,217 @@
 
 
 </GridLayout>
+=======
+        />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text=" SQUAT"
+                    android:drawableLeft="@drawable/ic_squat_2"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/im_squat"
+                        android:background="@drawable/round_bg_border_black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintGuide_begin = "0dp"
+                        />
+                </LinearLayout>
+                <Button
+                    android:id="@+id/squatBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:background="@drawable/btn_stroke_blue"
+                    android:text="스쿼트 시작"
+                    android:textColor="@color/btn_primary"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                     />
+                <View
+                    android:background="@color/btn_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginHorizontal="10dp"
+                    />
+                <!-- 플랭크 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="30dp"
+                    android:text=" PLANK"
+                    android:drawableLeft="@drawable/ic_plank_2"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+                    <ImageView
+                        android:id="@+id/im_plank"
+                        android:background="@drawable/round_bg_border_black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintGuide_begin = "0dp"
+                        />
+                </LinearLayout>
+                <Button
+                    android:id="@+id/plkBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/btn_stroke_blue"
+                    android:gravity="center"
+                    android:text="플랭크 시작"
+                    android:textColor="@color/btn_primary"
+                    android:textSize="40dp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="-30dp"
+                    tools:layout_editor_absoluteY="265dp" />
+                <View
+                    android:background="@color/btn_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginHorizontal="10dp"
+                    />
+
+            <!-- 사래레 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:text="SIDE LATERAL RAISE"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:drawableLeft="@drawable/ic_slr_2"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+                    <ImageView
+                        android:id="@+id/im_slr"
+                        android:background="@drawable/round_bg_border_black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintGuide_begin = "0dp"
+                        />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/puBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/btn_stroke_blue"
+                    android:gravity="center"
+                    android:text="사이드래터럴레이즈 시작"
+                    android:textColor="@color/btn_primary"
+                    android:textSize="28dp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="-30dp"
+                    tools:layout_editor_absoluteY="265dp" />
+                <View
+                    android:background="@color/btn_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginHorizontal="10dp"
+                    />
+
+                <!-- 자율 운동 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="30dp"
+                    android:text="FREE TRAINING"
+                    android:textSize="30dp"
+                    android:textStyle="bold"
+                    android:drawableLeft="@drawable/ic_free_2"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+                    <!--
+                    <ImageView
+                        android:id="@+id/im_autoEx"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/round_bg_border_black"
+                        app:layout_constraintGuide_begin="0dp" />
+                        -->
+                </LinearLayout>
+
+                <!--  비 운동 관련   -->
+
+                <Button
+                    android:id="@+id/freeExBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/btn_stroke_blue"
+                    android:gravity="center"
+                    android:text="자율운동 시작"
+                    android:textColor="@color/btn_primary"
+                    android:textSize="38dp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="-30dp"
+                    tools:layout_editor_absoluteY="265dp" />
+
+                <Button
+                    android:id="@+id/btnDevMode"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/button_radius_color"
+                    android:text="DEV MODE"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="-30dp"
+                    tools:layout_editor_absoluteY="265dp" />
+
+                <Button
+                    android:id="@+id/btnSignOut"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginBottom="100dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/button_radius_color_2"
+                    android:text="Sign Out"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="-30dp"
+                    tools:layout_editor_absoluteY="265dp" />
+            </LinearLayout>
+        </ScrollView>
+</LinearLayout>
+>>>>>>> 41954ee9ad1ce6bac589d1bfaeda8be1978eccc6
 

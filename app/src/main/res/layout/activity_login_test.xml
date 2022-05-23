@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.fitdback.test.loginTest.LoginTestActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:text="대충 헬스장에서 바벨드는 움짤"
+        android:textSize="30sp" />
+
+
+    <Button
+        android:id="@+id/btnRunEmailLogin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:text="이메일 로그인" />
+
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btnRunGoogleLogin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        />
+
+
+    <Button
+        android:id="@+id/btnRunDevLogin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:text="개발자 로그인" />
+
+    <TextView
+        android:id="@+id/joinTextView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:text="계정이 없으신가요?(클릭)"
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
+
+</LinearLayout>

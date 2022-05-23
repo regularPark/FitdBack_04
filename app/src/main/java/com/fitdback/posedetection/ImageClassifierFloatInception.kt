@@ -92,7 +92,7 @@ class ImageClassifierFloatInception private constructor(
             }
 
             mMat!!.put(0, 0, tempArray)
-            Imgproc.GaussianBlur(mMat!!, mMat!!, Size(5.0, 5.0), 0.0, 0.0)
+            Imgproc.GaussianBlur(mMat!!, mMat!!, Size(3.0, 3.0), 0.0, 0.0)
             mMat!!.get(0, 0, outTempArray)
 
             var maxX = 0f

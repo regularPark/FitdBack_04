@@ -13,15 +13,39 @@
         android:icon="@mipmap/ic_fitdback"
         android:label="@string/app_name"
         android:theme="@style/MaterialTheme">
+        <activity
+            android:name="com.fitdback.userinterface.LoadingActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
 
+        </activity>
 
+        <activity
+            android:name="com.fitdback.test.loginTest.LoginTestActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+<<<<<<< HEAD
         <activity android:name="com.fitdback.userinterface.MainTestActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"> <!-- 앱 중단 에러 방지 -->
             >
         </activity>
         <activity android:name="com.fitdback.test.barChartTest.BarChartTestActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
+=======
+        </activity>
+
+        <activity
+            android:name="com.fitdback.userinterface.MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <!-- 앱 중단 에러 방지 -->
+        </activity>
+        <activity
+            android:name="com.fitdback.test.barChartTest.BarChartTestActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+>>>>>>> 41954ee9ad1ce6bac589d1bfaeda8be1978eccc6
 
         </activity>
 
@@ -29,23 +53,24 @@
             android:name="com.fitdback.userinterface.LoginActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"> <!-- 앱 중단 에러 방지 -->
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
         </activity>
-
         <activity
             android:name="com.fitdback.userinterface.LoginSuccessActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"> <!-- 앱 중단 에러 방지 -->
 
         </activity>
+<<<<<<< HEAD
         <activity
             android:name="com.fitdback.userinterface.MainActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"> <!-- 앱 중단 에러 방지 -->
+=======
+>>>>>>> 41954ee9ad1ce6bac589d1bfaeda8be1978eccc6
 
-        </activity>
         <activity
             android:name="com.fitdback.userinterface.TutorialActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"> <!-- 앱 중단 에러 방지 -->
@@ -55,10 +80,13 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" /> <!-- MyPageFragement ~ -->
         <activity
+<<<<<<< HEAD
             android:name="com.fitdback.userinterface.MyPageActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"> <!-- 앱 중단 에러 방지 -->
         </activity>
         <activity
+=======
+>>>>>>> 41954ee9ad1ce6bac589d1bfaeda8be1978eccc6
             android:name="com.fitdback.userinterface.UserInformationActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"> <!-- 앱 중단 에러 방지 -->
         </activity>
@@ -68,20 +96,31 @@
         </activity>
         <activity
             android:name="com.fitdback.test.HealthMemoTestActivity"
+<<<<<<< HEAD
 
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
         <activity
             android:name="com.fitdback.test.FeedbackTestActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+=======
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name="com.fitdback.test.feedbackTest.FeedbackTestActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+>>>>>>> 41954ee9ad1ce6bac589d1bfaeda8be1978eccc6
         <activity
             android:name="com.fitdback.userinterface.FeedbackActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name="com.fitdback.test.DevModeActivity"
+<<<<<<< HEAD
 
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
+=======
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+>>>>>>> 41954ee9ad1ce6bac589d1bfaeda8be1978eccc6
     </application>
 
 </manifest>

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.fitdback.posedetection.R
+import com.fitdback.test.DevModeActivity
 import com.fitdback.userinterface.StatisticsPopUpActivity
 import com.fitdback.userinterface.UserInformationActivity
 
@@ -57,8 +58,9 @@ class MyPageFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_my_page, container, false)
 
 
-        val statisticBtn : Button = view.findViewById(R.id.statBtn)
         // 마이 페이지 프래그먼트 -> 액티비티 전환
+
+        // 내 정보
         val loginInfoBtn : Button = view.findViewById(R.id.loginInfoBtn)
         loginInfoBtn.setOnClickListener(object :View.OnClickListener {
             override fun onClick(v: View?) {
@@ -67,12 +69,7 @@ class MyPageFragment : Fragment() {
             }
         })
 
-        statisticBtn.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                val toStaticsPopupActivityIntent = Intent(context, StatisticsPopUpActivity::class.java)
-                startActivity(toStaticsPopupActivityIntent)
-            }
-        })
+
 
 
         // Inflate the layout for this fragment
