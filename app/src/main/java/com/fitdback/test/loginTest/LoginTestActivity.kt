@@ -5,10 +5,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import com.bumptech.glide.Glide
 import com.fitdback.database.DataBasket
 import com.fitdback.database.datamodel.UserInfoDataModel
 import com.fitdback.posedetection.R
@@ -44,6 +42,11 @@ class LoginTestActivity : AppCompatActivity() {
         val btnRunGoogleLogin = findViewById<SignInButton>(R.id.btnRunGoogleLogin)
         val btnRunDevLogin = findViewById<Button>(R.id.btnRunDevLogin)
         val joinTextView = findViewById<TextView>(R.id.joinTextView)
+
+        val image_bg = findViewById<ImageView>(R.id.image_bg)
+
+        Glide.with(this).load(R.raw.login_img).override(1200,800).into(image_bg)
+
 
         // 인텐트
         val toMainActivity = Intent(this, MainActivity::class.java)
