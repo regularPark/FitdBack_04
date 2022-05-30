@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.fitdback.userinterface.LoginActivity_new"
-    android:background="#f6f6f6">
+    android:background="#f7f7f7">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -28,6 +28,7 @@
         android:layout_margin="5dp"
         android:textSize="20sp"
         android:background="@drawable/btn_stroke_blk"
+        android:fontFamily="@font/font"
         android:text="이메일 로그인" />
 
 
@@ -47,6 +48,7 @@
         android:layout_margin="5dp"
         android:textSize="20sp"
         android:background="@drawable/btn_stroke_blk"
+        android:fontFamily="@font/font"
         android:text="개발자 로그인" />
 
     <TextView

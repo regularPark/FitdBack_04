@@ -135,7 +135,7 @@ class DrawView : View {
         super.onDraw(canvas)
         if (mDrawPoint.isEmpty()) return
         var prePointF: PointF? = null
-        mPaint.color = 0xfffaff0d.toInt() //  목윗부분 color
+        mPaint.color = 0x802AC1BC.toInt() //  목윗부분 color
         val p1 = mDrawPoint[1]
 
         // TODO: 143번 줄 에러 Fix : 카메라 실행 중 꺼지는 원인임
@@ -161,7 +161,7 @@ class DrawView : View {
                     }
                     // 1-2, 1-5, 1-8, 1-11
                     2, 5, 8, 11 -> {
-                        mPaint.color = 0xfffaff0d.toInt()
+                        mPaint.color = 0x802AC1BC.toInt()
                         canvas.drawLine(p1.x, p1.y, pointF.x, pointF.y, mPaint)
                     }
                     /*else -> {
@@ -172,7 +172,7 @@ class DrawView : View {
                 }*/
                     9, 10 -> {
                         if (prePointF != null) {
-                            mPaint.color = 0xffff0000.toInt() // skeleton 색상 지정
+                            mPaint.color = 0x802AC1BC.toInt() // skeleton 색상 지정
                             canvas.drawLine(
                                 prePointF.x,
                                 prePointF.y,
@@ -184,7 +184,7 @@ class DrawView : View {
                     }
                     else -> {
                         if (prePointF != null) {
-                            mPaint.color = 0xfffaff0d.toInt() // skeleton 색상 지정
+                            mPaint.color = 0x802AC1BC.toInt() // skeleton 색상 지정
                             canvas.drawLine(
                                 prePointF.x,
                                 prePointF.y,
