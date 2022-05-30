@@ -25,15 +25,14 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import com.fitdback.algorithm.FeedbackAlgorithm
-import java.lang.Exception
-import java.util.ArrayList
+import java.util.concurrent.CopyOnWriteArrayList
 
 class DrawView : View {
 
     private var mRatioWidth = 0
     private var mRatioHeight = 0
 
-    private val mDrawPoint = ArrayList<PointF>()
+    private val mDrawPoint = CopyOnWriteArrayList<PointF>()
     private var mWidth: Int = 0
     private var mHeight: Int = 0
     private var mRatioX: Float = 0.toFloat()
@@ -140,6 +139,12 @@ class DrawView : View {
         val p1 = mDrawPoint[1]
 
         // TODO: 143번 줄 에러 Fix : 카메라 실행 중 꺼지는 원인임
+
+//        while (mDrawPoint.hasNext())
+
+//        val ite : MutableIterator<PointF> = mDrawPoint.iterator()
+//        val index = 0
+
         for ((index, pointF) in mDrawPoint.withIndex()) {
 
             // 관절 튈 때 그리지 않는 방법

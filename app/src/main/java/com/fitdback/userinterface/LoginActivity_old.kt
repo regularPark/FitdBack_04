@@ -22,7 +22,7 @@ import java.lang.Exception
 //import com.google.firebase.auth.ktx.auth
 
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity_old : AppCompatActivity() {
 
     //    private lateinit var auth: FirebaseAuth
     lateinit var firebaseAuth: FirebaseAuth
@@ -244,4 +244,4 @@ class LoginActivity : AppCompatActivity() {
             }
 
     }
-} // end of LoginActivity
+} // end of LoginActivity_old

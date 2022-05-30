@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#f7f7f7"
-    tools:context="com.fitdback.test.loginTest.LoginTestActivity">
+    tools:context="com.fitdback.userinterface.LoginActivity_new">
 
     <ImageView
         android:layout_marginVertical="50dp"

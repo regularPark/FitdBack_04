@@ -140,7 +140,7 @@ class BarChartTestActivity : AppCompatActivity() {
                 // 마지막에 저장된 X Index를 이용하여 일주일 전의 dateListOfTargetWeek을 생성
                 val lastDateOfXIndex = BarChartVariables.lastDateOfXIndex
                 var (year: Int, month: Int, date: Int) = BarChartVariables.getYearMonthDateOfLastDate(
-                    lastDateOfXIndex
+                    lastDateOfXIndex!!
                 )
 
                 val dateOneWeekBefore =
@@ -199,7 +199,7 @@ class BarChartTestActivity : AppCompatActivity() {
                 // 마지막에 저장된 X Index를 이용하여 일주일 후의 dateListOfTargetWeek을 생성
                 val lastDateOfXIndex = BarChartVariables.lastDateOfXIndex
                 var (year: Int, month: Int, date: Int) = BarChartVariables.getYearMonthDateOfLastDate(
-                    lastDateOfXIndex
+                    lastDateOfXIndex!!
                 )
 
                 val dateOfTomorrow =

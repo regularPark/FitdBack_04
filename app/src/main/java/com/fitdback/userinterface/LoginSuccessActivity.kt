@@ -28,7 +28,7 @@ class LoginSuccessActivity : AppCompatActivity() {
         val btnFitnessStart = findViewById<Button>(R.id.btnFitnessStart)
 
         // Intent
-        val toLoginActivityIntent = Intent(this, LoginActivity::class.java)
+        val toLoginActivityIntent = Intent(this, LoginActivity_old::class.java)
         val toCameraActivityIntent = Intent(this, CameraActivity::class.java)
 
         // 로그인에 성공해서 현재 액티비티로 전환되면, user의 ID를 화면에 표시

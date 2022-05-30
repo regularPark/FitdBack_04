@@ -1,4 +1,4 @@
-package com.fitdback.test.loginTest
+package com.fitdback.userinterface
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -11,7 +11,6 @@ import com.fitdback.database.DataBasket
 import com.fitdback.database.datamodel.UserInfoDataModel
 import com.fitdback.posedetection.R
 import com.fitdback.test.CustomDialog
-import com.fitdback.userinterface.MainActivity
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -22,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import java.lang.Exception
 
-class LoginTestActivity : AppCompatActivity() {
+class LoginActivity_new : AppCompatActivity() {
 
     lateinit var firebaseAuth: FirebaseAuth
 
@@ -54,7 +53,8 @@ class LoginTestActivity : AppCompatActivity() {
         // 클릭 이벤트
         btnRunEmailLogin.setOnClickListener {
 
-            val dialog = CustomDialog(this, R.layout.dialog_login_email_login, "Email Login")
+            val dialog =
+                CustomDialog(this, R.layout.dialog_login_email_login, "Email Login")
             val mAlertDialog = dialog.showDialog()
             val btnEmailLogin = mAlertDialog!!.findViewById<Button>(R.id.btnEmailLogin)
 
@@ -95,7 +95,8 @@ class LoginTestActivity : AppCompatActivity() {
 
 
         btnRunDevLogin.setOnClickListener {
-            val dialog = CustomDialog(this, R.layout.dialog_dev_login, "Email Login")
+            val dialog =
+                CustomDialog(this, R.layout.dialog_dev_login, "Email Login")
             val mAlertDialog = dialog.showDialog()
 
             val btnKshLogin =
@@ -119,7 +120,8 @@ class LoginTestActivity : AppCompatActivity() {
         }
 
         joinTextView.setOnClickListener {
-            val dialog = CustomDialog(this, R.layout.dialog_login_join, "Email Join")
+            val dialog =
+                CustomDialog(this, R.layout.dialog_login_join, "Email Join")
             val mAlertDialog = dialog.showDialog()
 
             val btnEmailJoin =
@@ -130,6 +132,7 @@ class LoginTestActivity : AppCompatActivity() {
             // 이메일 회원가입 다이얼로그 실행
             btnEmailJoin?.setOnClickListener {
                 val emailJoinDialog =
+
                     CustomDialog(this, R.layout.dialog_login_join_email, "Email Join")
                 val emailJoinAlertDialog = emailJoinDialog.showDialog()
 
@@ -298,8 +301,12 @@ class LoginTestActivity : AppCompatActivity() {
 
                     Toast.makeText(this, "이메일 로그인 성공", Toast.LENGTH_SHORT).show()
 
-                    val dbPath = DataBasket.getDBPath("users", "ex_data", true)
-                    DataBasket.getDataFromFB(dbPath!!, "individualExData")
+                    val exDataDBPath = DataBasket.getDBPath("users", "ex_data", true)
+                    val userInfoDBPath = DataBasket.getDBPath("users", "user_info", true)
+                    val friendInfoDBPath = DataBasket.getDBPath("users", "friend_info", true)
+                    DataBasket.getDataFromFB(exDataDBPath!!, "no more use")
+                    DataBasket.getDataFromFB(userInfoDBPath!!, "no more use")
+                    DataBasket.getDataFromFB(friendInfoDBPath!!, "no more use")
 
                     startActivity(intent)
                     finish() // 액티비티가 두개 존재하는 오류 수정!

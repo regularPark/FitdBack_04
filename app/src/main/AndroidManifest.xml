@@ -25,7 +25,7 @@
         </activity>
 
         <activity
-            android:name="com.fitdback.test.loginTest.LoginTestActivity"
+            android:name="com.fitdback.userinterface.LoginActivity_new"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         </activity>
@@ -41,7 +41,7 @@
         </activity>
 
         <activity
-            android:name="com.fitdback.userinterface.LoginActivity"
+            android:name="com.fitdback.userinterface.LoginActivity_old"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <!-- 앱 중단 에러 방지 -->
 
             <!--            <intent-filter>-->
@@ -72,9 +72,7 @@
             android:name="com.fitdback.userinterface.StatisticsPopUpActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <!-- 앱 중단 에러 방지 -->
         </activity>
-        <activity
-            android:name="com.fitdback.test.HealthMemoTestActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
         <activity
             android:name="com.fitdback.test.feedbackTest.FeedbackTestActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

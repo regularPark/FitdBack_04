@@ -1,15 +1,13 @@
 package com.fitdback.userinterface
 
-
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.fitdback.posedetection.R
-import com.fitdback.test.loginTest.LoginTestActivity
 import com.fitdback.userinterface.fragment.HomeFragment
 import com.fitdback.userinterface.fragment.MyPageFragment
 import com.fitdback.userinterface.fragment.MyTownFragment
@@ -22,7 +20,6 @@ class MainActivity : AppCompatActivity() {
 
     private val bn: BottomNavigationView by lazy { findViewById(R.id.bn_) }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -33,9 +30,9 @@ class MainActivity : AppCompatActivity() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     bn.selectedItemId = when (position) {
-                        0 ->R.id.menu_home
-                        1 ->R.id.menu_mytown
-                        2 ->R.id.menu_stat
+                        0 -> R.id.menu_home
+                        1 -> R.id.menu_mytown
+                        2 -> R.id.menu_stat
                         else -> R.id.menu_mypage
                     }
                 }
@@ -67,9 +64,8 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     override fun onBackPressed() {
-        startActivity(Intent(this,LoginTestActivity::class.java))
+        startActivity(Intent(this, LoginActivity_old::class.java))
         finish()
     }
 
