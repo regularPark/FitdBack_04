@@ -44,7 +44,7 @@ class LoginActivity_new : AppCompatActivity() {
 
         val image_bg = findViewById<ImageView>(R.id.image_bg)
 
-        Glide.with(this).load(R.raw.login_img).override(1200,800).into(image_bg)
+        Glide.with(this).load(R.raw.move2).override(1200,800).into(image_bg)
 
 
         // 인텐트

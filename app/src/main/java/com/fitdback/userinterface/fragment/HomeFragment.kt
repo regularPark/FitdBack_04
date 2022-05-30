@@ -103,7 +103,7 @@ class HomeFragment : Fragment() {
         ftBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 val toTutorialActivity = Intent(context, TutorialActivity::class.java)
-                toTutorialActivity.putExtra("exr_mod","freeTraining")
+                toTutorialActivity.putExtra("exr_mod","free_exr")
                 startActivity(toTutorialActivity)
             }
         })

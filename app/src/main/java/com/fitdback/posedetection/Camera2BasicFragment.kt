@@ -362,6 +362,11 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             else{
                 countView!!.visibility = View.INVISIBLE
             }
+            if (FeedbackAlgorithm.exr_mode != "free_exr") {
+                free_cnt_plk!!.visibility = View.INVISIBLE
+                free_cnt_slr!!.visibility = View.INVISIBLE
+                free_cnt_sqt!!.visibility = View.INVISIBLE
+            }
         }
     }
 

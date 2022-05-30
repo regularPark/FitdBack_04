@@ -121,7 +121,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
                 android:text="SIDE LATERAL RAISE"
-                android:textSize="30dp"
+                android:textSize="28dp"
                 android:textStyle="bold"
                 android:drawableLeft="@drawable/ic_slr_2"/>
 
