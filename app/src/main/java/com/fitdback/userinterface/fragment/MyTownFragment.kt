@@ -412,11 +412,11 @@ class MyTownFragment : Fragment() {
                 dataModel.getValue(FriendDataModel::class.java)
 
             if (friendInfoDataModel?.friend_uid == friendCode) {
-//                Toast.makeText(
-//                    this,
-//                    "${friendInfoDataModel!!.friend_nickname} 님은 이미 친구로 등록된 유저입니다",
-//                    Toast.LENGTH_SHORT
-//                ).show()
+                Toast.makeText(
+                    context,
+                    "${friendInfoDataModel!!.friend_nickname} 님은 이미 친구로 등록된 유저입니다",
+                    Toast.LENGTH_SHORT
+                ).show()
 
                 return true
             }
