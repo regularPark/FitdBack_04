@@ -23,7 +23,7 @@ import com.fitdback.algorithm.FeedbackAlgorithm
 import com.fitdback.userinterface.TutorialActivity
 import org.opencv.android.BaseLoaderCallback
 import org.opencv.android.LoaderCallbackInterface
-import org.opencv.android.OpenCVLoader 
+import org.opencv.android.OpenCVLoader
 
 /**
  * Main `Activity` class for the Camera app.
@@ -88,6 +88,8 @@ class CameraActivity : Activity() {
                     FeedbackAlgorithm.start_time = 0
                     FeedbackAlgorithm.exr_cnt = 0
                     FeedbackAlgorithm.isPlaying = true
+                    FeedbackAlgorithm.isDone = false
+                    FeedbackAlgorithm.isFirst = true
 
                 }
 
@@ -102,6 +104,23 @@ class CameraActivity : Activity() {
                             5000
                     ) //5초 후 운동 시작 시간 설정
                     FeedbackAlgorithm.isPlaying = true
+                    FeedbackAlgorithm.prev_time = 0
+                    FeedbackAlgorithm.total_exr_time = 0
+                }
+
+                "free_exr" -> {
+                    FeedbackAlgorithm.exr_cnt = 0
+                    FeedbackAlgorithm.exr_cnt_s = 0
+                    FeedbackAlgorithm.exr_cnt_f = 0
+                    FeedbackAlgorithm.wrong_mode = 0
+                    FeedbackAlgorithm.isExrFinished = false
+                    Handler().postDelayed(
+                            { FeedbackAlgorithm.time_tf = true },
+                            5000
+                    ) //5초 후 운동 시작 시간 설정
+                    FeedbackAlgorithm.isPlaying = true
+                    FeedbackAlgorithm.prev_time = 0
+                    FeedbackAlgorithm.total_exr_time = 0
                 }
 
             }
@@ -112,6 +131,13 @@ class CameraActivity : Activity() {
         //circleProgressBar.progress
     }
 
+    /*override fun onBackPressed(){
+        startActivity(Intent(this, TutorialActivity::class.java))
+
+        FeedbackAlgorithm.sound_stop(this, R.raw.start_exr_5s)
+        finish()
+    }*/
+
     override fun onResume() {
         super.onResume()
         if (!OpenCVLoader.initDebug()) {
@@ -121,7 +147,7 @@ class CameraActivity : Activity() {
         }
     }
 
-    override fun onBackPressed(){
+    override fun onBackPressed() {
         val exr = intent.getStringExtra("exr_mod")
         val intent = Intent(this, TutorialActivity::class.java)
         intent.putExtra("exr_mod", exr)
