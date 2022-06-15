@@ -41,21 +41,21 @@ class DrawView : View {
     private var mImgHeight: Int = 0
 
     private val mColorArray = intArrayOf(
-        resources.getColor(R.color.color_top, null),        // 0
-        resources.getColor(R.color.color_neck, null),       // 1
-        resources.getColor(R.color.color_l_shoulder, null), // 2
-        resources.getColor(R.color.color_l_elbow, null),    // 3
-        resources.getColor(R.color.color_l_wrist, null),    // 4
-        resources.getColor(R.color.color_r_shoulder, null), // 5
-        resources.getColor(R.color.color_r_elbow, null),    // 6
-        resources.getColor(R.color.color_r_wrist, null),    // 7
-        resources.getColor(R.color.color_l_hip, null),      // 8
-        resources.getColor(R.color.color_l_knee, null),     // 9
-        resources.getColor(R.color.color_l_ankle, null),    // 10
-        resources.getColor(R.color.color_r_hip, null),      // 11
-        resources.getColor(R.color.color_r_knee, null),     // 12
-        resources.getColor(R.color.color_r_ankle, null),    // 13
-        resources.getColor(R.color.color_background, null)
+            resources.getColor(R.color.color_top, null),        // 0
+            resources.getColor(R.color.color_neck, null),       // 1
+            resources.getColor(R.color.color_l_shoulder, null), // 2
+            resources.getColor(R.color.color_l_elbow, null),    // 3
+            resources.getColor(R.color.color_l_wrist, null),    // 4
+            resources.getColor(R.color.color_r_shoulder, null), // 5
+            resources.getColor(R.color.color_r_elbow, null),    // 6
+            resources.getColor(R.color.color_r_wrist, null),    // 7
+            resources.getColor(R.color.color_l_hip, null),      // 8
+            resources.getColor(R.color.color_l_knee, null),     // 9
+            resources.getColor(R.color.color_l_ankle, null),    // 10
+            resources.getColor(R.color.color_r_hip, null),      // 11
+            resources.getColor(R.color.color_r_knee, null),     // 12
+            resources.getColor(R.color.color_r_ankle, null),    // 13
+            resources.getColor(R.color.color_background, null)
     )
 
     private val circleRadius: Float by lazy {
@@ -73,19 +73,19 @@ class DrawView : View {
     constructor(context: Context) : super(context)
 
     constructor(
-        context: Context,
-        attrs: AttributeSet?
+            context: Context,
+            attrs: AttributeSet?
     ) : super(context, attrs)
 
     constructor(
-        context: Context,
-        attrs: AttributeSet?,
-        defStyleAttr: Int
+            context: Context,
+            attrs: AttributeSet?,
+            defStyleAttr: Int
     ) : super(context, attrs, defStyleAttr)
 
     fun setImgSize(
-        width: Int,
-        height: Int
+            width: Int,
+            height: Int
     ) {
         mImgWidth = width
         mImgHeight = height
@@ -97,8 +97,8 @@ class DrawView : View {
      * @param point 2*14
      */
     fun setDrawPoint(
-        point: Array<FloatArray>,
-        ratio: Float
+            point: Array<FloatArray>,
+            ratio: Float
     ) {
         mDrawPoint.clear()
 
@@ -120,8 +120,8 @@ class DrawView : View {
      * @param height Relative vertical size
      */
     fun setAspectRatio(
-        width: Int,
-        height: Int
+            width: Int,
+            height: Int
     ) {
         if (width < 0 || height < 0) {
             throw IllegalArgumentException("Size cannot be negative.")
@@ -138,19 +138,13 @@ class DrawView : View {
         mPaint.color = 0x802AC1BC.toInt() //  목윗부분 color
         val p1 = mDrawPoint[1]
 
+
         // TODO: 143번 줄 에러 Fix : 카메라 실행 중 꺼지는 원인임
-
-//        while (mDrawPoint.hasNext())
-
-//        val ite : MutableIterator<PointF> = mDrawPoint.iterator()
-//        val index = 0
 
         for ((index, pointF) in mDrawPoint.withIndex()) {
 
             // 관절 튈 때 그리지 않는 방법
-            if (mDrawPoint[13].y > mDrawPoint[2].y && mDrawPoint[13].y > mDrawPoint[5].y &&
-                mDrawPoint[10].y > mDrawPoint[5].y && mDrawPoint[10].y > mDrawPoint[2].y
-            ) {
+
                 if (index == 1) continue
                 when (index) {
                     //0-1
@@ -174,11 +168,11 @@ class DrawView : View {
                         if (prePointF != null) {
                             mPaint.color = 0x802AC1BC.toInt() // skeleton 색상 지정
                             canvas.drawLine(
-                                prePointF.x,
-                                prePointF.y,
-                                pointF.x,
-                                pointF.y,
-                                mPaint
+                                    prePointF.x,
+                                    prePointF.y,
+                                    pointF.x,
+                                    pointF.y,
+                                    mPaint
                             )
                         }
                     }
@@ -186,30 +180,35 @@ class DrawView : View {
                         if (prePointF != null) {
                             mPaint.color = 0x802AC1BC.toInt() // skeleton 색상 지정
                             canvas.drawLine(
-                                prePointF.x,
-                                prePointF.y,
-                                pointF.x,
-                                pointF.y,
-                                mPaint
+                                    prePointF.x,
+                                    prePointF.y,
+                                    pointF.x,
+                                    pointF.y,
+                                    mPaint
                             )
                         }
                     }
                 }
                 prePointF = pointF
-            }
+
 
 
         }
 
         // 점 그리기
 
-        for ((index, pointF) in mDrawPoint.withIndex()) {
-            if (mDrawPoint[13].y > mDrawPoint[2].y && mDrawPoint[13].y > mDrawPoint[5].y &&
-                mDrawPoint[10].y > mDrawPoint[5].y && mDrawPoint[10].y > mDrawPoint[2].y
-            ) {
-                mPaint.color = mColorArray[index]
-                canvas.drawCircle(pointF.x, pointF.y, circleRadius, mPaint)
+        try {
+            for ((index, pointF) in mDrawPoint.withIndex()) {
+                if (mDrawPoint[13].y > mDrawPoint[2].y && mDrawPoint[13].y > mDrawPoint[5].y &&
+
+                        mDrawPoint[10].y > mDrawPoint[5].y && mDrawPoint[10].y > mDrawPoint[2].y
+                ) {
+                    mPaint.color = mColorArray[index]
+                    canvas.drawCircle(pointF.x, pointF.y, circleRadius, mPaint)
+                }
             }
+        }
+        catch(e: ArrayIndexOutOfBoundsException){
         }
 
 
@@ -217,13 +216,17 @@ class DrawView : View {
         if (FeedbackAlgorithm.isPlaying) {
             when (FeedbackAlgorithm.exr_mode) {
                 "squat" -> Handler().postDelayed(
-                    { FeedbackAlgorithm.squat(context, mDrawPoint) },
-                    5000
+                        { FeedbackAlgorithm.squat(context, mDrawPoint) },
+                        5000
                 ) // 5초동안 스쿼트 알고리즘 비활성화
                 "plank" -> Handler().postDelayed(
-                    { FeedbackAlgorithm.plank(context, mDrawPoint) },
-                    5000
+                        { FeedbackAlgorithm.plank(context, mDrawPoint) },
+                        5000
                 ) // 5초동안 플랭크 알고리즘 비활성화
+                "free_exr" -> Handler().postDelayed(
+                        { FeedbackAlgorithm.free_exr(context, mDrawPoint) },
+                        5000
+                )
                 "sidelr" -> Handler().postDelayed(
                     { FeedbackAlgorithm.sidelr(context, mDrawPoint) },
                     5000
@@ -233,8 +236,8 @@ class DrawView : View {
     }
 
     override fun onMeasure(
-        widthMeasureSpec: Int,
-        heightMeasureSpec: Int
+            widthMeasureSpec: Int,
+            heightMeasureSpec: Int
     ) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
