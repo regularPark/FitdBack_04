@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -21,6 +22,8 @@ import com.fitdback.test.CustomDialog
 import com.fitdback.test.barChartTest.BarChartVariables
 import com.fitdback.test.barChartTest.MyBarChartGenerator
 import com.fitdback.test.friendTest.FriendListAdapter
+import com.fitdback.userinterface.CommunityActivity
+import com.fitdback.userinterface.TutorialActivity
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -564,6 +567,13 @@ class MyTownFragment : Fragment() {
             }
 
         } // btnRunFriendMode
+
+        // 커뮤니티 버튼을 눌러 커뮤니티 액티비티로 이동
+        val btnRunCommunity = view.findViewById<Button>(R.id.town_community)
+        btnRunCommunity.setOnClickListener {
+            val toCommunityActivity = Intent(context, CommunityActivity::class.java)
+            startActivity(toCommunityActivity)
+        }
 
         return view
     }
