@@ -63,12 +63,14 @@ android {
 }
 
 repositories {
+
     maven {
         url 'https://jitpack.io'
     }
     maven {
         url 'https://google.bintray.com/tensorflow'
     }
+
     flatDir {
         dirs 'libs'
     }
@@ -123,5 +125,4 @@ dependencies {
     androidTestImplementation(deps.android.test.espresso, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
 }
