@@ -24,6 +24,7 @@
             android:id="@+id/selectedExTypeArea_"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
             android:layout_marginBottom="10dp"
             android:text="운동 선택"
             android:textAlignment="center"
@@ -173,17 +174,20 @@
             />
         <TextView
             android:id="@+id/yAxisTitleArea_"
-            android:textAlignment="center"
+            android:layout_gravity="left"
             android:layout_width="50dp"
             android:layout_marginStart="30dp"
             android:layout_height="20dp" />
-
+        <!-- 레이아웃에 차트 넣기-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/barChart"
             android:layout_width="match_parent"
             android:layout_marginHorizontal="20dp"
             android:layout_height="300dp" />
-
+        </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -223,7 +227,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
                     android:layout_marginHorizontal="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="100dp"
                     android:background="@drawable/button_radius_color"
                     android:text="다음 주"
                     android:textColor="@color/white"
@@ -231,6 +235,7 @@
                     android:textStyle="bold"
                     android:fontFamily="@font/font"
                     />
+
             </LinearLayout>
 
 

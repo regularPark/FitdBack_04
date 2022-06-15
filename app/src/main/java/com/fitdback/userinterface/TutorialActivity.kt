@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.NumberPicker
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.fitdback.algorithm.FeedbackAlgorithm
 import com.fitdback.posedetection.CameraActivity
 import com.fitdback.posedetection.R
 import com.google.android.youtube.player.YouTubeBaseActivity
@@ -26,6 +28,16 @@ class TutorialActivity : YouTubeBaseActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tutorial)
+
+        val btn_np = findViewById<Button>(R.id.btn_num_pick)
+        val np = findViewById<NumberPicker>(R.id.num_pick)
+        np.minValue = 1
+        np.maxValue = 60
+
+        btn_np.setOnClickListener{
+            FeedbackAlgorithm.target_cnt = np.value
+        }
+
 
         // 운동정보 넘기기
         val exr = intent.getStringExtra("exr_mod")
