@@ -99,7 +99,8 @@ class BarChartTestActivity : AppCompatActivity() {
                     BarChartVariables.getDailySumBarEntry(
                         dateListOfTargetWeek,
                         BarChartVariables.firstTargetData!!,
-                        BarChartVariables.secondTargetData!!
+                        BarChartVariables.secondTargetData!!,
+                        DataBasket.individualExData!!
                     )
 
 
@@ -165,7 +166,8 @@ class BarChartTestActivity : AppCompatActivity() {
                     BarChartVariables.getDailySumBarEntry(
                         dateListOfTargetWeek,
                         BarChartVariables.firstTargetData!!,
-                        BarChartVariables.secondTargetData!!
+                        BarChartVariables.secondTargetData!!,
+                        DataBasket.individualExData!!
                     )
 
                 val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList")
@@ -224,7 +226,8 @@ class BarChartTestActivity : AppCompatActivity() {
                     BarChartVariables.getDailySumBarEntry(
                         dateListOfTargetWeek,
                         BarChartVariables.firstTargetData!!,
-                        BarChartVariables.secondTargetData!!
+                        BarChartVariables.secondTargetData!!,
+                        DataBasket.individualExData!!
                     )
 
                 val barDataSet = BarDataSet(dailyExCountSumBarEntry, "exDataList")

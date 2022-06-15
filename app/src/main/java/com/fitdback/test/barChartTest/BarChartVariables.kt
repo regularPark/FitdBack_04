@@ -9,6 +9,7 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
+import com.google.firebase.database.DataSnapshot
 
 class BarChartVariables {
 
@@ -114,7 +115,8 @@ class BarChartVariables {
         fun getDailySumBarEntry(
             dateList: MutableList<String>,
             firstTargetData: String,
-            secondTargetData: String
+            secondTargetData: String,
+            whoseData: DataSnapshot
         ): MutableList<BarEntry> {
             /*
             dataSnapshot: 이미 로드한 Firebase DataSnapshot (users/ex_data)
@@ -127,7 +129,7 @@ class BarChartVariables {
             // (날짜, targetData의 합)의 Key-Value 구조의 Map
             val dailySumList =
                 DataBasket.enhancedGetDailySum(
-                    DataBasket.individualExData!!,
+                    whoseData,
                     dateList,
                     firstTargetData,
                     secondTargetData
