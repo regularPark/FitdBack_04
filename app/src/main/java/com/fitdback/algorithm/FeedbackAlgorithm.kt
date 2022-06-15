@@ -60,7 +60,7 @@ class FeedbackAlgorithm {
 
         val squat_cal: Double = 0.50 // 스쿼트 1회당 칼로리
 
-        val target_cnt: Int = 10
+        val target_cnt: Int = 1
 
         var isExrFinished: Boolean = false
         //val soundPool = SoundPool.Builder().build()

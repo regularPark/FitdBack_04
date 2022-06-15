@@ -45,7 +45,9 @@
                     android:layout_marginTop="10sp"
                     android:text="이름"
                     android:layout_gravity="right|top"
-                    android:textSize="50sp" />
+                    android:textSize="50sp"
+                    android:fontFamily="@font/font"
+                    />
 
                 <TextView
                     android:text="사용자이름"
@@ -69,6 +71,8 @@
                     android:layout_row="1"
                     android:layout_column="0"
                     android:layout_margin="20sp"
+                    android:fontFamily="@font/font"
+
                     />
                 <TextView
                     android:text="nickname"
@@ -106,7 +110,9 @@
                     android:text="내 정보"
                     android:gravity="fill"
                     android:textColor="@color/white"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:fontFamily="@font/font"
+                    />
                 <Button
                     android:id="@+id/btnChangePW"
                     android:layout_width="match_parent"
@@ -121,7 +127,9 @@
                     android:drawableLeft="@drawable/ic_pw"
                     android:text=" 비밀번호 변경"
                     android:textColor="@color/white"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:fontFamily="@font/font"
+                    />
 
                 <View
                     android:background="@color/btn_gray"
@@ -135,12 +143,15 @@
 
                 <!-- 개발자 -->
                 <TextView
-                    android:text="개발자"
-                    android:textSize="40sp"
                     android:layout_row="6"
                     android:layout_column="0"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="20sp"
+                    android:text="개발자"
+                    android:textSize="40sp"
+                    android:fontFamily="@font/font"
                     />
+
                 <Button
                     android:id="@+id/devBtn"
                     android:layout_width="match_parent"
@@ -157,7 +168,9 @@
                     android:background="@drawable/button_radius_color"
                     android:text=" 개발자"
                     android:textColor="@color/white"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:fontFamily="@font/font"
+                    />
 
             </GridLayout>
             <View
@@ -183,7 +196,9 @@
                 android:textSize="30sp"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="-30dp"
-                tools:layout_editor_absoluteY="265dp" />
+                tools:layout_editor_absoluteY="265dp"
+                android:fontFamily="@font/font"
+                />
 
         </LinearLayout>
 

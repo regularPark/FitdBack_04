@@ -93,6 +93,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private var free_cnt_sqt: CircleProgressBar? = null
     private var free_cnt_plk: CircleProgressBar? = null
     private var free_cnt_slr: CircleProgressBar? = null
+    private var cover : View? = null
 
 
     /**
@@ -351,11 +352,13 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         }
     }
 
+    // 자율운동 위한 함수
     private fun showCount(text_com: Int, text_tar: Int, text_f: Int, text_s: Int) {
         val activity = activity
         activity?.runOnUiThread {
             if(TimerClass.second <= 0){
                 countView!!.visibility = View.VISIBLE
+                cover!!.visibility = View.INVISIBLE
                 countView!!.text = "완료 :" + text_com.toString() + " / 목표 : " + text_tar.toString() +
                         " / 성공 : " + text_s.toString() + " / 실패 : " + text_f.toString()
             }
@@ -433,6 +436,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         free_cnt_sqt = view.findViewById(R.id.free_cnt_squat)
         free_cnt_plk = view.findViewById(R.id.free_cnt_plank)
         free_cnt_slr = view.findViewById(R.id.free_cnt_slr)
+        cover = view.findViewById(R.id.cover)
 
 
         // 렌더링 옵션 : CPU or GPU

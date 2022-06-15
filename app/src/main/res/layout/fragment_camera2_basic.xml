@@ -54,6 +54,7 @@
         android:paddingStart="10dp"
         android:paddingEnd="0dp">
     </LinearLayout>
+
     <com.dinuscxj.progressbar.CircleProgressBar
         android:id="@+id/free_cnt_squat"
         android:layout_width="80dp"
@@ -104,6 +105,14 @@
         app:progress_end_color="@color/btn_primary_red"
         app:progress_shader="linear"
         />
+    <View
+        android:id="@+id/cover"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@color/white"
+        >
+
+    </View>
 
     <!-- 운동 진행 바 -->
     <ProgressBar
@@ -134,11 +143,12 @@
         android:id="@+id/cnt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="600dp"
-        android:layout_marginRight="20dp"
         android:gravity="right"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="70dp"
         android:textColor="@color/btn_gray"
         android:textSize="20sp"
+        android:fontFamily="@font/font"
         tools:text="Count"
         />
     <TextView
@@ -162,7 +172,8 @@
         android:textColor="@color/btn_primary_red"
         android:textSize="30sp"
         android:textStyle="bold"
-        tools:text="countDown" />
+        tools:text="countDown"
+        android:fontFamily="@font/font"/>
 
     <ProgressBar
         android:id="@+id/progressbar"
