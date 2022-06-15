@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="데이터를 선택해주세요."
+        android:textSize="20sp" />
+
+    <ScrollView
+        android:id="@+id/chatting_room_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:fillViewport="true">
+
+        <ListView
+            android:id="@+id/exDataListLV"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+
+    </ScrollView>
+
+
+
+</LinearLayout>
