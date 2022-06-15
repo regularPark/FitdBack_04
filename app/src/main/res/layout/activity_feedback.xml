@@ -27,6 +27,9 @@
             android:textSize="30sp" />
 
     </LinearLayout>
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,23 +60,10 @@
             app:progress_end_color="@color/btn_primary"
             app:progress_text_color="@color/btn_gray"
             />
-
     </LinearLayout>
+    </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1">
 
-        <TextView
-            android:id="@+id/fb_feedbackArea"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="feedback area"
-            android:textSize="30sp" />
-
-    </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -82,7 +72,13 @@
             android:layout_width="match_parent"
             android:layout_height="360dp"
             android:orientation="vertical">
-
+            <TextView
+                android:id="@+id/fb_feedbackArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="feedback area"
+                android:textSize="30sp" />
             <TextView
                 android:id="@+id/feedbackYAxisTitleArea"
                 android:layout_width="50dp"

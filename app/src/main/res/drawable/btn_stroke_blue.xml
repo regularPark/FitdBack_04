@@ -7,7 +7,7 @@
             <corners android:radius="5dp" />
             <stroke
                 android:width="2dp"
-                android:color="@color/btn_primary"/>
+                android:color="#FAFAFA"/>
         </shape>
     </item>
     <item android:id="@android:id/background">
@@ -19,7 +19,7 @@
                 />
             <stroke
                 android:width="3dp"
-                android:color="@color/btn_primary"/>
+                android:color="#FAFAFA"/>
         </shape>
     </item>
 </ripple>

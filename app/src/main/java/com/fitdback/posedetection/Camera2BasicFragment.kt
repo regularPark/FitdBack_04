@@ -90,9 +90,10 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private var prgBar: ProgressBar? = null
     private var guideMsg: TextView? = null
     private var exPrgBar: ProgressBar? = null  // 카운트바
-    private var free_cnt_sqt: CircleProgressBar? = null
-    private var free_cnt_plk: CircleProgressBar? = null
-    private var free_cnt_slr: CircleProgressBar? = null
+    private var fr_sq_c: TextView? = null
+    private var fr_pl_c: TextView? = null
+    private var fr_slr_c: TextView? = null
+    private var cover: View? = null
 
 
     /**
@@ -378,6 +379,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         }
     }
 
+    // 자율운동 위한 함수
     private fun showCount(text_com: Int, text_tar: Int, text_f: Int, text_s: Int) {
         val activity = activity
         activity?.runOnUiThread {
@@ -390,10 +392,10 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                 countView!!.visibility = View.INVISIBLE
             }
             if (FeedbackAlgorithm.exr_mode != "free_exr") {
-                free_cnt_plk!!.visibility = View.INVISIBLE
-                free_cnt_slr!!.visibility = View.INVISIBLE
-                free_cnt_sqt!!.visibility = View.INVISIBLE
+                cover!!.visibility = View.VISIBLE
+
             }
+
         }
     }
 
@@ -414,6 +416,12 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                         },
                         1000
                 )
+                if (FeedbackAlgorithm.exr_mode == "free_exr") {
+                    fr_sq_c!!.text = " " + (FeedbackAlgorithm.squat_s + FeedbackAlgorithm.squat_f).toString() + "회"
+                    fr_pl_c!!.text = " " + (FeedbackAlgorithm.plank_s + FeedbackAlgorithm.plank_f).toString() + "초"
+                    fr_slr_c!!.text = " " + (FeedbackAlgorithm.sidelr_s + FeedbackAlgorithm.sidelr_f).toString() + "회"
+                    cover!!.visibility = View.INVISIBLE
+                }
             }
         } else {
             activity?.runOnUiThread {
@@ -421,6 +429,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                 guideMsg!!.text = "정확한 측정을 위해\n전신이 보이도록 뒤로 물러나 주세요"
                 drawView!!.visibility = View.INVISIBLE
                 exPrgBar!!.visibility = View.INVISIBLE
+
+                // 기기 간 성능차로 인한 카운트다운 차이 감안한 오디오 재생
                 if (text == 5) {
                     if (FeedbackAlgorithm.start_tf) {
                         FeedbackAlgorithm.start_tf = false
@@ -471,13 +481,18 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         layoutFrame = view.findViewById(R.id.layout_frame)
         drawView = view.findViewById(R.id.drawview)
         layoutBottom = view.findViewById(R.id.layout_bottom)
+
+        // 카운트 다운
         countTimer = view.findViewById(R.id.cntDown)
         prgBar = view.findViewById(R.id.progressbar)
         guideMsg = view.findViewById(R.id.guide)
         exPrgBar = view.findViewById(R.id.exPrgBar)
-        free_cnt_sqt = view.findViewById(R.id.free_cnt_squat)
-        free_cnt_plk = view.findViewById(R.id.free_cnt_plank)
-        free_cnt_slr = view.findViewById(R.id.free_cnt_slr)
+
+        // 자율운동 카운트
+        fr_sq_c = view.findViewById(R.id.free_sq_cnt)
+        fr_pl_c = view.findViewById(R.id.free_pl_cnt)
+        fr_slr_c = view.findViewById(R.id.free_slr_cnt)
+        cover = view.findViewById(R.id.cover)
 
 
         // 렌더링 옵션 : CPU or GPU

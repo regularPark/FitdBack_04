@@ -162,7 +162,7 @@ class FeedbackAlgorithm {
         val plank_cal: Double = 0.30
         val sidelr_cal: Double = 0.20
 
-        val target_cnt: Int = 10
+        val target_cnt: Int = 1
 
         var isExrFinished: Boolean = false
         //val soundPool = SoundPool.Builder().build()
