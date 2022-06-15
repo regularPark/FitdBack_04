@@ -18,7 +18,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/btn_gray">
+    android:background="@color/white">
 
     <com.fitdback.posedetection.AutoFitFrameLayout
         android:id="@+id/layout_frame"
@@ -65,7 +65,7 @@
         app:line_count="30"
         android:layout_gravity="left"
         android:layout_margin="10dp"
-        android:background="@color/btn_gray"
+        android:background="@color/white"
         app:progress_stroke_cap="round"
         app:progress_start_color="@color/btn_primary"
         app:progress_end_color="@color/btn_primary_red"
@@ -74,20 +74,19 @@
 
     <com.dinuscxj.progressbar.CircleProgressBar
         android:id="@+id/free_cnt_plank"
-        android:layout_width="80dp"
+        android:layout_width="70dp"
         android:layout_height="80dp"
-        app:progress_text_size="30dp"
-        app:progress_stroke_width="2dp"
-        app:line_width="5dp"
-        app:line_count="30"
         android:layout_gravity="center|top"
         android:layout_margin="10dp"
-        android:background="@color/btn_gray"
-        app:progress_stroke_cap="round"
-        app:progress_start_color="@color/btn_primary"
+        android:background="@color/white"
+        app:line_count="30"
+        app:line_width="5dp"
         app:progress_end_color="@color/btn_primary_red"
         app:progress_shader="linear"
-        />
+        app:progress_start_color="@color/btn_primary"
+        app:progress_stroke_cap="round"
+        app:progress_stroke_width="2dp"
+        app:progress_text_size="30dp" />
 
     <com.dinuscxj.progressbar.CircleProgressBar
         android:id="@+id/free_cnt_slr"
@@ -99,7 +98,7 @@
         app:line_count="30"
         android:layout_gravity="right"
         android:layout_margin="10dp"
-        android:background="@color/btn_gray"
+        android:background="@color/white"
         app:progress_stroke_cap="round"
         app:progress_start_color="@color/btn_primary"
         app:progress_end_color="@color/btn_primary_red"
@@ -108,17 +107,15 @@
 
     <!-- 운동 진행 바 -->
     <ProgressBar
-        android:id="@+id/prgHorizontal"
+        android:id="@+id/exPrgBar"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:background="@drawable/custom_prgbar"
-        tools:progress="80"
-        android:max="100"
         android:layout_gravity="center|bottom"
         android:layout_marginHorizontal="20dp"
         android:progressDrawable="@drawable/custom_prgbar"
-        android:layout_marginBottom="60dp"/>
+        android:layout_marginBottom="30dp"/>
 
 
     <TextView
@@ -140,8 +137,8 @@
         android:layout_marginTop="600dp"
         android:layout_marginRight="20dp"
         android:gravity="right"
-        android:textColor="#faff0d"
-        android:textSize="30sp"
+        android:textColor="@color/btn_gray"
+        android:textSize="20sp"
         tools:text="Count"
         />
     <TextView
@@ -174,8 +171,8 @@
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:layout_marginTop="90dp"
-        android:indeterminate="false"
         android:max="5"
+        tools:progress="3"
         android:progressBackgroundTint="#00000000"
         android:progressDrawable="@drawable/circle_progressbar"
         />

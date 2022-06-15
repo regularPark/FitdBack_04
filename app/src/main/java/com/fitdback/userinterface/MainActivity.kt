@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onBackPressed() {
-        startActivity(Intent(this, LoginActivity_old::class.java))
+        startActivity(Intent(this, LoginActivity_new::class.java))
         finish()
     }
 

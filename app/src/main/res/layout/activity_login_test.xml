@@ -5,13 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.fitdback.userinterface.LoginActivity_new">
+    tools:context="com.fitdback.userinterface.LoginActivity_new"
+    android:background="#f7f7f7">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:text="대충 헬스장에서 바벨드는 움짤"
-        android:textSize="30sp" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="180dp"
+        android:src="@drawable/pinterest_profile_image_1"
+        android:layout_gravity="top"
+        />
+    <ImageView
+        android:id="@+id/image_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 
 
     <Button
@@ -19,6 +26,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="5dp"
+        android:textSize="20sp"
+        android:background="@drawable/btn_stroke_blk"
+        android:fontFamily="@font/font"
         android:text="이메일 로그인" />
 
 
@@ -27,6 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="5dp"
+        android:background="@drawable/btn_stroke_blk"
         />
 
 
@@ -35,6 +46,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="5dp"
+        android:textSize="20sp"
+        android:background="@drawable/btn_stroke_blk"
+        android:fontFamily="@font/font"
         android:text="개발자 로그인" />
 
     <TextView

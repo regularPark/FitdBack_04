@@ -292,7 +292,7 @@ class FeedbackAlgorithm {
         }
 
         //sidelr로 바꾸기
-        fun pushup(context: Context, mDrawPoint: CopyOnWriteArrayList<PointF>) {
+        fun sidelr(context: Context, mDrawPoint: CopyOnWriteArrayList<PointF>) {
             no_exr = false
 
             if (exr_cnt == 0 && time_tf) {
