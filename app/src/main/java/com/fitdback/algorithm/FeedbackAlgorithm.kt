@@ -162,7 +162,7 @@ class FeedbackAlgorithm {
         val plank_cal: Double = 0.30
         val sidelr_cal: Double = 0.20
 
-        val target_cnt: Int = 10
+        val target_cnt: Int = 1
 
         var isExrFinished: Boolean = false
         //val soundPool = SoundPool.Builder().build()
@@ -299,10 +299,10 @@ class FeedbackAlgorithm {
                         Log.d("squat_time", "시간2 = " + squat_time)
 
                         squat_string1 = ("%d / %d 회 성공. \n " +
-                                "%d kcal 소모.").format(squat_s, squat_s+ squat_f, squat_cal*(squat_s+squat_f))
+                                "%d kcal 소모.").format(squat_s, squat_s+ squat_f, (squat_cal*(squat_s+squat_f)).toInt())
 
                         squat_string2 = ("%d회 중 %d회 성공, \n " +
-                                "&d kcal를 소모하였습니다.").format(squat_s+ squat_f, squat_s, squat_cal*(squat_s+squat_f))
+                                "&d kcal를 소모하였습니다.").format(squat_s+ squat_f, squat_s, (squat_cal*(squat_s+squat_f)).toInt())
 
                         squat_string3 = ("[실패 원인 분석] \n " +
                                 "다리를 %d회 더 굽혔습니다. \n " +

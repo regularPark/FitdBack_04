@@ -19,16 +19,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-
-            <Button
-                android:id="@+id/howTo"
+            <ImageView
+                android:id="@+id/tt_img"
                 android:layout_width="match_parent"
-                android:layout_height="330dp"
-                android:background="#000000"
-                android:text="description"
-                android:textColor="@color/white"
-                android:textSize="30sp"
-                android:textStyle="italic" />
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                />
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </TextView>
 
 
             <Button
@@ -39,7 +41,7 @@
                 android:layout_marginHorizontal="10dp"
                 android:text="전면 카메라 사용"
                 android:textSize="30sp"
-                android:textStyle="bold"
+                android:fontFamily="@font/font"
                 android:background="@drawable/btn_stroke_blk"/>
             <Button
                 android:id="@+id/btnFitnessStartBack"
@@ -48,7 +50,7 @@
                 android:layout_margin="10dp"
                 android:text="후면 카메라 사용"
                 android:textSize="30sp"
-                android:textStyle="bold"
+                android:fontFamily="@font/font"
                 android:background="@drawable/btn_stroke_blk"
                 />
         </LinearLayout>

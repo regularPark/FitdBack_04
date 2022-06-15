@@ -4,6 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.fitdback.posedetection.CameraActivity
 import com.fitdback.posedetection.R
 import com.google.android.youtube.player.YouTubeBaseActivity
@@ -34,34 +37,17 @@ class TutorialActivity : YouTubeBaseActivity() {
                 player: YouTubePlayer,
                 wasRestored: Boolean
             ) {
-                if (exr == "squat"){
+                if (exr == "squat") {
                     videoId = "Fk9j6pQ6ej8"
                     player.cueVideo(videoId)
-                }
-                else if(exr == "plank"){
+                } else if (exr == "plank") {
                     videoId = "B--6YfhmBGc"
                     player.cueVideo(videoId)
-                }
-                else if (exr == "sideLateralRaise")
+                } else if (exr == "sidelr") {
                     videoId = "YdhHnZxcpgY"
                     player.cueVideo(videoId)
                 }
-
-//               if (!wasRestored) {
-//                   player.cueVideo(videoId)
-//               }
-
-//                player.setPlayerStateChangeListener(object : YouTubePlayer.PlayerStateChangeListener {
-//                    override fun onAdStarted() {}
-//                    override fun onLoading() {}
-//                    override fun onVideoStarted() {}
-//                    override fun onVideoEnded() {}
-//                    override fun onError(p0: YouTubePlayer.ErrorReason) {}
-//                    override fun onLoaded(videoId: String) {
-//                    }
-//                })
-//            }
-
+            }
 
 
             override fun onInitializationFailure(
@@ -75,8 +61,21 @@ class TutorialActivity : YouTubeBaseActivity() {
         // 레이아웃
         val btnFitnessStart = findViewById<Button>(R.id.btnFitnessStart)
 
+        val imgView = findViewById<ImageView>(R.id.tt_img)
+        val txtView = findViewById<TextView>(R.id.description)
 
-
+        if (exr == "squat") {
+            Glide.with(this).load(R.raw.squat_gif).into(imgView)
+            txtView.setText("엉덩이 - 무릎 - 발목이 이루는 각이 70~90도여야 합니다.")
+        }
+        else if(exr == "plank") {
+            Glide.with(this).load(R.raw.plank).into(imgView)
+            txtView.setText("목 - 허리 - 무릎이 이루는 각이 170~190도여야 합니다.")
+        }
+        else if (exr == "sidelr") {
+            Glide.with(this).load(R.raw.slr_gif).into(imgView)
+            txtView.setText("양팔이 이루는 각이 170~190도여야 합니다.")
+        }
         // 인텐트
         val intent = Intent(this, CameraActivity::class.java)
 
