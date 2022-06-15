@@ -108,7 +108,7 @@ class CameraActivity : Activity() {
                     FeedbackAlgorithm.total_exr_time = 0
                 }
 
-                "pushup" -> {
+                "free_exr" -> {
                     FeedbackAlgorithm.exr_cnt = 0
                     FeedbackAlgorithm.exr_cnt_s = 0
                     FeedbackAlgorithm.exr_cnt_f = 0

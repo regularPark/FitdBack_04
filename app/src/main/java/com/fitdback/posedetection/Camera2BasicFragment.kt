@@ -334,7 +334,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                             }, 3000
                     ) //카메라 종료 3초 지연
                 }
-            } else if (FeedbackAlgorithm.exr_mode == "pushup") {
+            } else if (FeedbackAlgorithm.exr_mode == "free_exr") {
                 if (FeedbackAlgorithm.total_cnt == 10 && !FeedbackAlgorithm.isExrFinished) {
                     FeedbackAlgorithm.isExrFinished = true
                     Handler().postDelayed(
@@ -420,6 +420,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                 countTimer!!.text = text.toString()
                 guideMsg!!.text = "정확한 측정을 위해\n전신이 보이도록 뒤로 물러나 주세요"
                 drawView!!.visibility = View.INVISIBLE
+                exPrgBar!!.visibility = View.INVISIBLE
                 if (text == 5) {
                     if (FeedbackAlgorithm.start_tf) {
                         FeedbackAlgorithm.start_tf = false

@@ -144,10 +144,7 @@ class DrawView : View {
         for ((index, pointF) in mDrawPoint.withIndex()) {
 
             // 관절 튈 때 그리지 않는 방법
-            if (mDrawPoint[13].y > mDrawPoint[2].y && mDrawPoint[13].y > mDrawPoint[5].y &&
 
-                    mDrawPoint[10].y > mDrawPoint[5].y && mDrawPoint[10].y > mDrawPoint[2].y
-            ) {
                 if (index == 1) continue
                 when (index) {
                     //0-1
@@ -193,21 +190,25 @@ class DrawView : View {
                     }
                 }
                 prePointF = pointF
-            }
+
 
 
         }
 
         // 점 그리기
 
-        for ((index, pointF) in mDrawPoint.withIndex()) {
-            if (mDrawPoint[13].y > mDrawPoint[2].y && mDrawPoint[13].y > mDrawPoint[5].y &&
+        try {
+            for ((index, pointF) in mDrawPoint.withIndex()) {
+                if (mDrawPoint[13].y > mDrawPoint[2].y && mDrawPoint[13].y > mDrawPoint[5].y &&
 
-                    mDrawPoint[10].y > mDrawPoint[5].y && mDrawPoint[10].y > mDrawPoint[2].y
-            ) {
-                mPaint.color = mColorArray[index]
-                canvas.drawCircle(pointF.x, pointF.y, circleRadius, mPaint)
+                        mDrawPoint[10].y > mDrawPoint[5].y && mDrawPoint[10].y > mDrawPoint[2].y
+                ) {
+                    mPaint.color = mColorArray[index]
+                    canvas.drawCircle(pointF.x, pointF.y, circleRadius, mPaint)
+                }
             }
+        }
+        catch(e: ArrayIndexOutOfBoundsException){
         }
 
 
@@ -222,8 +223,8 @@ class DrawView : View {
                         { FeedbackAlgorithm.plank(context, mDrawPoint) },
                         5000
                 ) // 5초동안 플랭크 알고리즘 비활성화
-                "pushup" -> Handler().postDelayed(
-                        { FeedbackAlgorithm.pushup(context, mDrawPoint) },
+                "free_exr" -> Handler().postDelayed(
+                        { FeedbackAlgorithm.free_exr(context, mDrawPoint) },
                         5000
                 )
                 "sidelr" -> Handler().postDelayed(

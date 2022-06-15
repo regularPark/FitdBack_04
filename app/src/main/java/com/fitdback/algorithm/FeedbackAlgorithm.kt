@@ -89,7 +89,7 @@ class FeedbackAlgorithm {
         var ha_grad: Double = 0.0
         var squat_s: Int = 0
         var squat_f: Int = 0
-        var squat_f_mode = intArrayOf(0, 0, 0, 0, 0, 0)
+        var squat_f_mode = intArrayOf(0, 0, 0)
         var squat_f_most: Int = 0
         var squat_string: String = "Empty"
         var squat_most_ind: Int = 0
@@ -194,13 +194,10 @@ class FeedbackAlgorithm {
 
         //DrawView 164줄에서 squat 함수 호출
         fun squat(context: Context, mDrawPoint: CopyOnWriteArrayList<PointF>) {
+            Log.d("squat_err", "스쿼트 실행")
             no_exr = false
             sidelr_start = 0
             plank_start = 0
-            //squat_start = System.currentTimeMillis()
-
-            /*ank_dist = cal_dist(mDrawPoint[10], mDrawPoint[13])
-            Log.d("dist", "거리 = "+ ank_dist)*/
 
             if (exr_cnt == 0 && time_tf) {
                 start_time = System.currentTimeMillis()
@@ -208,40 +205,42 @@ class FeedbackAlgorithm {
             }
 
 
-            hka_l_angle = cal_angle(mDrawPoint[8], mDrawPoint[9], mDrawPoint[10])
-            hka_r_angle = cal_angle(mDrawPoint[11], mDrawPoint[12], mDrawPoint[13])
-            nhk_l_angle = cal_angle(mDrawPoint[9], mDrawPoint[8], mDrawPoint[1])
+            try{
+                hka_l_angle = cal_angle(mDrawPoint[8], mDrawPoint[9], mDrawPoint[10])
+                hka_r_angle = cal_angle(mDrawPoint[11], mDrawPoint[12], mDrawPoint[13])
+                nhk_l_angle = cal_angle(mDrawPoint[9], mDrawPoint[8], mDrawPoint[1])
 
-            head_y = mDrawPoint[0].y
-            ank_l_y = mDrawPoint[10].y
+                head_y = mDrawPoint[0].y
+                ank_l_y = mDrawPoint[10].y
 
-            //------------------------------
-            //머리가 가장 위, 왼발목이 가장 아래 있는지 체크 -> 아니면 스쿼트 판별x
-            for (i in 1..13) {
-                if (head_y >= mDrawPoint[i].y) {
-                    no_exr = true
-                    break
+                //------------------------------
+                //머리가 가장 위, 왼발목이 가장 아래 있는지 체크 -> 아니면 스쿼트 판별x
+                for (i in 1..13) {
+                    if (head_y >= mDrawPoint[i].y) {
+                        no_exr = true
+                        break
+                    }
                 }
-            }
-            for (i in 0..9) {
-                if (mDrawPoint[i].y >= ank_l_y) {
-                    no_exr = true
-                    break
+                for (i in 0..9) {
+                    if (mDrawPoint[i].y >= ank_l_y) {
+                        no_exr = true
+                        break
+                    }
                 }
+            }catch(e: ArrayIndexOutOfBoundsException){
             }
-            //------------------------------
+
 
             //스쿼트 판별 시작
 
-            Log.d("squat_err3", "허리 = " + nhk_l_angle)
+            Log.d("squat_err3", "허리 = " + nhk_l_angle + " tf "+ cnt_s_tf + " " + cnt_f_tf)
 
-            if (150.toDouble() <= hka_l_angle && hka_l_angle <= 190.toDouble() && !no_exr) {
+            if (hka_l_angle in 160.0..180.0 && !no_exr) {
                 isStand = true
-                //Log.d("zxcv", "stand complete")
 
                 //운동 횟수 추가 판단되면 스쿼트 동작 완료 후 기본자세(stand)로 돌아가면 횟수 추가
                 if (cnt_s_tf || cnt_f_tf) {
-                    if (cnt_s_tf && isSquat && wrong_mode < 5) {
+                    if (cnt_s_tf && isSquat && wrong_mode < 2) {
                         cnt_s_tf = false
                         isSquat = false
                         cnt_f_tf = false
@@ -257,33 +256,20 @@ class FeedbackAlgorithm {
                             exr_cnt_f++
                             squat_f++
 
-                            if (wrong_mode == 2) {
+                            if (wrong_mode == 1) {
                                 sound_play(context, R.raw.squat_ld_fb) // "다리 더 굽히세요"
                                 Toast.makeText(context, "------FAIL2------", Toast.LENGTH_SHORT)
                                         .show()
-                            } // 2 -> 다리가 덜 굽혀져 실패
-
-                            /*else if(wrong_mode==1) {
-                                sound_play(context, R.raw.squat_back_fb)
-                                Toast.makeText(context, "------FAIL1------", Toast.LENGTH_SHORT).show()
-                            } // 1 -> 허리 굽혀져 실패*/
-                            else if (wrong_mode == 5) {
+                            } else if (wrong_mode == 2) {
                                 sound_play(context, R.raw.squat_lu_fb) // "다리 너무 굽혔어요"
                                 Toast.makeText(context, "------FAIL5------", Toast.LENGTH_SHORT)
                                         .show()
                                 cnt_s_tf = false
                                 isSquat = false
-                            } // 5 -> 다리가 너무 굽혀져 실패
-
-                            /*else if(wrong_mode==3) {
-                                sound_play(context, R.raw.squat_legback_fb)
-                                Toast.makeText(context, "------FAIL3------", Toast.LENGTH_SHORT).show()
-                            } // 1+2 -> 다리가 덜 굽혀지고 허리도 덜 굽혀져 실패*/
+                            }
                             squat_f_mode[wrong_mode]++
 
                         }
-                        Log.d("exr_F", "wrong_mode = " + wrong_mode + " exr_cnt_f = " + exr_cnt_f)
-                        Log.d("exr_F", "test : " + squat_f_mode[0] + " " + squat_f_mode[2] + " " + squat_f_mode[5])
                         isWrong = false
                         wrong_mode = 0
                     }
@@ -303,20 +289,21 @@ class FeedbackAlgorithm {
                         Log.d("squat_time", "시간1 = " + total_exr_time)
                         Log.d("squat_time", "시간2 = " + squat_time)
 
-                        for (i in 1..5) {
-                            if (squat_f_most < squat_f_mode[i]) {
-                                squat_f_most = squat_f_mode[i]
-                                squat_most_ind = i
-                            }
+                        if (squat_f_mode[1] >= squat_f_mode[2]) {
+                            squat_f_most = squat_f_mode[1]
+                            squat_most_ind = 1
+                        } else {
+                            squat_f_most = squat_f_mode[2]
+                            squat_most_ind = 2
                         }
 
                         Log.d("exr_F_most", "most = " + squat_f_most.toFloat() + " " + squat_f_most.toFloat() / exr_cnt_f)
                         squat_f_per = ((squat_f_most.toFloat() / exr_cnt_f) * 100).toInt()
                         //f_per = cnt_f_most/ exr_cnt_f * 100
 
-                        if (squat_most_ind == 2) {
+                        if (squat_most_ind == 1) {
                             squat_string = "실패한 운동의 %d %%가 다리를 더 굽히지 않아서였습니다.".format(squat_f_per)
-                        } else if (squat_most_ind == 5) {
+                        } else if (squat_most_ind == 2) {
                             squat_string = "실패한 운동의 %d %%가 다리를 너무 많이 굽혀서였습니다.".format(squat_f_per)
                         }
                         Log.d("exr_F_string", squat_string)
@@ -326,44 +313,34 @@ class FeedbackAlgorithm {
                         //--------------------------------------------------------------------------------------------------------
 
                     }
-                } else if (140.toDouble() >= hka_l_angle && !no_exr) {
-                    //스쿼트 자세로 판단되면 Stand가 아님
-                    isStand = false
+                }
+            }
 
-                    //스쿼트 성공
-                    if (105.toDouble() >= hka_l_angle && 60.toDouble() <= hka_l_angle && 80.toDouble() <= nhk_l_angle && wrong_mode != 5) {
-                        cnt_s_tf = true
-                        isSquat = true
-                        Log.d("exr_S", "Success 각도 = 무릎 " + hka_l_angle)
-                    }
+            else if (160.toDouble() >= hka_l_angle && !no_exr) {
+                //스쿼트 자세로 판단되면 Stand가 아님
+                isStand = false
 
-                    //다리가 70도 이하로 내려가면 너무 굽혀져 실패
-                    else if (60.toDouble() > hka_l_angle) {
-                        cnt_f_tf = true
-                        wrong_mode = 5
+                //스쿼트 성공
+                if (hka_l_angle in 60.0..120.0 && wrong_mode != 2) {
+                    cnt_s_tf = true
+                    isSquat = true
+                    Log.d("exr_S", "Success 각도 = 무릎 " + hka_l_angle)
+                }
+
+                //다리가 70도 이하로 내려가면 너무 굽혀져 실패
+                else if (60.toDouble() > hka_l_angle) {
+                    cnt_f_tf = true
+                    wrong_mode = 2
+                    isWrong = true
+                    Log.d("exr_F5", "F5 각도 = 무릎 " + hka_l_angle)
+                }
+
+                //다리가 120도 이하로 굽혀지지 않아 실패
+                else if (hka_l_angle in 120.0..160.0) {
+                    cnt_f_tf = true
+                    if (wrong_mode != 2 && !cnt_s_tf) {
+                        wrong_mode = 1
                         isWrong = true
-                        Log.d("exr_F5", "F5 각도 = 무릎 " + hka_l_angle)
-                    } else if (!isSquat) {
-                        cnt_f_tf = true
-                        if (wrong_mode < 5 && !isWrong) {
-
-                            wrong_mode = 0
-
-                            //다리가 105도 이하로 굽혀지지 않아 실패
-                            if (hka_l_angle > 105.toDouble() || nhk_l_angle < 80.toDouble()) {
-                                Log.d("squat_err3", "허리 = " + nhk_l_angle + " 다리 = " + hka_l_angle)
-                                /*if(nhk_l_angle<80.toDouble()){
-                                    wrong_mode += 1
-                                    isWrong = true
-                                }*/
-                                if (hka_l_angle > 105.toDouble()) {
-                                    wrong_mode += 2
-                                    isWrong = true
-                                }
-
-                            }
-                            Log.d("squat_err", "mode = " + wrong_mode)
-                        }
                     }
                 }
             }
@@ -375,29 +352,33 @@ class FeedbackAlgorithm {
             squat_start = 0
             sidelr_start = 0
 
-            sew_l_angle = cal_angle(mDrawPoint[2], mDrawPoint[3], mDrawPoint[4])
-            nhk_l_angle = cal_angle(mDrawPoint[1], mDrawPoint[8], mDrawPoint[9])
+            try {
+                sew_l_angle = cal_angle(mDrawPoint[2], mDrawPoint[3], mDrawPoint[4])
+                nhk_l_angle = cal_angle(mDrawPoint[1], mDrawPoint[8], mDrawPoint[9])
 
-            head_x = mDrawPoint[0].x
-            ank_l_x = mDrawPoint[10].x
-            neck_y = mDrawPoint[1].y
-            hip_l_y = mDrawPoint[8].y
-            knee_l_y = mDrawPoint[9].y
+                head_x = mDrawPoint[0].x
+                ank_l_x = mDrawPoint[10].x
+                neck_y = mDrawPoint[1].y
+                hip_l_y = mDrawPoint[8].y
+                knee_l_y = mDrawPoint[9].y
 
-            //------------------------------
-            //오른쪽을 보고 엎드리기
-            //머리가 가장 오른쪽, 왼발목이 가장 왼쪽에 있는지 체크 -> 아니면 스쿼트 판별x
-            for (i in 1..13) {
-                if (head_x <= mDrawPoint[i].x) {
-                    no_exr = true
-                    break
+
+                //------------------------------
+                //오른쪽을 보고 엎드리기
+                //머리가 가장 오른쪽, 왼발목이 가장 왼쪽에 있는지 체크 -> 아니면 스쿼트 판별x
+                for (i in 1..13) {
+                    if (head_x <= mDrawPoint[i].x) {
+                        no_exr = true
+                        break
+                    }
                 }
-            }
-            for (i in 0..9) {
-                if (mDrawPoint[i].x <= ank_l_x) {
-                    no_exr = true
-                    break
+                for (i in 0..9) {
+                    if (mDrawPoint[i].x <= ank_l_x) {
+                        no_exr = true
+                        break
+                    }
                 }
+            } catch (e: ArrayIndexOutOfBoundsException) {
             }
             //------------------------------
 
@@ -428,7 +409,9 @@ class FeedbackAlgorithm {
                     }
 
 
-                } else {
+                }
+
+                else {
                     time_tf = true
                     plank_start = 0
                 }
@@ -451,7 +434,8 @@ class FeedbackAlgorithm {
                         isDone = true
                     }
                 }
-            } else {
+            }
+            else {
                 if (isFirst) {
                     isFirst = false
                     sound_play(context, R.raw.plank_suc) //플랭크 10초 완료 사운드
@@ -491,31 +475,38 @@ class FeedbackAlgorithm {
                 time_tf = false
             }
 
-            nse_l_angle = cal_angle(mDrawPoint[1], mDrawPoint[2], mDrawPoint[3])
-            nse_r_angle = cal_angle(mDrawPoint[1], mDrawPoint[5], mDrawPoint[6])
-            nhk_l_angle = cal_angle(mDrawPoint[1], mDrawPoint[8], mDrawPoint[9])
-            nhk_r_angle = cal_angle(mDrawPoint[1], mDrawPoint[11], mDrawPoint[12])
+            try {
+                nse_l_angle = cal_angle(mDrawPoint[1], mDrawPoint[2], mDrawPoint[3])
+                nse_r_angle = cal_angle(mDrawPoint[1], mDrawPoint[5], mDrawPoint[6])
+                nhk_l_angle = cal_angle(mDrawPoint[1], mDrawPoint[8], mDrawPoint[9])
+                nhk_r_angle = cal_angle(mDrawPoint[1], mDrawPoint[11], mDrawPoint[12])
 
-            head_y = mDrawPoint[0].y
-            ank_l_y = mDrawPoint[10].y
-            neck_y = mDrawPoint[1].y
-            elbow_l_y = mDrawPoint[3].y
-            elbow_r_y = mDrawPoint[6].y
+                head_y = mDrawPoint[0].y
+                ank_l_y = mDrawPoint[10].y
+                Log.d("necky", "neck" + mDrawPoint[1])
+                if (neck_y < 1.0) {
+                    neck_y = mDrawPoint[1].y
+                }
+                elbow_l_y = mDrawPoint[3].y
+                elbow_r_y = mDrawPoint[6].y
 
 
-            //------------------------------
-            //머리가 가장 위, 왼발목이 가장 아래 있는지 체크 -> 아니면 사래레 판별x
-            for (i in 1..13) {
-                if (head_y >= mDrawPoint[i].y) {
-                    no_exr = true
-                    break
+                //------------------------------
+                //머리가 가장 위, 왼발목이 가장 아래 있는지 체크 -> 아니면 사래레 판별x
+                for (i in 1..13) {
+                    if (head_y >= mDrawPoint[i].y) {
+                        no_exr = true
+                        break
+                    }
+                }
+                for (i in 0..9) {
+                    if (mDrawPoint[i].y >= ank_l_y) {
+                        no_exr = true
+                        break
+                    }
                 }
             }
-            for (i in 0..9) {
-                if (mDrawPoint[i].y >= ank_l_y) {
-                    no_exr = true
-                    break
-                }
+            catch(e: ArrayIndexOutOfBoundsException){
             }
             //------------------------------
 
@@ -624,7 +615,9 @@ class FeedbackAlgorithm {
                     //--------------------------------------------------------------------------------------------------------
 
                 }
-            } else if (elbow_l_y > neck_y && elbow_r_y > neck_y && nse_l_angle >= 140.0 && nse_r_angle >= 140.0 && !no_exr) {
+            }
+
+            else if (elbow_l_y > neck_y && elbow_r_y > neck_y && nse_l_angle >= 140.0 && nse_r_angle >= 140.0 && !no_exr && wrong_mode<5) {
                 //사래레 자세로 판단되면 Stand가 아님
                 isStand = false
 
@@ -635,10 +628,12 @@ class FeedbackAlgorithm {
                     isSidelr = true
                     isWrong = false
                     Log.d("sidelr_S", "왼팔 = " + nse_l_angle + " 오른팔 = " + nse_r_angle)
-                } else {
-                    cnt_f_tf = true
-                    if (!isSidelr && wrong_mode < 5) {
+                }
+
+                else {
+                    if (!isSidelr && wrong_mode < 5&&!cnt_s_tf) {
                         wrong_mode = 0
+                        cnt_f_tf = true
                         if (nse_l_angle in 140.0..169.9 || nse_r_angle in 140.0..169.9) {
                             if (nse_l_angle in 140.0..169.9) {
                                 wrong_mode += 2
@@ -651,42 +646,9 @@ class FeedbackAlgorithm {
                         }
                     }
                 }
+            }
 
-                /*//팔 각도가 너무 올라갔을 경우
-                else if (elbow_l_y <= neck_y || elbow_r_y <= neck_y) {
-                    if (elbow_l_y <= neck_y) {
-                        cnt_f_tf = true
-                        wrong_mode += 5
-                        isWrong = true
-                        Log.d("exr_F5", "F5 각도 = 무릎 " + hka_l_angle)
-                    }
-                    if (elbow_r_y <= neck_y) {
-                        cnt_f_tf = true
-                        wrong_mode += 8
-                        isWrong = true
-                        Log.d("exr_F5", "F5 각도 = 무릎 " + hka_l_angle)
-                    }
-                }*/
-
-                //팔 각도가 덜 올라갔을 경우
-                /*else if (!isSidelr) {
-                    cnt_f_tf = true
-                    if (!isSidelr && wrong_mode < 5) {
-                        wrong_mode = 0
-
-                        if (nse_l_angle in 140.0..169.9 || nse_r_angle in 140.0..169.9) {
-                            if (nse_l_angle in 140.0..169.9) {
-                                wrong_mode += 2
-                                isWrong = true
-                            }
-                            if (nse_r_angle in 140.0..169.9) {
-                                wrong_mode += 1
-                                isWrong = true
-                            }
-                        }
-                    }
-                }*/
-            } else if ((elbow_l_y <= neck_y || elbow_r_y <= neck_y) && wrong_mode < 5) {
+            else if ((elbow_l_y <= neck_y || elbow_r_y <= neck_y) && wrong_mode < 5) {
                 isStand = false
                 wrong_mode = 0
                 if (elbow_l_y <= neck_y) {
@@ -699,24 +661,30 @@ class FeedbackAlgorithm {
                     wrong_mode += 8
                     isWrong = true
                 }
-                Log.d(
-                        "sidelr_y",
-                        "왼팔꿈치 = " + elbow_l_y + " 오른팔꿈치 = " + elbow_r_y + " 목 = " + neck_y + " mode = " + wrong_mode
-                )
             }
-        }//자율운동
+        }
 
-        fun pushup(context: Context, mDrawPoint: CopyOnWriteArrayList<PointF>) {
+        //자율운동
+        fun free_exr(context: Context, mDrawPoint: CopyOnWriteArrayList<PointF>) {
+            Log.d("pushuptest", "freeexr_start")
             if (free_tf) {
                 free_tf = false
                 free_start = System.currentTimeMillis()
             }
-            ha_grad = cal_grad(mDrawPoint[0], mDrawPoint[10])
-            ank_dist = cal_dist(mDrawPoint[10], mDrawPoint[13])
+
+            try {
+                ha_grad = cal_grad(mDrawPoint[0], mDrawPoint[10])
+                ank_dist = cal_dist(mDrawPoint[10], mDrawPoint[13])
+            }
+            catch(e: ArrayIndexOutOfBoundsException){
+
+            }
 
             if (ha_grad in -1.0..1.0) {
                 plank(context, mDrawPoint)
-            } else {
+            }
+
+            else {
                 if (ank_dist < 150.0) {
                     squat(context, mDrawPoint)
                 } else {
@@ -732,10 +700,7 @@ class FeedbackAlgorithm {
             }
 
 
-            Log.d("pushup", "운동 시간. 스쿼트 = " + squat_time + " 플랭크 = " + plank_time_result + " 사래레 = " + sidelr_time + " 총 = " + free_time)
-            Log.d("pushup", "squat_s = " + squat_s + " squat_f = " + squat_f_mode[2] + " " + squat_f_mode[5])
-            Log.d("pushup", "plank_s = " + plank_time_result + " plank_f = " + plank_f_mode[1] + " " + plank_f_mode[2])
-            Log.d("pushup", "sidelr_s = " + sidelr_s + " sidelr_f = " + sidelr_f_mode[1] + " " + sidelr_f_mode[2] + " " + sidelr_f_mode[3] + " " + sidelr_f_mode[5] + " " + sidelr_f_mode[8] + " " + sidelr_f_mode[13])
+
         }
 
 
