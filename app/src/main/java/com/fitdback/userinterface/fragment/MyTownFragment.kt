@@ -6,6 +6,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import com.fitdback.database.datamodel.UserInfoDataModel
 import com.fitdback.posedetection.R
 import com.fitdback.test.CustomDialog
 import com.fitdback.test.friendTest.FriendListAdapter
+import com.github.mikephil.charting.charts.BarChart
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -140,15 +142,15 @@ class MyTownFragment : Fragment() {
                             .show()
 
                         // DB 불러오기
-                        var friendExData: DataSnapshot? = null
+//                        var friendExData: DataSnapshot? = null
                         val friendExDataDBPath =
                             database.getReference("users").child(selectItem.friend_uid!!)
                                 .child("ex_data")
 
                         friendExDataDBPath.addValueEventListener(object : ValueEventListener {
                             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                                friendExData = dataSnapshot
-                                Log.d("db_data", "friendExData: ${friendExData}")
+                                DataBasket.friendExData = dataSnapshot
+//                                Log.d("db_data", "friendExData: $dataSnapshot")
                             }
 
                             override fun onCancelled(error: DatabaseError) {
@@ -156,62 +158,37 @@ class MyTownFragment : Fragment() {
                             }
                         })
 
-                        // 다이얼로그
-                        val friendStatisticsDialog =
+                        // 친구 통계 다이얼로그
+                        val friendSTDialog =
                             CustomDialog(
                                 context,
                                 R.layout.dialog_friend_chart,
                                 "${selectItem.friend_nickname}님의 운동 통계"
                             )
-                        val friendStatisticsAlertDialog = friendStatisticsDialog.showDialog()
-                        friendStatisticsAlertDialog?.setCancelable(false)
+
+                        Handler().postDelayed(
+                            {
+                                val friendSTAlertDialog = friendSTDialog.showDialog()
+                                Log.d(
+                                    "db_data",
+                                    "friendExData: ${DataBasket.friendExData.toString()}"
+                                )
+                            }, 1000
+                        )
+//                        friendSTAlertDialog?.setCancelable(false) // 뒤로 가기 버튼을 눌러 종료 가능 여부
 
                         // 레이아웃
-                        val firstRadioGroup =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_radioGp_1)
-                        val btnSetSquatChart =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnSetSquatChart)
-                        val btnSetPlankChart =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnSetPlankChart)
-                        val btnSetSideLateralRaiseChart =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnSetSideLateralRaiseChart)
 
-                        val selectedDataArea =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_selectedDataArea)
-                        val secondRadioGroup =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_radioGp_2)
-                        val btnShowExCalorieChart =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnShowExCalorieChart)
-                        val btnShowExCountChart =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnShowExCountChart)
-                        val btnShowExTimeChart =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnShowExTimeChart)
-
-                        val yAxisTitleArea =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_yAxisTitleArea)
-                        val barChart =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_barChart)
-                        val btnShowPreviousWeek =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnShowPreviousWeek)
-                        val btnShowThisWeek =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnShowThisWeek)
-                        val btnShowNextWeek =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnShowNextWeek)
-
-                        val btnFriendChartConfirm =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.btnFriendChartConfirm)
 
                         // 차트
+
                         // TODO : 차트 불러오기
 
-
                         // 확인버튼
-                        btnFriendChartConfirm?.setOnClickListener {
-                            friendStatisticsAlertDialog.dismiss()
-                        }
-
-                    }
-
+//                        btnFriendSTConfirm?.setOnClickListener {
+//                            friendSTAlertDialog.dismiss()
+//                        }
+                    } // listView?.onItemClickListener
 
                 // 확인 버튼
                 btnFriendListConfirm?.setOnClickListener {
