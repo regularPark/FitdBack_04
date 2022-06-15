@@ -1,13 +1,16 @@
 package com.fitdback.userinterface
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.dinuscxj.progressbar.CircleProgressBar
 import com.fitdback.algorithm.FeedbackAlgorithm
 import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.R
@@ -28,7 +31,7 @@ class FeedbackActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_feedback_2)
+        setContentView(R.layout.activity_feedback)
 
         // Firebase
         firebaseAuth = FirebaseAuth.getInstance()
@@ -45,6 +48,9 @@ class FeedbackActivity : AppCompatActivity() {
         val exResultArea = findViewById<TextView>(R.id.fb_exResultArea)
         val achievementRate = findViewById<TextView>(R.id.fb_achivementRate)
         val feedbackArea = findViewById<TextView>(R.id.fb_feedbackArea)
+
+
+
 
 
         // Data Write
@@ -124,6 +130,22 @@ class FeedbackActivity : AppCompatActivity() {
             exResultArea.text = feedbackHandler.getExResult()
             feedbackArea.text = feedbackHandler.getFeedback()
 
+            // 프로그레스 바
+            val prgBar = findViewById<CircleProgressBar>(R.id.complete_PrgBar)
+            val tar_cnt = FeedbackAlgorithm.target_cnt
+            val prg = FeedbackAlgorithm.exr_cnt_s
+
+            // 완료 / 목표치
+            prgBar.max = 100
+            prgBar.progress = (prg.toFloat() / tar_cnt.toFloat() * 100).toInt()
+
+
+
+
+            // 성공 / 완료
+
+
+
             // bar chart 그리기
             Handler().postDelayed({
 
@@ -154,6 +176,9 @@ class FeedbackActivity : AppCompatActivity() {
             BarChartVariables.secondTargetData = "ex_time"
             showChart()
         }
+
+
+
 
     }
 

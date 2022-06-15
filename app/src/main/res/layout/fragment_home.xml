@@ -53,8 +53,10 @@
                     android:id="@+id/squatBtn"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_margin="10dp"
+                    android:layout_marginHorizontal="28dp"
+                    android:layout_gravity="center"
                     android:gravity="center"
+                    android:layout_marginBottom="20dp"
                     android:background="@drawable/btn_stroke_blue"
                     android:text="스쿼트 시작"
                     android:textColor="@color/btn_primary"
@@ -94,9 +96,11 @@
                     android:id="@+id/plkBtn"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_margin="10dp"
                     android:background="@drawable/btn_stroke_blue"
                     android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginBottom="20dp"
                     android:text="플랭크 시작"
                     android:textColor="@color/btn_primary"
                     android:textSize="40dp"
@@ -114,10 +118,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
                 android:text="SIDE LATERAL RAISE"
-                android:textSize="30dp"
+                android:textSize="28dp"
                 android:textStyle="bold"
                 android:drawableLeft="@drawable/ic_slr_2"/>
 
@@ -139,7 +143,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_columnWeight="1"
-                    android:layout_margin="10dp"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginBottom="20dp"
                     android:background="@drawable/btn_stroke_blue"
                     android:gravity="center"
                     android:text="사이드래터럴레이즈 시작"
@@ -179,13 +185,13 @@
                         app:layout_constraintGuide_begin="0dp" />
                         -->
                 </LinearLayout>
-
                 <Button
-                    android:id="@+id/autoExBtn"
+                    android:id="@+id/freeExBtn"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_columnWeight="1"
-                    android:layout_margin="10dp"
+                    android:layout_marginHorizontal="28dp"
+                    android:layout_marginBottom="20dp"
                     android:background="@drawable/btn_stroke_blue"
                     android:gravity="center"
                     android:text="자율운동 시작"
@@ -194,8 +200,9 @@
                     android:textStyle="bold"
                     tools:layout_editor_absoluteX="-30dp"
                     tools:layout_editor_absoluteY="265dp" />
+                <!--  비 운동 관련   -->
 
-            <!--  비 운동 관련   -->
+
 
                 <Button
                     android:id="@+id/btnDevMode"
