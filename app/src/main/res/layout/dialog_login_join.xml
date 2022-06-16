@@ -11,9 +11,10 @@
         android:layout_height="50dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/button_radius_color"
+        android:background="@drawable/btn_stroke_blk"
         android:text="이메일로 회원가입"
-        android:textColor="@color/white"
+        android:textColor="@color/btn_gray"
+        android:fontFamily="@font/font"
         android:textSize="20sp" />
 
     <Button
@@ -23,9 +24,10 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/button_radius_color"
+        android:background="@drawable/btn_stroke_blk"
         android:text="구글계정으로 회원가입"
-        android:textColor="@color/white"
+        android:textColor="@color/btn_gray"
+        android:fontFamily="@font/font"
         android:textSize="20sp" />
 
 </LinearLayout>

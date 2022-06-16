@@ -3,30 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:weightSum="1">
-
-        <TextView
-            android:id="@+id/fb_exTypeArea"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="Exercise name"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/fb_exResultArea"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="ex result area"
-            android:textSize="30sp" />
-
-    </LinearLayout>
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -36,29 +15,37 @@
         android:layout_height="150dp"
         >
 
-        <TextView
-            android:id="@+id/fb_achivementRate"
-            android:layout_width="wrap_content"
-            android:layout_height="150dp"
-            android:layout_weight="0.3"
-            android:layout_marginHorizontal="20dp"
-            android:text="달성률 표기"
-            android:textSize="30sp" />
+
 
         <com.dinuscxj.progressbar.CircleProgressBar
             android:id="@+id/complete_PrgBar"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_marginHorizontal="20dp"
             android:layout_gravity="right"
+            android:layout_marginHorizontal="20dp"
             app:progress_background_color="@color/btn_gray"
-            app:progress_text_size="30sp"
-            app:style="solid_line"
-            app:progress_stroke_width="10dp"
-            app:progress_stroke_cap="round"
-            app:progress_start_color="@color/btn_primary_red"
             app:progress_end_color="@color/btn_primary"
+            app:progress_start_color="@color/btn_primary_red"
+            app:progress_stroke_cap="round"
+            app:progress_stroke_width="10dp"
             app:progress_text_color="@color/btn_gray"
+            app:progress_text_size="30sp"
+            app:style="solid_line" />
+        <TextView
+            android:id="@+id/fb_achivementRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_weight="0.3"
+            android:text="달성률 표기"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="hi"
+            android:layout_gravity="center"
+            android:gravity="center"
             />
     </LinearLayout>
     </ScrollView>
@@ -73,12 +60,53 @@
             android:layout_height="360dp"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/fb_feedbackArea"
+                android:id="@+id/fb_sq_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="feedback area"
-                android:textSize="30sp" />
+                android:layout_marginTop="20dp"
+                tools:text="squat"
+                android:textSize="20sp"
+                android:fontFamily="@font/font"
+                />
+            <TextView
+                android:id="@+id/fb_msg_sq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="hi"
+                android:textSize="20dp"/>
+            <TextView
+                android:id="@+id/fb_pl_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                tools:text="plank"
+                android:textSize="20sp"
+                android:fontFamily="@font/font"
+                />
+            <TextView
+                android:id="@+id/fb_msg_pl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="hi"
+                android:textSize="20dp"/>
+            <TextView
+                android:id="@+id/fb_slr_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                tools:text="sidelr"
+                android:textSize="20sp"
+                android:fontFamily="@font/font"
+                />
+            <TextView
+                android:id="@+id/fb_msg_slr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="hi"
+                android:textSize="20dp"/>
             <TextView
                 android:id="@+id/feedbackYAxisTitleArea"
                 android:layout_width="50dp"
@@ -103,6 +131,7 @@
                 android:layout_height="50dp"
                 android:layout_weight="0.3"
                 android:text="칼로리 소모량"
+                android:fontFamily="@font/font"
                 android:textSize="15sp" />
 
             <Button
@@ -111,6 +140,7 @@
                 android:layout_height="50dp"
                 android:layout_weight="0.3"
                 android:text="운동 횟수"
+                android:fontFamily="@font/font"
                 android:textSize="15sp" />
 
             <Button
@@ -119,6 +149,7 @@
                 android:layout_height="50dp"
                 android:layout_weight="0.3"
                 android:text="운동 시간"
+                android:fontFamily="@font/font"
                 android:textSize="15sp" />
             </LinearLayout>
 
