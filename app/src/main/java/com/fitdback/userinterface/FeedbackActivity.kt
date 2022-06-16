@@ -151,9 +151,35 @@ class FeedbackActivity : AppCompatActivity() {
 
             // TODO: 레이아웃 채우기
             val feedbackHandler = FeedbackHandler()
+<<<<<<< HEAD
             //exTypeArea.text = feedbackHandler.getExType()
             //exResultArea.text = feedbackHandler.getExResult()
             feedbackArea.text = feedbackHandler.getFeedback()
+=======
+            exTypeArea.text = feedbackHandler.getExType()
+            exResultArea.text = feedbackHandler.getExResult()
+            //feedbackArea.text = feedbackHandler.getFeedback()
+            var feedbacktext_list: List<String> = listOf(FeedbackAlgorithm.squat_string3, FeedbackAlgorithm.plank_string3, FeedbackAlgorithm.sidelr_string3)
+
+            /*if(FeedbackAlgorithm.exr_mode == "squat"){
+                feedbackArea.text = FeedbackAlgorithm.squat_string3
+            }
+            else if(FeedbackAlgorithm.exr_mode == "plank"){
+                feedbackArea.text = FeedbackAlgorithm.plank_string3
+            }
+            else if(FeedbackAlgorithm.exr_mode == "sidelr"){
+                feedbackArea.text = FeedbackAlgorithm.sidelr_string3
+            }
+            else if(FeedbackAlgorithm.exr_mode == "free_exr"){
+                feedbackArea.text = FeedbackAlgorithm.squat_string3 + FeedbackAlgorithm.plank_string3 + FeedbackAlgorithm.sidelr_string3
+            }*/
+            for (i in feedbacktext_list){
+                if(i!="Empty"){
+                    FeedbackAlgorithm.feedback_text3 += i
+                }
+            }
+            feedbackArea.text = FeedbackAlgorithm.feedback_text3
+>>>>>>> 42590a4f809c7bd7688f5b3db59608b1ee4fc876
 
             // 프로그레스 바
             val prgBar = findViewById<CircleProgressBar>(R.id.complete_PrgBar)

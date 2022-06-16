@@ -67,8 +67,11 @@ class CameraActivity : Activity() {
             when (FeedbackAlgorithm.exr_mode) {
 
                 "squat" -> {
+                    FeedbackAlgorithm.isStand = false
+                    FeedbackAlgorithm.feedback_text3= ""
                     FeedbackAlgorithm.exr_cnt = 0
                     FeedbackAlgorithm.exr_cnt_s = 0
+                    FeedbackAlgorithm.delay_tf = false
                     FeedbackAlgorithm.exr_cnt_f = 0
                     FeedbackAlgorithm.wrong_mode = 0
                     FeedbackAlgorithm.isExrFinished = false
@@ -77,6 +80,12 @@ class CameraActivity : Activity() {
                             5000
                     ) //5초 후 운동 시작 시간 설정
                     FeedbackAlgorithm.isPlaying = true
+                    for(i in 0..2){
+                        FeedbackAlgorithm.squat_f_mode[i] = 0
+                    }
+                    FeedbackAlgorithm.squat_s = 0
+                    FeedbackAlgorithm.squat_f = 0
+                    FeedbackAlgorithm.isSound = false
                 }
 
                 "plank" -> {
@@ -85,17 +94,26 @@ class CameraActivity : Activity() {
                             5000
                     ) //5초 후 운동 시작 시간 설정
                     FeedbackAlgorithm.exr_time_result = 0
+                    FeedbackAlgorithm.feedback_text3= ""
                     FeedbackAlgorithm.start_time = 0
+                    FeedbackAlgorithm.delay_tf = false
                     FeedbackAlgorithm.exr_cnt = 0
                     FeedbackAlgorithm.isPlaying = true
                     FeedbackAlgorithm.isDone = false
                     FeedbackAlgorithm.isFirst = true
+                    for(i in 0..2){
+                        FeedbackAlgorithm.plank_f_mode[i] = 0
+                    }
+                    FeedbackAlgorithm.plank_time_result = 0
+                    FeedbackAlgorithm.isSound = false
 
                 }
 
                 "sidelr" -> {
                     FeedbackAlgorithm.exr_cnt = 0
                     FeedbackAlgorithm.exr_cnt_s = 0
+                    FeedbackAlgorithm.feedback_text3= ""
+                    FeedbackAlgorithm.delay_tf = false
                     FeedbackAlgorithm.exr_cnt_f = 0
                     FeedbackAlgorithm.wrong_mode = 0
                     FeedbackAlgorithm.isExrFinished = false
@@ -106,12 +124,20 @@ class CameraActivity : Activity() {
                     FeedbackAlgorithm.isPlaying = true
                     FeedbackAlgorithm.prev_time = 0
                     FeedbackAlgorithm.total_exr_time = 0
+                    for(i in 0..13){
+                        FeedbackAlgorithm.sidelr_f_mode[i] = 0
+                    }
+                    FeedbackAlgorithm.sidelr_s = 0
+                    FeedbackAlgorithm.sidelr_f = 0
+                    FeedbackAlgorithm.isSound = false
                 }
 
                 "free_exr" -> {
                     FeedbackAlgorithm.exr_cnt = 0
                     FeedbackAlgorithm.exr_cnt_s = 0
                     FeedbackAlgorithm.exr_cnt_f = 0
+                    FeedbackAlgorithm.feedback_text3= ""
+                    FeedbackAlgorithm.delay_tf = false
                     FeedbackAlgorithm.wrong_mode = 0
                     FeedbackAlgorithm.isExrFinished = false
                     Handler().postDelayed(
@@ -121,6 +147,24 @@ class CameraActivity : Activity() {
                     FeedbackAlgorithm.isPlaying = true
                     FeedbackAlgorithm.prev_time = 0
                     FeedbackAlgorithm.total_exr_time = 0
+                    FeedbackAlgorithm.squat_s = 0
+                    FeedbackAlgorithm.squat_f = 0
+                    for(i in 0..2){
+                        FeedbackAlgorithm.squat_f_mode[i] = 0
+                        FeedbackAlgorithm.plank_f_mode[i] = 0
+                    }
+                    for(i in 0..13){
+                        FeedbackAlgorithm.sidelr_f_mode[i] = 0
+                    }
+                    FeedbackAlgorithm.sidelr_s = 0
+                    FeedbackAlgorithm.sidelr_f = 0
+                    FeedbackAlgorithm.plank_time_result = 0
+                    FeedbackAlgorithm.total_cnt = 0
+                    FeedbackAlgorithm.free_start = 0
+                    FeedbackAlgorithm.free_time = 0
+                    FeedbackAlgorithm.free_time_result = 0
+                    FeedbackAlgorithm.isSound = false
+
                 }
 
             }

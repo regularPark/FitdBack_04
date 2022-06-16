@@ -406,6 +406,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
             FeedbackAlgorithm.start_tf = true
             activity?.runOnUiThread {
                 countTimer!!.text = "운동 시작!"
+                FeedbackAlgorithm.delay_tf = true
                 prgBar!!.visibility = View.INVISIBLE
                 guideMsg!!.visibility = View.INVISIBLE
                 drawView!!.visibility = View.VISIBLE
