@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.R
 import com.fitdback.test.DevModeActivity
+import com.fitdback.userinterface.FeedbackActivity
 import com.fitdback.userinterface.LoginActivity_new
 import com.fitdback.userinterface.TutorialActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -116,7 +117,8 @@ class HomeFragment : Fragment() {
         btnDevMode.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 activity?.finish()
-                val toDevActivity = Intent(context, DevModeActivity::class.java)
+                val toDevActivity = Intent(context, FeedbackActivity::class.java)
+                toDevActivity.putExtra("exr_mode", "squat")
                 startActivity(toDevActivity)
             }
         })

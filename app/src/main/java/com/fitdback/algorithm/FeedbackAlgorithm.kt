@@ -357,7 +357,7 @@ class FeedbackAlgorithm {
 
             squat_string3 = ("[스쿼트 실패 원인 분석] \n " +
                     "다리를 %d회 더 굽혔습니다. \n " +
-                    "다리를 %d회 덜 굽혔습니다. \n").format(squat_f_mode[2], squat_f_mode[1])
+                    "다리를 %d회 덜 굽혔습니다. ").format(squat_f_mode[2], squat_f_mode[1])
         }
 
         fun plank(context: Context, mDrawPoint: CopyOnWriteArrayList<PointF>) {
@@ -468,7 +468,7 @@ class FeedbackAlgorithm {
 
             plank_string3 = ("[플랭크 실패 원인 분석] \n " +
                     "엉덩이가 %d%% 들렸습니다. \n " +
-                    "엉덩이가 %d%% 내려갔습니다. \n").format((plank_f1_per*100).toInt(), (plank_f2_per*100).toInt())
+                    "엉덩이가 %d%% 내려갔습니다. ").format((plank_f1_per*100).toInt(), (plank_f2_per*100).toInt())
 
             Log.d("stringresult", "string = " + plank_string1 +" " + plank_string2+" "+plank_string3)
         }
@@ -677,7 +677,7 @@ class FeedbackAlgorithm {
                     "오른팔이 %d회 더 올라갔습니다. \n" +
                     "오른팔이 %d회 덜 올라갔습니다. \n" +
                     "양팔이 %d회 더 올라갔습니다. \n" +
-                    "양팔이 %d회 덜 올라갔습니다. \n").format(sidelr_f_mode[5], sidelr_f_mode[2], sidelr_f_mode[8], sidelr_f_mode[1], sidelr_f_mode[13], sidelr_f_mode[3])
+                    "양팔이 %d회 덜 올라갔습니다. ").format(sidelr_f_mode[5], sidelr_f_mode[2], sidelr_f_mode[8], sidelr_f_mode[1], sidelr_f_mode[13], sidelr_f_mode[3])
 
             Log.d("stringresult", "string = " + sidelr_string1 +" " + sidelr_string2+" "+sidelr_string3)
         }
