@@ -5,7 +5,9 @@ import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +19,14 @@ import com.fitdback.database.datamodel.FriendDataModel
 import com.fitdback.database.datamodel.UserInfoDataModel
 import com.fitdback.posedetection.R
 import com.fitdback.test.CustomDialog
+import com.fitdback.test.barChartTest.BarChartVariables
+import com.fitdback.test.barChartTest.MyBarChartGenerator
 import com.fitdback.test.friendTest.FriendListAdapter
+import com.fitdback.userinterface.CommunityActivity
+import com.fitdback.userinterface.TutorialActivity
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -140,15 +149,15 @@ class MyTownFragment : Fragment() {
                             .show()
 
                         // DB 불러오기
-                        var friendExData: DataSnapshot? = null
+//                        var friendExData: DataSnapshot? = null
                         val friendExDataDBPath =
                             database.getReference("users").child(selectItem.friend_uid!!)
                                 .child("ex_data")
 
                         friendExDataDBPath.addValueEventListener(object : ValueEventListener {
                             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                                friendExData = dataSnapshot
-                                Log.d("db_data", "friendExData: ${friendExData}")
+                                DataBasket.friendExData = dataSnapshot
+//                                Log.d("db_data", "friendExData: $dataSnapshot")
                             }
 
                             override fun onCancelled(error: DatabaseError) {
@@ -156,62 +165,256 @@ class MyTownFragment : Fragment() {
                             }
                         })
 
-                        // 다이얼로그
-                        val friendStatisticsDialog =
+                        // 친구 통계 다이얼로그
+                        val friendSTDialog =
                             CustomDialog(
                                 context,
                                 R.layout.dialog_friend_chart,
                                 "${selectItem.friend_nickname}님의 운동 통계"
                             )
-                        val friendStatisticsAlertDialog = friendStatisticsDialog.showDialog()
-                        friendStatisticsAlertDialog?.setCancelable(false)
 
-                        // 레이아웃
-                        val firstRadioGroup =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_radioGp_1)
-                        val btnSetSquatChart =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnSetSquatChart)
-                        val btnSetPlankChart =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnSetPlankChart)
-                        val btnSetSideLateralRaiseChart =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnSetSideLateralRaiseChart)
+                        Handler().postDelayed(
+                            {
+                                val friendSTAlertDialog = friendSTDialog.showDialog()
+                                Log.d(
+                                    "db_data",
+                                    "friendExData: ${DataBasket.friendExData.toString()}"
+                                )
 
-                        val selectedDataArea =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_selectedDataArea)
-                        val secondRadioGroup =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_radioGp_2)
-                        val btnShowExCalorieChart =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnShowExCalorieChart)
-                        val btnShowExCountChart =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnShowExCountChart)
-                        val btnShowExTimeChart =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnShowExTimeChart)
+                                // Bar chart Layout
+                                val barChart: BarChart = friendSTAlertDialog!!.findViewById(R.id.f_barChart)!!
 
-                        val yAxisTitleArea =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_yAxisTitleArea)
-                        val barChart =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_barChart)
-                        val btnShowPreviousWeek =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnShowPreviousWeek)
-                        val btnShowThisWeek =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnShowThisWeek)
-                        val btnShowNextWeek =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.f_btnShowNextWeek)
+                                val selectedExTypeArea =
+                                    friendSTAlertDialog.findViewById<TextView>(R.id.f_selectedExTypeArea)!!
+                                val selectedDataArea =
+                                    friendSTAlertDialog.findViewById<TextView>(R.id.f_selectedDataArea)
+                                val yAxisTitleArea =
+                                    friendSTAlertDialog.findViewById<TextView>(R.id.f_yAxisTitleArea)
 
-                        val btnFriendChartConfirm =
-                            friendStatisticsAlertDialog?.findViewById<Button>(R.id.btnFriendChartConfirm)
+                                val btnSetSquatChart =
+                                    friendSTAlertDialog.findViewById<RadioButton>(R.id.f_btnSetSquatChart)
+                                val btnSetPlankChart =
+                                    friendSTAlertDialog.findViewById<RadioButton>(R.id.f_btnSetPlankChart)
+                                val btnSetSideLateralRaiseChart =
+                                    friendSTAlertDialog.findViewById<RadioButton>(R.id.f_btnSetSideLateralRaiseChart)
 
-                        // 차트
-                        // TODO : 차트 불러오기
+                                val btnSetExCalorieChart =
+                                    friendSTAlertDialog.findViewById<Button>(R.id.f_btnShowExCalorieChart)
+                                val btnSetExCountChart =
+                                    friendSTAlertDialog.findViewById<Button>(R.id.f_btnShowExCountChart)
+                                val btnSetExTimeChart =
+                                    friendSTAlertDialog.findViewById<Button>(R.id.f_btnShowExTimeChart)
 
+                                val btnShowThisWeek =
+                                    friendSTAlertDialog.findViewById<Button>(R.id.f_btnShowThisWeek)
+                                val btnShowPreviousWeek =
+                                    friendSTAlertDialog.findViewById<Button>(R.id.f_btnShowPreviousWeek)
+                                val btnShowNextWeek =
+                                    friendSTAlertDialog.findViewById<Button>(R.id.f_btnShowNextWeek)
 
-                        // 확인버튼
-                        btnFriendChartConfirm?.setOnClickListener {
-                            friendStatisticsAlertDialog.dismiss()
-                        }
+                                // 차트 그려주는 함수
+                                fun showChart() {
+                                    if (BarChartVariables.firstTargetData == null || BarChartVariables.secondTargetData == null) {
 
-                    }
+                                        Toast.makeText(
+                                            context,
+                                            "운동 종류와 데이터를 선택해주세요.",
+                                            Toast.LENGTH_SHORT
+                                        )
+                                            .show()
 
+                                    } else {
+                                        // barChart 초기화
+                                        BarChartVariables.clearBarChart(barChart)
+
+                                        // yAxis Title
+                                        BarChartVariables.setYAxisTitle(yAxisTitleArea!!)
+
+                                        // 보고자 하는 날짜 리스트
+                                        val dateListOfTargetWeek = BarChartVariables.dateListOfWeek
+                                        BarChartVariables.updateBarChartData(dateListOfTargetWeek) // BarChartVariables 클래스의 전역변수 update
+
+                                        Log.d(
+                                            "BarChart",
+                                            "BarChartVariables.lastDateOfXIndex: ${BarChartVariables.lastDateOfXIndex}"
+                                        )
+
+                                        // 이번 주 날짜별 Sum
+                                        val dailySumBarEntry =
+                                            BarChartVariables.getDailySumBarEntry(
+                                                dateListOfTargetWeek,
+                                                BarChartVariables.firstTargetData!!,
+                                                BarChartVariables.secondTargetData!!,
+                                                DataBasket.friendExData!!
+                                            )
+
+                                        // 실제 Bar Data Set 생성.
+                                        val barDataSet = BarDataSet(dailySumBarEntry, "exDataList")
+                                        BarChartVariables.setExpressedDataFormat(barDataSet)
+
+                                        // Bar Chart 데이터 삽입
+                                        val data = BarData(barDataSet)
+                                        barChart.data = data
+                                        Log.d(
+                                            "BarChart",
+                                            "BarChartVariables.lastDateOfXIndex: ${BarChartVariables.lastDateOfXIndex}"
+                                        )
+
+                                        // Bar Chart 실행
+                                        MyBarChartGenerator().runBarChart(
+                                            barChart,
+                                            barDataSet.yMax + 1.0f
+                                        )
+
+                                    }
+                                } // showChart()
+
+                                val radioGroup_1 = friendSTAlertDialog.findViewById<RadioGroup>(R.id.f_radioGp_1)
+                                val radioGroup_2 = friendSTAlertDialog.findViewById<RadioGroup>(R.id.f_radioGp_2)
+
+                                radioGroup_1!!.setOnCheckedChangeListener { group, checkedId ->
+                                    when (checkedId) {
+                                        R.id.f_btnSetSquatChart -> btnSetSquatChart!!.setOnClickListener {
+                                            BarChartVariables.setFirstTargetData("squat", null)
+                                            selectedExTypeArea.text = "스쿼트"
+
+                                            if (BarChartVariables.secondTargetData != null) {
+                                                showChart()
+                                            }
+                                        }
+                                        R.id.f_btnSetPlankChart -> btnSetPlankChart!!.setOnClickListener {
+                                            BarChartVariables.setFirstTargetData("plank", null)
+                                            selectedExTypeArea.text = "플랭크"
+
+                                            if (BarChartVariables.secondTargetData != null) {
+                                                showChart()
+                                            }
+                                        }
+                                        R.id.f_btnSetSideLateralRaiseChart -> btnSetSideLateralRaiseChart!!.setOnClickListener {
+                                            BarChartVariables.setFirstTargetData(
+                                                "sideLateralRaise",
+                                                null
+                                            )
+                                            selectedExTypeArea.text = "사이드 래터럴 레이즈"
+
+                                            if (BarChartVariables.secondTargetData != null) {
+                                                showChart()
+                                            }
+                                        }
+
+                                    }
+                                }
+
+                                radioGroup_2!!.setOnCheckedChangeListener { group, checkedId ->
+                                    when (checkedId) {
+                                        R.id.f_btnShowExCalorieChart -> btnSetExCalorieChart!!.setOnClickListener {
+                                            BarChartVariables.setSecondTargetData(
+                                                "ex_calorie",
+                                                null
+                                            )
+                                            selectedDataArea!!.text = "칼로리 소모량"
+
+                                            checkIsChartInitialization()
+                                            showChart()
+
+                                        }
+                                        R.id.f_btnShowExCountChart -> btnSetExCountChart!!.setOnClickListener {
+                                            BarChartVariables.setSecondTargetData("ex_count", null)
+                                            selectedDataArea!!.text = "운동 횟수"
+
+                                            checkIsChartInitialization()
+                                            showChart()
+                                        }
+
+                                        R.id.f_btnShowExTimeChart -> btnSetExTimeChart!!.setOnClickListener {
+                                            BarChartVariables.setSecondTargetData("ex_time", null)
+                                            selectedDataArea!!.text = "운동 시간"
+
+                                            checkIsChartInitialization()
+                                            showChart()
+
+                                        }
+                                    }
+                                } // radioGroup_2
+
+                                /*
+                                    이번 주, 지난 주, 다음 주 차트 보기
+                                */
+                                btnShowThisWeek!!.setOnClickListener { // 이번 주(1주일 전 ~ 오늘) 차트보기
+
+                                    BarChartVariables.dateListOfWeek =
+                                        DataBasket.getDateListOfThisWeek()
+                                    showChart()
+
+                                }
+
+                                btnShowPreviousWeek!!.setOnClickListener {
+
+                                    // 마지막에 저장된 X Index를 이용하여 일주일 전의 dateListOfTargetWeek을 생성
+                                    if (BarChartVariables.lastDateOfXIndex == null) {
+                                        Toast.makeText(context, "운동 종류와 데이터를 선택해주세요.", Toast.LENGTH_SHORT)
+                                            .show()
+                                    } else {
+                                        val lastDateOfXIndex = BarChartVariables.lastDateOfXIndex
+                                        var (year: Int, month: Int, date: Int) = BarChartVariables.getYearMonthDateOfLastDate(
+                                            lastDateOfXIndex!!
+                                        )
+
+                                        val dateOneWeekBefore =
+                                            DataBasket.getDateOfOneWeekBeforeOrTomorrow(year, month, date, "Before")
+
+                                        val triple = BarChartVariables.getYearMonthDateOfLastDate(dateOneWeekBefore)
+                                        year = triple.first
+                                        month = triple.second
+                                        date = triple.third
+
+                                        val dateListOfTargetWeek =
+                                            DataBasket.getOneWeekListFromDate(year, month, date, "Before")
+
+                                        BarChartVariables.updateBarChartData(dateListOfTargetWeek)
+
+                                        showChart()
+                                    }
+
+                                }
+
+                                btnShowNextWeek!!.setOnClickListener {
+
+                                    // 마지막에 저장된 X Index를 이용하여 일주일 후의 dateListOfTargetWeek을 생성
+                                    if (BarChartVariables.lastDateOfXIndex == null) {
+                                        Toast.makeText(context, "운동 종류와 데이터를 선택해주세요.", Toast.LENGTH_SHORT)
+                                            .show()
+                                    } else {
+                                        val lastDateOfXIndex = BarChartVariables.lastDateOfXIndex
+                                        var (year: Int, month: Int, date: Int) = BarChartVariables.getYearMonthDateOfLastDate(
+                                            lastDateOfXIndex!!
+                                        )
+
+                                        val dateOfTomorrow =
+                                            DataBasket.getDateOfOneWeekBeforeOrTomorrow(year, month, date, "Tomorrow")
+
+                                        val triple = BarChartVariables.getYearMonthDateOfLastDate(dateOfTomorrow)
+                                        year = triple.first
+                                        month = triple.second
+                                        date = triple.third
+
+                                        val dateListOfTargetWeek =
+                                            DataBasket.getOneWeekListFromDate(year, month, date, "After")
+
+                                        BarChartVariables.updateBarChartData(dateListOfTargetWeek)
+
+                                        showChart()
+                                    }
+
+                                }
+
+                            }, 1000
+                        )
+//                        friendSTAlertDialog?.setCancelable(false) // 뒤로 가기 버튼을 눌러 종료 가능 여부
+//                        btnFriendSTConfirm?.setOnClickListener {
+//                            friendSTAlertDialog.dismiss()
+//                        }
+                    } // listView?.onItemClickListener
 
                 // 확인 버튼
                 btnFriendListConfirm?.setOnClickListener {
@@ -365,6 +568,13 @@ class MyTownFragment : Fragment() {
 
         } // btnRunFriendMode
 
+        // 커뮤니티 버튼을 눌러 커뮤니티 액티비티로 이동
+        val btnRunCommunity = view.findViewById<Button>(R.id.town_community)
+        btnRunCommunity.setOnClickListener {
+            val toCommunityActivity = Intent(context, CommunityActivity::class.java)
+            startActivity(toCommunityActivity)
+        }
+
         return view
     }
 
@@ -412,11 +622,11 @@ class MyTownFragment : Fragment() {
                 dataModel.getValue(FriendDataModel::class.java)
 
             if (friendInfoDataModel?.friend_uid == friendCode) {
-//                Toast.makeText(
-//                    this,
-//                    "${friendInfoDataModel!!.friend_nickname} 님은 이미 친구로 등록된 유저입니다",
-//                    Toast.LENGTH_SHORT
-//                ).show()
+                Toast.makeText(
+                    context,
+                    "${friendInfoDataModel!!.friend_nickname} 님은 이미 친구로 등록된 유저입니다",
+                    Toast.LENGTH_SHORT
+                ).show()
 
                 return true
             }
@@ -424,6 +634,18 @@ class MyTownFragment : Fragment() {
         }
 
         return false
+    }
+
+    private fun checkIsChartInitialization() {
+
+//        var returnValue = false
+
+        if (BarChartVariables.isFirstBarChart) {
+            BarChartVariables.isFirstBarChart = false
+            BarChartVariables.dateListOfWeek = DataBasket.getDateListOfThisWeek()
+//            returnValue = true
+        }
+
     }
 
     companion object {

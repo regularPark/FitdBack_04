@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?><!--android:descendantFocusability="blocksDescendants" : 리스트뷰 클릭 가능하게 해주는 옵션-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/list_exDataArea"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="EX DATA"
+        android:textSize="20sp" />
+
+
+</LinearLayout>

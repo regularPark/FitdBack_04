@@ -26,6 +26,7 @@ class DataBasket {
         var individualExData: DataSnapshot? = null
         var individualUserInfo: DataSnapshot? = null
         var individualFriendInfo: DataSnapshot? = null
+        var friendExData: DataSnapshot? = null
 
         /*
             날짜 관련

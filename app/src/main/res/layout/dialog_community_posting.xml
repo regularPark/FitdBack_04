@@ -6,44 +6,38 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/friendCodeArea"
-        android:hint="친구 코드를 입력해주세요"
+        android:id="@+id/memoArea"
+        android:hint="메모를 입력해주세요."
         android:layout_width="match_parent"
         android:textSize="20sp"
+        android:layout_margin="20dp"
         android:layout_height="100dp" />
 
-    <TextView
-        android:id="@+id/friendNicknameArea"
-        android:layout_width="match_parent"
-        android:textSize="20sp"
-        android:layout_height="50dp" />
-
     <Button
-        android:id="@+id/btnSearchFriend"
+        android:id="@+id/btnSelectDate"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="20dp"
-        android:text="검색"
+        android:text="날짜 선택"
         android:textAllCaps="false"
         android:textSize="20sp" />
 
     <Button
-        android:id="@+id/btnRegisterFriendToDB"
+        android:id="@+id/btnSelectExData"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="20dp"
-        android:text="친구 추가"
+        android:text="운동 데이터 선택"
         android:textAllCaps="false"
         android:textSize="20sp" />
 
-
     <Button
-        android:id="@+id/btnRegisterConfirm"
+        android:id="@+id/btnPost"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_margin="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="확인"
+        android:layout_marginHorizontal="20dp"
+        android:text="게시"
+        android:layout_marginBottom="30dp"
         android:textAllCaps="false"
         android:textSize="20sp" />
 

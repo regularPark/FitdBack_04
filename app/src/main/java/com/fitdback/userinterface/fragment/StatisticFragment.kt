@@ -94,7 +94,8 @@ class StatisticFragment : Fragment() {
                     BarChartVariables.getDailySumBarEntry(
                         dateListOfTargetWeek,
                         BarChartVariables.firstTargetData!!,
-                        BarChartVariables.secondTargetData!!
+                        BarChartVariables.secondTargetData!!,
+                        DataBasket.individualExData!!
                     )
 
                 // 실제 Bar Data Set 생성.
