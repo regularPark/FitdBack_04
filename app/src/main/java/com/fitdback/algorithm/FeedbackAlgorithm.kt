@@ -338,7 +338,7 @@ class FeedbackAlgorithm {
                         "%.3f kcal를 소모하였습니다.\n\n").format(squat_s+ squat_f, squat_s, cal_sq)
 
                 squat_string3 = ("다리를 %d회 더 굽혔습니다.\n" +
-                        "다리를 %d회 덜 굽혔습니다.\n").format(squat_f_mode[2], squat_f_mode[1])
+                        "다리를 %d회 덜 굽혔습니다.").format(squat_f_mode[2], squat_f_mode[1])
             }
 
             else if (160.toDouble() >= hka_l_angle && !no_exr) {
@@ -481,13 +481,13 @@ class FeedbackAlgorithm {
                 ran_int = (0..8).random()
                 cal_pl = (plank_time_result * plank_cal).toInt() + (ran_int*0.125)
                 plank_string1 = ("플랭크\n%d / %d 초 성공.\n" +
-                        "%.3f kcal 소모.\n\n").format(plank_s, plank_time_result, cal_pl)
+                        "%.3f kcal 소모.\n").format(plank_s, plank_time_result, cal_pl)
 
                 plank_string2 = ("플랭크\n%d 초 중 %d 초 성공.\n" +
-                        "%.3f kcal를 소모하였습니다.\n\n").format(plank_time_result, plank_s, cal_pl)
+                        "%.3f kcal를 소모하였습니다.\n").format(plank_time_result, plank_s, cal_pl)
 
                 plank_string3 = ("엉덩이가 %d%% 들렸습니다.\n" +
-                        "엉덩이가 %d%% 내려갔습니다.\n").format((plank_f1_per*100).toInt(), (plank_f2_per*100).toInt())
+                        "엉덩이가 %d%% 내려갔습니다.").format((plank_f1_per*100).toInt(), (plank_f2_per*100).toInt())
 
                 Log.d("stringresult", "string = " + plank_string1 +" " + plank_string2+" "+plank_string3)
             }
@@ -657,17 +657,17 @@ class FeedbackAlgorithm {
                 ran_int = (0..8).random()
                 cal_slr = (sidelr_cal*(sidelr_s+sidelr_f)).toInt() + (ran_int*0.125)
                 sidelr_string1 = ("래터럴 레이즈\n%d / %d 회 성공.\n" +
-                        "%.3f kcal 소모.\n\n").format(sidelr_s, sidelr_s+ sidelr_f, cal_slr)
+                        "%.3f kcal 소모.\n").format(sidelr_s, sidelr_s+ sidelr_f, cal_slr)
 
                 sidelr_string2 = ("래터럴 레이즈\n%d회 중 %d회 성공.\n" +
-                        "%.3f kcal를 소모하였습니다.\n\n").format(sidelr_s+ sidelr_f, sidelr_s, cal_slr)
+                        "%.3f kcal를 소모하였습니다.\n").format(sidelr_s+ sidelr_f, sidelr_s, cal_slr)
 
                 sidelr_string3 = ("왼팔이 %d회 더 올라갔습니다.\n" +
                         "왼팔이 %d회 덜 올라갔습니다.\n" +
                         "오른팔이 %d회 더 올라갔습니다.\n" +
                         "오른팔이 %d회 덜 올라갔습니다.\n" +
                         "양팔이 %d회 더 올라갔습니다.\n" +
-                        "양팔이 %d회 덜 올라갔습니다.\n").format(sidelr_f_mode[5], sidelr_f_mode[2], sidelr_f_mode[8], sidelr_f_mode[1], sidelr_f_mode[13], sidelr_f_mode[3])
+                        "양팔이 %d회 덜 올라갔습니다.").format(sidelr_f_mode[5], sidelr_f_mode[2], sidelr_f_mode[8], sidelr_f_mode[1], sidelr_f_mode[13], sidelr_f_mode[3])
             }
 
             else if (elbow_l_y > neck_y && elbow_r_y > neck_y && nse_l_angle >= 140.0 && nse_r_angle >= 140.0 && !no_exr && wrong_mode<5) {
@@ -722,17 +722,17 @@ class FeedbackAlgorithm {
             ran_int = (0..8).random()
             cal_slr = (sidelr_cal*(sidelr_s+sidelr_f)).toInt() + (ran_int*0.125)
             sidelr_string1 = ("래터럴 레이즈\n%d / %d 회 성공.\n" +
-                    "%.3f kcal 소모.\n\n").format(sidelr_s, sidelr_s+ sidelr_f, cal_slr)
+                    "%.3f kcal 소모.\n").format(sidelr_s, sidelr_s+ sidelr_f, cal_slr)
 
             sidelr_string2 = ("래터럴 레이즈\n%d회 중 %d회 성공.\n" +
-                    "%.3f kcal를 소모하였습니다.\n\n").format(sidelr_s+ sidelr_f, sidelr_s, cal_slr)
+                    "%.3f kcal를 소모하였습니다.\n").format(sidelr_s+ sidelr_f, sidelr_s, cal_slr)
 
             sidelr_string3 = ("왼팔이 %d회 더 올라갔습니다.\n" +
                     "왼팔이 %d회 덜 올라갔습니다.\n" +
                     "오른팔이 %d회 더 올라갔습니다.\n" +
                     "오른팔이 %d회 덜 올라갔습니다.\n" +
                     "양팔이 %d회 더 올라갔습니다.\n" +
-                    "양팔이 %d회 덜 올라갔습니다.\n").format(sidelr_f_mode[5], sidelr_f_mode[2], sidelr_f_mode[8], sidelr_f_mode[1], sidelr_f_mode[13], sidelr_f_mode[3])
+                    "양팔이 %d회 덜 올라갔습니다.").format(sidelr_f_mode[5], sidelr_f_mode[2], sidelr_f_mode[8], sidelr_f_mode[1], sidelr_f_mode[13], sidelr_f_mode[3])
 
             Log.d("stringresult", "string = " + sidelr_string1 +" " + sidelr_string2+" "+sidelr_string3)
         }

@@ -287,7 +287,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                 }
             } else if (FeedbackAlgorithm.exr_mode == "plank") {
                 //if (FeedbackAlgorithm.exr_time_result == 10 && !FeedbackAlgorithm.isExrFinished) {
-                if (FeedbackAlgorithm.exr_cnt >= 10 && !FeedbackAlgorithm.isExrFinished) {
+                if (FeedbackAlgorithm.exr_cnt >= FeedbackAlgorithm.target_cnt && !FeedbackAlgorithm.isExrFinished) {
                     FeedbackAlgorithm.isExrFinished = true
                     Handler().postDelayed(
                             {
@@ -311,7 +311,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                     ) //카메라 종료 3초 지연
                 }
             } else if (FeedbackAlgorithm.exr_mode == "sidelr") {
-                if (FeedbackAlgorithm.exr_cnt == 10 && !FeedbackAlgorithm.isExrFinished) {
+                if (FeedbackAlgorithm.exr_cnt == FeedbackAlgorithm.target_cnt && !FeedbackAlgorithm.isExrFinished) {
                     FeedbackAlgorithm.isExrFinished = true
                     Handler().postDelayed(
                             {

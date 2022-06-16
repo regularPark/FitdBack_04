@@ -42,6 +42,7 @@
   <color name="btn_primary_red">#d95652</color>
   <color name="btn_primary_orange">#d98156</color>
   <color name="btn_gray">#808080</color>
+  <color name="primary_bg">#f0f8ff</color>
 
 
   <color name="white">#fff</color>

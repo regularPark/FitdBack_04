@@ -1,15 +1,13 @@
 package com.fitdback.userinterface
 
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.dinuscxj.progressbar.CircleProgressBar
@@ -54,6 +52,19 @@ class FeedbackActivity : AppCompatActivity() {
         val feedbackMsgSlr = findViewById<TextView>(R.id.fb_msg_slr)
         val feedbackTitlePl = findViewById<TextView>(R.id.fb_pl_title)
         val feedbackTitleSlr = findViewById<TextView>(R.id.fb_slr_title)
+        // 그리드 레이아웃
+        val gridSq = findViewById<LinearLayout>(R.id.grid_sq)
+        val gridPl = findViewById<LinearLayout>(R.id.grid_pl)
+        val gridSlr = findViewById<LinearLayout>(R.id.grid_slr)
+
+        val rtn_home = findViewById<Button>(R.id.return_home)
+        val toMainActivity = Intent(this, MainActivity::class.java)
+
+        rtn_home.setOnClickListener{
+            startActivity(toMainActivity)
+            finish()
+        }
+
 
 
         // 피드백 액티비티 다른 운동시 UI 공간 차지 방지
@@ -62,18 +73,24 @@ class FeedbackActivity : AppCompatActivity() {
             feedbackMsgSlr.visibility = View.GONE
             feedbackTitlePl.visibility = View.GONE
             feedbackTitleSlr.visibility = View.GONE
+            gridPl.visibility = View.GONE
+            gridSlr.visibility = View.GONE
         }
         else if(FeedbackAlgorithm.exr_mode == "plank"){
             feedbackMsgSq.visibility = View.GONE
             feedbackMsgSlr.visibility = View.GONE
             feedbackTitleSq.visibility = View.GONE
             feedbackTitleSlr.visibility = View.GONE
+            gridSq.visibility = View.GONE
+            gridSlr.visibility = View.GONE
         }
         else if(FeedbackAlgorithm.exr_mode == "sidelr"){
             feedbackMsgSq.visibility = View.GONE
             feedbackMsgPl.visibility = View.GONE
             feedbackTitleSq.visibility = View.GONE
             feedbackTitlePl.visibility = View.GONE
+            gridPl.visibility = View.GONE
+            gridSq.visibility = View.GONE
         }
 
 
@@ -212,6 +229,8 @@ class FeedbackActivity : AppCompatActivity() {
             feedbackMsgSlr.text = FeedbackAlgorithm.sidelr_string3
 
             //feedbackArea.text = feedbackHandler.getFeedback()
+
+
 
             /*if(FeedbackAlgorithm.exr_mode == "squat"){
                 feedbackArea.text = FeedbackAlgorithm.squat_string3
