@@ -45,8 +45,7 @@ class FeedbackActivity : AppCompatActivity() {
         val btnShowExCountChart = findViewById<Button>(R.id.fb_btnShowExCountChart)
         val btnShowExTimeChart = findViewById<Button>(R.id.fb_btnShowExTimeChart)
 
-        //val exTypeArea = findViewById<TextView>(R.id.fb_exTypeArea)
-        //val exResultArea = findViewById<TextView>(R.id.fb_exResultArea)
+
         val achievementRate = findViewById<TextView>(R.id.fb_achivementRate)
         val feedbackArea = findViewById<TextView>(R.id.fb_sq_title)
         val feedbackMsgSq = findViewById<TextView>(R.id.fb_msg_sq)
@@ -151,13 +150,8 @@ class FeedbackActivity : AppCompatActivity() {
 
             // TODO: 레이아웃 채우기
             val feedbackHandler = FeedbackHandler()
-<<<<<<< HEAD
-            //exTypeArea.text = feedbackHandler.getExType()
-            //exResultArea.text = feedbackHandler.getExResult()
-            feedbackArea.text = feedbackHandler.getFeedback()
-=======
-            exTypeArea.text = feedbackHandler.getExType()
-            exResultArea.text = feedbackHandler.getExResult()
+
+
             //feedbackArea.text = feedbackHandler.getFeedback()
             var feedbacktext_list: List<String> = listOf(FeedbackAlgorithm.squat_string3, FeedbackAlgorithm.plank_string3, FeedbackAlgorithm.sidelr_string3)
 
@@ -179,7 +173,6 @@ class FeedbackActivity : AppCompatActivity() {
                 }
             }
             feedbackArea.text = FeedbackAlgorithm.feedback_text3
->>>>>>> 42590a4f809c7bd7688f5b3db59608b1ee4fc876
 
             // 프로그레스 바
             val prgBar = findViewById<CircleProgressBar>(R.id.complete_PrgBar)
