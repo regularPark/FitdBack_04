@@ -89,6 +89,7 @@ class FeedbackAlgorithm {
         var hip_dist: Double = 0.0
         var shou_dist: Double = 0.0
         var ha_grad: Double = 0.0
+        var squat_cnt: Int = 0
         var squat_s: Int = 0
         var squat_f: Int = 0
         var squat_f_mode = intArrayOf(0, 0, 0)
@@ -110,6 +111,7 @@ class FeedbackAlgorithm {
         var plank_string3: String = "Empty"
         var plank_most_ind: Int = 0
         var plank_f_per: Int = 0
+        var sidelr_cnt: Int = 0
         var sidelr_s: Int = 0
         var sidelr_f: Int = 0
         var sidelr_f_mode = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -133,7 +135,7 @@ class FeedbackAlgorithm {
         var sidelr_start: Long = 0
         var sidelr_time: Long = 0
         var sidelr_time_result: Int = 0
-        var feedback_text3: String = ""
+        var feedback_text2: String = ""
         var mod_Squat: Boolean = false //자율운동 - 스쿼트
         var mod_Plank: Boolean = false //자율운동 - 플랭크
         var mod_Sidelr: Boolean = false //자율운동 - 사래레
@@ -159,6 +161,10 @@ class FeedbackAlgorithm {
         var exr_cnt_f: Int = 0 //동작 실패 횟수
         var exr_cal: Double = 0.0 // 운동 후 칼로리 소모량
         val pi: Double = 3.141592
+        var cal_sq: Double = 0.0
+        var cal_pl: Double = 0.0
+        var cal_slr: Double = 0.0
+        var ran_int: Int = 0
 
 
         val squat_cal: Double = 0.50 // 스쿼트 1회당 칼로리
@@ -206,6 +212,7 @@ class FeedbackAlgorithm {
 
         //DrawView 164줄에서 squat 함수 호출
         fun squat(context: Context, mDrawPoint: CopyOnWriteArrayList<PointF>) {
+            Log.d("err100", "err100squat")
             isPlaying = true
             Log.d("squat_err", "스쿼트 실행")
             no_exr = false
@@ -283,6 +290,7 @@ class FeedbackAlgorithm {
                             }
                             squat_f_mode[wrong_mode]++
 
+
                         }
                         isWrong = false
                         wrong_mode = 0
@@ -319,6 +327,18 @@ class FeedbackAlgorithm {
 
                     }
                 }
+
+                squat_cnt = squat_s+ squat_f
+                ran_int = (0..8).random()
+                cal_sq = ((squat_s+squat_f) * squat_cal).toInt() + (ran_int*0.125)
+                squat_string1 = ("스쿼트\n%d / %d 회 성공.\n" +
+                        "%.3f kcal 소모.\n\n").format(squat_s, squat_s+ squat_f, cal_sq)
+
+                squat_string2 = ("스쿼트\n%d회 중 %d회 성공.\n" +
+                        "%.3f kcal를 소모하였습니다.\n\n").format(squat_s+ squat_f, squat_s, cal_sq)
+
+                squat_string3 = ("다리를 %d회 더 굽혔습니다.\n" +
+                        "다리를 %d회 덜 굽혔습니다.\n").format(squat_f_mode[2], squat_f_mode[1])
             }
 
             else if (160.toDouble() >= hka_l_angle && !no_exr) {
@@ -349,18 +369,21 @@ class FeedbackAlgorithm {
                     }
                 }
             }
-            squat_string1 = ("%d / %d 회 성공. \n " +
-                    "%d kcal 소모.").format(squat_s, squat_s+ squat_f, (squat_cal*(squat_s+squat_f)).toInt())
 
-            squat_string2 = ("%d회 중 %d회 성공, \n " +
-                    "&d kcal를 소모하였습니다.").format(squat_s+ squat_f, squat_s, (squat_cal*(squat_s+squat_f)).toInt())
+            /*ran_int = (0..8).random()
+            cal_sq = ((squat_s+squat_f) * squat_cal).toInt() + (ran_int*0.125)
+            squat_string1 = ("스쿼트\n%d / %d 회 성공.\n" +
+                    "%.3f kcal 소모.\n\n").format(squat_s, squat_s+ squat_f, cal_sq)
 
-            squat_string3 = ("[스쿼트 실패 원인 분석] \n " +
-                    "다리를 %d회 더 굽혔습니다. \n " +
-                    "다리를 %d회 덜 굽혔습니다. ").format(squat_f_mode[2], squat_f_mode[1])
+            squat_string2 = ("스쿼트\n%d회 중 %d회 성공.\n" +
+                    "%.3f kcal를 소모하였습니다.\n\n").format(squat_s+ squat_f, squat_s, cal_sq)
+
+            squat_string3 = ("다리를 %d회 더 굽혔습니다.\n" +
+                    "다리를 %d회 덜 굽혔습니다.\n").format(squat_f_mode[2], squat_f_mode[1])*/
         }
 
         fun plank(context: Context, mDrawPoint: CopyOnWriteArrayList<PointF>) {
+            Log.d("err100", "err100plank")
             no_exr = false
             isPlank = false
             squat_start = 0
@@ -420,6 +443,7 @@ class FeedbackAlgorithm {
                     }
 
                     if (isWrong) {
+
                         plank_f_mode[wrong_mode]++
                     }
                 }
@@ -447,34 +471,44 @@ class FeedbackAlgorithm {
                         isDone = true
                     }
                 }
+
+                exr_cal = exr_cnt * plank_cal
+                plank_s_per = plank_f_mode[0].toDouble() / (plank_f_mode[0] + plank_f_mode[1]+plank_f_mode[2])
+                plank_f1_per = plank_f_mode[1].toDouble() / (plank_f_mode[0] + plank_f_mode[1]+plank_f_mode[2])
+                plank_f2_per = plank_f_mode[2].toDouble() / (plank_f_mode[0] + plank_f_mode[1]+plank_f_mode[2])
+                plank_s = (plank_time_result.toDouble() * plank_s_per).toInt()
+
+                ran_int = (0..8).random()
+                cal_pl = (plank_time_result * plank_cal).toInt() + (ran_int*0.125)
+                plank_string1 = ("플랭크\n%d / %d 초 성공.\n" +
+                        "%.3f kcal 소모.\n\n").format(plank_s, plank_time_result, cal_pl)
+
+                plank_string2 = ("플랭크\n%d 초 중 %d 초 성공.\n" +
+                        "%.3f kcal를 소모하였습니다.\n\n").format(plank_time_result, plank_s, cal_pl)
+
+                plank_string3 = ("엉덩이가 %d%% 들렸습니다.\n" +
+                        "엉덩이가 %d%% 내려갔습니다.\n").format((plank_f1_per*100).toInt(), (plank_f2_per*100).toInt())
+
+                Log.d("stringresult", "string = " + plank_string1 +" " + plank_string2+" "+plank_string3)
             }
             else {
                 if (isFirst) {
                     isFirst = false
                     sound_play(context, R.raw.plank_suc) //플랭크 10초 완료 사운드
-                    exr_cal = exr_cnt * plank_cal
+                    /*exr_cal = exr_cnt * plank_cal
                     plank_s_per = plank_f_mode[0].toDouble() / (plank_f_mode[0] + plank_f_mode[1]+plank_f_mode[2])
                     plank_f1_per = plank_f_mode[1].toDouble() / (plank_f_mode[0] + plank_f_mode[1]+plank_f_mode[2])
                     plank_f2_per = plank_f_mode[2].toDouble() / (plank_f_mode[0] + plank_f_mode[1]+plank_f_mode[2])
-                    plank_s = (plank_time_result.toDouble() * plank_s_per).toInt()
+                    plank_s = (plank_time_result.toDouble() * plank_s_per).toInt()*/
 
                 }
             }
-            plank_string1 = ("%d / %d 초 성공. \n " +
-                    "%d kcal 소모.").format(plank_s, plank_time_result, (plank_cal*(plank_time_result)).toInt())
 
-            plank_string2 = ("%d 초 중 %d 초 성공, \n " +
-                    "%d kcal를 소모하였습니다.").format(plank_time_result, plank_s, (plank_cal*(plank_time_result)).toInt())
-
-            plank_string3 = ("[플랭크 실패 원인 분석] \n " +
-                    "엉덩이가 %d%% 들렸습니다. \n " +
-                    "엉덩이가 %d%% 내려갔습니다. ").format((plank_f1_per*100).toInt(), (plank_f2_per*100).toInt())
-
-            Log.d("stringresult", "string = " + plank_string1 +" " + plank_string2+" "+plank_string3)
         }
 
 
         fun sidelr(context: Context, mDrawPoint: CopyOnWriteArrayList<PointF>) {
+            Log.d("err100", "err100sidelr")
             no_exr = false
             squat_start = 0
             plank_start = 0
@@ -535,7 +569,9 @@ class FeedbackAlgorithm {
                         sidelr_s++
                         sound_play(context, R.raw.sound1) // "띠링" (성공사운드)
                         Toast.makeText(context, "운동 성공~!", Toast.LENGTH_SHORT).show()
-                    } else if (cnt_f_tf && isWrong) {
+                    }
+
+                    else if (cnt_f_tf && isWrong) {
                         cnt_f_tf = false
                         if (isWrong && wrong_mode >= 1) {
                             exr_cnt_f++
@@ -614,7 +650,24 @@ class FeedbackAlgorithm {
                     //exr_cal(double) = 칼로리 소모량, exr_time_result(int) = 운동 시간(초), exr_mode(string) = 운동 종류(사래레)
                     //--------------------------------------------------------------------------------------------------------
 
+
                 }
+
+                sidelr_cnt = sidelr_s+sidelr_f
+                ran_int = (0..8).random()
+                cal_slr = (sidelr_cal*(sidelr_s+sidelr_f)).toInt() + (ran_int*0.125)
+                sidelr_string1 = ("래터럴 레이즈\n%d / %d 회 성공.\n" +
+                        "%.3f kcal 소모.\n\n").format(sidelr_s, sidelr_s+ sidelr_f, cal_slr)
+
+                sidelr_string2 = ("래터럴 레이즈\n%d회 중 %d회 성공.\n" +
+                        "%.3f kcal를 소모하였습니다.\n\n").format(sidelr_s+ sidelr_f, sidelr_s, cal_slr)
+
+                sidelr_string3 = ("왼팔이 %d회 더 올라갔습니다.\n" +
+                        "왼팔이 %d회 덜 올라갔습니다.\n" +
+                        "오른팔이 %d회 더 올라갔습니다.\n" +
+                        "오른팔이 %d회 덜 올라갔습니다.\n" +
+                        "양팔이 %d회 더 올라갔습니다.\n" +
+                        "양팔이 %d회 덜 올라갔습니다.\n").format(sidelr_f_mode[5], sidelr_f_mode[2], sidelr_f_mode[8], sidelr_f_mode[1], sidelr_f_mode[13], sidelr_f_mode[3])
             }
 
             else if (elbow_l_y > neck_y && elbow_r_y > neck_y && nse_l_angle >= 140.0 && nse_r_angle >= 140.0 && !no_exr && wrong_mode<5) {
@@ -665,19 +718,21 @@ class FeedbackAlgorithm {
                 }
             }
 
-            sidelr_string1 = ("%d / %d 회 성공. \n" +
-                    "%d kcal 소모.").format(sidelr_s, sidelr_s+ sidelr_f, (sidelr_cal*(sidelr_s+sidelr_f)).toInt())
 
-            sidelr_string2 = ("%d회 중 %d회 성공, \n" +
-                    "%d kcal를 소모하였습니다.").format(sidelr_s+ sidelr_f, sidelr_s, (sidelr_cal*(sidelr_s+sidelr_f)).toInt())
+            ran_int = (0..8).random()
+            cal_slr = (sidelr_cal*(sidelr_s+sidelr_f)).toInt() + (ran_int*0.125)
+            sidelr_string1 = ("래터럴 레이즈\n%d / %d 회 성공.\n" +
+                    "%.3f kcal 소모.\n\n").format(sidelr_s, sidelr_s+ sidelr_f, cal_slr)
 
-            sidelr_string3 = ("[래터럴 레이즈 실패 원인 분석] \n" +
-                    "왼팔이 %d회 더 올라갔습니다. \n" +
-                    "왼팔이 %d회 덜 올라갔습니다. \n" +
-                    "오른팔이 %d회 더 올라갔습니다. \n" +
-                    "오른팔이 %d회 덜 올라갔습니다. \n" +
-                    "양팔이 %d회 더 올라갔습니다. \n" +
-                    "양팔이 %d회 덜 올라갔습니다. ").format(sidelr_f_mode[5], sidelr_f_mode[2], sidelr_f_mode[8], sidelr_f_mode[1], sidelr_f_mode[13], sidelr_f_mode[3])
+            sidelr_string2 = ("래터럴 레이즈\n%d회 중 %d회 성공.\n" +
+                    "%.3f kcal를 소모하였습니다.\n\n").format(sidelr_s+ sidelr_f, sidelr_s, cal_slr)
+
+            sidelr_string3 = ("왼팔이 %d회 더 올라갔습니다.\n" +
+                    "왼팔이 %d회 덜 올라갔습니다.\n" +
+                    "오른팔이 %d회 더 올라갔습니다.\n" +
+                    "오른팔이 %d회 덜 올라갔습니다.\n" +
+                    "양팔이 %d회 더 올라갔습니다.\n" +
+                    "양팔이 %d회 덜 올라갔습니다.\n").format(sidelr_f_mode[5], sidelr_f_mode[2], sidelr_f_mode[8], sidelr_f_mode[1], sidelr_f_mode[13], sidelr_f_mode[3])
 
             Log.d("stringresult", "string = " + sidelr_string1 +" " + sidelr_string2+" "+sidelr_string3)
         }

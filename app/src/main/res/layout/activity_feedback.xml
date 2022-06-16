@@ -132,12 +132,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 tools:text="sidelr"
+                android:textStyle="bold"
                 android:textSize="20sp"
                 android:fontFamily="@font/font"
                 />
             <TextView
                 android:id="@+id/fb_msg_slr"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/font"
                 android:layout_height="wrap_content"
                 tools:text="hi"
                 android:textSize="20dp"/>
