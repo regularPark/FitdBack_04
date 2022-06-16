@@ -8,16 +8,26 @@ import android.util.Log
 import android.widget.*
 import com.fitdback.database.DataBasket
 import com.fitdback.database.datamodel.ExerciseDataModel
+import com.fitdback.database.datamodel.PostDataModel
+import com.fitdback.database.datamodel.UserInfoDataModel
 import com.fitdback.posedetection.R
 import com.fitdback.test.CustomDialog
 import com.fitdback.userinterface.listviewadpater.ExDataListAdapter
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
 
 class CommunityActivity : AppCompatActivity() {
 
-    @SuppressLint("LogNotTimber")
+    lateinit var firebaseAuth: FirebaseAuth
+
+    @SuppressLint("LogNotTimber", "SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        firebaseAuth = FirebaseAuth.getInstance()
+        val database = Firebase.database
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community)
@@ -31,13 +41,15 @@ class CommunityActivity : AppCompatActivity() {
             val postingDialog = CustomDialog(this, R.layout.dialog_community_posting, "Posting")
             val postingAlertDialog = postingDialog.showDialog()
 
+            val memoArea = postingAlertDialog?.findViewById<EditText>(R.id.memoArea)
             val btnSelectDate = postingAlertDialog?.findViewById<Button>(R.id.btnSelectDate)
             val btnSelectExData = postingAlertDialog?.findViewById<Button>(R.id.btnSelectExData)
             val btnPost = postingAlertDialog?.findViewById<Button>(R.id.btnPost)
 
-            val ex_history: String? = null
-            val user_memo: String? = null
             var selectedDate: String? = null
+            var exData: String? = null
+            var post_ex_history: String? = null // selectDate + exData
+            var post_memo: String? = null
 
             // 날짜 선택
             btnSelectDate?.setOnClickListener {
@@ -133,6 +145,18 @@ class CommunityActivity : AppCompatActivity() {
                         val adapterList = ExDataListAdapter(dataModelList)
                         listView?.adapter = adapterList
 
+                        // 리스트뷰의 운동 데이터를 선택하고 운동 데이터 선택 버튼의 텍스트를 해당 정보로 변경
+                        // 변경 이후 다이얼로그 종료
+                        listView?.onItemClickListener =
+                            AdapterView.OnItemClickListener { parent, view, position, id ->
+                                val selectItem =
+                                    parent.getItemAtPosition(position) as ExerciseDataModel
+//                                Toast.makeText(this, getString(selectItem), Toast.LENGTH_SHORT).show()
+                                btnSelectExData.text = getString(selectItem)
+                                exData = getString(selectItem)
+                                exDataPickerAlert?.dismiss()
+                            }
+
 //                        dataModelList.clear()
                     } else {
                         Toast.makeText(
@@ -144,9 +168,50 @@ class CommunityActivity : AppCompatActivity() {
 
                 } // else
 
-            }
+            } // btnSelectExData?.setOnClickListener
 
+            // 게시 버튼
             btnPost?.setOnClickListener {
+                // memo 텍스트
+                post_memo = memoArea?.text.toString().trim()
+                Log.d("post_test", post_memo!!.isEmpty().toString())
+
+                if (post_memo!!.isNotEmpty() && selectedDate != null && exData != null) {
+
+                    // 현재 날짜 & 시간 계산
+                    val mNow = System.currentTimeMillis()
+                    val mDate = Date(mNow)
+                    val currentTime = SimpleDateFormat("yyMMdd HH:mm:ss").format(mDate)
+                    Log.d("post_test", currentTime)
+
+                    // post 데이터 모델 만들고
+                    val myUserInfoDataModel =
+                        DataBasket.individualUserInfo?.getValue(UserInfoDataModel::class.java)
+                    post_ex_history = "$selectedDate $exData"
+
+                    val postDataModel = PostDataModel(
+                        currentTime,
+                        myUserInfoDataModel?.user_nickname,
+                        post_ex_history,
+                        post_memo
+                    )
+
+                    // DB에 추가
+                    val dbPath = database.getReference("posts")
+                    dbPath.push().setValue(postDataModel)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "게시글 저장 완료", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this, "Error: 게시글 저장실패", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+
+                } else { // 예외처리
+
+                    
+
+                }
 
             }
 
@@ -164,6 +229,33 @@ class CommunityActivity : AppCompatActivity() {
 
         return targetData == 0 // if targetData == 0: return true (zero data exists)
 
+    }
+
+    private fun getString(exerciseDataModel: ExerciseDataModel): String {
+
+        return when (exerciseDataModel.ex_type) {
+            "squat" -> {
+                "스쿼트 ${exerciseDataModel.ex_count}회"
+            }
+            "plank" -> {
+                "플랭크 ${formatTime(exerciseDataModel.ex_time)}"
+            }
+            else -> {
+                "사이드래터럴레이즈 ${exerciseDataModel.ex_count}회"
+            }
+        }
+
+    }
+
+    private fun formatTime(time: Int): String {
+        val minute = time / 60
+        val sec = time % 60
+
+        return if (minute == 0) {
+            "${sec}초"
+        } else {
+            "${minute}분 ${sec}초"
+        }
     }
 
 } // CommunityActivity
