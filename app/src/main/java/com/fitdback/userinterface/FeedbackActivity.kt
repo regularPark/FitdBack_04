@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -44,12 +45,36 @@ class FeedbackActivity : AppCompatActivity() {
         val btnShowExCountChart = findViewById<Button>(R.id.fb_btnShowExCountChart)
         val btnShowExTimeChart = findViewById<Button>(R.id.fb_btnShowExTimeChart)
 
-        val exTypeArea = findViewById<TextView>(R.id.fb_exTypeArea)
-        val exResultArea = findViewById<TextView>(R.id.fb_exResultArea)
+        //val exTypeArea = findViewById<TextView>(R.id.fb_exTypeArea)
+        //val exResultArea = findViewById<TextView>(R.id.fb_exResultArea)
         val achievementRate = findViewById<TextView>(R.id.fb_achivementRate)
-        val feedbackArea = findViewById<TextView>(R.id.fb_feedbackArea)
+        val feedbackArea = findViewById<TextView>(R.id.fb_sq_title)
+        val feedbackMsgSq = findViewById<TextView>(R.id.fb_msg_sq)
+        val feedbackMsgPl = findViewById<TextView>(R.id.fb_msg_pl)
+        val feedbackMsgSlr = findViewById<TextView>(R.id.fb_msg_slr)
+        val feedbackTitlePl = findViewById<TextView>(R.id.fb_pl_title)
+        val feedbackTitleSlr = findViewById<TextView>(R.id.fb_slr_title)
 
 
+        // 피드백 액티비티 다른 운동시 UI 공간 차지 방지
+        if(FeedbackAlgorithm.exr_mode=="squat"){
+            feedbackMsgPl.visibility = View.GONE
+            feedbackMsgSlr.visibility = View.GONE
+            feedbackTitlePl.visibility = View.GONE
+            feedbackTitleSlr.visibility = View.GONE
+        }
+        else if(FeedbackAlgorithm.exr_mode == "plank"){
+            feedbackMsgSq.visibility = View.GONE
+            feedbackMsgSlr.visibility = View.GONE
+            feedbackArea.visibility = View.GONE
+            feedbackTitleSlr.visibility = View.GONE
+        }
+        else if(FeedbackAlgorithm.exr_mode == "sidelr"){
+            feedbackMsgSq.visibility = View.GONE
+            feedbackMsgPl.visibility = View.GONE
+            feedbackArea.visibility = View.GONE
+            feedbackTitlePl.visibility = View.GONE
+        }
 
 
 
@@ -126,8 +151,8 @@ class FeedbackActivity : AppCompatActivity() {
 
             // TODO: 레이아웃 채우기
             val feedbackHandler = FeedbackHandler()
-            exTypeArea.text = feedbackHandler.getExType()
-            exResultArea.text = feedbackHandler.getExResult()
+            //exTypeArea.text = feedbackHandler.getExType()
+            //exResultArea.text = feedbackHandler.getExResult()
             feedbackArea.text = feedbackHandler.getFeedback()
 
             // 프로그레스 바

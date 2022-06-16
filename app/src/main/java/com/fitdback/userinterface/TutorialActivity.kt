@@ -33,7 +33,6 @@ class TutorialActivity : YouTubeBaseActivity() {
         val exr = intent.getStringExtra("exr_mod")
 
         val set_cnt = findViewById<TextView>(R.id.set_cnt)
-        val btn_np = findViewById<Button>(R.id.btn_num_pick)
         val np = findViewById<NumberPicker>(R.id.num_pick)
 
         np.minValue = 1
@@ -41,10 +40,6 @@ class TutorialActivity : YouTubeBaseActivity() {
         np.value = 10
         np.wrapSelectorWheel = false
 
-
-        btn_np.setOnClickListener{
-            FeedbackAlgorithm.target_cnt = np.value
-        }
         if (exr == "squat"){
             set_cnt.setText("스쿼트 " + np.value + "회 실시")
         }
@@ -127,6 +122,7 @@ class TutorialActivity : YouTubeBaseActivity() {
 
         // btnFitnessStart 버튼을 클릭하여 CameraActivity 실행
         btnFitnessStart.setOnClickListener {
+            FeedbackAlgorithm.target_cnt = np.value
             intent.putExtra("exr_mod", exr)
             cameramode = "back"
             startActivity(intent)
@@ -136,6 +132,7 @@ class TutorialActivity : YouTubeBaseActivity() {
         val btnFitnessStartFront = findViewById<Button>(R.id.btnFitnessStartBack)
 
         btnFitnessStartFront.setOnClickListener {
+            FeedbackAlgorithm.target_cnt = np.value
             intent.putExtra("exr_mod", exr)
             cameramode = "front"
             startActivity(intent)

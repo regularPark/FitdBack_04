@@ -43,21 +43,8 @@
                             android:divider="@color/btn_primary_red"
                             android:theme="@style/AppTheme.NumberPicker"
                             />
-                        <Button
-                            android:id="@+id/btn_num_pick"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="10dp"
-                            android:paddingHorizontal="5dp"
-                            android:text="목표 변경하기"
-                            android:textSize="25dp"
-                            android:textColor="@color/btn_gray"
-                            android:fontFamily="@font/font"
-                            android:background="@drawable/btn_stroke_blk"
 
-                            android:elevation="10dp"
-                            />
+
             </LinearLayout>
             <TextView
                 android:id="@+id/set_cnt"
