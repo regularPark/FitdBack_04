@@ -12,7 +12,7 @@ class FeedbackHandler {
         when (FeedbackAlgorithm.exr_mode) {
             "squat" -> text = "스쿼트"
             "plank" -> text = "플랭크"
-            "sideLateralRaise" -> text = "사이드 래터럴 레이즈"
+            "sidelr" -> text = "사이드 래터럴 레이즈"
         }
         
         return text
@@ -24,9 +24,9 @@ class FeedbackHandler {
         var text: String? = null
 
         when (FeedbackAlgorithm.exr_mode) {
-            "squat" -> text = "${FeedbackAlgorithm.exr_cnt}회 완료"
-            "plank" -> text = "${FeedbackAlgorithm.exr_time_result}초 수행"
-            "sideLateralRaise" -> text = "${FeedbackAlgorithm.exr_cnt}회 완료"
+            "squat" -> text = "${FeedbackAlgorithm.squat_cnt}회 완료"
+            "plank" -> text = "${FeedbackAlgorithm.plank_time_result}초 수행"
+            "sidelr" -> text = "${FeedbackAlgorithm.sidelr_cnt}회 완료"
         }
 
         return text

@@ -7,38 +7,39 @@
     android:orientation="vertical">
 
     <ScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:layout_margin="10dp"
         >
 
 
 
         <com.dinuscxj.progressbar.CircleProgressBar
             android:id="@+id/complete_PrgBar"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:layout_gravity="right"
-            android:layout_marginHorizontal="20dp"
+            android:layout_marginRight="10dp"
             app:progress_background_color="@color/btn_gray"
             app:progress_end_color="@color/btn_primary"
             app:progress_start_color="@color/btn_primary_red"
             app:progress_stroke_cap="round"
-            app:progress_stroke_width="10dp"
+            app:progress_stroke_width="20dp"
             app:progress_text_color="@color/btn_gray"
             app:progress_text_size="30sp"
             app:style="solid_line" />
+
         <TextView
             android:id="@+id/fb_achivementRate"
-            android:layout_width="wrap_content"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
             android:layout_weight="0.3"
+            android:fontFamily="@font/font"
             android:text="달성률 표기"
-            android:textSize="20sp" />
+            android:textSize="20dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -47,6 +48,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             />
+
     </LinearLayout>
     </ScrollView>
 
@@ -58,6 +60,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="360dp"
+            android:layout_marginLeft="5dp"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/fb_sq_title"
@@ -67,14 +70,17 @@
                 android:layout_marginTop="20dp"
                 tools:text="squat"
                 android:textSize="20sp"
+                android:textStyle="bold"
                 android:fontFamily="@font/font"
                 />
+
             <TextView
                 android:id="@+id/fb_msg_sq"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="hi"
-                android:textSize="20dp"/>
+                android:fontFamily="@font/font"
+                android:textSize="20dp"
+                tools:text="hi" />
             <TextView
                 android:id="@+id/fb_pl_title"
                 android:layout_width="match_parent"
@@ -83,14 +89,17 @@
                 android:layout_marginTop="20dp"
                 tools:text="plank"
                 android:textSize="20sp"
+                android:textStyle="bold"
                 android:fontFamily="@font/font"
                 />
+
             <TextView
                 android:id="@+id/fb_msg_pl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="hi"
-                android:textSize="20dp"/>
+                android:fontFamily="@font/font"
+                android:textSize="20dp"
+                tools:text="hi" />
             <TextView
                 android:id="@+id/fb_slr_title"
                 android:layout_width="match_parent"
@@ -98,12 +107,14 @@
                 android:layout_weight="1"
                 android:layout_marginTop="20dp"
                 tools:text="sidelr"
+                android:textStyle="bold"
                 android:textSize="20sp"
                 android:fontFamily="@font/font"
                 />
             <TextView
                 android:id="@+id/fb_msg_slr"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/font"
                 android:layout_height="wrap_content"
                 tools:text="hi"
                 android:textSize="20dp"/>
