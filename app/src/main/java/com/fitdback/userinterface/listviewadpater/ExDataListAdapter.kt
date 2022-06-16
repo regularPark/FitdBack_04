@@ -45,13 +45,24 @@ class ExDataListAdapter(val list: MutableList<ExerciseDataModel>) : BaseAdapter(
                 "스쿼트 ${exerciseDataModel.ex_count}회"
             }
             "plank" -> {
-                "플랭크 ${exerciseDataModel.ex_time}초"
+                "플랭크 ${formatTime(exerciseDataModel.ex_time)}"
             }
             else -> {
                 "사이드래터럴레이즈 ${exerciseDataModel.ex_count}회"
             }
         }
 
+    }
+
+    private fun formatTime(time: Int): String {
+        val minute = time / 60
+        val sec = time % 60
+
+        return if (minute == 0) {
+            "${sec}초"
+        } else {
+            "${minute}분 ${sec}초"
+        }
     }
 
 } // ExDataListAdapter

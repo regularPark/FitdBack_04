@@ -124,7 +124,7 @@ class CommunityActivity : AppCompatActivity() {
                             CustomDialog(
                                 this,
                                 R.layout.dialog_community_ex_data_picker,
-                                "${selectedDate}  운동 기록"
+                                "$selectedDate  운동 기록"
                             )
                         val exDataPickerAlert = exDataPickerDialog.showDialog()
 

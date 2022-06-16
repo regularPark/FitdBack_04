@@ -33,7 +33,11 @@ class BarChartVariables {
                     return if (time == 0) {
                         ""
                     } else {
-                        "${minute}분 ${sec}초"
+                        if (minute == 0) {
+                            "${sec}초"
+                        } else {
+                            "${minute}분 ${sec}초"
+                        }
                     }
                 } else {
                     return if (value.toInt() == 0) {
