@@ -211,26 +211,25 @@ class DrawView : View {
         catch(e: ArrayIndexOutOfBoundsException){
         }
 
+        /*if(FeedbackAlgorithm.isStart){
+            FeedbackAlgorithm.isStart=false
+            FeedbackAlgorithm.del_start = System.currentTimeMillis()
+            FeedbackAlgorithm.del_time = 0
+        }
+        if(FeedbackAlgorithm.del_time<=5000){
+            FeedbackAlgorithm.del_time = System.currentTimeMillis() - FeedbackAlgorithm.del_start
+        }*/
 
         // FeedBack 알고리즘
-        if (FeedbackAlgorithm.isPlaying) {
+        if (FeedbackAlgorithm.isPlaying&&FeedbackAlgorithm.delay_tf) {
             when (FeedbackAlgorithm.exr_mode) {
-                "squat" -> Handler().postDelayed(
-                        { FeedbackAlgorithm.squat(context, mDrawPoint) },
-                        5000
-                ) // 5초동안 스쿼트 알고리즘 비활성화
-                "plank" -> Handler().postDelayed(
-                        { FeedbackAlgorithm.plank(context, mDrawPoint) },
-                        5000
-                ) // 5초동안 플랭크 알고리즘 비활성화
-                "free_exr" -> Handler().postDelayed(
-                        { FeedbackAlgorithm.free_exr(context, mDrawPoint) },
-                        5000
-                )
-                "sidelr" -> Handler().postDelayed(
-                    { FeedbackAlgorithm.sidelr(context, mDrawPoint) },
-                    5000
-                ) // 5초동안 플랭크 알고리즘 비활성화
+                "squat" -> FeedbackAlgorithm.squat(context, mDrawPoint)
+
+                "plank" -> FeedbackAlgorithm.plank(context, mDrawPoint)
+
+                "free_exr" -> FeedbackAlgorithm.free_exr(context, mDrawPoint)
+
+                "sidelr" -> FeedbackAlgorithm.sidelr(context, mDrawPoint)
             }
         }
     }
