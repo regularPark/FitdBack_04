@@ -13,7 +13,11 @@ import com.fitdback.database.datamodel.UserInfoDataModel
 import com.fitdback.posedetection.R
 import com.fitdback.test.CustomDialog
 import com.fitdback.userinterface.listviewadpater.ExDataListAdapter
+import com.fitdback.userinterface.listviewadpater.PostAdapter
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
@@ -32,9 +36,36 @@ class CommunityActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community)
 
-        // Post 아이콘을 클릭하여 날짜를 선택
         val btnWritePost = findViewById<ImageView>(R.id.btnWritePost)
 
+        // post list
+        val listView = findViewById<ListView>(R.id.postLV)
+
+        val dataModelList = mutableListOf<PostDataModel>()
+        val adapterList = PostAdapter(dataModelList)
+        listView?.adapter = adapterList
+
+        val dbPath = database.getReference("posts")
+
+        // get data from Database
+        dbPath.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                dataModelList.clear()
+                for (dataModel in snapshot.children) {
+                    dataModelList.add(dataModel.getValue(PostDataModel::class.java)!!)
+                }
+
+                adapterList.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+
+        // Post 아이콘을 클릭하여 날짜를 선택
         btnWritePost.setOnClickListener {
 
             // community_posting 다이얼로그
@@ -207,10 +238,11 @@ class CommunityActivity : AppCompatActivity() {
                                 .show()
                         }
 
-                } else { // 예외처리
+                    // Posting 다이얼로그 dismiss
+                    postingAlertDialog.dismiss()
 
-                    
-
+                } else {
+                    // TODO : 예외 처리
                 }
 
             }
