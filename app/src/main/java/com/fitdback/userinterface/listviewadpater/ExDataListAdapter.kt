@@ -33,12 +33,25 @@ class ExDataListAdapter(val list: MutableList<ExerciseDataModel>) : BaseAdapter(
         // listview_community_ex_data_list.xml 에 정의된 위젯 참조
         val list_exDataArea = myConvertView?.findViewById<TextView>(R.id.list_exDataArea)
 
-        list_exDataArea!!.text = list[position].ex_type
-//        friendNicknameArea!!.text = list[position].friend_nickname
-//        friendCodeArea!!.text = list[position].friend_uid
-
+        list_exDataArea!!.text = getString(list[position])
 
         return myConvertView!!
     }
 
-}
+    private fun getString(exerciseDataModel: ExerciseDataModel): String {
+
+        return when (exerciseDataModel.ex_type) {
+            "squat" -> {
+                "스쿼트 ${exerciseDataModel.ex_count}회"
+            }
+            "plank" -> {
+                "플랭크 ${exerciseDataModel.ex_time}초"
+            }
+            else -> {
+                "사이드래터럴레이즈 ${exerciseDataModel.ex_count}회"
+            }
+        }
+
+    }
+
+} // ExDataListAdapter

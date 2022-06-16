@@ -5,10 +5,7 @@ import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.DatePicker
-import android.widget.ImageView
-import android.widget.ListView
+import android.widget.*
 import com.fitdback.database.DataBasket
 import com.fitdback.database.datamodel.ExerciseDataModel
 import com.fitdback.posedetection.R
@@ -19,6 +16,7 @@ import java.util.*
 
 class CommunityActivity : AppCompatActivity() {
 
+    @SuppressLint("LogNotTimber")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -72,23 +70,79 @@ class CommunityActivity : AppCompatActivity() {
 
             // 운동 데이터 선택
             btnSelectExData?.setOnClickListener {
-                val exDataPickerDialog =
-                    CustomDialog(this, R.layout.dialog_community_ex_data_picker, "")
-                val exDataPickerAlert = exDataPickerDialog.showDialog()
 
-                // 리스트뷰에 추가할 데이터 리스트
-                val dataModelList = mutableListOf<ExerciseDataModel>()
+                if (selectedDate == null) { // 날짜를 먼저 선택했는지 널 체크
 
-                // 리스트뷰 연결
-                val listView = exDataPickerAlert?.findViewById<ListView>(R.id.exDataListLV)
-                val adapterList = ExDataListAdapter(dataModelList)
-                listView?.adapter = adapterList
+                    Toast.makeText(this, "먼저 날짜를 선택해주세요.", Toast.LENGTH_SHORT).show()
 
-                dataModelList.clear()
+                } else {
 
-                for (dataModel in DataBasket.individualExData!!.children) {
-                    dataModelList.add(dataModel.getValue(ExerciseDataModel::class.java)!!)
-                }
+                    // 리스트뷰에 추가할 Array
+                    val exDataArray = mutableListOf<ExerciseDataModel>()
+                    for (i in 0..2) {
+                        exDataArray.add(i, ExerciseDataModel())
+                    }
+                    exDataArray[0].ex_type = "squat"
+                    exDataArray[1].ex_type = "plank"
+                    exDataArray[2].ex_type = "sideLateralRaise"
+
+                    Log.d("post_test", exDataArray.toString())
+
+                    // 날짜별 & 운동 타입별 운동 데이터 업데이트
+                    for (dataModel in DataBasket.individualExData!!.children) {
+
+                        val tempDataModel = dataModel.getValue(ExerciseDataModel::class.java)
+
+                        if (tempDataModel != null && tempDataModel.ex_date.equals(selectedDate)) { // 날짜 필터링
+
+                            when (tempDataModel.ex_type) {
+                                "squat" -> exDataArray[0].ex_count += tempDataModel.ex_count
+                                "plank" -> exDataArray[1].ex_time += tempDataModel.ex_time
+                                "sideLateralRaise" -> exDataArray[2].ex_count += tempDataModel.ex_count
+                            }
+                        }
+                    }
+
+                    // 리스트뷰에 추가할 데이터 리스트
+                    val dataModelList = mutableListOf<ExerciseDataModel>()
+
+                    // 스쿼트나 사이드래터럴레이즈가 0회, 플랭크가 0초인 경우는 데이터 리스트에 추가하지 않는다.
+                    var dataCount = 0
+                    for (dataModel in exDataArray) {
+
+                        if (!checkIfZeroDataExists(dataModel)) { // zero data가 없을 때 리스트에 add
+                            dataModelList.add(dataModel)
+                            dataCount++
+                            Log.d("post_test", dataModel.toString())
+                        }
+
+                    }
+
+                    // 선택한 날짜의 운동 데이터가 있으면 다이얼로그를 띄운다.
+                    if (dataCount != 0) {
+                        val exDataPickerDialog =
+                            CustomDialog(
+                                this,
+                                R.layout.dialog_community_ex_data_picker,
+                                "${selectedDate}  운동 기록"
+                            )
+                        val exDataPickerAlert = exDataPickerDialog.showDialog()
+
+                        // 리스트뷰 연결
+                        val listView = exDataPickerAlert?.findViewById<ListView>(R.id.exDataListLV)
+                        val adapterList = ExDataListAdapter(dataModelList)
+                        listView?.adapter = adapterList
+
+//                        dataModelList.clear()
+                    } else {
+                        Toast.makeText(
+                            this,
+                            "${selectedDate}에 해당하는 운동 데이터가 없습니다. 먼저 운동을 해주세요.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                } // else
 
             }
 
@@ -98,5 +152,18 @@ class CommunityActivity : AppCompatActivity() {
 
         }
 
+    } // fun onCreate()
+
+    private fun checkIfZeroDataExists(dataModel: ExerciseDataModel): Boolean {
+
+        val targetData = if (dataModel.ex_type == "plank") {
+            dataModel.ex_time
+        } else {
+            dataModel.ex_count
+        }
+
+        return targetData == 0 // if targetData == 0: return true (zero data exists)
+
     }
-}
+
+} // CommunityActivity
