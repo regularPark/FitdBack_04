@@ -24,23 +24,57 @@ class TutorialActivity : YouTubeBaseActivity() {
         var cameramode : String = "back"
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tutorial)
+        // 운동정보 넘기기
+        val exr = intent.getStringExtra("exr_mod")
 
+        val set_cnt = findViewById<TextView>(R.id.set_cnt)
         val btn_np = findViewById<Button>(R.id.btn_num_pick)
         val np = findViewById<NumberPicker>(R.id.num_pick)
+
         np.minValue = 1
-        np.maxValue = 60
+        np.maxValue = 50
+        np.value = 10
+        np.wrapSelectorWheel = false
+
 
         btn_np.setOnClickListener{
             FeedbackAlgorithm.target_cnt = np.value
         }
+        if (exr == "squat"){
+            set_cnt.setText("스쿼트 " + np.value + "회 실시")
+        }
+        else if (exr == "plank"){
+            set_cnt.setText("플랭크 " + np.value + "회 실시")
+        }
+        else if (exr == "sidelr"){
+            set_cnt.setText("사이드레터럴레이즈 " + np.value + "회 실시")
+        }
+        else {
+            set_cnt.setText("자율운동 " + np.value + "회 실시")
+        }
+        np.setOnValueChangedListener { numberPicker, i, i2 ->
+            if(exr == "squat") {
+                set_cnt.setText("스쿼트 " + i2 + "회 실시")
+            }
+            else if (exr == "plank") {
+                set_cnt.setText("플랭크 " + i2 + "회 실시")
+            }
+            else if (exr == "sidelr"){
+                set_cnt.setText("사이드레터럴레이즈 " + i2 + "회 실시")
+            }
+            else{
+                set_cnt.setText("자율운동 " + i2 + "회 실시")
+
+            }
+        }
 
 
-        // 운동정보 넘기기
-        val exr = intent.getStringExtra("exr_mod")
+
         // 유튜브
         val youtubeView = findViewById<YouTubePlayerView>(R.id.youtubePlayer)
         youtubeView.initialize(api_key, object : YouTubePlayer.OnInitializedListener {

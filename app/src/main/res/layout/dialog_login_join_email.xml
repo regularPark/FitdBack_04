@@ -18,7 +18,8 @@
             android:layout_margin="10dp"
             android:background="@drawable/edit_text_blk"
             android:paddingHorizontal="5dp"
-            android:textCursorDrawable="@color/btn_primary"
+            android:textCursorDrawable="@drawable/text_cursor"
+
             android:hint="이메일" />
 
         <EditText
@@ -29,7 +30,7 @@
             android:hint="비밀번호"
             android:background="@drawable/edit_text_blk"
             android:paddingHorizontal="5dp"
-            android:textCursorDrawable="@color/btn_primary"
+            android:textCursorDrawable="@drawable/text_cursor"
             android:inputType="textPassword" />
 
         <EditText
@@ -40,7 +41,7 @@
             android:hint="비밀번호 확인"
             android:background="@drawable/edit_text_blk"
             android:paddingHorizontal="5dp"
-            android:textCursorDrawable="@color/btn_primary"
+            android:textCursorDrawable="@drawable/text_cursor"
             android:inputType="textPassword" />
 
         <EditText
@@ -50,7 +51,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/edit_text_blk"
             android:paddingHorizontal="5dp"
-            android:textCursorDrawable="@color/btn_primary"
+            android:textCursorDrawable="@drawable/text_cursor"
             android:hint="사용하실 닉네임" />
 
         <EditText
@@ -60,7 +61,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/edit_text_blk"
             android:paddingHorizontal="5dp"
-            android:textCursorDrawable="@color/btn_primary"
+            android:textCursorDrawable="@drawable/text_cursor"
             android:hint="회원님의 키" />
 
         <EditText
@@ -70,7 +71,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/edit_text_blk"
             android:paddingHorizontal="5dp"
-            android:textCursorDrawable="@color/btn_primary"
+            android:textCursorDrawable="@drawable/text_cursor"
             android:hint="회원님의 몸무게" />
         </LinearLayout>
     </ScrollView>
