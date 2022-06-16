@@ -94,6 +94,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private var fr_pl_c: TextView? = null
     private var fr_slr_c: TextView? = null
     private var cover: View? = null
+    private var chk: TextView? = null
 
 
     /**
@@ -399,6 +400,20 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         }
     }
 
+    private fun drawChk(text: Int){
+        if(text > 0){
+            activity?.runOnUiThread {
+                chk!!.visibility = View.VISIBLE
+                chk!!.text = "X"
+            }
+        }
+        else {
+            activity?.runOnUiThread {
+                chk!!.visibility = View.INVISIBLE
+            }
+        }
+    }
+
 
     private fun showCountDown(text: Int) {
         val activity = activity
@@ -482,6 +497,9 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         layoutFrame = view.findViewById(R.id.layout_frame)
         drawView = view.findViewById(R.id.drawview)
         layoutBottom = view.findViewById(R.id.layout_bottom)
+
+        // O, X
+        chk = view.findViewById(R.id.cnt_chk)
 
         // 카운트 다운
         countTimer = view.findViewById(R.id.cntDown)
@@ -915,6 +933,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         var tag_cnt = FeedbackAlgorithm.target_cnt
 
 
+
 //        // 자율운동일 때
 //        if (FeedbackAlgorithm.exr_mode == "freeTraining"){
 //            free_cnt_sqt?.progress =
@@ -924,6 +943,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
 
         exPrgBar?.max = tag_cnt
         exPrgBar?.progress = countToShow
+
+        drawChk(FeedbackAlgorithm.wrong_mode)
 
     }
 

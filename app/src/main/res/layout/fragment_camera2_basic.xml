@@ -141,7 +141,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textColor="@color/btn_primary_red"
         android:background="@drawable/button_radius_white"
         />
@@ -171,6 +171,15 @@
         android:progressBackgroundTint="#00000000"
         android:progressDrawable="@drawable/circle_progressbar"
         />
+    <TextView
+        android:id="@+id/cnt_chk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:layout_gravity="center"
+        android:textSize="100dp"
+        android:textColor="@color/btn_primary_red"
+        tools:text="HI"/>
 
 
 

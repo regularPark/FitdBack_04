@@ -484,7 +484,7 @@ class FeedbackAlgorithm {
                         "%.3f kcal 소모.\n").format(plank_s, plank_time_result, cal_pl)
 
                 plank_string2 = ("플랭크\n%d 초 중 %d 초 성공.\n" +
-                        "%.3f kcal를 소모하였습니다.\n").format(plank_time_result, plank_s, cal_pl)
+                        "%.3f kcal를 소모하였습니다.").format(plank_time_result, plank_s, cal_pl)
 
                 plank_string3 = ("엉덩이가 %d%% 들렸습니다.\n" +
                         "엉덩이가 %d%% 내려갔습니다.").format((plank_f1_per*100).toInt(), (plank_f2_per*100).toInt())
@@ -725,7 +725,7 @@ class FeedbackAlgorithm {
                     "%.3f kcal 소모.\n").format(sidelr_s, sidelr_s+ sidelr_f, cal_slr)
 
             sidelr_string2 = ("래터럴 레이즈\n%d회 중 %d회 성공.\n" +
-                    "%.3f kcal를 소모하였습니다.\n").format(sidelr_s+ sidelr_f, sidelr_s, cal_slr)
+                    "%.3f kcal를 소모하였습니다.").format(sidelr_s+ sidelr_f, sidelr_s, cal_slr)
 
             sidelr_string3 = ("왼팔이 %d회 더 올라갔습니다.\n" +
                     "왼팔이 %d회 덜 올라갔습니다.\n" +
