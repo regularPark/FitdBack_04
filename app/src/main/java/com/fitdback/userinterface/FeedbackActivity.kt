@@ -1,6 +1,7 @@
 package com.fitdback.userinterface
 
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -52,9 +53,19 @@ class FeedbackActivity : AppCompatActivity() {
         val feedbackTitlePl = findViewById<TextView>(R.id.fb_pl_title)
         val feedbackTitleSlr = findViewById<TextView>(R.id.fb_slr_title)
         // 그리드 레이아웃
-        val gridSq = findViewById<GridLayout>(R.id.grid_sq)
-        val gridPl = findViewById<GridLayout>(R.id.grid_pl)
-        val gridSlr = findViewById<GridLayout>(R.id.grid_slr)
+        val gridSq = findViewById<LinearLayout>(R.id.grid_sq)
+        val gridPl = findViewById<LinearLayout>(R.id.grid_pl)
+        val gridSlr = findViewById<LinearLayout>(R.id.grid_slr)
+
+        val rtn_home = findViewById<Button>(R.id.return_home)
+        val toMainActivity = Intent(this, MainActivity::class.java)
+
+        rtn_home.setOnClickListener{
+            startActivity(toMainActivity)
+            finish()
+        }
+
+
 
         // 피드백 액티비티 다른 운동시 UI 공간 차지 방지
         if(FeedbackAlgorithm.exr_mode=="squat"){

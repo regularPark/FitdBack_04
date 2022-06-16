@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.fitdback.database.DataBasket
@@ -60,6 +61,7 @@ class HomeFragment : Fragment() {
 
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+
 
 
         // 스쿼트 버튼

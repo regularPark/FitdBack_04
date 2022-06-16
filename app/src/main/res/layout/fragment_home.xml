@@ -6,11 +6,16 @@
     tools:context="com.fitdback.userinterface.fragment.HomeFragment"
     android:orientation="vertical"
     android:columnCount="3"
-    android:background="@color/white"
+    android:background="@color/primary_bg"
     android:rowCount="6">
 
     <!-- TODO: Update blank fragment layout -->
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:elevation="10dp">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,10 +34,11 @@
         android:textSize="20sp"
         android:textStyle="bold"
         />
+    </LinearLayout>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#f7f7f7"
+            android:background="@color/primary_bg"
             >
             <LinearLayout
                 android:layout_width="match_parent"
@@ -70,9 +76,11 @@
                     android:textStyle="bold"
                     android:fontFamily="@font/font"
                     android:drawableLeft="@drawable/sq"
+                    android:elevation="0dp"
                      />
 
                 <TextView
+                    android:id="@+id/sq_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

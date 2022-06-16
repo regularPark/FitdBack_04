@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/primary_bg"
     android:orientation="vertical">
 
     <ScrollView
@@ -14,7 +15,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="10dp"
         android:background="@drawable/btn_selector_color"
         >
 
@@ -30,13 +32,12 @@
             android:layout_gravity="right"
             android:layout_marginHorizontal="10dp"
             android:layout_marginVertical="10dp"
-            app:progress_background_color="@color/btn_gray"
             app:progress_end_color="@color/btn_primary"
-            app:progress_start_color="@color/btn_primary_red"
+            app:progress_start_color="@color/primary_bg"
             app:progress_stroke_cap="round"
             app:progress_stroke_width="20dp"
             app:progress_text_color="@color/btn_gray"
-            app:progress_text_size="30sp"
+            app:progress_text_size="20sp"
             app:style="solid_line" />
         </LinearLayout>
         <GridLayout
@@ -49,13 +50,19 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"
                 android:text="달성률 표기"
+                android:fontFamily="@font/font"
+                android:paddingVertical="5dp"
                 android:textSize="20sp" />
         </GridLayout>
     </LinearLayout>
 
     </ScrollView>
 
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/primary_bg"
+        />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,14 +73,15 @@
             android:orientation="vertical"
             android:background="@color/primary_bg"
             >
-            <GridLayout
+            <LinearLayout
                 android:id="@+id/grid_sq"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp"
-                android:padding="10dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/btn_selector_color"
+                android:orientation="vertical"
+                android:padding="10dp"
                 >
                 <TextView
                     android:id="@+id/fb_sq_title"
@@ -81,6 +89,7 @@
                     android:layout_height="wrap_content"
                     android:layout_row="0"
                     tools:text="squat"
+                    android:textStyle="bold"
                     android:textSize="20sp"
                     android:fontFamily="@font/font"
                     />
@@ -91,9 +100,9 @@
                     android:layout_row="1"
                     tools:text="hi"
                     android:textSize="20dp"/>
-            </GridLayout>
+            </LinearLayout>
 
-            <GridLayout
+            <LinearLayout
                 android:id="@+id/grid_pl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -106,6 +115,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textStyle="bold"
                     tools:text="plank"
                     android:textSize="20sp"
                     android:fontFamily="@font/font"
@@ -116,9 +126,9 @@
                     android:layout_height="wrap_content"
                     tools:text="hi"
                     android:textSize="20dp"/>
-            </GridLayout>
+            </LinearLayout>
 
-            <GridLayout
+            <LinearLayout
                 android:id="@+id/grid_slr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -126,24 +136,23 @@
                 android:layout_margin="10dp"
                 android:padding="10dp"
                 android:background="@drawable/btn_selector_color">
-            <TextView
-                android:id="@+id/fb_slr_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                tools:text="sidelr"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:fontFamily="@font/font"
-                />
-            <TextView
-                android:id="@+id/fb_msg_slr"
-                android:layout_width="wrap_content"
-                android:fontFamily="@font/font"
-                android:layout_height="wrap_content"
-                tools:text="hi"
-                android:textSize="20dp"/>
-            </GridLayout>
+                <TextView
+                    android:id="@+id/fb_slr_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="sidelr"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/font"
+                    />
+                <TextView
+                    android:id="@+id/fb_msg_slr"
+                    android:layout_width="wrap_content"
+                    android:fontFamily="@font/font"
+                    android:layout_height="wrap_content"
+                    tools:text="hi"
+                    android:textSize="20dp"/>
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -174,38 +183,59 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_marginBottom="10dp"
+                android:paddingVertical="10dp">
             <Button
                 android:id="@+id/fb_btnShowExCalorieChart"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="0.3"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
                 android:text="칼로리 소모량"
+                android:textColor="@color/btn_gray"
                 android:fontFamily="@font/font"
-                android:background="@drawable/btn_stroke_blk"
+                android:background="@drawable/btn_selector_color"
                 android:textSize="15sp" />
 
             <Button
                 android:id="@+id/fb_btnShowExCountChart"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="0.3"
                 android:text="운동 횟수"
                 android:fontFamily="@font/font"
-                android:background="@drawable/btn_stroke_blk"
+                android:textColor="@color/btn_gray"
+                android:background="@drawable/btn_selector_color"
                 android:layout_marginHorizontal="5dp"
                 android:textSize="15sp" />
 
             <Button
                 android:id="@+id/fb_btnShowExTimeChart"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="0.3"
+                android:layout_marginRight="10dp"
                 android:text="운동 시간"
                 android:fontFamily="@font/font"
-                android:background="@drawable/btn_stroke_blk"
+                android:textColor="@color/btn_gray"
+                android:background="@drawable/btn_selector_color"
                 android:textSize="15sp" />
             </LinearLayout>
+            <Button
+                android:id="@+id/return_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="확인"
+                android:padding="5dp"
+                android:textStyle="bold"
+                android:textColor="@color/btn_gray"
+                android:textSize="40dp"
+                android:fontFamily="@font/font"
+                android:background="@drawable/btn_selector_color"
+                />
 
         </LinearLayout>
 
