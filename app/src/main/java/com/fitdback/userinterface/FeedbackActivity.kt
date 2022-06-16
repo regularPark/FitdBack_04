@@ -1,13 +1,13 @@
 package com.fitdback.userinterface
 
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.dinuscxj.progressbar.CircleProgressBar
@@ -44,12 +44,54 @@ class FeedbackActivity : AppCompatActivity() {
         val btnShowExCountChart = findViewById<Button>(R.id.fb_btnShowExCountChart)
         val btnShowExTimeChart = findViewById<Button>(R.id.fb_btnShowExTimeChart)
 
-        val exTypeArea = findViewById<TextView>(R.id.fb_exTypeArea)
-        val exResultArea = findViewById<TextView>(R.id.fb_exResultArea)
+
         val achievementRate = findViewById<TextView>(R.id.fb_achivementRate)
-        val feedbackArea = findViewById<TextView>(R.id.fb_feedbackArea)
+        val feedbackTitleSq = findViewById<TextView>(R.id.fb_sq_title)
+        val feedbackMsgSq = findViewById<TextView>(R.id.fb_msg_sq)
+        val feedbackMsgPl = findViewById<TextView>(R.id.fb_msg_pl)
+        val feedbackMsgSlr = findViewById<TextView>(R.id.fb_msg_slr)
+        val feedbackTitlePl = findViewById<TextView>(R.id.fb_pl_title)
+        val feedbackTitleSlr = findViewById<TextView>(R.id.fb_slr_title)
+        // 그리드 레이아웃
+        val gridSq = findViewById<LinearLayout>(R.id.grid_sq)
+        val gridPl = findViewById<LinearLayout>(R.id.grid_pl)
+        val gridSlr = findViewById<LinearLayout>(R.id.grid_slr)
+
+        val rtn_home = findViewById<Button>(R.id.return_home)
+        val toMainActivity = Intent(this, MainActivity::class.java)
+
+        rtn_home.setOnClickListener{
+            startActivity(toMainActivity)
+            finish()
+        }
 
 
+
+        // 피드백 액티비티 다른 운동시 UI 공간 차지 방지
+        if(FeedbackAlgorithm.exr_mode=="squat"){
+            feedbackMsgPl.visibility = View.GONE
+            feedbackMsgSlr.visibility = View.GONE
+            feedbackTitlePl.visibility = View.GONE
+            feedbackTitleSlr.visibility = View.GONE
+            gridPl.visibility = View.GONE
+            gridSlr.visibility = View.GONE
+        }
+        else if(FeedbackAlgorithm.exr_mode == "plank"){
+            feedbackMsgSq.visibility = View.GONE
+            feedbackMsgSlr.visibility = View.GONE
+            feedbackTitleSq.visibility = View.GONE
+            feedbackTitleSlr.visibility = View.GONE
+            gridSq.visibility = View.GONE
+            gridSlr.visibility = View.GONE
+        }
+        else if(FeedbackAlgorithm.exr_mode == "sidelr"){
+            feedbackMsgSq.visibility = View.GONE
+            feedbackMsgPl.visibility = View.GONE
+            feedbackTitleSq.visibility = View.GONE
+            feedbackTitlePl.visibility = View.GONE
+            gridPl.visibility = View.GONE
+            gridSq.visibility = View.GONE
+        }
 
 
 
@@ -127,9 +169,88 @@ class FeedbackActivity : AppCompatActivity() {
 
             // TODO: 레이아웃 채우기
             val feedbackHandler = FeedbackHandler()
-            exTypeArea.text = feedbackHandler.getExType()
-            exResultArea.text = feedbackHandler.getExResult()
-            feedbackArea.text = feedbackHandler.getFeedback()
+
+
+            var feedbacktext_list3: List<String> = listOf(FeedbackAlgorithm.squat_string3, FeedbackAlgorithm.plank_string3, FeedbackAlgorithm.sidelr_string3)
+            var feedbacktext_list2: List<String> = listOf(FeedbackAlgorithm.squat_string2, FeedbackAlgorithm.plank_string2, FeedbackAlgorithm.sidelr_string2)
+
+            if(FeedbackAlgorithm.squat_string3=="Empty"){
+                feedbackMsgSq.visibility = View.GONE
+                feedbackTitleSq.visibility = View.GONE
+                if(FeedbackAlgorithm.plank_string3=="Empty"){
+                    feedbackMsgPl.visibility = View.GONE
+                    feedbackTitlePl.visibility = View.GONE
+                }
+                if(FeedbackAlgorithm.sidelr_string3=="Empty"){
+                    feedbackMsgSlr.visibility = View.GONE
+                    feedbackTitleSlr.visibility = View.GONE
+                }
+            }
+            else{
+                if(FeedbackAlgorithm.plank_string3=="Empty"){
+                    feedbackMsgPl.visibility = View.GONE
+                    feedbackTitlePl.visibility = View.GONE
+                }
+                if(FeedbackAlgorithm.sidelr_string3=="Empty") {
+                    feedbackMsgSlr.visibility = View.GONE
+                    feedbackTitleSlr.visibility = View.GONE
+                }
+            }
+            /*for( i in feedbacktext_list3){
+                if(i=="Empty"){
+                    if(i==FeedbackAlgorithm.squat_string3){
+                        feedbackMsgSq.visibility = View.GONE
+                        feedbackTitleSq.visibility = View.GONE
+                        Log.d("string_err", "squat_x")
+                    }
+                    else if(i==FeedbackAlgorithm.plank_string3){
+                        feedbackMsgPl.visibility = View.GONE
+                        feedbackTitlePl.visibility = View.GONE
+                        Log.d("string_err", "plank_x")
+                    }
+                    else if(i==FeedbackAlgorithm.sidelr_string3){
+                        feedbackMsgSlr.visibility = View.GONE
+                        feedbackTitleSlr.visibility = View.GONE
+                        Log.d("string_err", "sidelr_x")
+                    }
+                }
+            }*/
+            for(i in feedbacktext_list2){
+                if(i!="Empty"){
+                    FeedbackAlgorithm.feedback_text2 += i
+                }
+            }
+
+            achievementRate.text = FeedbackAlgorithm.feedback_text2
+            feedbackTitleSq.text = "[스쿼트 실패 원인]"
+            feedbackTitlePl.text = "[플랭크 실패 원인]"
+            feedbackTitleSlr.text = "[래터럴 레이즈 실패 원인]"
+            feedbackMsgSq.text = FeedbackAlgorithm.squat_string3
+            feedbackMsgPl.text = FeedbackAlgorithm.plank_string3
+            feedbackMsgSlr.text = FeedbackAlgorithm.sidelr_string3
+
+            //feedbackArea.text = feedbackHandler.getFeedback()
+
+
+
+            /*if(FeedbackAlgorithm.exr_mode == "squat"){
+                feedbackArea.text = FeedbackAlgorithm.squat_string3
+            }
+            else if(FeedbackAlgorithm.exr_mode == "plank"){
+                feedbackArea.text = FeedbackAlgorithm.plank_string3
+            }
+            else if(FeedbackAlgorithm.exr_mode == "sidelr"){
+                feedbackArea.text = FeedbackAlgorithm.sidelr_string3
+            }
+            else if(FeedbackAlgorithm.exr_mode == "free_exr"){
+                feedbackArea.text = FeedbackAlgorithm.squat_string3 + FeedbackAlgorithm.plank_string3 + FeedbackAlgorithm.sidelr_string3
+            }*/
+            /*for (i in feedbacktext_list){
+                if(i!="Empty"){
+                    FeedbackAlgorithm.feedback_text3 += i
+                }
+            }
+            feedbackArea.text = FeedbackAlgorithm.feedback_text3*/
 
             // 프로그레스 바
             val prgBar = findViewById<CircleProgressBar>(R.id.complete_PrgBar)

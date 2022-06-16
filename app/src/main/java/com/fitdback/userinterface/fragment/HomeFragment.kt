@@ -8,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.fitdback.database.DataBasket
 import com.fitdback.posedetection.R
 import com.fitdback.test.DevModeActivity
+import com.fitdback.userinterface.FeedbackActivity
 import com.fitdback.userinterface.LoginActivity_new
 import com.fitdback.userinterface.TutorialActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -60,14 +62,7 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        val im_squat = view.findViewById<ImageView>(R.id.im_squat)
-        val im_plank = view.findViewById<ImageView>(R.id.im_plank)
-        val im_slr = view.findViewById<ImageView>(R.id.im_slr)
-        im_squat.clipToOutline = true
 
-        Glide.with(this).load(R.raw.squat_gif).override(1000, 600).into(im_squat)
-        Glide.with(this).load(R.raw.plank).override(1000, 500).into(im_plank)
-        Glide.with(this).load(R.raw.slr_gif).override(1000, 500).into(im_slr)
 
         // 스쿼트 버튼
         val squatBtn: Button = view.findViewById(R.id.squatBtn)
@@ -124,7 +119,8 @@ class HomeFragment : Fragment() {
         btnDevMode.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 activity?.finish()
-                val toDevActivity = Intent(context, DevModeActivity::class.java)
+                val toDevActivity = Intent(context, FeedbackActivity::class.java)
+                toDevActivity.putExtra("exr_mode", "squat")
                 startActivity(toDevActivity)
             }
         })

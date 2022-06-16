@@ -6,24 +6,32 @@
     android:layout_height="wrap_content"
     android:fillViewport="true"
     android:orientation="vertical"
-    android:layout_gravity="center"
+    android:gravity="center"
     tools:context="com.fitdback.userinterface.fragment.StatisticFragment">
 
-
+<ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_gravity="center"
+        >
 
         <TextView
             android:id="@+id/selectedExTypeArea_"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:text="운동 종류 선택"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="10dp"
+            android:text="운동 선택"
             android:textAlignment="center"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:fontFamily="@font/font"
+            />
         <RadioGroup
             android:id="@+id/radioGp_1"
             android:orientation="horizontal"
@@ -40,7 +48,9 @@
                     android:text="스쿼트"
                     android:textColor="@color/btn_gray"
                     android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/font"
+                    />
                 <View
                     android:layout_width="2dp"
                     android:layout_height="40sp"
@@ -56,7 +66,9 @@
                     android:text="플랭크"
                     android:textColor="@color/btn_gray"
                     android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/font"
+                    />
             <View
                 android:layout_width="2dp"
                 android:layout_height="40sp"
@@ -73,7 +85,9 @@
                     android:text="사이드 래터럴"
                     android:textColor="#808080"
                     android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/font"
+                    />
 
         </RadioGroup>
         <View
@@ -87,10 +101,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:text="원하는 데이터"
+            android:text="데이터 선택"
             android:textAlignment="center"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:fontFamily="@font/font"
+            />
 
             <RadioGroup
                 android:id="@+id/radioGp_2"
@@ -108,7 +124,9 @@
                     android:text="칼로리 소모량"
                     android:textColor="@color/btn_gray"
                     android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/font"
+                    />
                 <View
                     android:layout_width="2dp"
                     android:layout_height="40sp"
@@ -125,7 +143,9 @@
                     android:text="운동 횟수"
                     android:textColor="@color/btn_gray"
                     android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/font"
+                    />
                 <View
                     android:layout_width="2dp"
                     android:layout_height="40sp"
@@ -142,7 +162,9 @@
                     android:text="운동 시간"
                     android:textColor="@color/btn_gray"
                     android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/font"
+                    />
             </RadioGroup>
         <View
             android:background="@color/btn_gray"
@@ -152,20 +174,21 @@
             />
         <TextView
             android:id="@+id/yAxisTitleArea_"
-            android:textAlignment="center"
+            android:layout_gravity="left"
             android:layout_width="50dp"
             android:layout_marginStart="30dp"
             android:layout_height="20dp" />
-
+        <!-- 레이아웃에 차트 넣기-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/barChart"
             android:layout_width="match_parent"
             android:layout_marginHorizontal="20dp"
             android:layout_height="300dp" />
+        </LinearLayout>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -180,8 +203,10 @@
                     android:background="@drawable/button_radius_color"
                     android:text="지난 주"
                     android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/font"
+                    />
                 <Button
                     android:id="@+id/btnShowThisWeek_"
                     android:layout_width="0dp"
@@ -192,24 +217,30 @@
                     android:background="@drawable/button_radius_color_3"
                     android:text="이번 주 차트"
                     android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/font"
+                    />
                 <Button
                     android:id="@+id/btnShowNextWeek_"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
                     android:layout_marginHorizontal="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="100dp"
                     android:background="@drawable/button_radius_color"
                     android:text="다음 주"
                     android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/font"
+                    />
+
             </LinearLayout>
 
-        </ScrollView>
 
     </LinearLayout>
+</ScrollView>
 
-</LinearLayout>
+
+    </LinearLayout>

@@ -19,38 +19,77 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-
-            <Button
-                android:id="@+id/howTo"
+            <ImageView
+                android:id="@+id/tt_img"
                 android:layout_width="match_parent"
-                android:layout_height="330dp"
-                android:background="#000000"
-                android:text="description"
-                android:textColor="@color/white"
-                android:textSize="30sp"
-                android:textStyle="italic" />
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                />
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+                        <NumberPicker
+                            android:id="@+id/num_pick"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:divider="@color/btn_primary_red"
+                            android:theme="@style/AppTheme.NumberPicker"
+                            />
 
 
+            </LinearLayout>
+            <TextView
+                android:id="@+id/set_cnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/font"
+                tools:text="hi"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2">
             <Button
                 android:id="@+id/btnFitnessStart"
-                android:layout_marginTop="50dp"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
                 android:layout_marginHorizontal="10dp"
-                android:text="전면 카메라 사용"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:background="@drawable/btn_stroke_blk"/>
+                android:text="전면 카메라 실행"
+                android:textSize="23sp"
+                android:fontFamily="@font/font"
+                android:background="@drawable/btn_stroke_blk"
+                android:drawableTop="@drawable/sf"
+                android:paddingVertical="5dp"
+                />
             <Button
                 android:id="@+id/btnFitnessStartBack"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_margin="10dp"
-                android:text="후면 카메라 사용"
-                android:textSize="30sp"
-                android:textStyle="bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:layout_marginVertical="10dp"
+                android:text="후면 카메라 실행"
+                android:textSize="23sp"
+                android:fontFamily="@font/font"
                 android:background="@drawable/btn_stroke_blk"
+                android:drawableTop="@drawable/cam"
+                android:paddingTop="10dp"
+                android:paddingBottom="5dp"
+
                 />
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

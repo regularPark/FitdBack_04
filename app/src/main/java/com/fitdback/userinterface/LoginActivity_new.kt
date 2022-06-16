@@ -2,6 +2,7 @@ package com.fitdback.userinterface
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -42,6 +43,7 @@ class LoginActivity_new : AppCompatActivity() {
         val btnRunDevLogin = findViewById<Button>(R.id.btnRunDevLogin)
         val joinTextView = findViewById<TextView>(R.id.joinTextView)
 
+
         val image_bg = findViewById<ImageView>(R.id.image_bg)
 
         Glide.with(this).load(R.raw.move2).override(1200,800).into(image_bg)
@@ -54,7 +56,7 @@ class LoginActivity_new : AppCompatActivity() {
         btnRunEmailLogin.setOnClickListener {
 
             val dialog =
-                CustomDialog(this, R.layout.dialog_login_email_login, "Email Login")
+                CustomDialog(this, R.layout.dialog_login_email_login,"")
             val mAlertDialog = dialog.showDialog()
             val btnEmailLogin = mAlertDialog!!.findViewById<Button>(R.id.btnEmailLogin)
 
@@ -118,10 +120,9 @@ class LoginActivity_new : AppCompatActivity() {
                 emailLoginAuth("pjk@gmail.com", "123456", toMainActivity)
             }
         }
-
         joinTextView.setOnClickListener {
             val dialog =
-                CustomDialog(this, R.layout.dialog_login_join, "Email Join")
+                CustomDialog(this, R.layout.dialog_login_join, "")
             val mAlertDialog = dialog.showDialog()
 
             val btnEmailJoin =
