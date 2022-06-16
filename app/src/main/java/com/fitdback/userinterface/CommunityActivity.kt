@@ -228,8 +228,8 @@ class CommunityActivity : AppCompatActivity() {
                     )
 
                     // DB에 추가
-                    val dbPath = database.getReference("posts")
-                    dbPath.push().setValue(postDataModel)
+                    val postDBPath = database.getReference("posts")
+                    postDBPath.push().setValue(postDataModel)
                         .addOnSuccessListener {
                             Toast.makeText(this, "게시글 저장 완료", Toast.LENGTH_SHORT).show()
                         }
@@ -273,7 +273,7 @@ class CommunityActivity : AppCompatActivity() {
                 "플랭크 ${formatTime(exerciseDataModel.ex_time)}"
             }
             else -> {
-                "사이드래터럴레이즈 ${exerciseDataModel.ex_count}회"
+                "래터럴레이즈 ${exerciseDataModel.ex_count}회"
             }
         }
 

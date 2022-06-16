@@ -5,7 +5,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="85dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.3"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:gravity="center_vertical|center"
                 android:text="post_memo" />
@@ -36,15 +36,15 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="20dp">
+            android:layout_height="25dp">
 
             <TextView
                 android:id="@+id/post_writer_and_datetime_area"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="13dp"
                 android:gravity="right"
-                android:text="posted by writer on datetime"
+                android:text="writer, datetime"
                 android:textSize="15sp"
                 android:textStyle="italic" />
 
