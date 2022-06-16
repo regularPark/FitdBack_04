@@ -94,7 +94,6 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private var fr_pl_c: TextView? = null
     private var fr_slr_c: TextView? = null
     private var cover: View? = null
-    private var chk: TextView? = null
 
 
     /**
@@ -386,8 +385,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         activity?.runOnUiThread {
             if(TimerClass.second <= 0){
                 countView!!.visibility = View.VISIBLE
-                countView!!.text = "완료 :" + text_com.toString() + " / 목표 : " + text_tar.toString() +
-                        " / 성공 : " + text_s.toString() + " / 실패 : " + text_f.toString()
+                countView!!.text = "목표 :" + text_tar.toString() + " / 완료 :" + text_com.toString() +
+                        "\n성공 :" + text_s.toString() + " / 실패 :" + text_f.toString()
             }
             else{
                 countView!!.visibility = View.INVISIBLE
@@ -397,20 +396,6 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
 
             }
 
-        }
-    }
-
-    private fun drawChk(text: Int){
-        if(text > 0){
-            activity?.runOnUiThread {
-                chk!!.visibility = View.VISIBLE
-                chk!!.text = "X"
-            }
-        }
-        else {
-            activity?.runOnUiThread {
-                chk!!.visibility = View.INVISIBLE
-            }
         }
     }
 
@@ -426,6 +411,9 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                 guideMsg!!.visibility = View.INVISIBLE
                 drawView!!.visibility = View.VISIBLE
                 exPrgBar!!.visibility = View.VISIBLE
+                fr_slr_c!!.visibility = View.INVISIBLE
+                fr_pl_c!!.visibility = View.INVISIBLE
+                fr_sq_c!!.visibility = View.INVISIBLE
                 Handler().postDelayed(
                         {
                             countTimer!!.visibility = View.INVISIBLE
@@ -436,7 +424,11 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                     fr_sq_c!!.text = " " + (FeedbackAlgorithm.squat_s + FeedbackAlgorithm.squat_f).toString() + "회"
                     fr_pl_c!!.text = " " + (FeedbackAlgorithm.plank_s + FeedbackAlgorithm.plank_f).toString() + "초"
                     fr_slr_c!!.text = " " + (FeedbackAlgorithm.sidelr_s + FeedbackAlgorithm.sidelr_f).toString() + "회"
+                    fr_slr_c!!.visibility = View.VISIBLE
+                    fr_pl_c!!.visibility = View.VISIBLE
+                    fr_sq_c!!.visibility = View.VISIBLE
                     cover!!.visibility = View.INVISIBLE
+                    exPrgBar!!.visibility = View.INVISIBLE
                 }
             }
         } else {
@@ -498,8 +490,6 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         drawView = view.findViewById(R.id.drawview)
         layoutBottom = view.findViewById(R.id.layout_bottom)
 
-        // O, X
-        chk = view.findViewById(R.id.cnt_chk)
 
         // 카운트 다운
         countTimer = view.findViewById(R.id.cntDown)
@@ -944,7 +934,6 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         exPrgBar?.max = tag_cnt
         exPrgBar?.progress = countToShow
 
-        drawChk(FeedbackAlgorithm.wrong_mode)
 
     }
 

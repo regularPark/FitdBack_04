@@ -332,10 +332,10 @@ class FeedbackAlgorithm {
                 ran_int = (0..8).random()
                 cal_sq = ((squat_s+squat_f) * squat_cal).toInt() + (ran_int*0.125)
                 squat_string1 = ("스쿼트\n%d / %d 회 성공.\n" +
-                        "%.3f kcal 소모.\n\n").format(squat_s, squat_s+ squat_f, cal_sq)
+                        "%.3f kcal 소모.").format(squat_s, squat_s+ squat_f, cal_sq)
 
                 squat_string2 = ("스쿼트\n%d회 중 %d회 성공.\n" +
-                        "%.3f kcal를 소모하였습니다.\n\n").format(squat_s+ squat_f, squat_s, cal_sq)
+                        "%.3f kcal를 소모하였습니다.").format(squat_s+ squat_f, squat_s, cal_sq)
 
                 squat_string3 = ("다리를 %d회 더 굽혔습니다.\n" +
                         "다리를 %d회 덜 굽혔습니다.").format(squat_f_mode[2], squat_f_mode[1])

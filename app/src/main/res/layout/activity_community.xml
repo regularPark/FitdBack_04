@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary_bg"
     tools:context="com.fitdback.userinterface.CommunityActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:weightSum="1"
-        tools:ignore="MissingConstraints">
+        android:background="@color/white"
+        tools:ignore="MissingConstraints"
+        android:elevation="5dp">
 
         <TextView
             android:id="@+id/post_ex_history_area"
@@ -19,6 +22,7 @@
             android:layout_weight="0.7"
             android:gravity="center_vertical|center"
             android:text="운동 기록"
+            android:textStyle="bold"
             android:background="#e4e4e4"
             android:textSize="18sp" />
 
@@ -44,14 +48,16 @@
         android:id="@+id/postLV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp" />
+        android:dividerHeight="0dp"
+        android:layout_marginTop="30dp"
+        android:divider="#FFFFFF" />
 
     <ImageView
         android:id="@+id/btnWritePost"
-        android:layout_width="62dp"
-        android:layout_height="67dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_margin="20dp"
-        android:src="@drawable/community_writing_icon"
+        android:src="@drawable/write"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

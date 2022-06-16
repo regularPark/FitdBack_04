@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/primary_bg"
     tools:context="com.fitdback.userinterface.TutorialActivity">
 
     <ScrollView
@@ -24,25 +25,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:background="@drawable/btn_selector_color"
                 />
             <TextView
                 android:id="@+id/description"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:textStyle="bold"
+                android:textSize="20dp">
 
             </TextView>
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
-                        <NumberPicker
-                            android:id="@+id/num_pick"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_gravity="center"
-                            android:divider="@color/btn_primary_red"
-                            android:theme="@style/AppTheme.NumberPicker"
-                            />
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="10dp">
+                <NumberPicker
+                    android:id="@+id/num_pick"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="10dp"
+                    android:divider="@color/btn_primary_red"
+                    android:theme="@style/AppTheme.NumberPicker"
+                    />
 
 
             </LinearLayout>
@@ -50,7 +60,9 @@
                 android:id="@+id/set_cnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:textSize="30dp"
+                android:textColor="@color/btn_primary"
                 android:layout_gravity="center"
                 android:fontFamily="@font/font"
                 tools:text="hi"
@@ -69,7 +81,7 @@
                 android:text="전면 카메라 실행"
                 android:textSize="23sp"
                 android:fontFamily="@font/font"
-                android:background="@drawable/btn_stroke_blk"
+                android:background="@drawable/btn_selector_color"
                 android:drawableTop="@drawable/sf"
                 android:paddingVertical="5dp"
                 />
@@ -83,7 +95,7 @@
                 android:text="후면 카메라 실행"
                 android:textSize="23sp"
                 android:fontFamily="@font/font"
-                android:background="@drawable/btn_stroke_blk"
+                android:background="@drawable/btn_selector_color"
                 android:drawableTop="@drawable/cam"
                 android:paddingTop="10dp"
                 android:paddingBottom="5dp"
