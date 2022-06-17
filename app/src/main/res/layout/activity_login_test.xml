@@ -84,16 +84,16 @@
             </RelativeLayout>
 
 
-            <Button
-                android:id="@+id/btnRunDevLogin"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="5dp"
-                android:textSize="20sp"
-                android:background="@drawable/btn_stroke_blk"
-                android:fontFamily="@font/font"
-                android:textColor="@color/btn_gray"
-                android:text="개발자 로그인" />
+<!--            <Button-->
+<!--                android:id="@+id/btnRunDevLogin"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_margin="5dp"-->
+<!--                android:textSize="20sp"-->
+<!--                android:background="@drawable/btn_stroke_blk"-->
+<!--                android:fontFamily="@font/font"-->
+<!--                android:textColor="@color/btn_gray"-->
+<!--                android:text="개발자 로그인" />-->
 
             <TextView
                 android:id="@+id/joinTextView"
