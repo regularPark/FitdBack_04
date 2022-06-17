@@ -3,7 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="20dp"
+    android:background="@color/primary_bg"
     android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40dp"
+        android:text="친구 등록"
+        android:layout_margin="10dp"
+        android:textStyle="bold"
+        />
 
     <EditText
         android:id="@+id/friendCodeArea"
@@ -23,7 +32,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="20dp"
+        android:fontFamily="@font/font"
         android:text="검색"
+        android:background="@drawable/btn_selector_color"
+        android:textColor="@color/btn_gray"
         android:textAllCaps="false"
         android:textSize="20sp" />
 
@@ -32,7 +44,11 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="10dp"
+        android:fontFamily="@font/font"
         android:text="친구 추가"
+        android:background="@drawable/btn_selector_color"
+        android:textColor="@color/btn_gray"
         android:textAllCaps="false"
         android:textSize="20sp" />
 
@@ -43,8 +59,10 @@
         android:layout_height="50dp"
         android:layout_margin="20dp"
         android:layout_marginBottom="20dp"
+        android:textColor="@color/btn_gray"
         android:text="확인"
         android:textAllCaps="false"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:background="@drawable/btn_selector_color"/>
 
 </LinearLayout>
