@@ -95,6 +95,12 @@
         android:fontFamily="@font/font"
         android:drawableLeft="@drawable/ic_slr_2"
         />
+    <TextView
+        android:id="@+id/test_toast"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
     <View
         android:id="@+id/cover"
         android:layout_width="match_parent"
@@ -137,9 +143,10 @@
         android:layout_marginBottom="20dp"
         android:gravity="center"
         android:layout_gravity="center|bottom"
-        android:textColor="@color/btn_primary"
+        android:textColor="@color/btn_gray"
         android:fontFamily="@font/font"
-        android:textSize="30sp"
+        android:textSize="25sp"
+        android:padding="4dp"
         tools:text="Count"
         />
     <TextView

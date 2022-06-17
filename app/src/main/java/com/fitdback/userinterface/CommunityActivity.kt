@@ -69,7 +69,7 @@ class CommunityActivity : AppCompatActivity() {
         btnWritePost.setOnClickListener {
 
             // community_posting 다이얼로그
-            val postingDialog = CustomDialog(this, R.layout.dialog_community_posting, "Posting")
+            val postingDialog = CustomDialog(this, R.layout.dialog_community_posting, "")
             val postingAlertDialog = postingDialog.showDialog()
 
             val memoArea = postingAlertDialog?.findViewById<EditText>(R.id.memoArea)
