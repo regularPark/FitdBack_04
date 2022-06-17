@@ -41,7 +41,7 @@ class LoginActivity_new : AppCompatActivity() {
         // 레이아웃
         val btnRunEmailLogin = findViewById<Button>(R.id.btnRunEmailLogin)
         val btnRunGoogleLogin = findViewById<SignInButton>(R.id.btnRunGoogleLogin)
-        val btnRunDevLogin = findViewById<Button>(R.id.btnRunDevLogin)
+//        val btnRunDevLogin = findViewById<Button>(R.id.btnRunDevLogin)
         val joinTextView = findViewById<TextView>(R.id.joinTextView)
 
 
@@ -97,30 +97,30 @@ class LoginActivity_new : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         // 개발자 로그인
-        btnRunDevLogin.setOnClickListener {
-            val dialog =
-                CustomDialog(this, R.layout.dialog_dev_login, "Email Login")
-            val mAlertDialog = dialog.showDialog()
-
-            val btnKshLogin =
-                mAlertDialog!!.findViewById<Button>(R.id.btnKshLogin)
-
-            val btnOmsLogin =
-                mAlertDialog.findViewById<Button>(R.id.btnOmsLogin)
-
-            val btnPjkLogin =
-                mAlertDialog.findViewById<Button>(R.id.btnPjkLogin)
-
-            btnKshLogin?.setOnClickListener {
-                emailLoginAuth("ksh@gmail.com", "123456", toMainActivity)
-            }
-            btnOmsLogin?.setOnClickListener {
-                emailLoginAuth("oms@gmail.com", "123456", toMainActivity)
-            }
-            btnPjkLogin?.setOnClickListener {
-                emailLoginAuth("pjk@gmail.com", "123456", toMainActivity)
-            }
-        }
+//        btnRunDevLogin.setOnClickListener {
+//            val dialog =
+//                CustomDialog(this, R.layout.dialog_dev_login, "Email Login")
+//            val mAlertDialog = dialog.showDialog()
+//
+//            val btnKshLogin =
+//                mAlertDialog!!.findViewById<Button>(R.id.btnKshLogin)
+//
+//            val btnOmsLogin =
+//                mAlertDialog.findViewById<Button>(R.id.btnOmsLogin)
+//
+//            val btnPjkLogin =
+//                mAlertDialog.findViewById<Button>(R.id.btnPjkLogin)
+//
+//            btnKshLogin?.setOnClickListener {
+//                emailLoginAuth("ksh@gmail.com", "123456", toMainActivity)
+//            }
+//            btnOmsLogin?.setOnClickListener {
+//                emailLoginAuth("oms@gmail.com", "123456", toMainActivity)
+//            }
+//            btnPjkLogin?.setOnClickListener {
+//                emailLoginAuth("pjk@gmail.com", "123456", toMainActivity)
+//            }
+//        }
 
         joinTextView.setOnClickListener {
             val dialog =
