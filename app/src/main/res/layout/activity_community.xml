@@ -1,56 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_bg"
+    android:orientation="vertical"
     tools:context="com.fitdback.userinterface.CommunityActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:weightSum="1"
+        android:layout_height="wrap_content"
         android:background="@color/white"
+        android:orientation="horizontal"
         tools:ignore="MissingConstraints"
         android:elevation="5dp">
 
         <TextView
             android:id="@+id/post_ex_history_area"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.7"
-            android:gravity="center_vertical|center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
             android:text="운동 기록"
+            android:gravity="center"
             android:textStyle="bold"
-            android:background="#e4e4e4"
+            android:padding="3dp"
+            android:background="@color/btn_primary"
+            android:textColor="@color/white"
             android:textSize="18sp" />
-
-        <View
-            android:layout_width="0.8dp"
-            android:layout_height="match_parent"
-            android:background="#BDBDBD" />
 
         <TextView
             android:id="@+id/post_memo_area"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:padding="3dp"
             android:gravity="center_vertical|center"
-            android:background="#e4e4e4"
+            android:background="@color/btn_primary"
+            android:textColor="@color/white"
             android:text="게시글"
             android:textSize="18sp"
             android:textStyle="bold" />
-
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/postLV"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:dividerHeight="0dp"
-        android:layout_marginTop="30dp"
-        android:divider="#FFFFFF" />
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ListView
+                android:id="@+id/postLV"
+                android:layout_width="match_parent"
+                android:layout_height="1000dp"
+                android:layout_marginTop="30dp"
+                android:divider="#FFFFFF"
+                android:dividerHeight="0dp" />
+        </LinearLayout>
+
+    </ScrollView>
 
     <ImageView
         android:id="@+id/btnWritePost"
