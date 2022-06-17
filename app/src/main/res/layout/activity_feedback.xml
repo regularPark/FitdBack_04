@@ -17,20 +17,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginHorizontal="10dp"
-        android:background="@drawable/btn_selector_color"
+        android:background="@color/primary_bg"
         >
 
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="100dp"
-            android:layout_marginVertical="10dp">
+            >
         <com.dinuscxj.progressbar.CircleProgressBar
             android:id="@+id/complete_PrgBar"
             android:layout_width="120dp"
             android:layout_height="100dp"
             android:layout_gravity="right"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginHorizontal="5dp"
             android:layout_marginVertical="10dp"
             app:progress_end_color="@color/btn_primary"
             app:progress_start_color="@color/primary_bg"
@@ -40,20 +40,17 @@
             app:progress_text_size="20sp"
             app:style="solid_line" />
         </LinearLayout>
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+
             <TextView
                 android:id="@+id/fb_achivementRate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.3"
                 android:text="달성률 표기"
+                android:padding="5dp"
+                android:background="@drawable/btn_selector_color"
                 android:fontFamily="@font/font"
-                android:paddingVertical="5dp"
                 android:textSize="20sp" />
-        </GridLayout>
+
     </LinearLayout>
 
     </ScrollView>
@@ -91,6 +88,7 @@
                     tools:text="squat"
                     android:textStyle="bold"
                     android:textSize="20sp"
+                    android:layout_marginBottom="3dp"
                     android:fontFamily="@font/font"
                     />
                 <TextView
@@ -98,6 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_row="1"
+                    android:fontFamily="@font/font"
                     tools:text="hi"
                     android:textSize="20dp"/>
             </LinearLayout>
@@ -116,6 +115,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textStyle="bold"
+                    android:layout_marginBottom="3dp"
                     tools:text="plank"
                     android:textSize="20sp"
                     android:fontFamily="@font/font"
@@ -125,6 +125,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="hi"
+                    android:fontFamily="@font/font"
                     android:textSize="20dp"/>
             </LinearLayout>
 
@@ -132,26 +133,28 @@
                 android:id="@+id/grid_slr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_margin="10dp"
-                android:padding="10dp"
-                android:background="@drawable/btn_selector_color">
+                android:background="@drawable/btn_selector_color"
+                android:orientation="vertical"
+                android:padding="10dp">
+
                 <TextView
                     android:id="@+id/fb_slr_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="sidelr"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
                     android:fontFamily="@font/font"
-                    />
+                    android:layout_marginBottom="3dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:text="sidelr" />
+
                 <TextView
                     android:id="@+id/fb_msg_slr"
                     android:layout_width="wrap_content"
-                    android:fontFamily="@font/font"
                     android:layout_height="wrap_content"
-                    tools:text="hi"
-                    android:textSize="20dp"/>
+                    android:fontFamily="@font/font"
+                    android:textSize="20dp"
+                    tools:text="hi" />
             </LinearLayout>
 
             <RelativeLayout
@@ -174,7 +177,7 @@
                     android:id="@+id/feedbackYAxisTitleArea"
                     android:layout_width="50dp"
                     android:layout_height="20dp"
-                    android:layout_marginStart="40dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:textAlignment="center"
                     tools:text="개수"/>

@@ -15,7 +15,7 @@
                 <gradient
                     android:startColor="@color/btn_primary"
                     android:centerColor="#7b79c4"
-                    android:endColor="@color/btn_primary_red"
+                    android:endColor="@color/primary_bg"
                     android:angle="180"/>
                 <stroke android:width="2dp"
                     android:color="@color/white"/>

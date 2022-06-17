@@ -19,6 +19,6 @@
         <item name="android:textSize">30sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColorPrimary">@color/btn_primary</item>
-        <item name="colorControlNormal">@color/btn_gray</item>
+        <item name="colorControlNormal">@color/white</item>
     </style>
 </resources>
