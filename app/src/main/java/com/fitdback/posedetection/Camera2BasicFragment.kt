@@ -385,8 +385,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         activity?.runOnUiThread {
             if(TimerClass.second <= 0){
                 countView!!.visibility = View.VISIBLE
-                countView!!.text = "완료 :" + text_com.toString() + " / 목표 : " + text_tar.toString() +
-                        " / 성공 : " + text_s.toString() + " / 실패 : " + text_f.toString()
+                countView!!.text = "🎯 " + text_tar.toString() + " | ☑ " + text_com.toString() +
+                        " | ⭕ " + text_s.toString() + " | ❌ " + text_f.toString()
             }
             else{
                 countView!!.visibility = View.INVISIBLE
@@ -411,6 +411,9 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                 guideMsg!!.visibility = View.INVISIBLE
                 drawView!!.visibility = View.VISIBLE
                 exPrgBar!!.visibility = View.VISIBLE
+                fr_slr_c!!.visibility = View.INVISIBLE
+                fr_pl_c!!.visibility = View.INVISIBLE
+                fr_sq_c!!.visibility = View.INVISIBLE
                 Handler().postDelayed(
                         {
                             countTimer!!.visibility = View.INVISIBLE
@@ -421,7 +424,11 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
                     fr_sq_c!!.text = " " + (FeedbackAlgorithm.squat_s + FeedbackAlgorithm.squat_f).toString() + "회"
                     fr_pl_c!!.text = " " + (FeedbackAlgorithm.plank_s + FeedbackAlgorithm.plank_f).toString() + "초"
                     fr_slr_c!!.text = " " + (FeedbackAlgorithm.sidelr_s + FeedbackAlgorithm.sidelr_f).toString() + "회"
+                    fr_slr_c!!.visibility = View.VISIBLE
+                    fr_pl_c!!.visibility = View.VISIBLE
+                    fr_sq_c!!.visibility = View.VISIBLE
                     cover!!.visibility = View.INVISIBLE
+                    exPrgBar!!.visibility = View.INVISIBLE
                 }
             }
         } else {
@@ -482,6 +489,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         layoutFrame = view.findViewById(R.id.layout_frame)
         drawView = view.findViewById(R.id.drawview)
         layoutBottom = view.findViewById(R.id.layout_bottom)
+
 
         // 카운트 다운
         countTimer = view.findViewById(R.id.cntDown)
@@ -915,6 +923,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         var tag_cnt = FeedbackAlgorithm.target_cnt
 
 
+
 //        // 자율운동일 때
 //        if (FeedbackAlgorithm.exr_mode == "freeTraining"){
 //            free_cnt_sqt?.progress =
@@ -924,6 +933,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
 
         exPrgBar?.max = tag_cnt
         exPrgBar?.progress = countToShow
+
 
     }
 

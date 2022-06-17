@@ -60,9 +60,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|left|top"
-        android:layout_margin="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="15dp"
         tools:text="squat"
         android:textSize="30dp"
+        android:fontFamily="@font/font"
         android:textColor="@color/btn_gray"
         android:drawableLeft="@drawable/ic_squat_2"
         />
@@ -71,10 +73,12 @@
         android:id="@+id/free_pl_cnt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="15dp"
         android:layout_gravity="center|top"
         tools:text="plank"
         android:textSize="30dp"
+        android:fontFamily="@font/font"
         android:textColor="@color/btn_gray"
         android:drawableLeft="@drawable/ic_plank_2"
         />
@@ -82,12 +86,20 @@
         android:id="@+id/free_slr_cnt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="15dp"
         android:layout_gravity="center|right|top"
         tools:text="slr"
         android:textSize="30dp"
         android:textColor="@color/btn_gray"
+        android:fontFamily="@font/font"
         android:drawableLeft="@drawable/ic_slr_2"
+        />
+    <TextView
+        android:id="@+id/test_toast"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         />
     <View
         android:id="@+id/cover"
@@ -106,10 +118,10 @@
         android:layout_height="30dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:background="@drawable/custom_prgbar"
-        android:layout_gravity="center|bottom"
+        android:layout_gravity="center|top"
         android:layout_marginHorizontal="20dp"
         android:progressDrawable="@drawable/custom_prgbar"
-        android:layout_marginBottom="30dp"/>
+        android:layout_marginTop="30dp"/>
 
 
     <TextView
@@ -128,11 +140,13 @@
         android:id="@+id/cnt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
         android:layout_gravity="center|bottom"
         android:textColor="@color/btn_gray"
-        android:textSize="22sp"
+        android:fontFamily="@font/font"
+        android:textSize="25sp"
+        android:padding="4dp"
         tools:text="Count"
         />
     <TextView
@@ -141,8 +155,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textColor="@color/btn_primary_red"
+        android:fontFamily="@font/font"
         android:background="@drawable/button_radius_white"
         />
     <TextView
@@ -171,8 +186,6 @@
         android:progressBackgroundTint="#00000000"
         android:progressDrawable="@drawable/circle_progressbar"
         />
-
-
 
     <!--    CPU / GPU 활성 버튼 -->
 

@@ -3,41 +3,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/primary_bg"
     tools:context="com.fitdback.userinterface.fragment.MyTownFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="200dp"
-        android:weightSum="1" >
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        >
         <Button
             android:layout_marginTop="20dp"
             android:id="@+id/town_friendList"
             android:layout_width="match_parent"
-            android:layout_height="200sp"
+            android:layout_height="100dp"
             android:layout_marginHorizontal="10dp"
             android:background="@drawable/button_radius_color"
             android:drawableLeft="@drawable/ic_my_info_2"
             android:paddingHorizontal="20dp"
             android:text="친구 목록"
+            android:fontFamily="@font/font"
             android:textColor="@color/white"
-            android:layout_weight="0.5"
-            android:textSize="20sp" />
+            android:textSize="40sp" />
 
         <Button
             android:layout_marginTop="20dp"
             android:id="@+id/town_community"
             android:layout_width="match_parent"
-            android:layout_height="200sp"
+            android:layout_height="100sp"
             android:layout_marginHorizontal="10dp"
             android:background="@drawable/button_radius_color"
             android:drawableLeft="@drawable/ic_my_info_2"
             android:paddingHorizontal="20dp"
             android:text="커뮤니티"
+            android:fontFamily="@font/font"
             android:textColor="@color/white"
             android:layout_weight="0.5"
-            android:textSize="20sp" />
+            android:textSize="40sp" />
 
     </LinearLayout>
 

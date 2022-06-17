@@ -15,10 +15,7 @@
         android:src="@drawable/pinterest_profile_image_1"
         android:layout_gravity="top"
         />
-    <ImageView
-        android:id="@+id/image_bg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -29,6 +26,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center">
+            <ImageView
+                android:id="@+id/image_bg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
             <Button
                 android:id="@+id/btnRunEmailLogin"
                 android:layout_width="match_parent"

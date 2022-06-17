@@ -7,6 +7,7 @@
     android:fillViewport="true"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@color/primary_bg"
     tools:context="com.fitdback.userinterface.fragment.StatisticFragment">
 
 <ScrollView
@@ -82,7 +83,7 @@
                     android:layout_margin="5dp"
                     android:layout_marginBottom="10dp"
                     android:layout_weight="0.4"
-                    android:text="사이드 래터럴"
+                    android:text="래터럴 레이즈"
                     android:textColor="#808080"
                     android:textSize="15sp"
                     android:textStyle="bold"
