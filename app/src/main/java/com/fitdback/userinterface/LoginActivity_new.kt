@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.widget.*
 import com.bumptech.glide.Glide
@@ -46,7 +47,7 @@ class LoginActivity_new : AppCompatActivity() {
 
         val image_bg = findViewById<ImageView>(R.id.image_bg)
 
-        Glide.with(this).load(R.raw.move2).override(1200,800).into(image_bg)
+        Glide.with(this).load(R.raw.move2).override(1200, 800).into(image_bg)
 
 
         // 인텐트
@@ -56,7 +57,7 @@ class LoginActivity_new : AppCompatActivity() {
         btnRunEmailLogin.setOnClickListener {
 
             val dialog =
-                CustomDialog(this, R.layout.dialog_login_email_login,"")
+                CustomDialog(this, R.layout.dialog_login_email_login, "")
             val mAlertDialog = dialog.showDialog()
             val btnEmailLogin = mAlertDialog!!.findViewById<Button>(R.id.btnEmailLogin)
 
@@ -95,7 +96,7 @@ class LoginActivity_new : AppCompatActivity() {
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-
+        // 개발자 로그인
         btnRunDevLogin.setOnClickListener {
             val dialog =
                 CustomDialog(this, R.layout.dialog_dev_login, "Email Login")
@@ -120,6 +121,7 @@ class LoginActivity_new : AppCompatActivity() {
                 emailLoginAuth("pjk@gmail.com", "123456", toMainActivity)
             }
         }
+
         joinTextView.setOnClickListener {
             val dialog =
                 CustomDialog(this, R.layout.dialog_login_join, "")
