@@ -385,8 +385,8 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
         activity?.runOnUiThread {
             if(TimerClass.second <= 0){
                 countView!!.visibility = View.VISIBLE
-                countView!!.text = "목표 :" + text_tar.toString() + " / 완료 :" + text_com.toString() +
-                        "\n성공 :" + text_s.toString() + " / 실패 :" + text_f.toString()
+                countView!!.text = "🎯 " + text_tar.toString() + " | ☑ " + text_com.toString() +
+                        " | ⭕ " + text_s.toString() + " | ❌ " + text_f.toString()
             }
             else{
                 countView!!.visibility = View.INVISIBLE

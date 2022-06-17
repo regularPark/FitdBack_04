@@ -5,6 +5,9 @@ import android.graphics.PointF
 import android.media.MediaPlayer
 import android.os.Handler
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.widget.TextView
 import android.widget.Toast
 import com.fitdback.posedetection.R
 import java.util.concurrent.CopyOnWriteArrayList
@@ -270,21 +273,45 @@ class FeedbackAlgorithm {
                         exr_cnt_s++
                         squat_s++
                         sound_play(context, R.raw.sound1) // "띠링" (성공사운드)
-                        Toast.makeText(context, "운동 성공~!", Toast.LENGTH_SHORT).show()
+                        var layoutInflater = LayoutInflater.from(context).inflate(R.layout.view_holder_toast, null)
+                        var text : TextView = layoutInflater.findViewById(R.id.textViewToast)
+                        text.text = "⭕ 운동 성공!"
+
+                        var toast = Toast(context)
+                        toast.setGravity(Gravity.TOP, 0, 200)
+                        toast.view = layoutInflater
+                        toast.show()
                     } else if (cnt_f_tf && isWrong) {
                         cnt_f_tf = false
                         if (isWrong && wrong_mode >= 1) {
                             exr_cnt_f++
+
                             squat_f++
 
                             if (wrong_mode == 1) {
                                 sound_play(context, R.raw.squat_ld_fb) // "다리 더 굽히세요"
-                                Toast.makeText(context, "------FAIL2------", Toast.LENGTH_SHORT)
-                                        .show()
+
+                                var layoutInflater = LayoutInflater.from(context).inflate(R.layout.view_holder_toast, null)
+                                var text : TextView = layoutInflater.findViewById(R.id.textViewToast)
+                                text.text = "❌ 다리 더 굽히세요"
+
+                                var toast = Toast(context)
+                                toast.setGravity(Gravity.TOP, 0, 200)
+                                toast.view = layoutInflater
+                                toast.show()
+
                             } else if (wrong_mode == 2) {
                                 sound_play(context, R.raw.squat_lu_fb) // "다리 너무 굽혔어요"
-                                Toast.makeText(context, "------FAIL5------", Toast.LENGTH_SHORT)
-                                        .show()
+
+                                var layoutInflater = LayoutInflater.from(context).inflate(R.layout.view_holder_toast, null)
+                                var text : TextView = layoutInflater.findViewById(R.id.textViewToast)
+                                text.text = "❌ 다리 너무 굽혔어요"
+
+                                var toast = Toast(context)
+                                toast.setGravity(Gravity.TOP, 0, 200)
+                                toast.view = layoutInflater
+                                toast.show()
+
                                 cnt_s_tf = false
                                 isSquat = false
                             }
@@ -431,10 +458,28 @@ class FeedbackAlgorithm {
 
                     if (nhk_l_angle < 150.0 && hip_l_y < neck_y) {
                         sound_play(context, R.raw.plank_bd_fb) //"허리 내리세요"
+                        var layoutInflater = LayoutInflater.from(context).inflate(R.layout.view_holder_toast, null)
+                        var text : TextView = layoutInflater.findViewById(R.id.textViewToast)
+                        text.text = "❌ 허리 내리세요"
+
+                        var toast = Toast(context)
+                        toast.setGravity(Gravity.TOP, 0, 200)
+                        toast.view = layoutInflater
+                        toast.show()
+
                         isWrong = true
                         wrong_mode = 1
                     } else if (nhk_l_angle < 170.0 && hip_l_y > neck_y) {
                         sound_play(context, R.raw.plank_bu_fb) //"허리 올리세요"
+                        var layoutInflater = LayoutInflater.from(context).inflate(R.layout.view_holder_toast, null)
+                        var text : TextView = layoutInflater.findViewById(R.id.textViewToast)
+                        text.text = "❌ 허리 올리세요"
+
+                        var toast = Toast(context)
+                        toast.setGravity(Gravity.TOP, 0, 200)
+                        toast.view = layoutInflater
+                        toast.show()
+
                         isWrong = true
                         wrong_mode = 2
                     } else if (nhk_l_angle in 150.0..180.0 && !no_exr && !isWrong) {
@@ -568,7 +613,14 @@ class FeedbackAlgorithm {
                         exr_cnt_s++
                         sidelr_s++
                         sound_play(context, R.raw.sound1) // "띠링" (성공사운드)
-                        Toast.makeText(context, "운동 성공~!", Toast.LENGTH_SHORT).show()
+                        var layoutInflater = LayoutInflater.from(context).inflate(R.layout.view_holder_toast, null)
+                        var text : TextView = layoutInflater.findViewById(R.id.textViewToast)
+                        text.text = "⭕ 운동 성공!"
+
+                        var toast = Toast(context)
+                        toast.setGravity(Gravity.TOP, 0, 200)
+                        toast.view = layoutInflater
+                        toast.show()
                     }
 
                     else if (cnt_f_tf && isWrong) {
@@ -580,32 +632,72 @@ class FeedbackAlgorithm {
 
                             if (wrong_mode == 1) {
                                 sound_play(context, R.raw.sidelr_ru_fb) // "오른팔 더 올리세요"
-                                Toast.makeText(context, "------FAIL1------", Toast.LENGTH_SHORT)
-                                        .show()
+                                var layoutInflater = LayoutInflater.from(context).inflate(R.layout.view_holder_toast, null)
+                                var text : TextView = layoutInflater.findViewById(R.id.textViewToast)
+                                text.text = "❌ 오른팔 더 올리세요"
+
+                                var toast = Toast(context)
+                                toast.setGravity(Gravity.TOP, 0, 200)
+                                toast.view = layoutInflater
+                                toast.show()
+
                             } else if (wrong_mode == 2) {
                                 sound_play(context, R.raw.sidelr_lu_fb) // "왼팔 더 올리세요"
-                                Toast.makeText(context, "------FAIL2------", Toast.LENGTH_SHORT)
-                                        .show()
+                                var layoutInflater = LayoutInflater.from(context).inflate(R.layout.view_holder_toast, null)
+                                var text : TextView = layoutInflater.findViewById(R.id.textViewToast)
+                                text.text = "❌ 왼팔 더 올리세요"
+
+                                var toast = Toast(context)
+                                toast.setGravity(Gravity.TOP, 0, 200)
+                                toast.view = layoutInflater
+                                toast.show()
                             } else if (wrong_mode == 3) {
                                 sound_play(context, R.raw.sidelr_bu_fb) // "두 팔 다 더 올리세요"
-                                Toast.makeText(context, "------FAIL3------", Toast.LENGTH_SHORT)
-                                        .show()
+                                var layoutInflater = LayoutInflater.from(context).inflate(R.layout.view_holder_toast, null)
+                                var text : TextView = layoutInflater.findViewById(R.id.textViewToast)
+                                text.text = "❌ 두 팔 다 더 올리세요"
+
+                                var toast = Toast(context)
+                                toast.setGravity(Gravity.TOP, 0, 200)
+                                toast.view = layoutInflater
+                                toast.show()
                             } else if (wrong_mode == 5) {
                                 sound_play(context, R.raw.sidelr_ld_fb) // "왼팔 조금 내리세요"
-                                Toast.makeText(context, "------FAIL5------", Toast.LENGTH_SHORT)
-                                        .show()
+                                var layoutInflater = LayoutInflater.from(context).inflate(R.layout.view_holder_toast, null)
+                                var text : TextView = layoutInflater.findViewById(R.id.textViewToast)
+                                text.text = "❌ 왼팔 조금 내리세요"
+
+                                var toast = Toast(context)
+                                toast.setGravity(Gravity.TOP, 0, 200)
+                                toast.view = layoutInflater
+                                toast.show()
+
                                 cnt_s_tf = false
                                 isSidelr = false
                             } else if (wrong_mode == 8) {
                                 sound_play(context, R.raw.sidelr_rd_fb) // "오른팔 조금 내리세요"
-                                Toast.makeText(context, "------FAIL8------", Toast.LENGTH_SHORT)
-                                        .show()
+                                var layoutInflater = LayoutInflater.from(context).inflate(R.layout.view_holder_toast, null)
+                                var text : TextView = layoutInflater.findViewById(R.id.textViewToast)
+                                text.text = "❌ 오른팔 조금 내리세요"
+
+                                var toast = Toast(context)
+                                toast.setGravity(Gravity.TOP, 0, 200)
+                                toast.view = layoutInflater
+                                toast.show()
+
                                 cnt_s_tf = false
                                 isSidelr = false
                             } else if (wrong_mode == 13) {
                                 sound_play(context, R.raw.sidelr_bd_fb) // "두 팔 다 더 내리세요"
-                                Toast.makeText(context, "------FAIL13------", Toast.LENGTH_SHORT)
-                                        .show()
+                                var layoutInflater = LayoutInflater.from(context).inflate(R.layout.view_holder_toast, null)
+                                var text : TextView = layoutInflater.findViewById(R.id.textViewToast)
+                                text.text = "❌ 두 팔 다 더 내리세요"
+
+                                var toast = Toast(context)
+                                toast.setGravity(Gravity.TOP, 0, 200)
+                                toast.view = layoutInflater
+                                toast.show()
+
                                 cnt_s_tf = false
                                 isSidelr = false
                             }
@@ -757,7 +849,7 @@ class FeedbackAlgorithm {
             }
 
             else {
-                if (ank_dist < 150.0) {
+                if (ank_dist < 250.0) {
                     squat(context, mDrawPoint)
                 } else {
                     sidelr(context, mDrawPoint)

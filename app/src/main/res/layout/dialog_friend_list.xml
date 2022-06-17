@@ -2,12 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/primary_bg">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="친구 목록"
+        android:textStyle="bold"
+        android:textSize="40dp"
+        android:layout_margin="10dp"
+        />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="통계를 보려면 닉네임을 클릭하세요"
+        android:fontFamily="@font/font"
         android:gravity="center"
         android:textSize="20sp" />
 
@@ -15,6 +25,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/btn_selector_color"
         android:weightSum="1">
 
         <TextView
@@ -40,7 +52,10 @@
     <ListView
         android:id="@+id/friendListLV"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="300dp"
+        android:layout_marginHorizontal="10dp"
+        android:background="@drawable/btn_selector_color"
+        android:divider="#FFFFFF"/>
 
     <Button
         android:id="@+id/btnFriendListConfirm"
@@ -50,6 +65,8 @@
         android:layout_marginBottom="10dp"
         android:textSize="20sp"
         android:text="확인"
+        android:background="@drawable/btn_selector_color"
+        android:fontFamily="@font/font"
         android:textAllCaps="false" />
 
 

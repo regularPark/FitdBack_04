@@ -2,12 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/primary_bg"
     android:orientation="vertical">
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="내 코드 확인"
+        android:layout_margin="10dp"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        />
+    <TextView
         android:id="@+id/myCodeArea"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:text="myCodeArea"
         android:textAlignment="center"
@@ -20,7 +29,10 @@
         android:layout_margin="20dp"
         android:layout_marginBottom="20dp"
         android:text="확인"
+        android:fontFamily="@font/font"
+        android:textColor="@color/btn_gray"
+        android:background="@drawable/btn_selector_color"
         android:textAllCaps="false"
-        android:textSize="20sp" />
+        android:textSize="30sp" />
 
 </LinearLayout>

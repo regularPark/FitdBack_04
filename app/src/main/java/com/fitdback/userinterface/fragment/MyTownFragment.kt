@@ -82,7 +82,7 @@ class MyTownFragment : Fragment() {
 
             // 다이얼로그
             val friendModeDialog =
-                CustomDialog(context!!, R.layout.dialog_friend_mode, "Friend Mode")
+                CustomDialog(context!!, R.layout.dialog_friend_mode, "")
             val friendModeAlertDialog = friendModeDialog.showDialog()
             friendModeAlertDialog?.setCancelable(false)
 
@@ -101,7 +101,7 @@ class MyTownFragment : Fragment() {
 
                 // 다이얼로그
                 val friendListDialog =
-                    CustomDialog(context, R.layout.dialog_friend_list, "Friend List")
+                    CustomDialog(context, R.layout.dialog_friend_list, "")
                 val friendListAlertDialog = friendListDialog.showDialog()
                 friendListAlertDialog?.setCancelable(false)
 
@@ -426,7 +426,7 @@ class MyTownFragment : Fragment() {
             // 친구 등록
             btnRegisterFriend?.setOnClickListener {
                 val registerDialog =
-                    CustomDialog(context, R.layout.dialog_friend_register, "Friend Register")
+                    CustomDialog(context, R.layout.dialog_friend_register, "")
                 val registerAlertDialog = registerDialog.showDialog()
                 registerAlertDialog?.setCancelable(false)
 
