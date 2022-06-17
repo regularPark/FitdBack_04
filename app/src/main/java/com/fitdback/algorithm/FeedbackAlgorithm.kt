@@ -368,12 +368,12 @@ class FeedbackAlgorithm {
                         "다리를 %d회 덜 굽혔습니다.").format(squat_f_mode[2], squat_f_mode[1])
             }
 
-            else if (160.toDouble() >= hka_l_angle && !no_exr) {
+            else if (140.toDouble() >= hka_l_angle && !no_exr) {
                 //스쿼트 자세로 판단되면 Stand가 아님
                 isStand = false
 
                 //스쿼트 성공
-                if (hka_l_angle in 70.0..110.0 && wrong_mode != 2) {
+                if (hka_l_angle in 60.0..100.0 && wrong_mode != 2) {
                     cnt_s_tf = true
                     isSquat = true
                     Log.d("exr_S", "Success 각도 = 무릎 " + hka_l_angle)
@@ -388,7 +388,7 @@ class FeedbackAlgorithm {
                 }
 
                 //다리가 120도 이하로 굽혀지지 않아 실패
-                else if (hka_l_angle in 110.0..160.0) {
+                else if (hka_l_angle in 100.1..140.0) {
                     cnt_f_tf = true
                     if (wrong_mode != 2 && !cnt_s_tf) {
                         wrong_mode = 1
@@ -849,7 +849,7 @@ class FeedbackAlgorithm {
             }
 
             else {
-                if (ank_dist < 250.0) {
+                if (ank_dist < 200.0) {
                     squat(context, mDrawPoint)
                 } else {
                     sidelr(context, mDrawPoint)

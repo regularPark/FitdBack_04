@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:title="홈"
+        android:title="Home"
         android:enabled="true"
 
         android:icon="@drawable/ic_home"
@@ -9,19 +9,19 @@
         />
 
     <item
-        android:title="친구"
+        android:title="Community"
         android:enabled="true"
         android:icon="@drawable/ic_users"
         android:id="@+id/menu_mytown"
         />
     <item
-        android:title="통계"
+        android:title="Statistics"
         android:enabled="true"
         android:icon="@drawable/ic_chart"
         android:id="@+id/menu_stat"
         />
     <item
-        android:title="마이페이지"
+        android:title="My Page"
         android:enabled="true"
         android:icon="@drawable/ic_mypage"
         android:id="@+id/menu_mypage"

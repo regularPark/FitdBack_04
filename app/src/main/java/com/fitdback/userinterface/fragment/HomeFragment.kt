@@ -1,7 +1,9 @@
 package com.fitdback.userinterface.fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.fitdback.database.DataBasket
+import com.fitdback.database.datamodel.UserInfoDataModel
 import com.fitdback.posedetection.R
 import com.fitdback.test.DevModeActivity
 import com.fitdback.userinterface.FeedbackActivity
@@ -62,7 +65,8 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-
+        val greetingArea = view.findViewById<TextView>(R.id.home_greeting)
+        greetingArea.text = getGreetingMessage()
 
         // 스쿼트 버튼
         val squatBtn: Button = view.findViewById(R.id.squatBtn)
@@ -94,11 +98,11 @@ class HomeFragment : Fragment() {
             }
         })
 
-        val ftBtn:Button = view.findViewById(R.id.freeExBtn)
+        val ftBtn: Button = view.findViewById(R.id.freeExBtn)
         ftBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 val toTutorialActivity = Intent(context, TutorialActivity::class.java)
-                toTutorialActivity.putExtra("exr_mod","free_exr")
+                toTutorialActivity.putExtra("exr_mod", "free_exr")
                 startActivity(toTutorialActivity)
             }
         })
@@ -114,27 +118,34 @@ class HomeFragment : Fragment() {
 
         })
 
-        // 개발자 모드
-        val btnDevMode: Button = view.findViewById(R.id.btnDevMode)
-        btnDevMode.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                activity?.finish()
-                val toDevActivity = Intent(context, FeedbackActivity::class.java)
-                toDevActivity.putExtra("exr_mode", "squat")
-                startActivity(toDevActivity)
-            }
-        })
+//        // 개발자 모드
+//        val btnDevMode: Button = view.findViewById(R.id.btnDevMode)
+//        btnDevMode.setOnClickListener(object : View.OnClickListener {
+//            override fun onClick(v: View?) {
+//                activity?.finish()
+//                val toDevActivity = Intent(context, FeedbackActivity::class.java)
+//                toDevActivity.putExtra("exr_mode", "squat")
+//                startActivity(toDevActivity)
+//            }
+//        })
 
 
         // Inflate the layout for this fragment
         return view
     }
 
+    @SuppressLint("LogNotTimber")
+    private fun getGreetingMessage(): String {
+        val userInfoDataModel: UserInfoDataModel? =
+            DataBasket.individualUserInfo?.getValue(UserInfoDataModel::class.java)
+
+        return "${userInfoDataModel?.user_nickname}님 안녕하세요!"
+    }
+
     private fun getDB() {
         Log.d("DB", "진입")
         val dbPath = DataBasket.getDBPath("users", "ex_data", true)
         DataBasket.getDataFromFB(dbPath!!, "individualExData")
-
 
         Log.d("DB", "완료")
     }
