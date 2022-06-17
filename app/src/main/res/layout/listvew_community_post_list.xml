@@ -34,7 +34,6 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:gravity="center_vertical|center"
-                android:fontFamily="@font/font"
                 android:text="post_memo" />
 
         </LinearLayout>
