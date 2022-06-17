@@ -44,10 +44,10 @@ class TutorialActivity : YouTubeBaseActivity() {
             set_cnt.setText("스쿼트 " + np.value + "회 실시")
         }
         else if (exr == "plank"){
-            set_cnt.setText("플랭크 " + np.value + "회 실시")
+            set_cnt.setText("플랭크 " + np.value + "초 실시")
         }
         else if (exr == "sidelr"){
-            set_cnt.setText("사이드레터럴레이즈 " + np.value + "회 실시")
+            set_cnt.setText("래터럴레이즈 " + np.value + "회 실시")
         }
         else {
             set_cnt.setText("자율운동 " + np.value + "회 실시")
@@ -57,10 +57,10 @@ class TutorialActivity : YouTubeBaseActivity() {
                 set_cnt.setText("스쿼트 " + i2 + "회 실시")
             }
             else if (exr == "plank") {
-                set_cnt.setText("플랭크 " + i2 + "회 실시")
+                set_cnt.setText("플랭크 " + i2 + "초 실시")
             }
             else if (exr == "sidelr"){
-                set_cnt.setText("사이드레터럴레이즈 " + i2 + "회 실시")
+                set_cnt.setText("래터럴레이즈 " + i2 + "회 실시")
             }
             else{
                 set_cnt.setText("자율운동 " + i2 + "회 실시")

@@ -30,7 +30,7 @@
                     />
                 <gradient
                     android:startColor="@color/btn_primary"
-                    android:endColor="@color/btn_primary_red"
+                    android:endColor="@color/primary_bg"
                     android:type="linear"/>
             </shape>
         </rotate>

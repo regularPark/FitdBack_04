@@ -41,25 +41,25 @@ class DrawView : View {
     private var mImgHeight: Int = 0
 
     private val mColorArray = intArrayOf(
-            resources.getColor(R.color.color_top, null),        // 0
-            resources.getColor(R.color.color_neck, null),       // 1
-            resources.getColor(R.color.color_l_shoulder, null), // 2
-            resources.getColor(R.color.color_l_elbow, null),    // 3
-            resources.getColor(R.color.color_l_wrist, null),    // 4
-            resources.getColor(R.color.color_r_shoulder, null), // 5
-            resources.getColor(R.color.color_r_elbow, null),    // 6
-            resources.getColor(R.color.color_r_wrist, null),    // 7
-            resources.getColor(R.color.color_l_hip, null),      // 8
-            resources.getColor(R.color.color_l_knee, null),     // 9
-            resources.getColor(R.color.color_l_ankle, null),    // 10
-            resources.getColor(R.color.color_r_hip, null),      // 11
-            resources.getColor(R.color.color_r_knee, null),     // 12
-            resources.getColor(R.color.color_r_ankle, null),    // 13
-            resources.getColor(R.color.color_background, null)
+            resources.getColor(R.color.white, null),        // 0
+            resources.getColor(R.color.white, null),       // 1
+            resources.getColor(R.color.white, null),    // 2
+            resources.getColor(R.color.white, null),    // 3
+            resources.getColor(R.color.white, null),    // 4
+            resources.getColor(R.color.white, null),    // 5
+            resources.getColor(R.color.white, null),    // 6
+            resources.getColor(R.color.white, null),    // 7
+            resources.getColor(R.color.white, null),        // 8
+            resources.getColor(R.color.white, null),       // 9
+            resources.getColor(R.color.white, null),      // 10
+            resources.getColor(R.color.white, null),       // 11
+            resources.getColor(R.color.white, null),       // 12
+            resources.getColor(R.color.white, null),       // 13
+            resources.getColor(R.color.white, null)
     )
 
     private val circleRadius: Float by lazy {
-        dip(2).toFloat()
+        dip(4).toFloat()
     }
 
     private val mPaint: Paint by lazy {
