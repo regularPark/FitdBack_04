@@ -118,7 +118,7 @@ class FeedbackActivity : AppCompatActivity() {
         val mDialogView =
             LayoutInflater.from(this).inflate(R.layout.dialog_exercise_data_write, null)
         val mBuilder =
-            AlertDialog.Builder(this).setView(mDialogView).setTitle("FeedbackTest 다이얼로그")
+            AlertDialog.Builder(this).setView(mDialogView).setTitle("")
         mBuilder.setCancelable(false) // 배경 터치시 종료 방지
         
         val mAlertDialog = mBuilder.show()
