@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="300dp"
     android:layout_margin="15dp"
+    android:gravity="center"
+    android:background="@color/primary_bg"
     android:orientation="vertical">
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_margin="10dp"
+        android:text="이메일"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        />
     <EditText
         android:id="@+id/loginEmailArea"
         android:layout_width="match_parent"
@@ -16,6 +27,16 @@
         android:paddingHorizontal="5dp"
         android:hint="email" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_margin="10dp"
+        android:textColor="@color/black"
+        android:text="비밀번호"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        />
     <EditText
         android:id="@+id/loginPasswordArea"
         android:layout_width="match_parent"
@@ -36,7 +57,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/btn_stroke_blk"
-        android:text="로그인 하기"
+        android:text="로그인"
         android:textColor="@color/btn_gray"
         android:textStyle="bold"
         android:textSize="30sp"
