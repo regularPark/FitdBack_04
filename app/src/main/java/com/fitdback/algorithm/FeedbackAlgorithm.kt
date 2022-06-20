@@ -458,27 +458,27 @@ class FeedbackAlgorithm {
 
                     if (nhk_l_angle < 150.0 && hip_l_y < neck_y) {
                         sound_play(context, R.raw.plank_bd_fb) //"허리 내리세요"
-                        var layoutInflater = LayoutInflater.from(context).inflate(R.layout.view_holder_toast, null)
-                        var text : TextView = layoutInflater.findViewById(R.id.textViewToast)
-                        text.text = "❌ 허리 내리세요"
-
-                        var toast = Toast(context)
-                        toast.setGravity(Gravity.TOP, 0, 200)
-                        toast.view = layoutInflater
-                        toast.show()
+//                        var layoutInflater = LayoutInflater.from(context).inflate(R.layout.view_holder_toast, null)
+//                        var text : TextView = layoutInflater.findViewById(R.id.textViewToast)
+//                        text.text = "❌ 허리 내리세요"
+//
+//                        var toast = Toast(context)
+//                        toast.setGravity(Gravity.TOP, 0, 200)
+//                        toast.view = layoutInflater
+//                        toast.show()
 
                         isWrong = true
                         wrong_mode = 1
                     } else if (nhk_l_angle < 170.0 && hip_l_y > neck_y) {
                         sound_play(context, R.raw.plank_bu_fb) //"허리 올리세요"
-                        var layoutInflater = LayoutInflater.from(context).inflate(R.layout.view_holder_toast, null)
-                        var text : TextView = layoutInflater.findViewById(R.id.textViewToast)
-                        text.text = "❌ 허리 올리세요"
-
-                        var toast = Toast(context)
-                        toast.setGravity(Gravity.TOP, 0, 200)
-                        toast.view = layoutInflater
-                        toast.show()
+//                        var layoutInflater = LayoutInflater.from(context).inflate(R.layout.view_holder_toast, null)
+//                        var text : TextView = layoutInflater.findViewById(R.id.textViewToast)
+//                        text.text = "❌ 허리 올리세요"
+//
+//                        var toast = Toast(context)
+//                        toast.setGravity(Gravity.TOP, 0, 200)
+//                        toast.view = layoutInflater
+//                        toast.show()
 
                         isWrong = true
                         wrong_mode = 2

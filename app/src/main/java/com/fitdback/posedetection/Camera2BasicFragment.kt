@@ -383,7 +383,7 @@ class Camera2BasicFragment : Fragment(), FragmentCompat.OnRequestPermissionsResu
     private fun showCount(text_com: Int, text_tar: Int, text_f: Int, text_s: Int) {
         val activity = activity
         activity?.runOnUiThread {
-            if(TimerClass.second <= 0){
+            if(TimerClass.second <= 0 && FeedbackAlgorithm.exr_mode != "plank") {
                 countView!!.visibility = View.VISIBLE
                 countView!!.text = "🎯 " + text_tar.toString() + " | ☑ " + text_com.toString() +
                         " | ⭕ " + text_s.toString() + " | ❌ " + text_f.toString()
